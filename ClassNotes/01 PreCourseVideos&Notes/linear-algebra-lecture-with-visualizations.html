@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linear Algebra: From Complex Vector Spaces to Tensor Products</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,600;0,700;1,400&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] },
+  startup: {
+    pageReady: function () {
+      return MathJax.startup.defaultPageReady().then(function () {
+        document.body.classList.add('math-ready');
+      });
+    }
+  }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js" id="MathJax-script" async></script>
+<style>
+:root{
+  --paper:#FBFCFD;
+  --grid:#E9EDF4;
+  --ink:#14202F;
+  --ink-soft:#5A6A80;
+  --ink-faint:#8B98AB;
+  --pen:#2242D6;
+  --pen-wash:#EDF1FE;
+  --redpen:#AE2230;
+  --redpen-wash:#FCF0F1;
+  --rule:#D6DEE9;
+  --serif:'Spectral',Georgia,serif;
+  --sans:'IBM Plex Sans',system-ui,sans-serif;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{
+  margin:0;
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:26px 26px;
+  color:var(--ink);
+  font-family:var(--serif);
+  font-size:18px;
+  line-height:1.68;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- progress rail ---------- */
+#progress-rail{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:60}
+#progress-fill{height:100%;width:0;background:var(--pen);transition:width .12s linear}
+
+/* ---------- hero ---------- */
+.hero{
+  max-width:1180px;margin:0 auto;padding:88px 32px 56px;
+}
+.hero h1{
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:clamp(2.3rem,5.4vw,4rem);
+  line-height:1.06;
+  letter-spacing:-.022em;
+  margin:0 0 20px;
+  max-width:16ch;
+}
+.hero .standfirst{
+  font-size:1.18rem;color:var(--ink-soft);max-width:62ch;margin:0 0 44px;
+}
+.hero .standfirst em{color:var(--ink);font-style:italic}
+
+/* the chain — the page's signature element */
+.chain{
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  padding:26px 0;
+  margin:0 0 40px;
+  display:flex;flex-wrap:wrap;align-items:center;gap:0 4px;
+}
+.chain span{
+  font-family:var(--sans);font-size:.86rem;font-weight:500;
+  color:var(--ink);white-space:nowrap;padding:3px 0;
+  opacity:0;transform:translateY(6px);
+  animation:linkin .5s ease forwards;
+}
+.chain i{
+  color:var(--pen);font-style:normal;padding:0 8px;font-size:.9rem;
+  opacity:0;animation:linkin .5s ease forwards;
+}
+@keyframes linkin{to{opacity:1;transform:none}}
+.chain > *:nth-child(1){animation-delay:0.15s}
+.chain > *:nth-child(2){animation-delay:0.20s}
+.chain > *:nth-child(3){animation-delay:0.26s}
+.chain > *:nth-child(4){animation-delay:0.32s}
+.chain > *:nth-child(5){animation-delay:0.37s}
+.chain > *:nth-child(6){animation-delay:0.43s}
+.chain > *:nth-child(7){animation-delay:0.48s}
+.chain > *:nth-child(8){animation-delay:0.54s}
+.chain > *:nth-child(9){animation-delay:0.59s}
+.chain > *:nth-child(10){animation-delay:0.65s}
+.chain > *:nth-child(11){animation-delay:0.70s}
+.chain > *:nth-child(12){animation-delay:0.76s}
+.chain > *:nth-child(13){animation-delay:0.81s}
+.chain > *:nth-child(14){animation-delay:0.86s}
+.chain > *:nth-child(15){animation-delay:0.92s}
+.chain > *:nth-child(16){animation-delay:0.97s}
+.chain > *:nth-child(17){animation-delay:1.03s}
+.chain > *:nth-child(18){animation-delay:1.08s}
+.chain > *:nth-child(19){animation-delay:1.14s}
+.chain > *:nth-child(20){animation-delay:1.19s}
+.chain > *:nth-child(21){animation-delay:1.25s}
+.chain > *:nth-child(22){animation-delay:1.30s}
+.chain > *:nth-child(23){animation-delay:1.36s}
+@media (prefers-reduced-motion:reduce){
+  .chain span,.chain i{animation:none;opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+
+.hero-meta{display:flex;flex-wrap:wrap;gap:14px 40px;align-items:center;font-family:var(--sans);font-size:.9rem;color:var(--ink-soft)}
+.hero-meta b{color:var(--ink);font-weight:600}
+.startlink{
+  font-family:var(--sans);font-size:.92rem;font-weight:600;
+  color:#fff;background:var(--pen);text-decoration:none;
+  padding:11px 22px;border-radius:2px;display:inline-block;
+}
+.startlink:hover{background:#1b35b0}
+
+/* ---------- layout ---------- */
+.shell{max-width:1180px;margin:0 auto;padding:0 32px 120px;display:grid;grid-template-columns:236px minmax(0,1fr);gap:64px;align-items:start}
+
+/* ---------- spine nav ---------- */
+.spine{position:sticky;top:36px;font-family:var(--sans);font-size:.86rem;padding-bottom:20px}
+.spine-title{font-size:.78rem;color:var(--ink-faint);margin:0 0 18px;font-weight:500}
+.spine ol{list-style:none;margin:0;padding:0 0 0 18px;position:relative}
+.spine > ol::before{content:"";position:absolute;left:3px;top:6px;bottom:6px;width:1px;background:var(--rule)}
+.spine .part{margin-bottom:16px;position:relative}
+.spine .part > a{
+  display:block;color:var(--ink);text-decoration:none;font-weight:600;padding:2px 0;line-height:1.4;
+}
+.spine .part::before{
+  content:"";position:absolute;left:-18px;top:11px;width:7px;height:7px;border-radius:50%;
+  background:var(--paper);border:1px solid var(--rule);
+}
+.spine .part.active::before{background:var(--pen);border-color:var(--pen)}
+.spine .part.active > a{color:var(--pen)}
+.spine ul{list-style:none;margin:6px 0 0;padding:0}
+.spine ul a{display:block;color:var(--ink-soft);text-decoration:none;padding:3px 0;line-height:1.35;font-size:.82rem}
+.spine ul a:hover{color:var(--pen)}
+.spine ul a.here{color:var(--pen);font-weight:500}
+
+.tracker{margin-top:26px;padding-top:20px;border-top:1px solid var(--rule)}
+.tracker-row{display:flex;align-items:center;gap:12px}
+.tracker svg{flex:none}
+.tracker-text{font-family:var(--sans);font-size:.78rem;color:var(--ink-soft);line-height:1.35}
+.tracker-text b{display:block;color:var(--ink);font-size:.95rem;font-weight:600}
+
+/* ---------- main content ---------- */
+main{max-width:70ch}
+.part-head{margin:72px 0 8px;padding-top:24px;border-top:2px solid var(--ink)}
+.part-head:first-child{margin-top:0}
+.part-head .pnum{font-family:var(--sans);font-size:.8rem;font-weight:600;color:var(--pen);display:block;margin-bottom:6px}
+.part-head h2{font-size:clamp(1.7rem,3.4vw,2.3rem);line-height:1.14;letter-spacing:-.015em;margin:0 0 10px;font-weight:700}
+.part-head p{color:var(--ink-soft);margin:0 0 8px;font-size:1.02rem}
+
+section.concept{padding:34px 0;border-bottom:1px solid var(--rule)}
+section.concept h3{
+  font-size:1.32rem;font-weight:600;line-height:1.3;margin:0 0 14px;letter-spacing:-.01em;
+  display:flex;gap:14px;align-items:baseline;
+}
+section.concept h3 .n{
+  font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--ink-faint);
+  flex:none;min-width:1.6em;padding-top:.15em;
+}
+p{margin:0 0 16px}
+/* plain-language definition, one per concept */
+.def{
+  background:var(--pen-wash);border-radius:3px;
+  padding:13px 16px;margin:0 0 20px;font-size:1rem;line-height:1.55;
+}
+.def b{
+  display:block;font-family:var(--sans);font-size:.76rem;font-weight:600;
+  color:var(--pen);margin-bottom:2px;
+}
+main p+p{margin-top:-2px}
+.lead-q{font-style:italic;color:var(--pen);font-size:1.06rem;margin:0 0 16px;padding-left:16px;border-left:2px solid var(--pen)}
+.pull{font-style:italic;color:var(--ink-soft);margin:20px 0;padding-left:16px;border-left:2px solid var(--rule)}
+main ul,main ol.plain{padding-left:22px;margin:0 0 16px}
+main li{margin-bottom:5px}
+strong{font-weight:600}
+h4{font-family:var(--sans);font-size:.92rem;font-weight:600;margin:24px 0 10px;color:var(--ink)}
+
+/* math sits on clean paper so the grid never fights the notation */
+mjx-container[display="true"]{
+  background:#fff;border:1px solid var(--rule);border-radius:3px;
+  padding:14px 10px;margin:18px 0 !important;overflow-x:auto;overflow-y:hidden;
+}
+body:not(.math-ready) .mathblock{opacity:.35}
+body.math-ready .mathblock{opacity:1}
+body.math-fallback .mathblock{
+  background:#fff;border:1px solid var(--rule);border-radius:3px;
+  padding:14px 16px;margin:18px 0;overflow-x:auto;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86rem;line-height:1.6;color:var(--ink-soft);
+}
+
+/* ---------- reveal blocks ---------- */
+.reveal{border:1px solid var(--rule);background:#fff;border-radius:3px;margin:22px 0;overflow:hidden}
+.reveal > button{
+  width:100%;text-align:left;background:none;border:0;cursor:pointer;
+  font-family:var(--sans);font-size:.9rem;font-weight:600;color:var(--ink);
+  padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.reveal > button:hover{background:var(--pen-wash)}
+.reveal > button .cue{font-family:var(--sans);font-weight:500;font-size:.8rem;color:var(--pen)}
+.reveal.is-open > button .cue::after{content:" ▴"}
+.reveal:not(.is-open) > button .cue::after{content:" ▾"}
+.reveal .body{display:none}
+.reveal.is-open .body{display:block}
+.reveal .body{padding:2px 18px 16px;border-top:1px solid var(--rule)}
+.reveal .body > *:first-child{margin-top:14px}
+.reveal .body > *:last-child{margin-bottom:0}
+
+/* ---------- problem checkpoints ---------- */
+.problem{
+  background:var(--redpen-wash);border-left:3px solid var(--redpen);
+  padding:22px 24px;margin:28px 0;border-radius:0 3px 3px 0;
+}
+.problem-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:12px}
+.problem-head h4{font-family:var(--sans);font-size:.9rem;font-weight:600;color:var(--redpen);margin:0}
+.problem-head h4 span{display:block;font-family:var(--serif);font-size:1.12rem;font-weight:600;color:var(--ink);margin-top:4px}
+.problem p{font-size:.98rem}
+.problem > *:last-child{margin-bottom:0}
+.done{
+  font-family:var(--sans);font-size:.78rem;color:var(--ink-soft);
+  display:flex;align-items:center;gap:7px;cursor:pointer;flex:none;white-space:nowrap;user-select:none;
+}
+.done input{width:15px;height:15px;accent-color:var(--redpen);cursor:pointer;margin:0}
+.done.is-done{color:var(--redpen);font-weight:500}
+
+/* ---------- quick check ---------- */
+.qc{border:1px solid var(--rule);background:#fff;border-radius:3px;padding:20px 22px;margin:26px 0}
+.qc h4{margin:0 0 4px;color:var(--pen)}
+.qc .stem{font-size:1rem;margin:0 0 14px}
+.qc .opts{display:flex;flex-direction:column;gap:8px}
+.qc button.opt{
+  font-family:var(--sans);font-size:.9rem;text-align:left;background:var(--paper);
+  border:1px solid var(--rule);border-radius:3px;padding:10px 14px;cursor:pointer;color:var(--ink);line-height:1.4;
+}
+.qc button.opt:hover:not(:disabled){border-color:var(--pen);background:var(--pen-wash)}
+.qc button.opt:disabled{cursor:default;opacity:.72}
+.qc button.opt.right{border-color:#1F7A48;background:#EFF8F2;opacity:1;font-weight:500}
+.qc button.opt.wrong{border-color:var(--redpen);background:var(--redpen-wash);opacity:1}
+.qc .verdict{font-family:var(--sans);font-size:.88rem;margin-top:14px;display:none;line-height:1.5}
+.qc .verdict.show{display:block}
+
+/* ---------- concept map ---------- */
+.map{border:1px solid var(--rule);background:#fff;border-radius:3px;padding:26px 24px;margin:30px 0}
+.map h4{margin:0 0 18px;color:var(--ink-faint)}
+.map ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+.map li{font-family:var(--sans);font-size:.92rem;font-weight:500;padding:9px 0;position:relative;padding-left:26px}
+.map li::before{content:"";position:absolute;left:5px;top:0;bottom:0;width:1px;background:var(--rule)}
+.map li:first-child::before{top:50%}
+.map li:last-child::before{bottom:50%}
+.map li::after{content:"";position:absolute;left:2px;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:var(--pen)}
+.map li.split{color:var(--ink-soft)}
+.map .note{font-family:var(--sans);font-size:.82rem;color:var(--ink-soft);margin:14px 0 0}
+
+/* ---------- closing ---------- */
+.closing{border-top:2px solid var(--ink);margin-top:72px;padding-top:32px}
+.closing h2{font-size:1.7rem;margin:0 0 16px;font-weight:700;letter-spacing:-.015em}
+.recap{border-collapse:collapse;width:100%;font-size:.92rem;margin:22px 0}
+.recap th,.recap td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.recap th{font-family:var(--sans);font-size:.78rem;font-weight:600;color:var(--ink-faint)}
+.recap td:first-child{font-family:var(--sans);font-size:.85rem;font-weight:500;white-space:nowrap;width:1%;padding-right:22px}
+
+a{color:var(--pen)}
+:focus-visible{outline:2px solid var(--pen);outline-offset:2px}
+
+@media (max-width:940px){
+  .shell{grid-template-columns:1fr;gap:0}
+  .spine{position:static;border-bottom:1px solid var(--rule);margin-bottom:24px;padding-bottom:22px}
+  .spine ul{display:none}
+  .spine > ol{display:flex;flex-wrap:wrap;gap:8px 20px;padding-left:0}
+  .spine > ol::before{display:none}
+  .spine .part::before{display:none}
+  .spine .part{margin-bottom:0}
+  .hero{padding:56px 22px 40px}
+  .shell{padding:0 22px 80px}
+  body{font-size:17px}
+}
+
+/* ---------- interactive visualizations ---------- */
+.viz{
+  border:1px solid var(--rule); background:#fff; border-radius:4px;
+  margin:28px 0; padding:20px;
+}
+.viz h4{margin:0 0 6px;color:var(--ink)}
+.viz p.viz-intro{font-family:var(--sans);font-size:.86rem;color:var(--ink-soft);margin:0 0 14px}
+.viz-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,.65fr);gap:18px;align-items:start}
+.viz-controls{font-family:var(--sans);font-size:.86rem}
+.viz-controls label{display:block;font-weight:600;margin:10px 0 5px}
+.viz-controls input[type=range]{width:100%}
+.viz-controls .row{display:flex;gap:8px;flex-wrap:wrap}
+.viz-controls button{
+  border:1px solid var(--rule);background:var(--paper);color:var(--ink);
+  border-radius:3px;padding:9px 12px;cursor:pointer;font-family:var(--sans);font-weight:500;
+}
+.viz-controls button:hover{border-color:var(--pen);background:var(--pen-wash)}
+.viz-readout{
+  background:var(--paper);border-left:2px solid var(--pen);padding:10px 12px;
+  font-family:var(--sans);font-size:.82rem;line-height:1.45;margin-top:12px;
+}
+.viz svg{width:100%;height:auto;min-height:250px;display:block;background:#fff;border:1px solid var(--rule)}
+.viz-fallback{display:none;margin:10px 0;padding:10px 12px;border-left:2px solid var(--pen);background:var(--paper);font-family:var(--sans);font-size:.84rem}
+.viz .hint{font-family:var(--sans);font-size:.78rem;color:var(--ink-faint);margin-top:8px}
+.viz .matrix-output{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82rem;
+  background:var(--paper);border:1px solid var(--rule);padding:10px;white-space:pre-wrap;
+}
+@media (max-width:760px){.viz-grid{grid-template-columns:1fr}.viz{padding:14px}}
+
+</style>
+</head>
+<body>
+
+<div id="progress-rail"><div id="progress-fill"></div></div>
+
+<header class="hero">
+  <h1>From complex vector spaces to tensor products</h1>
+  <p class="standfirst">A working lecture built around the 18-problem set. Part 1 is treated as prerequisite core; Parts 2–4 extend it into projections, matrix operators, and Kronecker products. The goal is not to memorise procedures — it is to build <em>one continuous chain of ideas</em>, where each link only makes sense because of the one before it.</p>
+
+  <div class="chain" id="chain">
+    <span>Vectors</span><i>→</i><span>Linear combinations</span><i>→</i><span>Span</span><i>→</i><span>Independence</span><i>→</i><span>Basis</span><i>→</i><span>Inner product</span><i>→</i><span>Orthogonality</span><i>→</i><span>Projection</span><i>→</i><span>Operators</span><i>→</i><span>Eigenvectors</span><i>→</i><span>Spectral decomposition</span><i>→</i><span>Tensor products</span>
+  </div>
+
+  <div class="hero-meta">
+    <a class="startlink" href="#part1">Start with Part 1</a>
+    <span><b>4</b> parts</span>
+    <span><b>50</b> concept steps</span>
+    <span><b>18</b> problem checkpoints</span>
+    <span>Tick each checkpoint as you clear it</span>
+  </div>
+</header>
+
+<div class="shell">
+
+<nav class="spine" aria-label="Contents">
+  <p class="spine-title">Contents</p>
+  <ol>
+    <li class="part" data-part="part1">
+      <a href="#part1">Part 1 · Complex vector spaces and basis</a>
+      <ul>
+        <li><a href="#s2">Real vs. complex</a></li>
+        <li><a href="#s3">Combinations &amp; span</a></li>
+        <li><a href="#s5">Linear independence</a></li>
+        <li><a href="#s6">Basis &amp; dimension</a></li>
+        <li><a href="#s9">Coordinates &amp; change of basis</a></li>
+        <li><a href="#s11">The complex inner product</a></li>
+        <li><a href="#s14">Norm &amp; orthogonality</a></li>
+        <li><a href="#s16">Orthonormality</a></li>
+        <li><a href="#s18">Phase factors</a></li>
+      </ul>
+    </li>
+    <li class="part" data-part="part2">
+      <a href="#part2">Part 2 · Projections</a>
+      <ul>
+        <li><a href="#s19">Projection onto a direction</a></li>
+        <li><a href="#s21">Outer products</a></li>
+        <li><a href="#s24">Idempotence</a></li>
+        <li><a href="#s25">Orthogonal residuals</a></li>
+      </ul>
+    </li>
+    <li class="part" data-part="part3">
+      <a href="#part3">Part 3 · Matrix operators</a>
+      <ul>
+        <li><a href="#s28">Unitary matrices</a></li>
+        <li><a href="#s31">Hermitian matrices</a></li>
+        <li><a href="#s33">Eigenvalues &amp; eigenvectors</a></li>
+        <li><a href="#s36">Spectral decomposition</a></li>
+        <li><a href="#s38">Commutators</a></li>
+      </ul>
+    </li>
+    <li class="part" data-part="part4">
+      <a href="#part4">Part 4 · Tensor products</a>
+      <ul>
+        <li><a href="#s40">Why tensor products</a></li>
+        <li><a href="#s41">Vector Kronecker product</a></li>
+        <li><a href="#s43">Matrix Kronecker product</a></li>
+        <li><a href="#s46">Tensor transformations</a></li>
+        <li><a href="#s48">Unfactorizable vectors</a></li>
+      </ul>
+    </li>
+    <li class="part" data-part="close"><a href="#close">Where this leaves you</a></li>
+  </ol>
+
+  <div class="tracker">
+    <div class="tracker-row">
+      <svg width="42" height="42" viewBox="0 0 42 42" aria-hidden="true">
+        <circle cx="21" cy="21" r="17" fill="none" stroke="#D6DEE9" stroke-width="3"/>
+        <circle id="ring" cx="21" cy="21" r="17" fill="none" stroke="#AE2230" stroke-width="3"
+                stroke-dasharray="106.8" stroke-dashoffset="106.8" stroke-linecap="butt"
+                transform="rotate(-90 21 21)" style="transition:stroke-dashoffset .3s ease"/>
+      </svg>
+      <p class="tracker-text"><b id="tracker-count">0 of 18</b>problem checkpoints cleared</p>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<div class="part-head" id="part1">
+  <span class="pnum">Part 1</span>
+  <h2>Complex vector spaces and basis</h2>
+  <p>The problem set treats this part as prerequisite knowledge. Everything in Parts 2–4 is built directly on top of it, so it is worth being slow here. Problems 1–7 sit inside this part as checkpoints.</p>
+</div>
+
+<section class="concept" id="s1">
+  <h3><span class="n">1</span>The big picture</h3>
+  <p class="def"><b>Vector space</b>A collection of things you can add together and stretch by numbers, where the results always stay inside the collection.</p>
+  <p>Before working with projections, unitary matrices, or tensor products, we need to understand what a vector space actually gives us. It provides two basic operations: you can add vectors, and you can multiply vectors by scalars.</p>
+  <p>For example,</p>
+  <div class="mathblock">\[ v=\begin{bmatrix}1\\2\\3\end{bmatrix}, \qquad w=\begin{bmatrix}2\\0\\1\end{bmatrix} \]</div>
+  <p>can be added,</p>
+  <div class="mathblock">\[ v+w=\begin{bmatrix}3\\2\\4\end{bmatrix}, \]</div>
+  <p>and \(v\) can be scaled,</p>
+  <div class="mathblock">\[ 3v=\begin{bmatrix}3\\6\\9\end{bmatrix}. \]</div>
+  <p class="lead-q">What changes when the scalars are complex numbers instead of real ones?</p>
+  <p>That is where this problem set begins.</p>
+</section>
+
+<section class="concept" id="s2">
+  <h3><span class="n">2</span>Real vs. complex vector spaces</h3>
+  <p class="def"><b>Complex vector space</b>A vector space where the stretching numbers are allowed to be complex, so they can rotate a vector as well as resize it.</p>
+  <p>In a real vector space the scalars come from \(\mathbb R\). In a complex vector space they come from \(\mathbb C\), where a complex number has the form \(z=a+ib\) with \(i^2=-1\).</p>
+  <p>So a vector in \(\mathbb C^3\) might look like</p>
+  <div class="mathblock">\[ v=\begin{bmatrix}1\\2+i\\-3i\end{bmatrix}. \]</div>
+  <p>The vector itself is not necessarily complex-valued in every coordinate — its coordinates are simply <em>allowed</em> to be complex. That distinction becomes extremely important once we define inner products.</p>
+
+  <div class="reveal">
+    <button type="button">Think about it — can we multiply \(v=[1,\;i]^T\) by \(2+i\)?<span class="cue">Reveal</span></button>
+    <div class="body">
+      <p>Yes. Complex scalars are exactly what \(\mathbb C^2\) permits.</p>
+      <div class="mathblock">\[ (2+i)v=\begin{bmatrix}2+i\\(2+i)i\end{bmatrix} \]</div>
+      <p>The second coordinate becomes \((2+i)i=2i+i^2=-1+2i\), so</p>
+      <div class="mathblock">\[ (2+i)v=\begin{bmatrix}2+i\\-1+2i\end{bmatrix}. \]</div>
+      <p>Perfectly valid.</p>
+    </div>
+  </div>
+</section>
+
+<section class="concept" id="s3">
+  <h3><span class="n">3</span>Linear combinations</h3>
+  <p class="def"><b>Linear combination</b>What you get by stretching some vectors by chosen amounts and adding the results together.</p>
+  <p class="lead-q">What vectors can I construct from the ones I have?</p>
+  <p>The answer is described by linear combinations. Given vectors \(v_1,v_2,\ldots,v_k\), a linear combination is</p>
+  <div class="mathblock">\[ c_1v_1+c_2v_2+\cdots+c_kv_k, \]</div>
+  <p>where the \(c_i\) are scalars. In a complex vector space those scalars can be complex, so \(2v_1+(1+i)v_2\) is a perfectly valid linear combination of \(v_1\) and \(v_2\).</p>
+</section>
+
+<section class="concept" id="s4">
+  <h3><span class="n">4</span>Span</h3>
+  <p class="def"><b>Span</b>Every vector you could possibly build from a given set — the full reach of those directions.</p>
+  <p>The span of a set of vectors is the collection of every vector that can be produced by their linear combinations:</p>
+  <div class="mathblock">\[ \operatorname{span}\{v_1,v_2\}=\{c_1v_1+c_2v_2:c_1,c_2\in\mathbb C\}. \]</div>
+  <p>So a linear combination is one particular construction, while the span is <em>all possible</em> constructions.</p>
+  <h4>Simple example</h4>
+  <p>Let \(v_1=[1,\,0]^T\) and \(v_2=[0,\,1]^T\). Then</p>
+  <div class="mathblock">\[ c_1v_1+c_2v_2=\begin{bmatrix}c_1\\c_2\end{bmatrix}, \qquad\text{so}\qquad \operatorname{span}\{v_1,v_2\}=\mathbb C^2. \]</div>
+  <p>These two vectors can generate every vector in \(\mathbb C^2\).</p>
+
+<div class="viz" id="viz-span">
+  <h4>Explore span in 2D</h4>
+  <p class="viz-intro">Drag the sliders to change the coefficients. The red point is the linear combination \(c_1v_1+c_2v_2\).</p>
+  <div class="viz-grid">
+    <svg id="span-svg" viewBox="0 0 520 330" role="img" aria-label="Interactive 2D visualization of a linear combination"></svg>
+    <div class="viz-controls">
+      <label for="span-c1">\(c_1\): <output id="span-c1-out">1.0</output></label>
+      <input id="span-c1" type="range" min="-2" max="2" step=".1" value="1">
+      <label for="span-c2">\(c_2\): <output id="span-c2-out">0.5</output></label>
+      <input id="span-c2" type="range" min="-2" max="2" step=".1" value=".5">
+      <div class="viz-readout" id="span-readout"></div>
+      <p class="hint">Try setting both coefficients to 0, then make one negative.</p>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<section class="concept" id="s5">
+  <h3><span class="n">5</span>Linear independence</h3>
+  <p class="def"><b>Linear independence</b>A set is independent when none of its vectors can be built from the others. Nothing in it is repeated information.</p>
+  <p class="lead-q">Are any of the vectors redundant?</p>
+  <p>A set \(\{v_1,\ldots,v_k\}\) is linearly independent if</p>
+  <div class="mathblock">\[ c_1v_1+\cdots+c_kv_k=0 \]</div>
+  <p>has only the trivial solution \(c_1=c_2=\cdots=c_k=0\). If a non-zero solution exists, the vectors are linearly dependent.</p>
+  <h4>Intuition</h4>
+  <p>Imagine three directions. If one of them can already be produced from the other two, it is redundant. For instance if \(v_3=2v_1-3v_2\), then \(2v_1-3v_2-v_3=0\) — the coefficients are not all zero, so the set is dependent.</p>
+  <h4>Testing independence</h4>
+  <p>Start with \(c_1v_1+c_2v_2+c_3v_3=0\), write the resulting equations coordinate by coordinate, and solve for the coefficients. Only zero coefficients possible means independent; a non-zero solution means dependent.</p>
+
+  <div class="problem" id="p1">
+    <div class="problem-head">
+      <h4>Problem 1<span>Linear independence in \(\mathbb C^3\)</span></h4>
+      <label class="done"><input type="checkbox" data-prob="1"> Cleared</label>
+    </div>
+    <p>The problem set gives</p>
+    <div class="mathblock">\[ v_1=\begin{bmatrix}1\\0\\1\end{bmatrix},\quad v_2=\begin{bmatrix}0\\1\\i\end{bmatrix},\quad v_3=\begin{bmatrix}1\\i\\0\end{bmatrix} \]</div>
+    <p>and asks you to determine independence — and, if dependent, to express one vector using the other two with complex scalars.</p>
+    <p><strong>What you should recognise.</strong> Write \(c_1v_1+c_2v_2+c_3v_3=0\) immediately, then solve the resulting complex system. Do not assume the coefficients must be real.</p>
+  </div>
+
+  <div class="reveal" data-reveal>
+    <button type="button">Common mistake worth naming<span class="cue">Reveal</span></button>
+    <div class="body">
+      <p>Seeing an \(i\) inside a vector does not mean you need a completely new method. The definition of independence is still</p>
+      <div class="mathblock">\[ \sum_i c_iv_i=0. \]</div>
+      <p>The only difference is that now \(c_i\in\mathbb C\).</p>
+    </div>
+  </div>
+</section>
+
+<section class="concept" id="s6">
+  <h3><span class="n">6</span>Basis</h3>
+  <p class="def"><b>Basis</b>A smallest set of directions that still reaches everywhere in the space: enough to build anything, with nothing spare.</p>
+  <p>We now have three ideas in sequence: linear combinations, then span, then independence. A basis combines the last two. A set is a basis for a vector space if it spans the space <em>and</em> is linearly independent.</p>
+  <p class="pull">A basis gives you enough directions to construct everything, and no unnecessary directions.</p>
+</section>
+
+<section class="concept" id="s7">
+  <h3><span class="n">7</span>Dimension</h3>
+  <p class="def"><b>Dimension</b>How many directions a basis needs — the number of independent choices the space gives you.</p>
+  <p>The number of vectors in a basis is the dimension of the vector space. So \(\dim(\mathbb R^3)=3\), meaning any basis of \(\mathbb R^3\) contains exactly three linearly independent vectors. Similarly \(\dim(\mathbb C^2)=2\).</p>
+</section>
+
+<section class="concept" id="s8">
+  <h3><span class="n">8</span>Extending a set to a basis</h3>
+  <p class="def"><b>Extending to a basis</b>Adding new directions to a starting set until it reaches the whole space, without any of them repeating what you already have.</p>
+  <p>Suppose you are given \(v_1=[1,\,2,\,3]^T\in\mathbb R^3\) and need two more vectors. The goal is not to find special vectors. You simply need vectors that are not redundant with \(v_1\), and that together span \(\mathbb R^3\). The easiest choice is often to reach for standard basis vectors.</p>
+
+  <div class="problem" id="p2">
+    <div class="problem-head">
+      <h4>Problem 2<span>Extending to a basis</span></h4>
+      <label class="done"><input type="checkbox" data-prob="2"> Cleared</label>
+    </div>
+    <p>Find \(v_2,v_3\) so that \(\{v_1,v_2,v_3\}\) forms a basis for \(\mathbb R^3\).</p>
+    <p><strong>What you should recognise.</strong> You already know that basis = independent + spanning. Since three independent vectors in \(\mathbb R^3\) automatically form a basis, the practical task reduces to choosing two vectors that preserve independence.</p>
+  </div>
+</section>
+
+<section class="concept" id="s9">
+  <h3><span class="n">9</span>Coordinates with respect to a basis</h3>
+  <p class="def"><b>Coordinates</b>The amounts of each basis direction you need in order to build a given vector.</p>
+  <p>The standard basis is familiar: \(e_1=[1,\,0]^T\) and \(e_2=[0,\,1]^T\). If \(v=[3,\,2]^T\), then \(v=3e_1+2e_2\) and therefore</p>
+  <div class="mathblock">\[ [v]_E=\begin{bmatrix}3\\2\end{bmatrix}. \]</div>
+  <p>But the vector itself and its coordinates with respect to a basis are conceptually different things. That difference is easy to miss precisely because the standard basis makes them look identical.</p>
+</section>
+
+<section class="concept" id="s10">
+  <h3><span class="n">10</span>Change of basis</h3>
+  <p class="def"><b>Change of basis</b>Re-describing the same vector using a different set of reference directions. The vector does not move; only the numbers describing it do.</p>
+  <p>Suppose \(B=\{b_1,b_2\}\) is another basis. The same vector \(v\) can have completely different coordinates in \(B\). For the problem-set basis,</p>
+  <div class="mathblock">\[ b_1=\frac1{\sqrt2}\begin{bmatrix}1\\1\end{bmatrix},\qquad b_2=\frac1{\sqrt2}\begin{bmatrix}1\\-1\end{bmatrix}. \]</div>
+  <p>We want to express \(v=[1,\,0]^T\) as \(v=c_1b_1+c_2b_2\). Substituting,</p>
+  <div class="mathblock">\[ \begin{bmatrix}1\\0\end{bmatrix} = c_1\frac1{\sqrt2}\begin{bmatrix}1\\1\end{bmatrix} + c_2\frac1{\sqrt2}\begin{bmatrix}1\\-1\end{bmatrix}, \]</div>
+  <p>which produces two equations for \(c_1,c_2\).</p>
+  <h4>Why this matters</h4>
+  <p>The physical vector has not changed. Only its description has changed. Think of it as describing the same location using two different coordinate systems.</p>
+
+  <div class="problem" id="p3">
+    <div class="problem-head">
+      <h4>Problem 3<span>Change of basis</span></h4>
+      <label class="done"><input type="checkbox" data-prob="3"> Cleared</label>
+    </div>
+    <p>Find the coordinates of \([1,\,0]^T\) in the new orthonormal basis \(B\).</p>
+    <p>Because \(B\) is orthonormal, there is an easier method that we are about to derive:</p>
+    <div class="mathblock">\[ \boxed{c_i=b_i^*v}. \]</div>
+    <p>This is our first hint that inner products and basis coordinates are connected.</p>
+  </div>
+</section>
+
+<section class="concept" id="s11">
+  <h3><span class="n">11</span>The complex inner product</h3>
+  <p class="def"><b>Inner product</b>A way of multiplying two vectors into a single number that measures how much they overlap. For complex vectors, the first one is conjugated first.</p>
+  <p>Here we reach one of the most important differences between real and complex vector spaces. For real vectors we commonly use \(u^Tv\). For complex vectors we instead use the conjugate transpose:</p>
+  <div class="mathblock">\[ \boxed{u^*v}. \]</div>
+  <p>Here \(u^*\) means: transpose \(u\), then complex-conjugate every entry.</p>
+
+<div class="viz" id="viz-inner">
+  <h4>Why conjugation matters</h4>
+  <p class="viz-intro">Compare \(u^Tu\) and \(u^*u\) for \(u=[1,\;ri]^T\). The conjugate transpose turns the imaginary component into a positive contribution to squared length.</p>
+  <div class="viz-grid">
+    <svg id="inner-svg" viewBox="0 0 520 250" role="img" aria-label="Comparison of transpose and conjugate transpose"></svg>
+    <div class="viz-fallback" id="inner-fallback">Interactive drawing unavailable in this viewer. The numerical comparison is shown in the panel on the right.</div>
+    <div class="viz-controls">
+      <label for="inner-r">Imaginary magnitude \(r\): <output id="inner-r-out">1.0</output></label>
+      <input id="inner-r" type="range" min="0" max="2" step=".1" value="1">
+      <div class="viz-readout" id="inner-readout"></div>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<section class="concept" id="s12">
+  <h3><span class="n">12</span>Transpose vs. conjugate transpose</h3>
+  <p class="def"><b>Conjugate transpose</b>Turning a column into a row and also flipping the sign of every imaginary part. Written with a star.</p>
+  <p>Take \(u=[1,\,i]^T\). The ordinary transpose is</p>
+  <div class="mathblock">\[ u^T=\begin{bmatrix}1&amp;i\end{bmatrix}, \]</div>
+  <p>but the conjugate transpose is</p>
+  <div class="mathblock">\[ u^*=\begin{bmatrix}1&amp;-i\end{bmatrix}, \]</div>
+  <p>because \(\overline{i}=-i\). One character of difference on paper; a completely different object in practice.</p>
+</section>
+
+<section class="concept" id="s13">
+  <h3><span class="n">13</span>Why can't we use \(u^Tu\)?</h3>
+  <p class="def"><b>Squared length</b>A number saying how long a vector is, squared. It must always be real, never negative, and zero only for the zero vector.</p>
+  <p>Compute it and watch it fail:</p>
+  <div class="mathblock">\[ u^Tu=\begin{bmatrix}1&amp;i\end{bmatrix}\begin{bmatrix}1\\i\end{bmatrix}=1+i^2=0. \]</div>
+  <p>But \(u\neq0\). So this cannot represent a squared length. Now use the conjugate transpose instead:</p>
+  <div class="mathblock">\[ u^*u=\begin{bmatrix}1&amp;-i\end{bmatrix}\begin{bmatrix}1\\i\end{bmatrix}=1+(-i)i=1+1=2, \]</div>
+  <p>and hence \(\|u\|=\sqrt2\). That is exactly what we want.</p>
+  <h4>Key principle</h4>
+  <div class="mathblock">\[ \boxed{\|u\|^2=u^*u} \]</div>
+  <p>Why? Because \(u^*u=|u_1|^2+\cdots+|u_n|^2\), which is always real and non-negative.</p>
+
+  <div class="qc" data-answer="b">
+    <h4>Quick check</h4>
+    <p class="stem">For \(u=[1,\,i]^T\), which statement is true?</p>
+    <div class="opts">
+      <button class="opt" type="button" data-key="a">Both \(u^Tu\) and \(u^*u\) equal 2</button>
+      <button class="opt" type="button" data-key="b">\(u^Tu=0\) while \(u^*u=2\)</button>
+      <button class="opt" type="button" data-key="c">\(u^Tu=2\) while \(u^*u=0\)</button>
+      <button class="opt" type="button" data-key="d">Neither is real, so neither can be a norm</button>
+    </div>
+    <p class="verdict" data-right="Right. The transpose gives \(1+i^2=0\) for a non-zero vector — which is why it cannot define length. The conjugate transpose gives \(1+(-i)i=2\)." data-wrong="Not quite. The transpose gives \(1+i^2=0\) even though \(u\neq0\); the conjugate transpose gives \(1+(-i)i=2\). The conjugation is what rescues the notion of length."></p>
+  </div>
+
+  <div class="problem" id="p4">
+    <div class="problem-head">
+      <h4>Problem 4<span>Complex inner product and norms</span></h4>
+      <label class="done"><input type="checkbox" data-prob="4"> Cleared</label>
+    </div>
+    <p>Compare \(u^Tu\) with \(u^*u\), and explain why the second is required to define squared length in a complex vector space.</p>
+    <p><strong>The conceptual lesson.</strong> The conjugation is not an arbitrary convention. It is what makes the squared norm behave like a genuine squared length.</p>
+  </div>
+</section>
+
+<section class="concept" id="s14">
+  <h3><span class="n">14</span>Norm</h3>
+  <p class="def"><b>Norm</b>The length of a vector: the square root of the sum of the squared sizes of its entries.</p>
+  <p>The norm of \(u\) is</p>
+  <div class="mathblock">\[ \boxed{\|u\|=\sqrt{u^*u}}. \]</div>
+  <p>For \(u=[z_1,\,z_2]^T\) we get \(\|u\|^2=|z_1|^2+|z_2|^2\). Therefore \(\|u\|\geq0\), and \(\|u\|=0\) only when \(u=0\) — the two properties any honest notion of length must have.</p>
+</section>
+
+<section class="concept" id="s15">
+  <h3><span class="n">15</span>Complex orthogonality</h3>
+  <p class="def"><b>Orthogonal</b>Two vectors are orthogonal when their inner product is zero, meaning they share no overlap at all. It is the general version of being at right angles.</p>
+  <p>Two vectors are orthogonal if their inner product is zero:</p>
+  <div class="mathblock">\[ \boxed{u^*v=0}. \]</div>
+  <p>This generalises the familiar right-angle idea from real geometry.</p>
+
+  <div class="problem" id="p5">
+    <div class="problem-head">
+      <h4>Problem 5<span>Complex orthogonality</span></h4>
+      <label class="done"><input type="checkbox" data-prob="5"> Cleared</label>
+    </div>
+    <p>Given \(x=[1,\,i]^T\) and \(y=[1,\,-i]^T\), determine whether \(x^*y=0\).</p>
+    <p>The important part is not merely calculating the product. The recognition being tested is</p>
+    <div class="mathblock">\[ \boxed{x\perp y\iff x^*y=0}. \]</div>
+  </div>
+</section>
+
+<section class="concept" id="s16">
+  <h3><span class="n">16</span>Orthonormality</h3>
+  <p class="def"><b>Orthonormal</b>A set of vectors that are all at right angles to each other and each of length exactly 1.</p>
+  <p>Two vectors are orthonormal if they are orthogonal <em>and</em> each have norm 1. Compactly,</p>
+  <div class="mathblock">\[ u_i^*u_j=\begin{cases}1&amp;i=j\\0&amp;i\neq j.\end{cases} \]</div>
+</section>
+
+<section class="concept" id="s17">
+  <h3><span class="n">17</span>Completing an orthonormal basis</h3>
+  <p class="def"><b>Completing a basis</b>Finding the missing directions that are perpendicular to everything you already have, then shrinking each to length 1.</p>
+  <p>Suppose you already have two orthonormal vectors in \(\mathbb C^3\):</p>
+  <div class="mathblock">\[ u_1=\frac1{\sqrt2}\begin{bmatrix}1\\0\\i\end{bmatrix},\qquad u_2=\begin{bmatrix}0\\1\\0\end{bmatrix}. \]</div>
+  <p>We want \(u_3\) satisfying \(u_1^*u_3=0\), \(u_2^*u_3=0\), and \(u_3^*u_3=1\). That is a system of constraints.</p>
+  <h4>A useful strategy</h4>
+  <p>Because \(u_2=[0,\,1,\,0]^T\), orthogonality with \(u_2\) immediately forces the second coordinate of \(u_3\) to be zero. Then use orthogonality with \(u_1\) to determine the relationship between the remaining coordinates. Finally, normalise.</p>
+
+  <div class="problem" id="p6">
+    <div class="problem-head">
+      <h4>Problem 6<span>Completing an orthonormal basis</span></h4>
+      <label class="done"><input type="checkbox" data-prob="6"> Cleared</label>
+    </div>
+    <p>Verify that \(u_1,u_2\) are orthonormal, then construct \(u_3\) so that \(\{u_1,u_2,u_3\}\) is an orthonormal basis for \(\mathbb C^3\).</p>
+    <p>This one problem combines almost everything so far: inner product, norm, orthogonality, and basis.</p>
+  </div>
+</section>
+
+<section class="concept" id="s18">
+  <h3><span class="n">18</span>Phase factors</h3>
+  <p class="def"><b>Phase factor</b>A complex number whose size is exactly 1. Multiplying by it turns a vector without changing its length.</p>
+  <p>Complex numbers introduce an interesting phenomenon. Consider \(e^{i\theta}\). Euler's formula gives \(e^{i\theta}=\cos\theta+i\sin\theta\), and its magnitude is always \(|e^{i\theta}|=1\). So multiplying a vector by \(e^{i\theta}\) changes its phase but not its norm.</p>
+  <p>Indeed, \(\|e^{i\theta}v\|^2=(e^{i\theta}v)^*(e^{i\theta}v)\), and since \((e^{i\theta})^*=e^{-i\theta}\),</p>
+  <div class="mathblock">\[ e^{-i\theta}e^{i\theta}v^*v=v^*v, \qquad\text{hence}\qquad \boxed{\|e^{i\theta}v\|=\|v\|}. \]</div>
+
+  <div class="problem" id="p7">
+    <div class="problem-head">
+      <h4>Problem 7<span>Linear combinations and phase</span></h4>
+      <label class="done"><input type="checkbox" data-prob="7"> Cleared</label>
+    </div>
+    <p>With \(v,w\) the standard basis vectors and</p>
+    <div class="mathblock">\[ x=\frac1{\sqrt2}v+\frac{e^{i\pi/4}}{\sqrt2}w, \]</div>
+    <p>prove that \(x\) is a unit vector.</p>
+    <p><strong>The important idea.</strong> The phase factor \(e^{i\pi/4}\) has magnitude 1, so it does not change the magnitude of that component.</p>
+  </div>
+
+  <div class="map">
+    <h4>Part 1 concept map</h4>
+    <ol>
+      <li>Linear combination</li>
+      <li>Span</li>
+      <li>Linear independence</li>
+      <li>Basis + dimension</li>
+      <li>Coordinates / change of basis</li>
+      <li>Inner product</li>
+      <li>Norm</li>
+      <li>Orthogonality</li>
+      <li>Orthonormal basis</li>
+      <li>Phase</li>
+    </ol>
+    <p class="note">These ideas provide the foundation for everything that follows.</p>
+  </div>
+</section>
+
+<div class="part-head" id="part2">
+  <span class="pnum">Part 2</span>
+  <h2>Projections and orthogonal subspaces</h2>
+  <p>The next question: given a vector \(v\), how much of it points in a particular direction? That is the problem of projection — and it is where a geometric idea first turns into a matrix.</p>
+</div>
+
+<section class="concept" id="s19">
+  <h3><span class="n">19</span>Projection onto a direction</h3>
+  <p class="def"><b>Projection</b>The shadow one vector casts on a chosen direction — the part of it that points that way.</p>
+  <p>Suppose \(u\) is a unit vector. Given another vector \(v\), we want the component of \(v\) pointing along \(u\). The answer is</p>
+  <div class="mathblock">\[ \boxed{\operatorname{proj}_u(v)=u(u^*v)}. \]</div>
+  <p>Notice the order. \(u^*v\) is a scalar; then \(u(u^*v)\) is a vector.</p>
+  <h4>Why this works</h4>
+  <p>The inner product \(u^*v\) measures how strongly \(v\) aligns with \(u\). Multiplying by \(u\) converts that scalar amount back into a vector pointing along \(u\). So a projection is a direction multiplied by the amount along that direction.</p>
+
+<div class="viz" id="viz-projection">
+  <h4>See a projection happen</h4>
+  <p class="viz-intro">Move \(v\) and watch its projected component \(p\) and residual \(r=v-p\). The residual is perpendicular to the projection direction.</p>
+  <div class="viz-grid">
+    <svg id="proj-svg" viewBox="0 0 520 360" role="img" aria-label="Interactive vector projection visualization"></svg>
+    <div class="viz-controls">
+      <label for="proj-x">\(v_x\): <output id="proj-x-out">2.0</output></label>
+      <input id="proj-x" type="range" min="-3" max="3" step=".1" value="2">
+      <label for="proj-y">\(v_y\): <output id="proj-y-out">2.5</output></label>
+      <input id="proj-y" type="range" min="-3" max="3" step=".1" value="2.5">
+      <div class="viz-readout" id="proj-readout"></div>
+      <p class="hint">The fixed direction is \(u=(1,1)/\sqrt2\), matching Problems 8–10.</p>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<section class="concept" id="s20">
+  <h3><span class="n">20</span>The general projection formula</h3>
+  <p class="def"><b>General projection</b>The same shadow, corrected for the case where the direction is not already length 1, by dividing out its squared length.</p>
+  <p>If \(u\) is not normalised, then</p>
+  <div class="mathblock">\[ \boxed{\operatorname{proj}_u(v)=u\frac{u^*v}{u^*u}} \]</div>
+  <p>because \(u^*u=\|u\|^2\). If \(u\) is a unit vector then \(u^*u=1\) and the formula simplifies back to \(\operatorname{proj}_u(v)=u(u^*v)\).</p>
+  <p>This is worth stating explicitly every time you use the short form: it is the general formula with the assumption \(\|u\|=1\) already substituted in.</p>
+</section>
+
+<section class="concept" id="s21">
+  <h3><span class="n">21</span>Outer products</h3>
+  <p class="def"><b>Outer product</b>Multiplying a column by a row, which produces a whole matrix rather than a single number.</p>
+  <p>The expression \(uu^*\) is a matrix. It is called an outer product. If \(u\) is a unit vector, define</p>
+  <div class="mathblock">\[ \boxed{P=uu^*}. \]</div>
+  <p>Then \(Pv=uu^*v=u(u^*v)\), and therefore</p>
+  <div class="mathblock">\[ \boxed{Pv=\operatorname{proj}_u(v)}. \]</div>
+  <p class="pull">A geometric operation has become a matrix operator. Nothing new was assumed — the same expression was simply re-bracketed.</p>
+
+  <div class="qc" data-answer="c">
+    <h4>Quick check</h4>
+    <p class="stem">Same two vectors, opposite order. What are \(u^*v\) and \(uv^*\)?</p>
+    <div class="opts">
+      <button class="opt" type="button" data-key="a">Both are scalars</button>
+      <button class="opt" type="button" data-key="b">Both are matrices</button>
+      <button class="opt" type="button" data-key="c">\(u^*v\) is a scalar; \(uv^*\) is a matrix</button>
+      <button class="opt" type="button" data-key="d">\(u^*v\) is a matrix; \(uv^*\) is a scalar</button>
+    </div>
+    <p class="verdict" data-right="Right — and the shapes tell you so directly: \((1\times n)(n\times 1)\) collapses to a number, while \((n\times 1)(1\times n)\) expands to an \(n\times n\) matrix." data-wrong="Check the shapes: \((1\times n)(n\times 1)=1\times1\), a scalar, while \((n\times 1)(1\times n)=n\times n\), a matrix. Confusing these two is the single most common slip in Parts 2 and 3."></p>
+  </div>
+</section>
+
+<section class="concept" id="s22">
+  <h3><span class="n">22</span>Building the projection matrix</h3>
+  <p class="def"><b>Projection matrix</b>A single matrix that casts the shadow for you: feed it any vector and it hands back the projected part.</p>
+  <div class="problem" id="p8">
+    <div class="problem-head">
+      <h4>Problem 8<span>Outer products as projection matrices</span></h4>
+      <label class="done"><input type="checkbox" data-prob="8"> Cleared</label>
+    </div>
+    <p>Given \(u=\frac1{\sqrt2}[1,\,1]^T\), compute \(P=uu^*\) and apply \(P\) to \(v=[1,\,0]^T\).</p>
+    <p>The conceptual pattern is a short pipeline:</p>
+    <div class="mathblock">\[ u \;\longrightarrow\; uu^* \;\longrightarrow\; P \;\longrightarrow\; Pv. \]</div>
+  </div>
+</section>
+
+<section class="concept" id="s23">
+  <h3><span class="n">23</span>Projection matrices</h3>
+  <p class="def"><b>Applying a projector</b>Running a vector through the projection matrix keeps whatever part of it lies along the chosen direction and discards the rest.</p>
+  <p>For our particular \(u=\frac1{\sqrt2}[1,\,1]^T\), the conjugate transpose is \(u^*=\frac1{\sqrt2}\begin{bmatrix}1&amp;1\end{bmatrix}\). Therefore</p>
+  <div class="mathblock">\[ P=uu^*=\frac12\begin{bmatrix}1&amp;1\\1&amp;1\end{bmatrix}. \]</div>
+  <p>Applying \(P\) to a vector extracts its component along the direction \([1,\,1]^T\).</p>
+</section>
+
+<section class="concept" id="s24">
+  <h3><span class="n">24</span>Why \(P^2=P\)?</h3>
+  <p class="def"><b>Idempotent</b>An operation that changes nothing further when you apply it a second time.</p>
+  <p>This property is called idempotence. Start with \(P=uu^*\) and assume \(u\) is normalised. Then</p>
+  <div class="mathblock">\[ P^2=(uu^*)(uu^*)=u(u^*u)u^*. \]</div>
+  <p>Because \(u^*u=1\), we get \(P^2=uu^*=P\), that is</p>
+  <div class="mathblock">\[ \boxed{P^2=P}. \]</div>
+  <h4>Geometric meaning</h4>
+  <p>Suppose you project \(v\) onto a line. After the first projection the result is already on that line, so projecting again does nothing: \(P(Pv)=Pv\), and algebraically \(P^2v=Pv\).</p>
+
+  <div class="reveal" data-reveal>
+    <button type="button">Predict before calculating — what is \(P^{100}v\)?<span class="cue">Reveal</span></button>
+    <div class="body">
+      <p>It is simply \(Pv\). By induction from \(P^2=P\), every power satisfies \(P^n=P\) for \(n\geq1\). Once the shadow has been cast, casting it again changes nothing — and note the tempting wrong answer, \(100\,Pv\), which would treat projection as something that accumulates.</p>
+    </div>
+  </div>
+
+  <div class="problem" id="p9">
+    <div class="problem-head">
+      <h4>Problem 9<span>Properties of projectors (idempotence)</span></h4>
+      <label class="done"><input type="checkbox" data-prob="9"> Cleared</label>
+    </div>
+    <p>Show that \(P^2=P\) for the matrix built in Problem 8, and interpret what this means when the projection is applied repeatedly.</p>
+    <p><strong>The key interpretation.</strong> A projection has already done its job after one application.</p>
+  </div>
+</section>
+
+<section class="concept" id="s25">
+  <h3><span class="n">25</span>Orthogonal residuals</h3>
+  <p class="def"><b>Residual</b>What is left of a vector once its shadow is removed — the part the chosen direction could not see.</p>
+  <p>Projection does not usually reconstruct the original vector. Instead it splits it in two:</p>
+  <div class="mathblock">\[ v=\underbrace{Pv}_{\text{projection}}+\underbrace{(v-Pv)}_{\text{residual}}. \]</div>
+  <p>Define \(\boxed{r=v-p}\). The residual represents the part of \(v\) that lies outside the projection direction, and for an orthogonal projection</p>
+  <div class="mathblock">\[ \boxed{u^*r=0}. \]</div>
+  <p>So the residual is perpendicular to the projected direction.</p>
+</section>
+
+<section class="concept" id="s26">
+  <h3><span class="n">26</span>Why is the residual orthogonal?</h3>
+  <p class="def"><b>Orthogonal residual</b>The leftover always sits at right angles to the direction you projected onto, because anything pointing along it was already taken away.</p>
+  <p>Suppose \(p=u(u^*v)\), so that \(r=v-p\). Compute:</p>
+  <div class="mathblock">\[ u^*r=u^*\bigl(v-u(u^*v)\bigr) = u^*v-(u^*u)(u^*v). \]</div>
+  <p>For a unit vector \(u^*u=1\), and therefore \(u^*r=0\). Notice exactly where normalisation was used — it is the same step that made \(P^2=P\) work.</p>
+
+  <div class="problem" id="p10">
+    <div class="problem-head">
+      <h4>Problem 10<span>Orthogonal residuals</span></h4>
+      <label class="done"><input type="checkbox" data-prob="10"> Cleared</label>
+    </div>
+    <p>Using the vector and projection from Problem 8, compute the residual and prove that \(u^*r=0\).</p>
+    <p>This completes the geometric story:</p>
+    <div class="mathblock">\[ \boxed{v=\text{parallel component}+\text{orthogonal component}} \]</div>
+  </div>
+
+  <div class="map">
+    <h4>Part 2 concept map</h4>
+    <ol>
+      <li>Inner product</li>
+      <li>Alignment / projection</li>
+      <li>Outer product \(uu^*\)</li>
+      <li>Projection matrix</li>
+      <li>\(P^2=P\)</li>
+      <li>Projected component + orthogonal residual</li>
+    </ol>
+  </div>
+</section>
+
+<div class="part-head" id="part3">
+  <span class="pnum">Part 3</span>
+  <h2>Matrix operators</h2>
+  <p>We now move from one specific operation — projection — to matrices as general operators, and ask which of them preserve geometric structure.</p>
+</div>
+
+<section class="concept" id="s27">
+  <h3><span class="n">27</span>Matrices as linear operators</h3>
+  <p class="def"><b>Linear operator</b>A matrix seen as a machine: put a vector in, get a transformed vector out.</p>
+  <p>A matrix \(A\) takes an input vector \(x\) and produces \(Ax\). So we can think of \(A:\mathbf x\mapsto A\mathbf x\) as a transformation. A matrix might rotate vectors, reflect them, stretch them, compress them, project them, or combine several of these effects.</p>
+  <p class="lead-q">Which matrices preserve geometric properties?</p>
+</section>
+
+<section class="concept" id="s28">
+  <h3><span class="n">28</span>Unitary matrices</h3>
+  <p class="def"><b>Unitary matrix</b>A matrix that moves vectors around without changing any lengths — a rotation or reflection of the whole space.</p>
+  <p>In real linear algebra, orthogonal matrices preserve lengths. In complex vector spaces the corresponding concept is a unitary matrix. A matrix \(U\) is unitary if</p>
+  <div class="mathblock">\[ \boxed{U^*U=I}, \qquad\text{equivalently}\qquad U^{-1}=U^*. \]</div>
+</section>
+
+<section class="concept" id="s29">
+  <h3><span class="n">29</span>Why does unitary mean norm-preserving?</h3>
+  <p class="def"><b>Norm preservation</b>Every vector comes out of the transformation exactly as long as it went in.</p>
+  <p>Take any vector \(x\). The squared norm after transformation is \(\|Ux\|^2=(Ux)^*(Ux)\). Using \((Ux)^*=x^*U^*\),</p>
+  <div class="mathblock">\[ \|Ux\|^2=x^*U^*Ux. \]</div>
+  <p>If \(U\) is unitary then \(U^*U=I\), so</p>
+  <div class="mathblock">\[ \|Ux\|^2=x^*Ix=x^*x, \qquad\text{hence}\qquad \boxed{\|Ux\|=\|x\|}. \]</div>
+  <p>The algebraic condition \(U^*U=I\) therefore has a purely geometric meaning: the transformation preserves length. It is not an arbitrary definition — it is precisely the condition that makes the middle of that chain collapse.</p>
+</section>
+
+<section class="concept" id="s30">
+  <h3><span class="n">30</span>Unitarity in practice</h3>
+  <p class="def"><b>Checking unitarity</b>Multiply the matrix by its own conjugate transpose. If you get the identity, it is unitary.</p>
+  <div class="problem" id="p11">
+    <div class="problem-head">
+      <h4>Problem 11<span>Unitary matrices and norm preservation</span></h4>
+      <label class="done"><input type="checkbox" data-prob="11"> Cleared</label>
+    </div>
+    <p>For \(U=\frac1{\sqrt2}\begin{bmatrix}1&amp;1\\1&amp;-1\end{bmatrix}\), prove that \(U^*U=I\), then prove norm preservation for an arbitrary \(x=[c_1,\,c_2]^T\).</p>
+    <p>The reasoning chain being tested:</p>
+    <div class="mathblock">\[ U^*U=I \;\Longrightarrow\; x^*U^*Ux=x^*x \;\Longrightarrow\; \boxed{\|Ux\|=\|x\|}. \]</div>
+    <p>The word <em>arbitrary</em> is the signal that a general proof is wanted, not a single numerical example.</p>
+  </div>
+
+<div class="viz" id="viz-unitary">
+  <h4>Unitary transformation: length stays the same</h4>
+  <p class="viz-intro">This visualization applies the problem-set matrix \(U=\frac1{\sqrt2}\begin{bmatrix}1&1\\1&-1\end{bmatrix}\). Compare the input and output vector lengths.</p>
+  <div class="viz-grid">
+    <svg id="unitary-svg" viewBox="0 0 520 330" role="img" aria-label="Interactive unitary transformation visualization"></svg>
+    <div class="viz-controls">
+      <label for="unitary-angle">Input angle: <output id="unitary-angle-out">35°</output></label>
+      <input id="unitary-angle" type="range" min="0" max="360" step="1" value="35">
+      <label for="unitary-radius">Input length: <output id="unitary-radius-out">2.0</output></label>
+      <input id="unitary-radius" type="range" min=".5" max="3" step=".1" value="2">
+      <div class="viz-readout" id="unitary-readout"></div>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<section class="concept" id="s31">
+  <h3><span class="n">31</span>Hermitian matrices</h3>
+  <p class="def"><b>Hermitian matrix</b>A matrix that is unchanged when you transpose it and flip the signs of the imaginary parts — the complex version of symmetric.</p>
+  <p>A matrix \(H\) is Hermitian if</p>
+  <div class="mathblock">\[ \boxed{H=H^*}. \]</div>
+  <p>This is the complex analogue of a real symmetric matrix. Take</p>
+  <div class="mathblock">\[ H=\begin{bmatrix}0&amp;-i\\i&amp;0\end{bmatrix}. \]</div>
+  <p>To calculate \(H^*\), transpose and then conjugate. The resulting matrix is again \(\begin{bmatrix}0&amp;-i\\i&amp;0\end{bmatrix}\), so \(H=H^*\).</p>
+</section>
+
+<section class="concept" id="s32">
+  <h3><span class="n">32</span>Why are Hermitian matrices important?</h3>
+  <p class="def"><b>Real eigenvalues</b>The stretching factors of the matrix turn out to be ordinary real numbers, with no imaginary part at all.</p>
+  <p>They have a remarkable property:</p>
+  <div class="mathblock">\[ \boxed{\text{Their eigenvalues are real.}} \]</div>
+  <p>This is extremely useful, because the eigenvalues of a general complex matrix can be complex. For Hermitian matrices the eigenvalues behave like real geometric quantities.</p>
+</section>
+
+<section class="concept" id="s33">
+  <h3><span class="n">33</span>Eigenvalues and eigenvectors</h3>
+  <p class="def"><b>Eigenvector and eigenvalue</b>An eigenvector is a direction the matrix does not turn, only stretches. The eigenvalue is how much it stretches by.</p>
+  <p>An eigenvector \(v\neq0\) satisfies</p>
+  <div class="mathblock">\[ Hv=\lambda v, \]</div>
+  <p>where \(H\) is the matrix, \(v\) an eigenvector, and \(\lambda\) its eigenvalue. The transformation acts on \(v\) without changing its direction — it only scales it.</p>
+</section>
+
+<section class="concept" id="s34">
+  <h3><span class="n">34</span>Finding eigenvalues</h3>
+  <p class="def"><b>Characteristic equation</b>The equation you solve to find the stretching factors: set the determinant of the matrix minus λ times the identity to zero.</p>
+  <p>Rewrite \(Hv=\lambda v\) as \((H-\lambda I)v=0\). For a non-zero solution to exist we need</p>
+  <div class="mathblock">\[ \boxed{\det(H-\lambda I)=0}, \]</div>
+  <p>the characteristic equation. For our \(H\),</p>
+  <div class="mathblock">\[ H-\lambda I=\begin{bmatrix}-\lambda&amp;-i\\i&amp;-\lambda\end{bmatrix}, \qquad \det(H-\lambda I)=\lambda^2-1. \]</div>
+  <p>Therefore \(\lambda^2=1\), giving \(\boxed{\lambda=\pm1}\). Both eigenvalues are real.</p>
+
+  <div class="reveal" data-reveal>
+    <button type="button">Watch one sign here<span class="cue">Reveal</span></button>
+    <div class="body">
+      <p>The off-diagonal contribution to the determinant is \(-(-i)(i)\), and \((-i)(i)=-i^2=+1\). Getting this wrong turns the characteristic polynomial into \(\lambda^2+1\) and hands you imaginary eigenvalues — which should immediately alarm you, since the Hermitian check has already ruled that out.</p>
+    </div>
+  </div>
+
+  <div class="problem" id="p12">
+    <div class="problem-head">
+      <h4>Problem 12<span>Hermitian matrices and real eigenvalues</span></h4>
+      <label class="done"><input type="checkbox" data-prob="12"> Cleared</label>
+    </div>
+    <p>Verify that the given \(H\) is Hermitian and calculate its eigenvalues, saying whether they are real or complex.</p>
+    <p>The conceptual connection to state explicitly:</p>
+    <div class="mathblock">\[ H=H^* \;\Longrightarrow\; \text{Hermitian} \;\Longrightarrow\; \text{real eigenvalues}. \]</div>
+  </div>
+</section>
+
+<section class="concept" id="s35">
+  <h3><span class="n">35</span>Orthogonality of eigenvectors</h3>
+  <p class="def"><b>Orthogonal eigenvectors</b>For a Hermitian matrix, directions with different stretching factors automatically sit at right angles to each other.</p>
+  <p>Another powerful property: eigenvectors corresponding to distinct eigenvalues are orthogonal. Suppose \(Hv_1=\lambda_1v_1\) and \(Hv_2=\lambda_2v_2\) with \(\lambda_1\neq\lambda_2\). Then</p>
+  <div class="mathblock">\[ v_1^*v_2=0. \]</div>
+  <p>This means the eigenvectors hand us natural orthogonal directions. We can normalise them so that \(v_i^*v_i=1\), and then they form an orthonormal eigenbasis — with no extra work required.</p>
+</section>
+
+<section class="concept" id="s36">
+  <h3><span class="n">36</span>Spectral decomposition</h3>
+  <p class="def"><b>Spectral decomposition</b>Rebuilding a matrix as a list of its natural directions, each weighted by how much it stretches along that direction.</p>
+  <p>Once we have normalised eigenvectors, a Hermitian matrix can be reconstructed from them:</p>
+  <div class="mathblock">\[ \boxed{H=\sum_i\lambda_i v_iv_i^*}. \]</div>
+  <p>For two eigenvalues this reads</p>
+  <div class="mathblock">\[ \boxed{H=\lambda_1v_1v_1^*+\lambda_2v_2v_2^*}. \]</div>
+  <h4>Why this is powerful</h4>
+  <p>Instead of thinking of \(H\) as a collection of four matrix entries, we can understand it as an instruction: scale this direction by \(\lambda_1\), scale that direction by \(\lambda_2\). The eigenvectors reveal the natural directions of the transformation.</p>
+
+  <div class="reveal" data-reveal>
+    <button type="button">Concept connection — what is each \(v_iv_i^*\) on its own?<span class="cue">Reveal</span></button>
+    <div class="body">
+      <p>It is exactly the projection matrix from Part 2, built from a unit vector. So spectral decomposition invents nothing new: it reuses the projector once per eigendirection and weights each one by its eigenvalue. This is also why normalisation is not optional — without \(v_i^*v_i=1\), every term is scaled wrongly and the sum will not reproduce \(H\).</p>
+    </div>
+  </div>
+
+</section>
+
+<section class="concept" id="s37">
+  <h3><span class="n">37</span>Reconstructing \(H\) from its eigendirections</h3>
+  <p class="def"><b>Reconstruction</b>Adding those weighted pieces back together and checking that you recover the original matrix exactly.</p>
+  <div class="problem" id="p13">
+    <div class="problem-head">
+      <h4>Problem 13<span>Eigenvectors and spectral decomposition</span></h4>
+      <label class="done"><input type="checkbox" data-prob="13"> Cleared</label>
+    </div>
+    <p>Find the normalised eigenvectors, verify that they are mutually orthogonal, then compute \(\lambda_1v_1v_1^*+\lambda_2v_2v_2^*\) and verify that it reconstructs \(H\).</p>
+    <p>This problem chains together five ideas at once: Hermitian → eigenvalues → eigenvectors → orthogonality → spectral decomposition.</p>
+  </div>
+</section>
+
+<section class="concept" id="s38">
+  <h3><span class="n">38</span>Matrix commutators</h3>
+  <p class="def"><b>Commutator</b>A measure of whether the order of two operations matters. It comes out zero exactly when the order makes no difference.</p>
+  <p>Given two matrices \(A\) and \(B\), their commutator is</p>
+  <div class="mathblock">\[ \boxed{[A,B]=AB-BA}. \]</div>
+  <p>If \([A,B]=0\) then \(AB=BA\) and we say the matrices commute. If \([A,B]\neq0\), they do not.</p>
+  <h4>Why order matters</h4>
+  <p>For ordinary numbers \(ab=ba\). For matrices this is generally false: \(AB\) may produce a completely different result from \(BA\). This is one of the fundamental differences between scalar arithmetic and matrix algebra.</p>
+
+</section>
+
+<section class="concept" id="s39">
+  <h3><span class="n">39</span>Testing whether two operators commute</h3>
+  <p class="def"><b>Commuting matrices</b>Two matrices commute when applying them in either order gives the same result.</p>
+  <div class="problem" id="p14">
+    <div class="problem-head">
+      <h4>Problem 14<span>Matrix commutators</span></h4>
+      <label class="done"><input type="checkbox" data-prob="14"> Cleared</label>
+    </div>
+    <p>For \(X=\begin{bmatrix}0&amp;1\\1&amp;0\end{bmatrix}\) and \(Z=\begin{bmatrix}1&amp;0\\0&amp;-1\end{bmatrix}\), compute \([X,Z]=XZ-ZX\).</p>
+    <p>The key question is not <em>what matrix do I get?</em> It is: does the order in which these operators are applied matter?</p>
+  </div>
+
+  <div class="map">
+    <h4>Part 3 concept map</h4>
+    <ol>
+      <li>Matrix</li>
+      <li>Linear operator</li>
+      <li class="split">Branch one: unitary operator → norm preservation</li>
+      <li class="split">Branch two: Hermitian operator → real eigenvalues</li>
+      <li>Orthogonal eigenvectors</li>
+      <li>Spectral decomposition</li>
+      <li class="split">And separately: two operators → commutator → commuting or not</li>
+    </ol>
+  </div>
+</section>
+
+<div class="part-head" id="part4">
+  <span class="pnum">Part 4</span>
+  <h2>Tensor / Kronecker products</h2>
+  <p>So far we have worked inside spaces such as \(\mathbb C^2\) and \(\mathbb C^3\). But what if we want to construct a larger space by combining two smaller ones? This is where the tensor product becomes useful.</p>
+</div>
+
+<section class="concept" id="s40">
+  <h3><span class="n">40</span>Why tensor products?</h3>
+  <p class="def"><b>Tensor product</b>A way of building one bigger space out of two smaller ones, covering every combination of a choice from each.</p>
+  <p>Suppose \(a\in\mathbb C^2\) and \(b\in\mathbb C^2\). Individually each vector has two coordinates. The tensor product \(a\otimes b\) belongs to a space of dimension \(2\times2=4\), so</p>
+  <div class="mathblock">\[ \boxed{\mathbb C^2\otimes\mathbb C^2\cong\mathbb C^4} \]</div>
+  <p>in terms of dimension. The important idea: tensor products combine the degrees of freedom of two spaces. Dimensions multiply rather than add, because the combined space must account for every pairing of a choice from the first space with a choice from the second.</p>
+</section>
+
+<section class="concept" id="s41">
+  <h3><span class="n">41</span>Vector Kronecker product</h3>
+  <p class="def"><b>Kronecker product of vectors</b>Stacking a full copy of the second vector, scaled by each entry of the first in turn.</p>
+  <p>Let \(a=[a_1,\,a_2]^T\) and \(b=[b_1,\,b_2]^T\). Then \(a\otimes b\) stacks scaled copies of \(b\):</p>
+  <div class="mathblock">\[ a\otimes b=\begin{bmatrix}a_1b\\a_2b\end{bmatrix} = \begin{bmatrix}a_1b_1\\a_1b_2\\a_2b_1\\a_2b_2\end{bmatrix}. \]</div>
+  <p>Read the index pattern: the first index varies slowly across the outer blocks, the second varies quickly inside each block. Keeping that ordering straight is most of the battle.</p>
+</section>
+
+<section class="concept" id="s42">
+  <h3><span class="n">42</span>Kronecker products of basis vectors</h3>
+  <p class="def"><b>Dimension rule</b>When two spaces are combined this way, multiply their sizes together rather than adding them.</p>
+  <div class="problem" id="p15">
+    <div class="problem-head">
+      <h4>Problem 15<span>Computing the vector tensor product</span></h4>
+      <label class="done"><input type="checkbox" data-prob="15"> Cleared</label>
+    </div>
+    <p>Given \(a=[1,\,0]^T\) and \(b=[\alpha,\,\beta]^T\), the definition gives</p>
+    <div class="mathblock">\[ a\otimes b=\begin{bmatrix}\alpha\\\beta\\0\\0\end{bmatrix}, \qquad\text{and for } c=[0,\,1]^T,\qquad c\otimes b=\begin{bmatrix}0\\0\\\alpha\\\beta\end{bmatrix}. \]</div>
+    <p>The problem then asks for the resulting dimension when both original vectors belong to \(\mathbb C^2\). The rule:</p>
+    <div class="mathblock">\[ \boxed{(m\text{-dimensional})\otimes(n\text{-dimensional})\rightarrow mn\text{-dimensional}}. \]</div>
+    <p>Notice too that \(a\otimes b\) and \(c\otimes b\) occupy disjoint halves of \(\mathbb C^4\) — a preview of how the four tensor basis vectors tile the joint space.</p>
+  </div>
+
+<div class="viz" id="viz-tensor">
+  <h4>Build a Kronecker product</h4>
+  <p class="viz-intro">Choose \(a=[a_1,a_2]^T\) and \(b=[b_1,b_2]^T\). The four coordinates of \(a\otimes b\) are all pairwise products.</p>
+  <div class="viz-grid">
+    <svg id="tensor-svg" viewBox="0 0 520 300" role="img" aria-label="Interactive Kronecker product visualization"></svg>
+    <div class="viz-controls">
+      <label for="tensor-a1">\(a_1\): <output id="tensor-a1-out">1</output></label>
+      <input id="tensor-a1" type="range" min="-2" max="2" step=".1" value="1">
+      <label for="tensor-a2">\(a_2\): <output id="tensor-a2-out">0.5</output></label>
+      <input id="tensor-a2" type="range" min="-2" max="2" step=".1" value=".5">
+      <label for="tensor-b1">\(b_1\): <output id="tensor-b1-out">1.5</output></label>
+      <input id="tensor-b1" type="range" min="-2" max="2" step=".1" value="1.5">
+      <label for="tensor-b2">\(b_2\): <output id="tensor-b2-out">-1</output></label>
+      <input id="tensor-b2" type="range" min="-2" max="2" step=".1" value="-1">
+      <div class="viz-readout" id="tensor-readout"></div>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<section class="concept" id="s43">
+  <h3><span class="n">43</span>Matrix Kronecker product</h3>
+  <p class="def"><b>Kronecker product of matrices</b>Replacing every entry of the first matrix with that entry times a full copy of the second matrix.</p>
+  <p>The same idea works with matrices. If \(A\) is \(m\times n\) and \(B\) is \(p\times q\), then \(A\otimes B\) has dimensions \((mp)\times(nq)\). A useful way to construct it:</p>
+  <p class="pull">Replace every scalar entry of \(A\) with that scalar multiplied by the entire matrix \(B\).</p>
+</section>
+
+<section class="concept" id="s44">
+  <h3><span class="n">44</span>The block-matrix picture</h3>
+  <p class="def"><b>Block matrix</b>A large matrix read as a grid of smaller matrices instead of a grid of individual numbers.</p>
+  <p>Let \(A=\begin{bmatrix}a&amp;b\\c&amp;d\end{bmatrix}\). Then</p>
+  <div class="mathblock">\[ A\otimes B=\begin{bmatrix}aB&amp;bB\\cB&amp;dB\end{bmatrix}. \]</div>
+  <p>This is the block-matrix interpretation of the Kronecker product: the left factor sets the block layout, the right factor fills each block.</p>
+
+  <div class="qc" data-answer="a">
+    <h4>Predict before calculating</h4>
+    <p class="stem">With \(X=\begin{bmatrix}0&amp;1\\1&amp;0\end{bmatrix}\), what is the block structure of \(X\otimes I\)?</p>
+    <div class="opts">
+      <button class="opt" type="button" data-key="a">Block anti-diagonal — identity blocks in the off-diagonal corners</button>
+      <button class="opt" type="button" data-key="b">Block diagonal — a copy of \(X\) in each diagonal block</button>
+      <button class="opt" type="button" data-key="c">The same matrix as \(I\otimes X\)</button>
+      <button class="opt" type="button" data-key="d">A \(2\times2\) matrix equal to \(X\)</button>
+    </div>
+    <p class="verdict" data-right="Right. \(X\) has zeros on the diagonal and ones off it, so the blocks land as \([[0\cdot I,\,1\cdot I],[1\cdot I,\,0\cdot I]]\). Compare with \(I\otimes X\), which is block diagonal — confirming that \(\otimes\) is not commutative." data-wrong="Look at where \(X\) has its ones: off the diagonal. So the blocks land off-diagonal too, giving \([[0\cdot I,\,1\cdot I],[1\cdot I,\,0\cdot I]]\). The left factor sets the block layout; \(I\otimes X\) is the block-diagonal one, and the two are different matrices."></p>
+  </div>
+</section>
+
+<section class="concept" id="s45">
+  <h3><span class="n">45</span>Building a \(4\times4\) operator</h3>
+  <p class="def"><b>Block layout</b>The left factor decides how the blocks are arranged; the right factor fills in what goes inside each block.</p>
+  <div class="problem" id="p16">
+    <div class="problem-head">
+      <h4>Problem 16<span>Matrix tensor products</span></h4>
+      <label class="done"><input type="checkbox" data-prob="16"> Cleared</label>
+    </div>
+    <p>Given \(I=\begin{bmatrix}1&amp;0\\0&amp;1\end{bmatrix}\) and \(X=\begin{bmatrix}0&amp;1\\1&amp;0\end{bmatrix}\), compute \(M=I\otimes X\). Because</p>
+    <div class="mathblock">\[ I\otimes X=\begin{bmatrix}1\,X&amp;0\,X\\0\,X&amp;1\,X\end{bmatrix}, \]</div>
+    <p>the result is a \(4\times4\) block matrix. Write the blocks first and expand to entries afterwards — going straight to sixteen individual entries is where mistakes come from.</p>
+  </div>
+</section>
+
+<section class="concept" id="s46">
+  <h3><span class="n">46</span>Tensor-product transformations</h3>
+  <p class="def"><b>Tensor-product operator</b>An operator acting on two combined systems at once, with each factor handling its own side and leaving the other alone.</p>
+  <p>Now we can combine transformations. Suppose \(A\) acts on one space and \(B\) acts on another. Their combined transformation is represented by</p>
+  <div class="mathblock">\[ \boxed{A\otimes B}, \]</div>
+  <p>an operator on the combined tensor-product space. Its defining behaviour is that each factor acts on its own subsystem: \((A\otimes B)(u\otimes w)=(Au)\otimes(Bw)\).</p>
+</section>
+
+<section class="concept" id="s47">
+  <h3><span class="n">47</span>Coordinate interpretation</h3>
+  <p class="def"><b>Reading it in coordinates</b>Saying in words which entries a matrix swaps, keeps, or mixes together, instead of just listing its numbers.</p>
+  <p>Suppose \(w=[x_1,\,x_2,\,x_3,\,x_4]^T\). When we multiply \(Mw\), the new coordinates are linear combinations of the original ones. Rather than viewing \(M\) as just a \(4\times4\) array, ask:</p>
+  <p class="lead-q">Which coordinates are being exchanged, preserved, or combined?</p>
+  <p>That reading is usually far more informative than the array itself.</p>
+
+  <div class="problem" id="p17">
+    <div class="problem-head">
+      <h4>Problem 17<span>Tensor space transformations</span></h4>
+      <label class="done"><input type="checkbox" data-prob="17"> Cleared</label>
+    </div>
+    <p>Multiply \(w\) by the matrix \(M\) from Problem 16 and describe the transformation in terms of coordinates.</p>
+    <p>The goal is to translate \(Mw\) into plain language: the first output coordinate comes from…, the second comes from…, and so on. Then say it at the tensor level too — \(I\otimes X\) leaves the first subsystem alone and applies \(X\) to the second.</p>
+  </div>
+</section>
+
+<section class="concept" id="s48">
+  <h3><span class="n">48</span>Product / factorizable vectors</h3>
+  <p class="def"><b>Product vector</b>A vector in the combined space that can be split back into two smaller vectors. Not every vector can.</p>
+  <p>Here is a deeper question. Suppose \(x\in\mathbb C^4\). Can every such vector be written as \(x=u\otimes w\) with \(u,w\in\mathbb C^2\)?</p>
+  <p>No. Some vectors can be represented this way; others cannot. Those that cannot are called unfactorizable or non-product vectors with respect to this \(2\times2\) decomposition.</p>
+</section>
+
+<section class="concept" id="s49">
+  <h3><span class="n">49</span>What would factorization mean?</h3>
+  <p class="def"><b>Factorizing</b>Finding two smaller vectors whose Kronecker product rebuilds the vector you started with.</p>
+  <p>Let \(u=[u_1,\,u_2]^T\) and \(w=[w_1,\,w_2]^T\). Then</p>
+  <div class="mathblock">\[ u\otimes w=\begin{bmatrix}u_1w_1\\u_1w_2\\u_2w_1\\u_2w_2\end{bmatrix}. \]</div>
+  <p>So if \(x=[x_1,\,x_2,\,x_3,\,x_4]^T\), factorization requires the system</p>
+  <div class="mathblock">\[ u_1w_1=x_1,\qquad u_1w_2=x_2,\qquad u_2w_1=x_3,\qquad u_2w_2=x_4. \]</div>
+  <p class="lead-q">Can these four equations be simultaneously satisfied?</p>
+</section>
+
+<section class="concept" id="s50">
+  <h3><span class="n">50</span>A vector that will not factor</h3>
+  <p class="def"><b>Unfactorizable vector</b>One where no pair of smaller vectors works. Its two halves are tied together and cannot be described separately.</p>
+  <p>The problem set considers</p>
+  <div class="mathblock">\[ x=\frac1{\sqrt2}\begin{bmatrix}1\\0\\0\\1\end{bmatrix} \]</div>
+  <p>and assumes, for contradiction, that \(x=u\otimes w\) for two-dimensional \(u,w\). The resulting equations are</p>
+  <div class="mathblock">\[ u_1w_1=\tfrac1{\sqrt2},\qquad u_1w_2=0,\qquad u_2w_1=0,\qquad u_2w_2=\tfrac1{\sqrt2}. \]</div>
+
+  <div class="reveal" data-reveal>
+    <button type="button">Try chasing the contradiction yourself first<span class="cue">Reveal the argument</span></button>
+    <div class="body">
+      <p>From \(u_1w_1\neq0\) we know \(u_1\neq0\) and \(w_1\neq0\) — a product of numbers is non-zero only when both factors are.</p>
+      <p>But \(u_1w_2=0\) with \(u_1\neq0\) then forces \(w_2=0\). Likewise \(u_2w_1=0\) with \(w_1\neq0\) forces \(u_2=0\).</p>
+      <p>Then \(u_2w_2=0\), contradicting \(u_2w_2=\tfrac1{\sqrt2}\). Therefore the assumed factorization cannot exist:</p>
+      <div class="mathblock">\[ \boxed{x\neq u\otimes w} \]</div>
+      <p>for any two-dimensional \(u,w\). Note what makes this a proof rather than a failed attempt: it rules out <em>every</em> possible \(u\) and \(w\), not just the ones you happened to try.</p>
+    </div>
+  </div>
+
+  <div class="problem" id="p18">
+    <div class="problem-head">
+      <h4>Problem 18<span>Unfactorizable vectors</span></h4>
+      <label class="done"><input type="checkbox" data-prob="18"> Cleared</label>
+    </div>
+    <p>Write out the implied system of four equations for \(u_1,u_2,w_1,w_2\) and prove that it has no solution, so \(x\) cannot be factored.</p>
+    <p><strong>What the proof needs.</strong> Every division by a variable must be justified by first showing that variable is non-zero. That is where the argument does its real work.</p>
+  </div>
+
+  <h4>Why this matters</h4>
+  <p>This is not merely a strange algebraic puzzle. Tensor products let us distinguish between states that can be separated into two independent components and states that cannot. The latter idea becomes particularly important in areas such as quantum information — though the problem set itself only asks us to establish the mathematical fact.</p>
+</section>
+
+<div class="closing" id="close">
+  <h2>Where this leaves you</h2>
+  <p>Every idea in these four parts was needed by the one after it. The inner product was not introduced for its own sake — it was needed to define a norm, which was needed for orthogonality, which made projection simple, which became a matrix, which reappeared inside the spectral decomposition. Tensor products then took that whole apparatus and asked what happens when two spaces are combined.</p>
+
+  <table class="recap">
+    <tr><th>Idea</th><th>What to carry forward</th></tr>
+    <tr><td>\(u^*v\)</td><td>The inner product conjugates the first argument. That conjugation is what makes \(u^*u\) real and non-negative, and therefore what makes length meaningful.</td></tr>
+    <tr><td>Basis</td><td>Spanning plus independence. In an \(n\)-dimensional space, \(n\) independent vectors are automatically a basis.</td></tr>
+    <tr><td>Orthonormal</td><td>Orthogonal <em>and</em> unit length. Coordinates then reduce to \(c_i=b_i^*v\), with no system to solve.</td></tr>
+    <tr><td>\(P=uu^*\)</td><td>A geometric shadow written as a matrix. \(P^2=P\) and \(u^*r=0\) both follow from \(u^*u=1\).</td></tr>
+    <tr><td>\(U^*U=I\)</td><td>Preserves length, because \(\|Ux\|^2=x^*U^*Ux=x^*x\).</td></tr>
+    <tr><td>\(H=H^*\)</td><td>Real eigenvalues, orthogonal eigenvectors, and hence a spectral decomposition \(H=\sum_i\lambda_iv_iv_i^*\).</td></tr>
+    <tr><td>\([A,B]\)</td><td>Zero means order is irrelevant; non-zero means these operators have incompatible natural directions.</td></tr>
+    <tr><td>\(u\otimes w\)</td><td>Dimensions multiply. Most vectors in the combined space are not products at all.</td></tr>
+  </table>
+
+  <p>If a step ever feels arbitrary, trace it back one link in the chain. Almost every definition in this module was forced by the one before it.</p>
+</div>
+
+</main>
+</div>
+
+<script>
+(function () {
+  // if the math CDN never arrives, strip the delimiters so the notation stays readable
+  setTimeout(function () {
+    if (document.body.classList.contains('math-ready')) return;
+    document.body.classList.add('math-ready', 'math-fallback');
+    document.querySelectorAll('.mathblock').forEach(function (el) {
+      el.textContent = el.textContent.replace(/^\s*\\\[/, '').replace(/\\\]\s*$/, '').trim();
+    });
+  }, 7000);
+
+  // reveal blocks
+  document.querySelectorAll('.reveal > button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      btn.parentElement.classList.toggle('is-open');
+    });
+  });
+
+  // quick checks
+  document.querySelectorAll('.qc').forEach(function (qc) {
+    var answer = qc.dataset.answer;
+    var verdict = qc.querySelector('.verdict');
+    qc.querySelectorAll('button.opt').forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        if (qc.dataset.locked) return;
+        qc.dataset.locked = '1';
+        var correct = opt.dataset.key === answer;
+        qc.querySelectorAll('button.opt').forEach(function (b) {
+          b.disabled = true;
+          if (b.dataset.key === answer) b.classList.add('right');
+        });
+        if (!correct) opt.classList.add('wrong');
+        verdict.innerHTML = correct ? verdict.dataset.right : verdict.dataset.wrong;
+        verdict.classList.add('show');
+        if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([verdict]);
+      });
+    });
+  });
+
+  // problem checkpoint tracker
+  var TOTAL = 18, C = 2 * Math.PI * 17;
+  var ring = document.getElementById('ring');
+  var count = document.getElementById('tracker-count');
+  var boxes = document.querySelectorAll('.done input');
+  function refresh() {
+    var n = 0;
+    boxes.forEach(function (b) {
+      b.parentElement.classList.toggle('is-done', b.checked);
+      if (b.checked) n++;
+    });
+    count.textContent = n + ' of ' + TOTAL;
+    ring.setAttribute('stroke-dashoffset', String(C - (n / TOTAL) * C));
+  }
+  ring.setAttribute('stroke-dasharray', String(C));
+  ring.setAttribute('stroke-dashoffset', String(C));
+  boxes.forEach(function (b) { b.addEventListener('change', refresh); });
+
+  // reading progress
+  var fill = document.getElementById('progress-fill');
+  // scrollspy across parts and sections
+  var parts = Array.prototype.slice.call(document.querySelectorAll('.spine .part'));
+  var subLinks = Array.prototype.slice.call(document.querySelectorAll('.spine ul a'));
+  var anchors = subLinks.map(function (a) {
+    return { link: a, el: document.querySelector(a.getAttribute('href')) };
+  }).filter(function (o) { return o.el; });
+  var partBlocks = parts.map(function (li) {
+    var id = li.dataset.part;
+    return { li: li, el: document.getElementById(id) };
+  }).filter(function (o) { return o.el; });
+
+  var ticking = false;
+  function onScroll() {
+    var y = window.scrollY;
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    fill.style.width = (h > 0 ? Math.min(100, (y / h) * 100) : 0) + '%';
+
+    var mark = y + window.innerHeight * 0.28;
+    var activePart = null;
+    partBlocks.forEach(function (o) { if (o.el.offsetTop <= mark) activePart = o.li; });
+    parts.forEach(function (li) { li.classList.toggle('active', li === activePart); });
+
+    var here = null;
+    anchors.forEach(function (o) { if (o.el.offsetTop <= mark) here = o.link; });
+    subLinks.forEach(function (a) { a.classList.toggle('here', a === here); });
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+})();
+</script>
+
+<script>
+(function(){
+  'use strict';
+  function q(id){return document.getElementById(id)}
+  function showError(err){
+    document.querySelectorAll('.viz').forEach(function(v){
+      var box=v.querySelector('.viz-fallback');
+      if(box){box.style.display='block'; box.textContent='Visualization could not initialize. Try opening this file directly in Chrome, Safari, or Firefox.';}
+    });
+    console.error('Visualization error:', err);
+  }
+  function n(id){return parseFloat(q(id).value)}
+  function fmt(x){return Number(x).toFixed(2)}
+  function setupRange(id,out,cb){const el=q(id),o=q(out); function go(){o.textContent=Number(el.value).toFixed(1);cb()} el.addEventListener('input',go);go()}
+
+  function axes(svg, sx, sy, w=520,h=330){
+    svg.innerHTML='';
+    const NS='http://www.w3.org/2000/svg';
+    function line(x1,y1,x2,y2,stroke='#D6DEE9',width=1){
+      const e=document.createElementNS(NS,'line');
+      e.setAttribute('x1',x1); e.setAttribute('y1',y1); e.setAttribute('x2',x2); e.setAttribute('y2',y2);
+      e.setAttribute('stroke',stroke);e.setAttribute('stroke-width',width);svg.appendChild(e);
+    }
+    for(let x=-4;x<=4;x++){const px=sx(x);line(px,20,px,h-25,x===0?'#14202F':'#E9EDF4',x===0?1.5:1)}
+    for(let y=-3;y<=3;y++){const py=sy(y);line(30,py,w-20,py,y===0?'#14202F':'#E9EDF4',y===0?1.5:1)}
+  }
+  function arrow(svg,sx,sy,x,y,label,stroke='#2242D6'){
+    const NS='http://www.w3.org/2000/svg', px=sx(x),py=sy(y);
+    const g=document.createElementNS(NS,'g');
+    const l=document.createElementNS(NS,'line');l.setAttribute('x1',sx(0));l.setAttribute('y1',sy(0));l.setAttribute('x2',px);l.setAttribute('y2',py);l.setAttribute('stroke',stroke);l.setAttribute('stroke-width','3');
+    const c=document.createElementNS(NS,'circle');c.setAttribute('cx',px);c.setAttribute('cy',py);c.setAttribute('r','5');c.setAttribute('fill',stroke);
+    const t=document.createElementNS(NS,'text');t.setAttribute('x',px+8);t.setAttribute('y',py-8);t.setAttribute('font-family','IBM Plex Sans, sans-serif');t.setAttribute('font-size','14');t.setAttribute('fill','#14202F');t.textContent=label;
+    g.append(l,c,t);svg.appendChild(g);
+  }
+
+  // Span
+  const span=q('span-svg');
+  function drawSpan(){
+    const c1=n('span-c1'),c2=n('span-c2'),sx=x=>260+x*55,sy=y=>165-y*55;
+    axes(span,sx,sy);
+    arrow(span,sx,sy,1,0,'v₁','#5A6A80'); arrow(span,sx,sy,0,1,'v₂','#8B98AB');
+    arrow(span,sx,sy,c1,c2,'c₁v₁ + c₂v₂','#AE2230');
+    q('span-readout').innerHTML=`<strong>Result</strong><br>c₁v₁ + c₂v₂ = [${fmt(c1)}, ${fmt(c2)}]ᵀ`;
+  }
+  setupRange('span-c1','span-c1-out',drawSpan);setupRange('span-c2','span-c2-out',drawSpan);
+
+  // Inner product
+  const inner=q('inner-svg');
+  function drawInner(){
+    const r=n('inner-r'),a=1-r*r,b=1+r*r;
+    inner.innerHTML='';
+    const NS='http://www.w3.org/2000/svg';
+    function txt(x,y,s,size=15,fill='#14202F'){const t=document.createElementNS(NS,'text');t.setAttribute('x',x);t.setAttribute('y',y);t.setAttribute('font-family','IBM Plex Sans, sans-serif');t.setAttribute('font-size',size);t.setAttribute('fill',fill);t.textContent=s;inner.appendChild(t)}
+    txt(32,45,'Transpose',18);txt(32,85,`uᵀu = 1 − r² = ${fmt(a)}`,16,'#AE2230');
+    txt(275,45,'Conjugate transpose',18);txt(275,85,`u*u = 1 + r² = ${fmt(b)}`,16,'#2242D6');
+    txt(32,135,'As r grows, uᵀu can become negative — impossible for a squared length.',13,'#5A6A80');
+    txt(32,170,'Meanwhile u*u stays non-negative because it sums magnitudes squared.',13,'#5A6A80');
+    const max=5,base=215,w=180;
+    function rect(x,y,w,h,fill){
+      const e=document.createElementNS(NS,'rect');
+      e.setAttribute('x',x); e.setAttribute('y',y); e.setAttribute('width',w); e.setAttribute('height',h); e.setAttribute('fill',fill); e.setAttribute('rx','3');
+      inner.appendChild(e);
+    }
+    rect(32,base-Math.max(0,b)*18,36,Math.max(0,b)*18,'#2242D6');
+    rect(275,base-Math.max(0,a)*18,36,Math.max(0,a)*18,'#AE2230');
+    q('inner-readout').innerHTML=`<strong>At r = ${fmt(r)}</strong><br>uᵀu = ${fmt(a)} &nbsp; | &nbsp; u*u = ${fmt(b)}<br>${a < 0 ? 'Transpose gives a negative value — so it cannot represent squared length.' : 'The conjugate transpose keeps the squared length non-negative.'}`;
+  }
+  setupRange('inner-r','inner-r-out',drawInner);
+
+  // Projection
+  const proj=q('proj-svg');
+  function drawProj(){
+    const vx=n('proj-x'),vy=n('proj-y'),ux=1/Math.sqrt(2),uy=ux;
+    const dot=vx*ux+vy*uy,px=dot*ux,py=dot*uy,rx=vx-px,ry=vy-py;
+    const sx=x=>260+x*55,sy=y=>180-y*55;
+    axes(proj,sx,sy);
+    arrow(proj,sx,sy,3*ux,3*uy,'u','#5A6A80');
+    arrow(proj,sx,sy,vx,vy,'v','#AE2230');
+    arrow(proj,sx,sy,px,py,'p','#2242D6');
+    const NS='http://www.w3.org/2000/svg';
+    const line=document.createElementNS(NS,'line');line.setAttribute('x1',sx(px));line.setAttribute('y1',sy(py));line.setAttribute('x2',sx(vx));line.setAttribute('y2',sy(vy));line.setAttribute('stroke','#8B98AB');line.setAttribute('stroke-width','2');line.setAttribute('stroke-dasharray','6 5');proj.appendChild(line);
+    q('proj-readout').innerHTML=`<strong>Projection</strong><br>u* v = ${fmt(dot)}<br>p = [${fmt(px)}, ${fmt(py)}]ᵀ<br>r = [${fmt(rx)}, ${fmt(ry)}]ᵀ<br><strong>u* r ≈ ${fmt(ux*rx+uy*ry)}</strong>`;
+  }
+  setupRange('proj-x','proj-x-out',drawProj);setupRange('proj-y','proj-y-out',drawProj);
+
+  // Unitary
+  const uni=q('unitary-svg');
+  function drawUni(){
+    const deg=n('unitary-angle'),rad=n('unitary-radius'),a=deg*Math.PI/180;
+    const x=rad*Math.cos(a),y=rad*Math.sin(a);
+    const xp=(x+y)/Math.sqrt(2),yp=(x-y)/Math.sqrt(2);
+    const sx=z=>260+z*65,sy=z=>165-z*65;
+    axes(uni,sx,sy);
+    arrow(uni,sx,sy,x,y,'x','#AE2230');arrow(uni,sx,sy,xp,yp,'Ux','#2242D6');
+    q('unitary-readout').innerHTML=`<strong>Lengths</strong><br>||x|| = ${fmt(Math.hypot(x,y))}<br>||Ux|| = ${fmt(Math.hypot(xp,yp))}<br><strong>Difference ≈ ${fmt(Math.hypot(x,y)-Math.hypot(xp,yp))}</strong>`;
+  }
+  setupRange('unitary-angle','unitary-angle-out',drawUni);setupRange('unitary-radius','unitary-radius-out',drawUni);
+
+  // Tensor
+  const ten=q('tensor-svg');
+  function drawTensor(){
+    const a1=n('tensor-a1'),a2=n('tensor-a2'),b1=n('tensor-b1'),b2=n('tensor-b2');
+    const vals=[a1*b1,a1*b2,a2*b1,a2*b2];
+    ten.innerHTML='';
+    const NS='http://www.w3.org/2000/svg';
+    function txt(x,y,s,size=16,fill='#14202F'){const t=document.createElementNS(NS,'text');t.setAttribute('x',x);t.setAttribute('y',y);t.setAttribute('font-family','IBM Plex Sans, sans-serif');t.setAttribute('font-size',size);t.setAttribute('fill',fill);t.textContent=s;ten.appendChild(t)}
+    txt(25,35,'a',18);txt(65,35,`[${fmt(a1)}, ${fmt(a2)}]ᵀ`,16);
+    txt(25,75,'b',18);txt(65,75,`[${fmt(b1)}, ${fmt(b2)}]ᵀ`,16);
+    txt(25,125,'Pairwise products',15,'#5A6A80');
+    vals.forEach((v,i)=>{const y=155+i*32;txt(45,y,`component ${i+1}:`,14,'#5A6A80');txt(180,y,fmt(v),16,i===0?'#2242D6':'#14202F')});
+    txt(25,285,`a ⊗ b = [${vals.map(fmt).join(', ')}]ᵀ`,16,'#AE2230');
+  }
+  ['tensor-a1','tensor-a2','tensor-b1','tensor-b2'].forEach(id=>setupRange(id,id+'-out',drawTensor));
+  document.documentElement.classList.add('viz-js-ready');
+})();
+</script>
+
+</body>
+</html>

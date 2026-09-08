@@ -1,0 +1,40 @@
+# ==========================================================
+# Video files - keep videos locally, do not commit to Git
+# ==========================================================
+*.mp4
+*.m4v
+*.mov
+*.avi
+*.mkv
+*.wmv
+*.flv
+*.webm
+*.mpeg
+*.mpg
+*.3gp
+*.3g2
+*.mts
+*.m2ts
+*.ts
+*.vob
+*.ogv
+
+# Other video/recording formats
+*.dav
+*.asf
+*.rm
+*.rmvb
+
+# ==========================================================
+# OS / editor junk
+# ==========================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
