@@ -18,6 +18,7 @@
 *.ts
 *.vob
 *.ogv
+*.mp3
 
 # Other video/recording formats
 *.dav
