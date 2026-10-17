@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 350" width="440" height="350" font-family="Arial, Helvetica, sans-serif">
+  <title>Right triangle with angle theta: cos theta = a/r and sin theta = b/r</title>
+  <defs>
+    <marker id="axT" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 z" fill="#222"/></marker>
+    <marker id="zT" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L14,7 L0,14 z" fill="#1f5fbf"/></marker>
+  </defs>
+  <rect x="0" y="0" width="440" height="350" fill="#ffffff"/>
+  <text x="220" y="20" font-size="15" font-weight="bold" fill="#222" text-anchor="middle">The right-angled triangle behind polar form</text>
+  <polygon points="50,240 310,240 310,70" fill="#eaf1fb"/>
+  <line x1="50" y1="240" x2="310" y2="240" stroke="#e07b00" stroke-width="4"/>
+  <line x1="310" y1="240" x2="310" y2="70" stroke="#e07b00" stroke-width="4"/>
+  <line x1="50" y1="240" x2="310" y2="70" stroke="#1f5fbf" stroke-width="4"/>
+  <polyline points="300,240 300,230 310,230" fill="none" stroke="#555" stroke-width="1.5"/>
+  <path d="M 95,240 A 45 45 0 0 0 87.7,215.4" fill="none" stroke="#d62828" stroke-width="3"/>
+  <text x="108" y="230" font-size="17" font-weight="bold" fill="#d62828">&#952;</text>
+  <text x="180" y="262" font-size="13" font-weight="bold" fill="#e07b00" text-anchor="middle">a  (the side next to the angle)</text>
+  <text x="322" y="160" font-size="13" font-weight="bold" fill="#e07b00">b</text>
+  <text x="322" y="176" font-size="12" fill="#e07b00">(opposite</text>
+  <text x="322" y="190" font-size="12" fill="#e07b00">the angle)</text>
+  <text x="165" y="140" font-size="13" font-weight="bold" fill="#1f5fbf" text-anchor="middle" transform="rotate(-33.2 165 140)">r  (hypotenuse)</text>
+  <text x="220" y="296" font-size="14" fill="#222" text-anchor="middle">cos &#952; = a / r        sin &#952; = b / r</text>
+  <text x="220" y="320" font-size="14" font-weight="bold" fill="#222" text-anchor="middle">so   a = r cos &#952;        b = r sin &#952;</text>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 450" width="520" height="450" font-family="Arial, Helvetica, sans-serif">
+<defs>
+<marker id="aBlue" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#1f5fbf"/></marker>
+<marker id="aGreen" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2e8b2e"/></marker>
+<marker id="aRed" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#d62828"/></marker>
+<marker id="aBlack" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#333"/></marker>
+</defs>
+<rect width="520" height="450" fill="#ffffff"/>
+<text x="260" y="26" font-size="16" font-weight="bold" text-anchor="middle" fill="#222">Multiplying by i rotates by 90&#176;</text>
+<line x1="20" y1="110" x2="20" y2="390" stroke="#e6e6e6"/>
+<line x1="60" y1="110" x2="60" y2="390" stroke="#e6e6e6"/>
+<line x1="100" y1="110" x2="100" y2="390" stroke="#e6e6e6"/>
+<line x1="140" y1="110" x2="140" y2="390" stroke="#e6e6e6"/>
+<line x1="180" y1="110" x2="180" y2="390" stroke="#e6e6e6"/>
+<line x1="220" y1="110" x2="220" y2="390" stroke="#e6e6e6"/>
+<line x1="260" y1="110" x2="260" y2="390" stroke="#e6e6e6"/>
+<line x1="300" y1="110" x2="300" y2="390" stroke="#e6e6e6"/>
+<line x1="340" y1="110" x2="340" y2="390" stroke="#e6e6e6"/>
+<line x1="380" y1="110" x2="380" y2="390" stroke="#e6e6e6"/>
+<line x1="420" y1="110" x2="420" y2="390" stroke="#e6e6e6"/>
+<line x1="460" y1="110" x2="460" y2="390" stroke="#e6e6e6"/>
+<line x1="500" y1="110" x2="500" y2="390" stroke="#e6e6e6"/>
+<line x1="20" y1="130" x2="500" y2="130" stroke="#e6e6e6"/>
+<line x1="20" y1="170" x2="500" y2="170" stroke="#e6e6e6"/>
+<line x1="20" y1="210" x2="500" y2="210" stroke="#e6e6e6"/>
+<line x1="20" y1="250" x2="500" y2="250" stroke="#e6e6e6"/>
+<line x1="20" y1="290" x2="500" y2="290" stroke="#e6e6e6"/>
+<line x1="20" y1="330" x2="500" y2="330" stroke="#e6e6e6"/>
+<line x1="20" y1="370" x2="500" y2="370" stroke="#e6e6e6"/>
+<line x1="20" y1="330" x2="505" y2="330" stroke="#333" stroke-width="1.5" marker-end="url(#aBlack)"/>
+<line x1="260" y1="390" x2="260" y2="100" stroke="#333" stroke-width="1.5" marker-end="url(#aBlack)"/>
+<text x="508" y="346" font-size="13" fill="#333" text-anchor="end">Re</text>
+<text x="268" y="106" font-size="13" fill="#333">Im</text>
+<text x="252" y="346" font-size="11" fill="#555" text-anchor="end">0</text>
+<path d="M60,330 A200,200 0 0 1 460,330" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="5,4"/>
+<text x="260" y="122" font-size="12" fill="#666" text-anchor="middle">circle of radius 5: the length does not change</text>
+<line x1="260" y1="330" x2="378" y2="172" stroke="#1f5fbf" stroke-width="2.5" marker-end="url(#aBlue)"/>
+<line x1="260" y1="330" x2="102" y2="212" stroke="#2e8b2e" stroke-width="2.5" marker-end="url(#aGreen)"/>
+<path d="M296,282 A60,60 0 0 0 212,294" fill="none" stroke="#d62828" stroke-width="2.5" marker-end="url(#aRed)"/>
+<text x="248" y="258" font-size="14" font-weight="bold" fill="#d62828">90&#176;</text>
+<circle cx="260" cy="290" r="4.5" fill="#e68a00"/>
+<text x="252" y="285" font-size="14" font-weight="bold" fill="#e68a00" text-anchor="end">i</text>
+<circle cx="380" cy="170" r="4" fill="#1f5fbf"/>
+<circle cx="100" cy="210" r="4" fill="#2e8b2e"/>
+<text x="388" y="166" font-size="13" font-weight="bold" fill="#1f5fbf">z = 3 + 4i</text>
+<text x="388" y="182" font-size="12" fill="#1f5fbf">length 5, angle 53.1&#176;</text>
+<text x="92" y="206" font-size="13" font-weight="bold" fill="#2e8b2e" text-anchor="end">iz = &#8722;4 + 3i</text>
+<text x="92" y="222" font-size="12" fill="#2e8b2e" text-anchor="end">length 5, angle 143.1&#176;</text>
+<text x="260" y="412" font-size="13" fill="#222" text-anchor="middle">(3, 4) &#8594; (&#8722;4, 3): same length 5, angle 53.1&#176; + 90&#176; = 143.1&#176;</text>
+<text x="260" y="432" font-size="13" fill="#e68a00" text-anchor="middle">Orange dot: i = e<tspan dy="-5" font-size="10">i&#960;/2</tspan><tspan dy="5"> = (0, 1): length 1, angle 90&#176;. Grid: 1 square = 1 unit.</tspan></text>
+</svg>
