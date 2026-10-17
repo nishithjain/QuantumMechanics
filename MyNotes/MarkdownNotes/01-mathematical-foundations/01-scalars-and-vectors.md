@@ -31,7 +31,7 @@ $$
 \vec{v} = (5,\ 0)
 $$
 
-The first number is the horizontal move: \(+5\). The second number is the vertical move: \(0\).
+The first number is the horizontal move: $+5$. The second number is the vertical move: $0$.
 
 In linear algebra we stack those two numbers in a column. That is the form you will see everywhere in quantum computing:
 
@@ -42,11 +42,11 @@ $$
 - The top entry is the horizontal part.
 - The bottom entry is the vertical part.
 
-(Your OneNote notes used a bar over the letter, \(\bar{v}\). These notes use an arrow, \(\vec{v}\). Both mean “this is a vector.”)
+(Your OneNote notes used a bar over the letter, $\bar{v}$. These notes use an arrow, $\vec{v}$. Both mean “this is a vector.”)
 
 ## Example: a vector that moves right *and* up
 
-Now take a vector that moves \(+3\) horizontally and \(+4\) vertically:
+Now take a vector that moves $+3$ horizontally and $+4$ vertically:
 
 $$
 \vec{x} = \begin{bmatrix} 3 \\ 4 \end{bmatrix}
@@ -54,7 +54,7 @@ $$
 
 ![Vector x from the origin to the point (3, 4)](../assets/images/two-dimensional-vector-x.png)
 
-The arrow starts at the origin \((0,0)\) and ends at the grid point where \(x=3\) and \(y=4\).
+The arrow starts at the origin $(0,0)$ and ends at the grid point where $x=3$ and $y=4$.
 
 The *length* of this arrow is the straight-line distance from start to finish. By Pythagoras:
 
@@ -62,11 +62,11 @@ $$
 \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25} = 5
 $$
 
-So \(\vec{x}\) has magnitude \(5\), even though its two components are \(3\) and \(4\).
+So $\vec{x}$ has magnitude $5$, even though its two components are $3$ and $4$.
 
 ## Why this matters for quantum computing
 
-A quantum bit (qubit) is not stored as a single \(0\) or \(1\). It is stored as a short list of numbers — a vector. Once you can read a column of numbers as “how much in this direction, how much in that direction,” you are ready for the next note: the special way physicists write those vectors.
+A quantum bit (qubit) is not stored as a single $0$ or $1$. It is stored as a short list of numbers — a vector. Once you can read a column of numbers as “how much in this direction, how much in that direction,” you are ready for the next note: the special way physicists write those vectors.
 
 ---
 

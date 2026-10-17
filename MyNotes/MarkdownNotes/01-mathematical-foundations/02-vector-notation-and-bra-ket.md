@@ -6,22 +6,22 @@
 
 ---
 
-Quantum notes do not usually write \(\vec{v}\). They use **Dirac notation**, also called **bra-ket** notation. It looks unusual at first. It is only a nickname for the same column of numbers you already know.
+Quantum notes do not usually write $\vec{v}$. They use **Dirac notation**, also called **bra-ket** notation. It looks unusual at first. It is only a nickname for the same column of numbers you already know.
 
 The notation is built from an angle bracket and a vertical bar:
 
-- a **ket** looks like \(|v\rangle\)
-- a **bra** looks like \(\langle v|\)
+- a **ket** looks like $|v\rangle$
+- a **bra** looks like $\langle v|$
 
 ## What a ket is
 
-A ket \(|v\rangle\) is a vector \(v\). In the math, it lives in a vector space \(V\). In the physics, it stands for a *state* of a quantum system: “this is how the system is right now.”
+A ket $|v\rangle$ is a vector $v$. In the math, it lives in a vector space $V$. In the physics, it stands for a *state* of a quantum system: “this is how the system is right now.”
 
 For one bit (and later, one qubit), two special kets are the starting points. Think of them as two arrows that are at right angles: one along the horizontal axis, one along the vertical axis.
 
 ![2D vector space with |0> along the x-axis and |1> along the y-axis](../assets/images/two-dimensional-complex-vector-space.png)
 
-Your notes labeled the horizontal arrow \(B\) (point B) and the vertical arrow \(C\) (point C):
+Your notes labeled the horizontal arrow $B$ (point B) and the vertical arrow $C$ (point C):
 
 $$
 |0\rangle = \begin{bmatrix} 1 \\ 0 \end{bmatrix}
@@ -31,10 +31,10 @@ $$
 |1\rangle = \begin{bmatrix} 0 \\ 1 \end{bmatrix}
 $$
 
-Read \(|0\rangle\) as “ket zero” and \(|1\rangle\) as “ket one.”
+Read $|0\rangle$ as “ket zero” and $|1\rangle$ as “ket one.”
 
-- \(|0\rangle\) means “all of the vector is in the first slot, none in the second.”
-- \(|1\rangle\) means “none in the first slot, all in the second.”
+- $|0\rangle$ means “all of the vector is in the first slot, none in the second.”
+- $|1\rangle$ means “none in the first slot, all in the second.”
 
 These two arrows are the **standard basis**. Any other 2-number column can be built by mixing them. That mixing is how superposition will appear later.
 
@@ -66,11 +66,11 @@ $$
 x^* = a - i b
 $$
 
-If \(x\) is an ordinary real number, then \(x^* = x\).
+If $x$ is an ordinary real number, then $x^* = x$.
 
 ## What a bra is
 
-A bra \(\langle b|\) is the conjugate transpose of the ket \(|b\rangle\): turn the column into a row, *and* conjugate each entry.
+A bra $\langle b|$ is the conjugate transpose of the ket $|b\rangle$: turn the column into a row, *and* conjugate each entry.
 
 $$
 \langle b|
@@ -100,7 +100,7 @@ $$
 b_0^* a_0 + b_1^* a_1
 $$
 
-Your notes also wrote this as \(a_0 b_0^* + a_1 b_1^*\), which is the same because ordinary numbers (and complex numbers) multiply in either order.
+Your notes also wrote this as $a_0 b_0^* + a_1 b_1^*$, which is the same because ordinary numbers (and complex numbers) multiply in either order.
 
 A useful fact:
 
@@ -138,9 +138,9 @@ Inner product = number. Outer product = grid of numbers. Both are legal; they ju
 
 | Everyday idea | Linear algebra | Dirac notation |
 |---|---|---|
-| Arrow along \(x\) | \(\begin{bmatrix} 1 \\ 0 \end{bmatrix}\) | \(|0\rangle\) |
-| Arrow along \(y\) | \(\begin{bmatrix} 0 \\ 1 \end{bmatrix}\) | \(|1\rangle\) |
-| A general state | a column vector | \(|\psi\rangle\) (often read “ket psi”) |
+| Arrow along $x$ | $\begin{bmatrix} 1 \\ 0 \end{bmatrix}$ | $|0\rangle$ |
+| Arrow along $y$ | $\begin{bmatrix} 0 \\ 1 \end{bmatrix}$ | $|1\rangle$ |
+| A general state | a column vector | $|\psi\rangle$ (often read “ket psi”) |
 
 ---
 

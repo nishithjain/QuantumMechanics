@@ -48,4 +48,600 @@ called as superposition. Have you ever heard about this superposition? Anyone in
 There is something called as quantum superposition. Okay. Now the big idea of this in when you want
 to talk about quantum superposition, this idea is related to a concept in linear algebra, which we
 will see today is called linear combination. Okay. Now there is a Another concept that is very very
-very popular a lot of research has went into this honestly speaking something called as entanglement. Now, how many of you have? heard this term entanglement quantum entanglement. Okay. I'm not discussing about this term. So it's okay completely fine. I just want to give you the idea about it. How quantum computing is connected to linear algebra. That's the more idea. Okay. Now the important part over here is sorry the important part over here. This entanglement is actually coming from the idea of something called as complex numbers or complex vectors. would say complex vectors because entanglement typically says about the idea that we can't represent either in 0 or 1, says that anything in between can happen. The state can change. Okay. This particular terminology in quantum computing is called as quantum state and we will use this idea very in a simple manner. Okay. All right. I repeat once again that is entanglement is the idea of having a hovered state a hovered state. It is not 0 or 1. It is a hovered state. It means it's not either 0 not either one something in between. Okay. That is typically represented by the idea of linear algebra called as complex vector. The same terminology complex vector same terminology is used in quantum computing as quantum state. Okay, very nice. Now there are more terminologies associated with it. Even this guy has a linear algebraic terminology around it so I can say that but we'll just I'll just tell it but I will not explain it too much into it because that's a completely different side of thing is something called as unfactorized or unfactorizable state again same concept just a different terminology. It means you cannot factorize or break it down into two parts or something. Okay, why we need to study linear algebra that you have got. So the basic foundation of quantum computing itself is linear algebra. So we need to study some basic idea around linear algebra. Okay, and as Chaitanya and your professor has been mentioning that they will be sharing a problem solving set for all of you. It will have 18 questions in total.  So talking about linear algebra now, this is a very, very, very lengthy space. A lot and lot of concepts are there around it, but we don't need to learn all of those concepts. is something called as linear combination. There is something called as vector space. There is something called as Hessian matrix. There is something called as eigenvalue, eigenvectors. A lot of these things are there. So we will learn these concepts in a flow and in order to study the flow in a step by step manner, I have curated a nice document for all of us over here. Just a quick thought. So the main idea like typically what we do like during our school days or college days, we did not have a very good flow of understanding what comes after what. So this is typically the flow cool. how you should study linear algebra for quantum computing. Okay, as I mentioned, there are way too many concepts around linear algebra. We will only focus on those concepts which are required for us to get going. Like we will start off with the idea of vectors. Then we will move to linear combination, something called as span, something called as linear independence, something called as basics, something called as inner product, something called as orthogonality. Okay, now if you see very carefully, this particular part is very, very basic part, like a foundation. So we will spend roughly around 20 to 40 minutes discussing about these basics then I have broken it down into like this phase one or part one part two part and part four. Okay, so we will start off with our part one that is linear combination and span complex inner products all of this then we will get down into projection now before I talk about part two even a little bit first thing your step one is to get familiar with all of these terms. These are important. These are a very curated terms that you're seeing over here and these are very very important. You need all of this to get familiar with first get familiar with the linear algebra and these terms will be used in quantum computing as well going forward. So at that time right at that time your professor will simplify Simply assume that you are aware about all of these terms. Now I will come to phase two later. Let's start off with phase one or part one. Now first of all, you might have heard about the very first term vector. A vector is something which has direction and magnitude. In physics and mathematics, we use this term of vector or definition of vector that is it has direction and magnitude or magnitude of direction. Now, what does it mean magnitude and direction? So just consider this that I have a point.  is coordinate two comma three. Then in that case, what is the value of X over here? What is the value of X? You can type it out too, right? Very nice. I'm just assuming that you know everything from the start itself. So this is my two on X axis. This is my three on Y axis. Okay. And this is basically a vector for us and we typically represent vectors in terms of any alphabet you can think of any alphabet. Let's let me call it a you will not write a you will either write a arrow like this or you will write a bar. Okay, this is a mathematical notation for it and my understanding is most of you will write it in this format. Okay, or at least I will write it in this format. I don't assume. At least I will write it in this format. I am very habituated with this. Now the direction of this vector a vector is what in which direction it is going. Do we know the direction guys 2, 3 it's going in that direction. Yes or no think about it. The vector is going in that direction 2, 3. So 2, 3 is the direction over here. Okay, then this other term magnitude a magnitude is nothing but a nothing but this length this particular length. Okay. So a magnitude is nothing but the length of the vector. Okay length. of the vector and this is typically called as in linear algebra. This is typically called as a norm norm of a vector. will keep hearing this word norm of a vector calculate the norm of this calculate the norm of that. Okay. Now there are typically a very specific norm that is used something called as norm to also called as it has a very specific name also called as Euclidean distance Euclidean distance which basically means you're calculating this particular distance this particular disk. Okay. There is also something called as norm one it is normalized. Yes norm one which has a very different distance formula. It is called a Manhattan distance. Manhattan distance. Okay. What is Manhattan distance? I'll just highlight it. So I'll take the yellow color. See if I travel across this part and this part, this is your Manhattan distance. Okay in simple words, it's the longest distance. Let me take the green color now or red color. If I take this part, this is your Euclidean distance. Okay. So there are two terminologies of norm you have learned norm one and norm to the one that we typically use for linear algebra is norm to Euclidean distance. Okay. So just by looking at this What kind of triangle does it remind you of? What kind of triangle does it remind you of? Right angle triangle. Okay, right angle triangle. So in that case, just a simple question. Get back to class 10th physics. Forget about physics. Class 10th mathematics or class 7 mathematics as a matter of fact. Can I calculate this red line distance? Right? Pythagoras theorem. Very nice. So think about it. That distance, let me call it D. This distance is nothing but, okay, is nothing but the, let's call this A, let's call this B, then it becomes A squared plus B square and square root of that right and this is nothing but your Pythagoras theorem fair. This is a distance formula. Exactly is a distance formula. So in our case, yes, so the Euclidean distance we won't say minimum. We will call it the shortest distance and the Manhattan distance is basically great base short straight line. Yes, correct. Now this particular distance is the longest distance. This is the shortest distance. Okay. So just by looking at it your task of the day is can you tell me what will be norm to distance first? What will be the answer of that just by at the formula anyone yes it would be square root of 13 it would be square root of 13 you just plug the numbers in a is what two square three b is what three square that is square root of 13 that is what i'll get i will not write in decimal but it's all right okay now tell me the simple answer what will be manhattan distance or norm one what will be norm one simple yes three plus two five that's it so my norm one would be five three plus two three plus two five that's it okay now every time i'm writing this norm one norm two in mathematics we don't do that in mathematics every is a shorthand variable. the norm one. So when you write or see a symbol like this of a vector, okay, of a vector, this is called a norm. And if I say this, this is norm two of a vector and this is norm one of a vector. This subscript is something that is very special. And in many textbooks, many literature, you will not even see these subscripts present. They will simply write a norm of this. So typically when people write norm of something, they represent this by default. Okay, I'll quickly pause over here. Is everybody clear with this concept so far? Yeah, perfect. Now let's start talking about a little bit of difficult things.  Consider vector three comma four normal, norm is seven and easy to see where it went.  That way you can also see it in that way. Yes, yes. Now there are a few properties of vectors that we should be aware about. This is a vector. This is a vector. I want you to use your normal thought process and think if this was my vector in 2D, which dimension this belongs to? Which dimension this belongs to? 3D, okay, 3D.  Unfortunately,  see beyond 3D, but mathematics is not limited to any dimension. It can go above and beyond it can scale up very easily. Okay, and that is why we were able to solve mathematical problems like in AI and ML and quantum computing all of these problems. are able to solve today. So in vector there is a concept called a vector addition. Okay, by the way, I completely forgot to introduce this vector is represented in this format in the square bracket format mathematically. Okay. These are vector representation mathematically good. Now the next thing that they can do is you can do vector addition V plus W V plus W. So if you do yes similar to matrix V plus W. No, no matrix is different matrix is different. I'll come to that V plus W you will have this 3 2 4 if you see it does element by element addition like this element by element addition. So vector addition is possible like this similarly a vector. V can be multiplied by a particular element value like 3. This 3 in linear algebra we call it scalar. Vector is multiplied by a scalar value. So this is 3 multiplied by V. So you see each element got multiplied with this. Okay, each element got multiplied with this. Now I'll come to the matrix part a little later. We have this topic. This is where the game becomes a little interesting. That is real versus complex vector space. What is real? What is complex? In simple words, very easy. Any real A vector is called in a real vector space when it comes when the scalar comes from the real value like whatever we see 1 2 3 4 5 6 any number real numbers. Okay, it could be minus 3 minus 4 anything but there are challenges. There are a lot of things in mathematics, which we typically can't represent in a mathematical notation which we typically consider that as an imaginary number because we can't place a variable to it a very simple understanding is how many of you have the idea about there is something called as null in SQL. database or pandas data frame. There is a concept of null values, right? So those null values are also something's undefined. We don't know what is the exact placeholder for that. We don't know exactly same thing in mathematics. We call that imaginary. We can't we don't know the actual placeholder for it. That's the main idea and it's complex in nature. Now by the word complex, it sounds very complex, right? Like what will be the value of it? It's not is just that we don't know it's undefined at that particular point. We don't know the value of it. Now complex numbers are typically represented in this particular form this particular form and I'm hundred percent sure that you guys have might have seen this form in your life at least once somewhere school days college days doesn't matter you might have seen it and for many of you it could be very much possible that you might have forgotten about it, but I'm very sure you have studied about it. Okay. This is a function how we represent complex number. Okay complex number CN and you might have also seen this part again. I can assume that you might have forgotten that is I which I was talking about iota if you do iota square it is is minus one, it is minus one. Okay, now there is a long proof around this. Obviously, we are not getting into that part today, but there is a long proof around it. How I square Iota square is minus one. Okay, so a complex vector typically represented like this, C to the power three. Now a quick question, common sense question. What does the three over here represents? What do you think? It's a dimension, exactly. It's a dimension, like one, two, three. It talks about the dimension, exactly. Now the very interesting part over here is this is a complex vector, like this is a complex vector. I am going to multiply Multiply a complex vector with a complex vector before you answer before you answer. Are you guys familiar with this symbol this capital T over here at the top? What does it mean anyone it is called as transpose? Okay, it is called as transpose. Okay, it is called as transport But before we go into it, let me just quickly tell you what is transpose. It's one of the most simplest concept honestly So if I have a vector which is like this one comma two and I say transpose of that It means a is this one comma two like this. So basically the orientation change rows and columns they swap this one simple. That's how it is as simple as that and this idea will make much more sense when we talk about matrix. Okay. Now. So what do you guys think this multiplied by this is it possible? What do think right very much possible? Yes. So if you see this is two complex vectors see to this part and this part. Okay, what is happening? So basically this element. is being multiplied first with one which is giving me this and this element is being multiplied with I after that. So obviously if you if you expand it this part if you expand it it becomes 2i plus I square and what is the value of I square minus one we have just seen it. So if I simply rearrange it if I simply rearrange it I get it like this. Now your question might be a why are we representing it like this in this format? Why are we not writing it like simply 2i minus one because complex formulas are represented in this format.  A plus IB that's why okay. So far everybody clear. Perfect. Now we are now going to talk about linear combination again a very simple and easy concept linear combination linear combination is nothing but if I have vectors, okay V1 V2 these are better V1 V2 their vectors linear combination says vector can be added right vector addition is possible. So vector addition is possible in a linear fashion linear combination. So if I have this if I have these two vectors, okay, these two vectors. I'm doing this operation. This is called a linear combination guys. That's it and mathematically. How do we represent it as we represented as C1 V1 plus C2 V2 dot dot dot CK VK general formula. Why are we writing C1 and C2 over here here C1 and C2 are actually scalar values single values like numbers. Okay, that number that number could be one in our case example. We have seen they are one. Okay. Yes, the all the vectors has to be on the same dimension. Yes, they can't they can't vary in other demand. They have to be in the same dimension. Yes, then this is what linear combination means again another fancy word. I generally call this guy another fancy word span. Okay span span is nothing but do you agree that this is a linear combination? Yes or no, so would know what span does span basically says I will only take the vectors from that linear combination. So if you write span of V1 and V2 it basically means you can expand it to a linear combination to a linear combination. Okay. So span of a vector is a collection of every vector that can be produced by a linear combination. Okay by default. If you see very carefully this terminology has not a lot of weightage. I would see it in a very fancy way that this is a terminological. So span is basically a collection of every vector that can be produced by their linear combination simple as that. Okay, but this keyword is very important by their linear combination. Okay, what are combination example can be for span anything like for example, I can just show you so if I take any vector, let's say 3x plus I'll do it in this way. I'll just show you so let's I have let's say V1 I have I have a vector Let's say 1 comma 3 just writing V 2. I am writing 4 comma 8. Then if I simply say some scalar value, let's say a some scalar value, let's say a 1 comma 3 plus some other scalar value be 4 comma 8 like this. So these are my vectors. So if I write it in complex form, it would be what I sorry if I write it in compact form, it would be what a V 1 plus B V 2 like this since it can be done in a linear combination. I am just going to write that the span of it the span of it will be represented as in curly braces V1 and V2. That's it. This is what span means which can be expanded to other values. What is A and B over here? A and B are scalar values. Scalar values. This and these are scalar values. Scalar values. Okay, like 1, 2, 3, 4, 5, 7, like that any numbers. This is the exact example. I have just talked about. Okay, I give you 30 seconds to take a pause. Look at this example. See if it is making sense or not. Once it makes sense for everybody and it's clear for all of you. Just give me a thumbs up or say yes, we will proceed. further right? Perfect. Now look at this. Okay, this this C basically represents a vector of two dimension like that. Okay, that's it. So I want you to look at this visualization a little bit to get an idea. I hope everybody can see this V2 and V1 correct V2 and V1. These are my individual vector individual vectors. What is my C1 and C2 anyone? What is my C1 and C2 scalar values exactly. So if I change the scalar value, can you see how the direction can also change is only the direction changing or the magnitude is also changing just Just look at this and tell me both or any one of them right? It is changing both. So that is the broad idea how linear combination can change the magnitude and direction of my vectors. Okay, that's the core idea. Now we are getting into solving things. So this was understanding vectors. Now we have to solve vector equation and in order to solve vector equation. We need a concept of linear independence. Okay again, this terminology is very fancy I feel but what does it mean in simple words? I'll tell you let's say I give you a vector vector a set of vector V1 V2 V3 V4 VK. They are called linearly independent if and only if that vector is equal to zero that linear combination of vector is equal to zero. It means it has only the trivial solution of C1 C2 dot dot dot CK equals to zero. Okay, if a non zero solution exists then this vectors are linearly dependent. Okay linearly dependent. So tell me very very simple. I give you an equation like this. is only one time when LHS will be equal to my RHS. There's only one time right that would be happening when all the scalar values are equal to zero and that is what we call as linearly independent of vector equation is linearly independent when all of his coefficient or scalar values are zero if any of them if any of them is nonzero, they will call it linearly dependent. Okay, we call it linearly dependent. That's the main idea again the intuition the testing all of these are there. I just want to come how how do we remember all of these new concepts with time you will Remember it so the real time so there is no rocket science around this with practice and we get familiar with this. So if you ask me, how do I know all of this because I practice this every single things on my day job every day. use this. That's how I remember it for the past nine years. I've been doing this. So that's how I remember it. Okay. I won't say there is any shortcut around it. Okay. Now next part something called as a basis something called as basis. This one is a nice way to look at it basis. We have now three ideas in sequence. We talked about linear combination. We talked about span.  about independence a basis is nothing but the combination of last two that is span and independence. Okay basis is nothing but a set a collection a set is a basis for a better space if it's span the space and it's linearly independent. Okay. So if I give you vectors to vectors this and this okay, and I take a span of it that is V1 V2 like this and you do a linear combination of these two. Let's say you do a linear combination of these two that is C1 V1 plus C2 V4. and if they becomes equal to zero then these vectors are basis. These vectors are basis. That's what it means. Okay. So a set of basis for a vector space if the spans of the space is linearly independent, that's it. Okay. Now how this is connected to quantum computing which you will eventually learn going forward. Okay. Now in quantum computing this exact same term this exact same turn is known as computational basis computational basis exact same thing is known as computational basis. So today you're just getting familiar with some of the terminologies. Okay. Now this part this part is called dimension. Okay. This part is very very simple to understand. So if I give you a vector like for example anything so you tell me how many dimension is this these two vectors to dimension right this part you have already understood. is two dimensional vectors. Similarly if I can play around with so if I write something like this one second, so if I write this yeah, what is the dimension of this right? What is it? What is the difference in terms of dimension writing in horizontally and vertically? So there are two types of there are two types of vectors actually uncut. So one is called the row vector, which is typically written as like this. one, two, three like this. And then we have something called as column vector. Same thing, exact same thing.  Representation is different. That's it. It would be like this. Now typically when we talk about a vector in AI ML or quantum computing, we typically represent everything as column vectors typically. Okay. So it's the same thing. There's no just a representation different. Can we link the concept with rows and column? Not yet. So the rows and columns concept will actually come into play when we talk about another kind of vector, which is not exactly better, a two dimensional vector, which is called as a matrix. There it will come actually into the play. Okay. Now I think the kind of explains the difference with matrix vector has either row or column exact not a combination of exactly exactly. it's either one of it's a representation. That's it. Okay. So here there is no row no column, but if you swap it like this to change it orientation, that's why we call it a column vector or a row vector, but these are only names. Okay. The whole game is not changing. It's just name. Okay, just like you can think of you have a nickname at home and your formal name is but the person you are at the same, right? So that's the whole concept now this part.  just want to talk about this important part is topic. Okay. The one is a transpose of the other right? They can exactly they can yeah, just a transpose of the other they are exactly the same. They are they are exactly the same just the transpose of the other. Okay. Now look at this particular part the complex inner product. Okay, the complex inner product a way of multiplying two vectors into a single number that measures how much they overlap. This is a very beautiful definition. I would say okay a very beautiful definition. I want you to just focus on this part first this first half which is called in a product. Okay, just one. right, let's continue. So now this particular part which says how much of two vectors are actually similar to each other and by the way guys this concept I'm not sure how many of you are actually from the AI or ML background. I'm assuming none of you are but this particular concept actually runs a very very very big show in a ML space whether you talk about GPT based model where you talk about recommendation system whether you talk about classification based models this particular concept is there everywhere which is called as a dot product. Have you guys ever heard about this something called as a dot product anyone dot product of two vectors? Yeah, you might have heard about it, right? So I'll talk about dot product very quickly because the first definition itself is dot product. Yeah. Now the second part what does dot product means? So if I have a vector like this V and I write one two three and I have another vector T horrible drawing. I'll draw it in my notepad. So look at this. So if I have a vector V as one two three and I have another vector you four five six now do you guys Remember that matrix multiplication concept, matrix multiplication concept that how matrix multiplication is possible, right? That again is a very big concept within machine learning itself. So I have to do V transpose u bar like this. So how will it look? It will actually look like this. One, two, three, four, five, six like this. Now you will do a simple element by multiplication and do a sum of it. So what will happen? It will become four times one plus five times two plus six times three. So what you will get, you are simply going to get four, 10, 18.  I'll just do a sum of a 32. All right. So this is what you will eventually get. This is the value you will get now this essentially talks about how two vectors are actually similar. Now when we talk about vectors being similar this number doesn't indicate. Okay, this number doesn't indicate anything doesn't mean anything. Okay, even without transpose we can't why can't we multiply because it's part of the matrix multiplication rule within the you can actually look at look it up because for matrix multiplication right for matrix multiplication. You might have heard about this that the row of the first sorry if a matrix is like this having shape a cross B and if you want to do a multiplication then it has to be B cross C like that. So these two things needs to match and in order to for us to perform the rows and columns to match one of them has to go for transpose. That's it. And typically the first one is what we transpose with. Okay, that's a matrix multiplication rule. As I was saying this number will not make any sense for that. There is a concept. and that concept is angle between two vectors.  So if I have a vector like this, two vectors, I'm just drawing it out. Let's call this u vector and v vector. So this angle is called theta. Now think and tell me if they are overlapping on top of each other, if two vectors are overlapping on top of each other, angle would be what? Angle would be what? Zero, right? Practically zero. There is no angle between them. So the formula for this is actually cos theta equals to v vector dot u vector and divide by the norm of V vector dot u vector. Now here this is a dot product just like what we have learned. This is a dot product what we have done in a product or anything. This part is multiplication of norm multiplication of norm. All right of two vector multiplication of norm of two vectors and when you do it, you will get some value around it. Let's say cos theta equals to 0.34. Now just hypothetically speaking 0.34 hypothetically speaking. Okay random number now from here will we be able to calculate the theta? Yes or no that is Theta would be cosine inverse of this 0.34 job done. Okay job done. So with that being said I want you to remember this concept for the next five minutes because we're going to understand a very important concept that is so hold on to that thought. Okay, hold on to this thought will come back to this in just five minutes. Let's get back to inner product or dot product. Once again for complex vector. The first one is a conjugate first. Okay, like what is a conjugate? Have you ever heard about this word conjugate anyone just swap science? I would say swap science conjugate. Okay swap science. So I'll just show you what a conjugate of a vector would look like. So complex vector, right? Complex vector. So if I have a complex vector, so it would look like this. I'm just taking a random vector X. Is this a complex vector? Yes or no? Yeah, 100%. So if you do a conjugate of this, if you do a conjugate of this, it will become one three minus two I that's it three minus two. I this is what conjugate means the sign of the complex part will change whatever it will flip. If it was positive, it will become negative negative. It will become positive. This is what conjugate means. Okay, just wanted to give you that experience. this part. Okay and look at this particular symbol. So when you define a conjugate we write it. So we write it with an asterisk. So in my case this X bar would be represented as a star to represent conjugate is this idea of conjugate clear for everybody simple right transpose is mandatory before conjugate not necessary not necessary conjugate is a separate concept conjugate transpose is separate concept. So when we use the word conjugate transpose, that's a separate concept. Okay. I just talked about conjugate conjugate transpose is a separate concept. Okay.  one did not become minus one because conjugate only works on the imaginary part of it only the imaginary part of it only this part not on because the complex vector it only works on the complex vector part of it not the whole vector. Okay. That's right now. Okay. So what is what is transpose versus conjugate transpose? I want you to make a quick read of it. You will be able to do it by yourself. I'm hundred percent sure just tell me if this is making sense or not to all of you just go through it make a read about it. Yeah straightforward concept right now what I want you to do is is get back into our discussion what we were discussing over here a quick question to all of you a quick question to all of you this value this particular value whatever written over here if this is actually zero then what is cos theta theta theta let's talk about theta what will be the value of theta 90 degree right 90 degree. So think in this way look at the formula cos theta equals to a vector dot product B vector divided by norm of a norm of B. Okay, if my cos theta is zero then theta is 90 degree which means my two vector my vectors are something like this. Frankly speaking if this is my a vector and this is my be better. It would look like this. Yes or no 90 degree just like you guys said. So this angle is my 90 degree. Now, what does it mean two things you have to learn first when two vectors are completely perpendicular to each other. are called orthogonal to each other orthogonal orthogonal vectors again perpendicular vectors orthogonal vectors doesn't really matters the same thing. Okay people usually get confused with this but it's the same thing now orthogonal vectors. But how do we know that orthogonal vectors will be See my RHS my right hand side this thing needs to be become zero when this thing can become zero. Tell me that this thing this whole thing this whole thing can be zero when my numerator is zero when my numerator is zero that is correct. If my dot product becomes zero, then can I say my two vectors are orthogonal to each other? Yes or no very frankly, right then I don't have to do all of these mumbo jumbo after this. can simply do a dot product of this and get the answer out. Okay. What are those double vertical lines of our a and b that is called a norm that's called a norm norm of a vector. Okay norm. I think I did not write the double line over there my bad one second at the start. This is norm double. I don't know what I was thinking, but this should be double norm. Okay, like this. Okay has to be linear independent to get a zero in the numerator not necessarily not necessarily round. I'm talking about two independent vectors doesn't necessarily be linear independent. Okay, so we are talking about two vectors being what is the relationship between the two vectors are they perpendicular or orthogonal to each other or not? That is what we are trying to find and for that that they does not necessarily have to be linearly independent. Okay, linearly independent is basically a way of solving equation. That's it. Okay. Now, so we'll roll back to our idea. I have just covered about norm. Okay. I have also covered about orthogonality. Now two vectors are orthogonal if their inner product is zero. We have just talked about it. Okay, the angle should be 90 degree or 270 is also okay for them to be called orthogonal. No, for 270.  It's one second how you are saying. So basically you're saying like this is that Is that the case in case in your you're representing it like this? No, right? It will not 270 is not exactly here. Right? That's 180 exactly. We only take acute angles between the vector. Right? We only take one one side of not the acute angle the shortest if you when you say acute angle nickel, we only take only one direction either it's clockwise or anti-clockwise. Okay, like that a cause value can be zero at 270 also, right? I'll just show you the cost in case you're wondering cause theta image tick tick tick tick tick not I don't want to this I wanted the waveform. So is there any this is clear. See this is your zero. has value one. This is pi which is 180 minus one. Okay. This is your 90 again at zero after that's a repeating cycle right after that's a repeating cycle. So cos theta repeats at every every cycle of 360. It repeats after that. Okay. So technically the cos value that will be zero at 270 is an extended version of it. Okay, it's simply so you're talking about this point and this point right? mean if I I get it right. Yeah, so it's a repeating cycle. So it's it's one half of the wave is repeating whether you get it at 90 or 270 is really doesn't matter. Okay, so we have essentially covered everything except for one topic that is a set of vectors, is called orthonormality. Okay, another term orthonormality a set of vectors that are all at the right angle to each other and each length is exactly one exactly one. So when we talk about length, what exactly are we talking about over here guys? What terminology we are supposed to use we are supposed to use norm or magnitude anything. Okay norm or magnitude now now understand this whole flow. Okay, understand this whole flow. No, no, She has a see the cycle repeats over here. If you see this part cycle is up till here. Okay, or if you see very carefully the cycle is actually like this from one one crest to here. This is one cycle. Okay, so it is still one peak one peak one bottom one bottom like that. So it's repeating. is the whole cycle of it. So the cycle depends on how from where we are actually selling selecting it. So the absolute value is only between 0 to 90. Yes, it's just one cycle. You can consider if you select this cycle, this is the part it means you're taking the other half from this. Okay, so it's basically a repeating cycle only but depends on how you take the cycle if I'm taking the cycle from here I have to reach out till here like that. Okay, that's that's the main idea now if you see this is how we typically take minus pi to pi This is how I take it or anybody would take it cost Okay, but we don't typically take it from here to here that that's where the confusion came into the picture Okay, so minus 180 to 180 now next what is normality orthonormality very simple two vectors are orthonormal if they're orthogonal and have a norm of exactly one exactly Exactly one. This is a very very simple definition. So technically we have covered our part one part two. will just talk about it part three. We will talk about it part four. We will talk about it. Okay. So these are micro concepts very easily to understand. We will talk about it in the next 30 minutes. Okay, so guys take a break of five minutes and then we will regroup and discuss about projection matrix operation and tensor products. All right, so please take a five minutes break and we regroup in 1235. Now, let's understand something called as a projection. Okay, vector projection. This is again important concept of projection. Now, if I draw a vector like this, let's say a vector and I have a vector like this like this. Do you agree that the shadow of this vector a will fall on this be better thinking that way and this is essentially what we call as projection. So basically what we are dealing over here is projection of a vector on B vector. So when we talk about projection, we are actually talking about this part the shadow will be casted on this part. like this part. this is projection of a on B and what is the formula for that the formula is very straightforward. You will write a vector dot B vector divided by the norm of B vector. Okay, the norm of B vector this particular formula this part just this part as a very special name as a very special name. This thing is called unit better and typically represented by the vector cap B cap like this. So you are looking at the final formula as a vector dot B cap like this. Okay, you need to vector. What is the specialty of you? unit vector the specialty of unit vector is the magnitude of this unit vector will be one the magnitude of this unit vector will be one. So unit vectors are typically used for us to understand the direction of the vectors understand the direction of the vectors since the magnitude is only one a constant value. is help us to understand the direction of any vectors. So I'll just go to projection now. It would be very easy for you to understand in this form. Yeah, absolutely. You will have all the documents all the notes this interactive play chart playroom.  Okay. Now, so now look at this. If you see this particular part, I'm talking about V vector and U vector. Okay. So we are actually dropping this projection of V on U and can you clearly see that we are calculating this projection the blue line everybody can see the blue line, right? So this is your projection. This is what we calculate and the general formula for projection is this now this may look a bit complicated if you read about it, but I have made it a more simplified version of the exact same thing. So projection of a vector is falling on B the formula would be a vector dot B vector that is doing a dot product of this divided by a norm of B vector. Okay, same thing. Look at the same thing same idea. If I take this vector, let's say this is B vector now B vector is projecting on a will the formula be same or slightly different? What do you think it would be different? Okay, it would be different because now B is being projected on a so we are trying to find this projection this projection. Okay, so it would be I'm writing simply projection B vector on a vector. The equation will slightly change. would be B vector dot a vector divided by the norm of a vector like this or you can simply write B vector dot a cap like this. So there are multiple problems over the internet. You can solve around this concept. See the concepts are not difficult. Okay, if you understand it in the right fashion, the concepts are not difficult at all. Now everybody clear with the idea of projection for any doubt guys any doubt with projection. Yes. Is this is this always going to be perpendicular? Yes. Okay. Yes, it is always going to be perpendicular. Yes. Okay. So look at this case.  the orientation a little bit. you see that the distance or that shadow is always perpendicular no matter how I change the vector no matter how I change the orientation of it. Okay, it's still perpendicular. It will always be perpendicular distance. Okay. So when I say shadow you may think the Sun is over here the light is being casted. So shadow should be like this. No shadow will be always perpendicular now for orthogonal vectors. It would be zero right? Yeah for orthogonal vectors. There can't be any shadow right exactly now. Now the whole whole concept of this projection part is what I have covered in a very short fact. Now these are actually detail notes which you will have you can definitely go through this. This would be very very helpful coming to the next chapter, which is your matrix operation matrix is a very very beautiful concepts throughout machine learning AI any space of quantum computing you will encounter matrix now matrix is nothing but combination of vectors. So if I have a matrix, let's say a 1 4 3 5 2 2 8 1 This is a matrix of shape three cross three. This is a matrix. Now matrix has lot of lot of properties. We will quickly talk about those properties. Okay matrix. The very first property we will talk about is transpose. We will write a transpose like this. So rows will become column, column will become rows. Look at this. This is a column. This is a column. This is a column. So this column will become a row. That is one, five, eight, four, two, one, three, two, one. See rows have become columns, columns have become rows. Does the shape of the matrix will change in this case? The shape of the matrix will change in this case. In this case, okay, that is the keyword. The answer is no. It will still remain three cross three. It will remain three cross three, okay? But if you're dealing with a different matrix like this B whose shape is five comma two, it means five rows and two columns, then what will be the B transpose shape? Exactly, it would be two comma five. Okay, so this is the one property that we have just learned about it. Now, next property is basically matrices as linear operators. operation, okay matrices as linear operation. Now, where does matrix actually come into the picture? You also have to understand that very quickly matrix comes into the picture. You can think of these are individual vectors put together right individual vectors put together. So if I simply take a I'll just copy it actually. Okay. So if I simply write something like 3a, what do you think it will happen? What do you think it will happen? It will simply multiply each element with three exactly right multiply each element with three. So now can I look at this a particular part as individual vectors? So can I see it like this as a as V1 V2 V3 inside this can I see it in thinking that way tell me guys right? So a matrix is nothing but a collection of vectors a matrix is nothing but a collection of vectors. So if you want to solve multiple equations at scale, you would use a matrix not a vector. Okay, same thing in machine learning. We solve multiple dot product computation along with it. Okay. So for that we use matrix and not vectors. So basically vector got evolved into matrix. You can think it in that way. Okay. That's a easy way to representation. Now I was talking about properties right from there. The property that we are talking about is unitary Matrix a Matrix that moves vector around without changing any length or rotation. could be a rotation or a reflection of a whole space. What does it mean in real linear algebra? See I use the word real it means there is no complex orthogonal Matrix preserve length in complex spaces. The corresponding concept is a unitary Matrix. So unitary Matrix is a concept for complex  a matrix U is unitary if and only if this particular format is followed. Okay. Now you may think this is essentially a multiplication U multiplied by U. Okay, but it's a conjugate. It's a conjugate. Okay. So what does it say that if you multiply you conjugate with original U matrix, it will give you an identity matrix. This is called as a identity matrix. Okay. I quickly show you identity matrix. This is an identity matrix. This is an identity matrix like the diagonals will be 1 everything else would be 0. Okay, diagonal will be 1 everything else would be 0. This is called an identity matrix and it is saying the exact same thing. We call it a unitary matrix of a complex vector space. If you multiply conjugate of that matrix along with its own matrix, you will get an identity matrix. Then we call it as a unitary matrix. Okay. I told you there are multiple concepts over here. These concepts will be eventually used going forward. Same thing. I'll have to talk about the hermitian matrix. Now the hermitian matrix is basically a matrix. Don't get confused by the terminologies guys. It's a very simple thing. Actually, this is a matrix H if this matrix is equal to the conjugate of it, then it's called a hermitian matrix. I told you there are a lot of terminologies over here. Original matrix equivalent to the conjugate matrix. This is called a hermitian hermitian matrix. Okay, take an example. Let's say this is my H I do a conjugate of this. Okay. So when you when people write H star over here, they actually first have to go and make it a transpose and then make it a conjugate. That's a conjugate transpose. We will do and if they come out to be same, are called the hermitian matrix. Okay. Now, why did we study this? Let me just tell you that part as well. The hermitian part why hermitian matrices are important. Okay. There is a small concept around this that small concept of this hermitian matrix are their eigenvalues are real. Now, this is a very very important concept eigenvalues are real. This is extremely useful because the eigenvalues of a general complex matrix can be complex for Hermitian matrix. Okay, the eigenvalue behaves like a real geometric quantities. Real Geometric quantities. I'll come to this once again. Let me just quickly help you understand this part of the Hermitian Matrix. See I'll just do it for you. I have H over here as 0 minus I 0 minus I and what was the other thing I 0 so I 0 so first we will transpose this H transpose. What will be the case it will be become 0 I minus I 0 and then you want to do a conjugate of this H star. What will it become 0 I will become minus I minus I will become I 0 will remain 0 now is this matching with this? Yes. If yes, this is the Hermitian matrix. Okay, that's it. Clear? Now why this is important because this property because of this property Hermitian matrix gives you the eigenvalues which are real eigenvalues. Now for a complex matrix, the eigenvalues could also be complex but for a Hermitian matrix the eigenvalue even if the Hermitian matrix is complex the eigenvalues will be a real geometric quantities which we can actually use and leverage. But for that you need to know what is eigenvalues and what is eigenvectors now there are two terms eigenvalues and eigenvectors. Okay, and eigenvector is a direction the matrix does not turn to it only stretches.  it simply means a direct an eigenvector is a direction the matrix does not turn it only simply stretches it only elongates the magnitude can change but the direction won't the eigenvalue is how much it stretches by so basically your eigenvalue is like the magnitude how much it stretches by vector talks about the Okay better talks about the direction now if I have a matrix if I have a matrix H I can decompose that matrix with another vector V with another vector V equals to lambda times that same vector V. it basically means here this particular vector is called the eigenvector and the lambda over here is called the eigenvalue. The transformation is very simple. You are trying to find such values and such vector combination which will represents this entire matrix along with that. vector combination. Let me see if we have some good example. So let's try to understand this. Let's take an example to solve or find eigenvectors.  We'll solve one small equation. So let me pull up. Okay, let's start with this. Okay. So going through this concepts can be very scary. So we'll solve one example to understand eigenvalue and eigenvectors. Now eigenvectors and values. So we are trying to find the eigenvalue and eigenvector of a matrix. So let's say I give you the matrix as 2, 1, 1, 2 just intentionally taking up some smaller size. So what we have to do we have to get we know the formula. know the formula a V equals to lambda V. is V over here? What is V over here the vector eigenvector? Okay. This is my eigenvector and this lambda is my eigenvalue eigenvalue. So the question is how we can solve this thing. Okay, so we need to find the lambda our goal is to find lambda to do this the approaches you will take a determinant of a minus lambda. I equals to zero. This is the equation you will solve. What is I over here guys? What is I over here? identity matrix identity matrix. Okay. So what we are doing over here is a minus I that is a is two one one two minus lambda with I matrix would be one zero zero one is this this part clear the middle part right now what you have to do is just expand it it becomes two minus lambda then it becomes one then becomes one minus lambda or one zero and then it becomes two minus lambda. That's it. I have just done on that entire equation altogether. Now what you have to do is you have to find the determinant determinant of this matrix is nothing but you multiply this with this minus this with this you have to do this. So I will do 2 minus lambda 2 minus lambda minus 1 times 1 would be 1 if you solve this do you agree that this is nothing but a quadratic equation? Yes or no. if you solve this quadratic equation, how many lambda value we will get how many lambda value we will get we'll get two lambda values. We'll get two lambda values. It's a quadratic equation. Okay. I can solve this as I'll just write down this equation. This is nothing but 2 minus lambda whole square minus 1 if you expand this it will become a square plus b square minus 2 a b minus 1 equals to 0 so you solve this you will get some value. have the value written in front of me. So I'm not solving it lambda 1 would be 1 lambda 2 would be 3 so we have got our eigenvalues everybody clear. We have got our eigenvalues. We have got our lambda right now for each lambda for each lambda over here. Can we find? our associated V that is also very simple. So we have we know our lambda right? So for this we will find our associated V see how we can find our associated V that also is very simple this particular part this particular part. will simply multiply it with the eigenvector. So look at this. will say a minus lambda I times that equals to 0 now tell me do we know all three of this? Yes or no. Do we have all the information around this we have all of them. So do one thing whatever the values they were like 2 1 1 2 2 1 one, one, two minus lambda one, zero, one, zero, one like this. This is what you're to do. And for each value of lambda I told you, so that is first case lambda is one. If you plug lambda one over here and solve this whole equation, you will actually get a final answer like one, one, one, one like this. Okay. So what do you have to do? You're taking this one, one, one, one multiplied with this V. So let's take this V vector value as X and Y. Okay. Equal to zero. So if you do this, what are we getting? X plus Y. equal to zero x plus y equal to zero because I'm doing nothing x multiplied with this this multiplied with this getting the equation equal to equal to zero. Actually, this would be equated to like zero like this zero and zero like this. Okay. And finally if you solve this what you will get x equals to minus y now if you do x equals to minus y and if you put x equals to 1 what will be the case of y so I again vector 1 would be 1 and minus 1 like this like this and similarly we are also need to solve it for lambda equals to 3. Then you will get a V2 of it again after that and that is a core idea of calculating these eigenvalues. Now the bigger question that I want to ask is do you agree that one one matrix can have multiple eigenvalues and eigenvectors? Yeah, is very much possible like we can see exactly very much possible. Okay, and this particular concept of eigenvalue and eigenvector. me just connect you with where this is used in AI or machine learning so that you can also connect that same thing into quantum computing as well in AI or machine learning.  using something called as a principal component analysis. Anybody heard about this algorithm principal component analysis typically known as PCA. Okay, there also this is used. Okay, there also it is used the same concept. I'm just giving you an application around how this can be used. Now we are almost wrapping up this part. Now this fourth part. I want you guys to go through it as far as the node once okay, no need to go over it right now. No need to go over it right now. This is the next part which is tensor. Okay. Now what is tensor? Let me give you a brief of that so that you guys can connect it very easily. See if you see the proper flow of the picture we started off with vectors then we move on to matrix and then we switched to the near higher concept of tensor. So what do you think if you understand the pattern between vectors and matrix? What do you think tensor would mean anyone? It's the same concept. Again, exactly. It is the same concept what we have seen. It's now a more higher combination. It's like a more higher combination. That's it. No difference at all whatsoever. So just to give you an idea, just to give you an idea, I'm just going to write down a format so that you can understand the format and the rest of the whole flow is same. If you understood matrix, you will understand tensor. So I know the class has been stretched by a little bit, but I just want to take two more minutes of your time. A is going to be A1, A2, just like this. Okay. And B is going to be B1, B2 like this. So these are my two vectors.  two vectors. Now if you want to do a tensor product of this, okay, tensor product of this, what does it mean? You will simply write like this, A, this symbol like this. It's called a tensor product. This will create more combinations around it, like all possible combination around it. What do we call this in join, SQL join? I forgot. In SQL join, it's called a cross product. It's called a cross product. Okay, so look how it will come. It will come as A1, B1, A1, B2, A2, B1, A2, B2, So this is basically called as a tensor product. Okay cross product in SQL. We call it a cross product. Okay. So think in this way. Why does this exactly gives us the idea of quantum computing because from here the quantum computing game actually starts. Okay. Oh, I think I made a mistake is the same thing right? No, no, no, it's the same thing. I have changed it. Look a 1 b 1 a 1 b 1 then a 1 b 2 then a 2 b 1 a 2 b 2 right? So it's all possible combination here. See so is there are doing I think it's fine, right? It's fine. It's correct only. Okay. possible combination. basically two times two now before does it occur in the same order the order in vector the order doesn't really matter over here. Ravi. Okay. Now what is quantum computing so famous for this is the last question. I'm wrapping up with what is quantum computing the most famous for tell me that like this one thing you have learned about right quantum computing cryptography anything. I'm not talking about the application. talking about the core heart of it. Why it is so special about its speed, right? It's speed is speed what we can't achieve with a normal computational bits. See when we when we say we want speed throughout our life history, human history. We have done this. If you see very carefully, speed versus accuracy. Tell me one thing. This is what we have done. Speed versus accuracy trade off throughout our human history before quantum computing. We have been doing this. Like if you achieve greater speed, you do a trade off with accuracy. If you get higher accuracy, it will take a lot of time to solve the problem. But quantum computing is solving this exact same thing. So if you want higher accuracy, then you essentially have to check all possible scenarios, all possible scenarios those all possible scenarios can't be done in one linear thread of motion and this is where different states more than two states or simultaneous states concepts is actually coming in to solve problems. So in in if I have to give you the analogy the idea is in CPU just like we have multi thread which does parallel processing and all of that here in quantum computing. We have the same concept. It is called as a combines combined state or multi-state. Okay, that is where the entanglement also comes in exactly and that is where the entanglement part also comes in this leads to that important concept of entanglement and that is where the whole idea comes in. So can I write the flow for you guys so that your course curriculum becomes easy? See we are looking at vectors it goes into tensor products. Whatever we have done this will lead to something called as multiple qubits, which I verbally explained that will lead to entanglement exactly and obviously entanglement and all this is the whole program that you're going to study about. Okay. Is the flow clear for everybody where exactly linear algebra sits and why you need to cover this basics. Okay, perfect. So with that being said, I am essentially done with the content of this class. Now what is left out for you guys is to shine and solve those assignments and how can you solve those assignments? You use this particular notebook as a reference. This will be shared along with my own handwritten notebook that will also be shared. Okay, so you can use it as a reference and go kill it. That's all I'm going to say. Okay, perfect. Perfect. I hope the session is done. Chaitanya over to you.
+very popular a lot of research has went into this honestly speaking something called as
+entanglement. Now, how many of you have? heard this term entanglement quantum entanglement. Okay.
+I'm not discussing about this term. So it's okay completely fine. I just want to give you the idea
+about it. How quantum computing is connected to linear algebra. That's the more idea. Okay. Now the
+important part over here is sorry the important part over here. This entanglement is actually coming
+from the idea of something called as complex numbers or complex vectors. would say complex vectors
+because entanglement typically says about the idea that we can't represent either in 0 or 1, says
+that anything in between can happen. The state can change. Okay. This particular terminology in
+quantum computing is called as quantum state and we will use this idea very in a simple manner.
+Okay. All right. I repeat once again that is entanglement is the idea of having a hovered state a
+hovered state. It is not 0 or 1. It is a hovered state. It means it's not either 0 not either one
+something in between. Okay. That is typically represented by the idea of linear algebra called as
+complex vector. The same terminology complex vector same terminology is used in quantum computing as
+quantum state. Okay, very nice. Now there are more terminologies associated with it. Even this guy
+has a linear algebraic terminology around it so I can say that but we'll just I'll just tell it but
+I will not explain it too much into it because that's a completely different side of thing is
+something called as unfactorized or unfactorizable state again same concept just a different
+terminology. It means you cannot factorize or break it down into two parts or something. Okay, why
+we need to study linear algebra that you have got. So the basic foundation of quantum computing
+itself is linear algebra. So we need to study some basic idea around linear algebra. Okay, and as
+Chaitanya and your professor has been mentioning that they will be sharing a problem solving set for
+all of you. It will have 18 questions in total.  So talking about linear algebra now, this is a
+very, very, very lengthy space. A lot and lot of concepts are there around it, but we don't need to
+learn all of those concepts. is something called as linear combination. There is something called as
+vector space. There is something called as Hessian matrix. There is something called as eigenvalue,
+eigenvectors. A lot of these things are there. So we will learn these concepts in a flow and in
+order to study the flow in a step by step manner, I have curated a nice document for all of us over
+here. Just a quick thought. So the main idea like typically what we do like during our school days
+or college days, we did not have a very good flow of understanding what comes after what. So this is
+typically the flow cool. how you should study linear algebra for quantum computing. Okay, as I
+mentioned, there are way too many concepts around linear algebra. We will only focus on those
+concepts which are required for us to get going. Like we will start off with the idea of vectors.
+Then we will move to linear combination, something called as span, something called as linear
+independence, something called as basics, something called as inner product, something called as
+orthogonality. Okay, now if you see very carefully, this particular part is very, very basic part,
+like a foundation. So we will spend roughly around 20 to 40 minutes discussing about these basics
+then I have broken it down into like this phase one or part one part two part and part four. Okay,
+so we will start off with our part one that is linear combination and span complex inner products
+all of this then we will get down into projection now before I talk about part two even a little bit
+first thing your step one is to get familiar with all of these terms. These are important. These are
+a very curated terms that you're seeing over here and these are very very important. You need all of
+this to get familiar with first get familiar with the linear algebra and these terms will be used in
+quantum computing as well going forward. So at that time right at that time your professor will
+simplify Simply assume that you are aware about all of these terms. Now I will come to phase two
+later. Let's start off with phase one or part one. Now first of all, you might have heard about the
+very first term vector. A vector is something which has direction and magnitude. In physics and
+mathematics, we use this term of vector or definition of vector that is it has direction and
+magnitude or magnitude of direction. Now, what does it mean magnitude and direction? So just
+consider this that I have a point.  is coordinate two comma three. Then in that case, what is the
+value of X over here? What is the value of X? You can type it out too, right? Very nice. I'm just
+assuming that you know everything from the start itself. So this is my two on X axis. This is my
+three on Y axis. Okay. And this is basically a vector for us and we typically represent vectors in
+terms of any alphabet you can think of any alphabet. Let's let me call it a you will not write a you
+will either write a arrow like this or you will write a bar. Okay, this is a mathematical notation
+for it and my understanding is most of you will write it in this format. Okay, or at least I will
+write it in this format. I don't assume. At least I will write it in this format. I am very
+habituated with this. Now the direction of this vector a vector is what in which direction it is
+going. Do we know the direction guys 2, 3 it's going in that direction. Yes or no think about it.
+The vector is going in that direction 2, 3. So 2, 3 is the direction over here. Okay, then this
+other term magnitude a magnitude is nothing but a nothing but this length this particular length.
+Okay. So a magnitude is nothing but the length of the vector. Okay length. of the vector and this is
+typically called as in linear algebra. This is typically called as a norm norm of a vector. will
+keep hearing this word norm of a vector calculate the norm of this calculate the norm of that. Okay.
+Now there are typically a very specific norm that is used something called as norm to also called as
+it has a very specific name also called as Euclidean distance Euclidean distance which basically
+means you're calculating this particular distance this particular disk. Okay. There is also
+something called as norm one it is normalized. Yes norm one which has a very different distance
+formula. It is called a Manhattan distance. Manhattan distance. Okay. What is Manhattan distance?
+I'll just highlight it. So I'll take the yellow color. See if I travel across this part and this
+part, this is your Manhattan distance. Okay in simple words, it's the longest distance. Let me take
+the green color now or red color. If I take this part, this is your Euclidean distance. Okay. So
+there are two terminologies of norm you have learned norm one and norm to the one that we typically
+use for linear algebra is norm to Euclidean distance. Okay. So just by looking at this What kind of
+triangle does it remind you of? What kind of triangle does it remind you of? Right angle triangle.
+Okay, right angle triangle. So in that case, just a simple question. Get back to class 10th physics.
+Forget about physics. Class 10th mathematics or class 7 mathematics as a matter of fact. Can I
+calculate this red line distance? Right? Pythagoras theorem. Very nice. So think about it. That
+distance, let me call it D. This distance is nothing but, okay, is nothing but the, let's call this
+A, let's call this B, then it becomes A squared plus B square and square root of that right and this
+is nothing but your Pythagoras theorem fair. This is a distance formula. Exactly is a distance
+formula. So in our case, yes, so the Euclidean distance we won't say minimum. We will call it the
+shortest distance and the Manhattan distance is basically great base short straight line. Yes,
+correct. Now this particular distance is the longest distance. This is the shortest distance. Okay.
+So just by looking at it your task of the day is can you tell me what will be norm to distance
+first? What will be the answer of that just by at the formula anyone yes it would be square root of
+13 it would be square root of 13 you just plug the numbers in a is what two square three b is what
+three square that is square root of 13 that is what i'll get i will not write in decimal but it's
+all right okay now tell me the simple answer what will be manhattan distance or norm one what will
+be norm one simple yes three plus two five that's it so my norm one would be five three plus two
+three plus two five that's it okay now every time i'm writing this norm one norm two in mathematics
+we don't do that in mathematics every is a shorthand variable. the norm one. So when you write or
+see a symbol like this of a vector, okay, of a vector, this is called a norm. And if I say this,
+this is norm two of a vector and this is norm one of a vector. This subscript is something that is
+very special. And in many textbooks, many literature, you will not even see these subscripts
+present. They will simply write a norm of this. So typically when people write norm of something,
+they represent this by default. Okay, I'll quickly pause over here. Is everybody clear with this
+concept so far? Yeah, perfect. Now let's start talking about a little bit of difficult things. 
+Consider vector three comma four normal, norm is seven and easy to see where it went.  That way you
+can also see it in that way. Yes, yes. Now there are a few properties of vectors that we should be
+aware about. This is a vector. This is a vector. I want you to use your normal thought process and
+think if this was my vector in 2D, which dimension this belongs to? Which dimension this belongs to?
+3D, okay, 3D.  Unfortunately,  see beyond 3D, but mathematics is not limited to any dimension. It
+can go above and beyond it can scale up very easily. Okay, and that is why we were able to solve
+mathematical problems like in AI and ML and quantum computing all of these problems. are able to
+solve today. So in vector there is a concept called a vector addition. Okay, by the way, I
+completely forgot to introduce this vector is represented in this format in the square bracket
+format mathematically. Okay. These are vector representation mathematically good. Now the next thing
+that they can do is you can do vector addition V plus W V plus W. So if you do yes similar to matrix
+V plus W. No, no matrix is different matrix is different. I'll come to that V plus W you will have
+this 3 2 4 if you see it does element by element addition like this element by element addition. So
+vector addition is possible like this similarly a vector. V can be multiplied by a particular
+element value like 3. This 3 in linear algebra we call it scalar. Vector is multiplied by a scalar
+value. So this is 3 multiplied by V. So you see each element got multiplied with this. Okay, each
+element got multiplied with this. Now I'll come to the matrix part a little later. We have this
+topic. This is where the game becomes a little interesting. That is real versus complex vector
+space. What is real? What is complex? In simple words, very easy. Any real A vector is called in a
+real vector space when it comes when the scalar comes from the real value like whatever we see 1 2 3
+4 5 6 any number real numbers. Okay, it could be minus 3 minus 4 anything but there are challenges.
+There are a lot of things in mathematics, which we typically can't represent in a mathematical
+notation which we typically consider that as an imaginary number because we can't place a variable
+to it a very simple understanding is how many of you have the idea about there is something called
+as null in SQL. database or pandas data frame. There is a concept of null values, right? So those
+null values are also something's undefined. We don't know what is the exact placeholder for that. We
+don't know exactly same thing in mathematics. We call that imaginary. We can't we don't know the
+actual placeholder for it. That's the main idea and it's complex in nature. Now by the word complex,
+it sounds very complex, right? Like what will be the value of it? It's not is just that we don't
+know it's undefined at that particular point. We don't know the value of it. Now complex numbers are
+typically represented in this particular form this particular form and I'm hundred percent sure that
+you guys have might have seen this form in your life at least once somewhere school days college
+days doesn't matter you might have seen it and for many of you it could be very much possible that
+you might have forgotten about it, but I'm very sure you have studied about it. Okay. This is a
+function how we represent complex number. Okay complex number CN and you might have also seen this
+part again. I can assume that you might have forgotten that is I which I was talking about iota if
+you do iota square it is is minus one, it is minus one. Okay, now there is a long proof around this.
+Obviously, we are not getting into that part today, but there is a long proof around it. How I
+square Iota square is minus one. Okay, so a complex vector typically represented like this, C to the
+power three. Now a quick question, common sense question. What does the three over here represents?
+What do you think? It's a dimension, exactly. It's a dimension, like one, two, three. It talks about
+the dimension, exactly. Now the very interesting part over here is this is a complex vector, like
+this is a complex vector. I am going to multiply Multiply a complex vector with a complex vector
+before you answer before you answer. Are you guys familiar with this symbol this capital T over here
+at the top? What does it mean anyone it is called as transpose? Okay, it is called as transpose.
+Okay, it is called as transport But before we go into it, let me just quickly tell you what is
+transpose. It's one of the most simplest concept honestly So if I have a vector which is like this
+one comma two and I say transpose of that It means a is this one comma two like this. So basically
+the orientation change rows and columns they swap this one simple. That's how it is as simple as
+that and this idea will make much more sense when we talk about matrix. Okay. Now. So what do you
+guys think this multiplied by this is it possible? What do think right very much possible? Yes. So
+if you see this is two complex vectors see to this part and this part. Okay, what is happening? So
+basically this element. is being multiplied first with one which is giving me this and this element
+is being multiplied with I after that. So obviously if you if you expand it this part if you expand
+it it becomes 2i plus I square and what is the value of I square minus one we have just seen it. So
+if I simply rearrange it if I simply rearrange it I get it like this. Now your question might be a
+why are we representing it like this in this format? Why are we not writing it like simply 2i minus
+one because complex formulas are represented in this format.  A plus IB that's why okay. So far
+everybody clear. Perfect. Now we are now going to talk about linear combination again a very simple
+and easy concept linear combination linear combination is nothing but if I have vectors, okay V1 V2
+these are better V1 V2 their vectors linear combination says vector can be added right vector
+addition is possible. So vector addition is possible in a linear fashion linear combination. So if I
+have this if I have these two vectors, okay, these two vectors. I'm doing this operation. This is
+called a linear combination guys. That's it and mathematically. How do we represent it as we
+represented as C1 V1 plus C2 V2 dot dot dot CK VK general formula. Why are we writing C1 and C2 over
+here here C1 and C2 are actually scalar values single values like numbers. Okay, that number that
+number could be one in our case example. We have seen they are one. Okay. Yes, the all the vectors
+has to be on the same dimension. Yes, they can't they can't vary in other demand. They have to be in
+the same dimension. Yes, then this is what linear combination means again another fancy word. I
+generally call this guy another fancy word span. Okay span span is nothing but do you agree that
+this is a linear combination? Yes or no, so would know what span does span basically says I will
+only take the vectors from that linear combination. So if you write span of V1 and V2 it basically
+means you can expand it to a linear combination to a linear combination. Okay. So span of a vector
+is a collection of every vector that can be produced by a linear combination. Okay by default. If
+you see very carefully this terminology has not a lot of weightage. I would see it in a very fancy
+way that this is a terminological. So span is basically a collection of every vector that can be
+produced by their linear combination simple as that. Okay, but this keyword is very important by
+their linear combination. Okay, what are combination example can be for span anything like for
+example, I can just show you so if I take any vector, let's say 3x plus I'll do it in this way. I'll
+just show you so let's I have let's say V1 I have I have a vector Let's say 1 comma 3 just writing V
+2. I am writing 4 comma 8. Then if I simply say some scalar value, let's say a some scalar value,
+let's say a 1 comma 3 plus some other scalar value be 4 comma 8 like this. So these are my vectors.
+So if I write it in complex form, it would be what I sorry if I write it in compact form, it would
+be what a V 1 plus B V 2 like this since it can be done in a linear combination. I am just going to
+write that the span of it the span of it will be represented as in curly braces V1 and V2. That's
+it. This is what span means which can be expanded to other values. What is A and B over here? A and
+B are scalar values. Scalar values. This and these are scalar values. Scalar values. Okay, like 1,
+2, 3, 4, 5, 7, like that any numbers. This is the exact example. I have just talked about. Okay, I
+give you 30 seconds to take a pause. Look at this example. See if it is making sense or not. Once it
+makes sense for everybody and it's clear for all of you. Just give me a thumbs up or say yes, we
+will proceed. further right? Perfect. Now look at this. Okay, this this C basically represents a
+vector of two dimension like that. Okay, that's it. So I want you to look at this visualization a
+little bit to get an idea. I hope everybody can see this V2 and V1 correct V2 and V1. These are my
+individual vector individual vectors. What is my C1 and C2 anyone? What is my C1 and C2 scalar
+values exactly. So if I change the scalar value, can you see how the direction can also change is
+only the direction changing or the magnitude is also changing just Just look at this and tell me
+both or any one of them right? It is changing both. So that is the broad idea how linear combination
+can change the magnitude and direction of my vectors. Okay, that's the core idea. Now we are getting
+into solving things. So this was understanding vectors. Now we have to solve vector equation and in
+order to solve vector equation. We need a concept of linear independence. Okay again, this
+terminology is very fancy I feel but what does it mean in simple words? I'll tell you let's say I
+give you a vector vector a set of vector V1 V2 V3 V4 VK. They are called linearly independent if and
+only if that vector is equal to zero that linear combination of vector is equal to zero. It means it
+has only the trivial solution of C1 C2 dot dot dot CK equals to zero. Okay, if a non zero solution
+exists then this vectors are linearly dependent. Okay linearly dependent. So tell me very very
+simple. I give you an equation like this. is only one time when LHS will be equal to my RHS. There's
+only one time right that would be happening when all the scalar values are equal to zero and that is
+what we call as linearly independent of vector equation is linearly independent when all of his
+coefficient or scalar values are zero if any of them if any of them is nonzero, they will call it
+linearly dependent. Okay, we call it linearly dependent. That's the main idea again the intuition
+the testing all of these are there. I just want to come how how do we remember all of these new
+concepts with time you will Remember it so the real time so there is no rocket science around this
+with practice and we get familiar with this. So if you ask me, how do I know all of this because I
+practice this every single things on my day job every day. use this. That's how I remember it for
+the past nine years. I've been doing this. So that's how I remember it. Okay. I won't say there is
+any shortcut around it. Okay. Now next part something called as a basis something called as basis.
+This one is a nice way to look at it basis. We have now three ideas in sequence. We talked about
+linear combination. We talked about span.  about independence a basis is nothing but the combination
+of last two that is span and independence. Okay basis is nothing but a set a collection a set is a
+basis for a better space if it's span the space and it's linearly independent. Okay. So if I give
+you vectors to vectors this and this okay, and I take a span of it that is V1 V2 like this and you
+do a linear combination of these two. Let's say you do a linear combination of these two that is C1
+V1 plus C2 V4. and if they becomes equal to zero then these vectors are basis. These vectors are
+basis. That's what it means. Okay. So a set of basis for a vector space if the spans of the space is
+linearly independent, that's it. Okay. Now how this is connected to quantum computing which you will
+eventually learn going forward. Okay. Now in quantum computing this exact same term this exact same
+turn is known as computational basis computational basis exact same thing is known as computational
+basis. So today you're just getting familiar with some of the terminologies. Okay. Now this part
+this part is called dimension. Okay. This part is very very simple to understand. So if I give you a
+vector like for example anything so you tell me how many dimension is this these two vectors to
+dimension right this part you have already understood. is two dimensional vectors. Similarly if I
+can play around with so if I write something like this one second, so if I write this yeah, what is
+the dimension of this right? What is it? What is the difference in terms of dimension writing in
+horizontally and vertically? So there are two types of there are two types of vectors actually
+uncut. So one is called the row vector, which is typically written as like this. one, two, three
+like this. And then we have something called as column vector. Same thing, exact same thing. 
+Representation is different. That's it. It would be like this. Now typically when we talk about a
+vector in AI ML or quantum computing, we typically represent everything as column vectors typically.
+Okay. So it's the same thing. There's no just a representation different. Can we link the concept
+with rows and column? Not yet. So the rows and columns concept will actually come into play when we
+talk about another kind of vector, which is not exactly better, a two dimensional vector, which is
+called as a matrix. There it will come actually into the play. Okay. Now I think the kind of
+explains the difference with matrix vector has either row or column exact not a combination of
+exactly exactly. it's either one of it's a representation. That's it. Okay. So here there is no row
+no column, but if you swap it like this to change it orientation, that's why we call it a column
+vector or a row vector, but these are only names. Okay. The whole game is not changing. It's just
+name. Okay, just like you can think of you have a nickname at home and your formal name is but the
+person you are at the same, right? So that's the whole concept now this part.  just want to talk
+about this important part is topic. Okay. The one is a transpose of the other right? They can
+exactly they can yeah, just a transpose of the other they are exactly the same. They are they are
+exactly the same just the transpose of the other. Okay. Now look at this particular part the complex
+inner product. Okay, the complex inner product a way of multiplying two vectors into a single number
+that measures how much they overlap. This is a very beautiful definition. I would say okay a very
+beautiful definition. I want you to just focus on this part first this first half which is called in
+a product. Okay, just one. right, let's continue. So now this particular part which says how much of
+two vectors are actually similar to each other and by the way guys this concept I'm not sure how
+many of you are actually from the AI or ML background. I'm assuming none of you are but this
+particular concept actually runs a very very very big show in a ML space whether you talk about GPT
+based model where you talk about recommendation system whether you talk about classification based
+models this particular concept is there everywhere which is called as a dot product. Have you guys
+ever heard about this something called as a dot product anyone dot product of two vectors? Yeah, you
+might have heard about it, right? So I'll talk about dot product very quickly because the first
+definition itself is dot product. Yeah. Now the second part what does dot product means? So if I
+have a vector like this V and I write one two three and I have another vector T horrible drawing.
+I'll draw it in my notepad. So look at this. So if I have a vector V as one two three and I have
+another vector you four five six now do you guys Remember that matrix multiplication concept, matrix
+multiplication concept that how matrix multiplication is possible, right? That again is a very big
+concept within machine learning itself. So I have to do V transpose u bar like this. So how will it
+look? It will actually look like this. One, two, three, four, five, six like this. Now you will do a
+simple element by multiplication and do a sum of it. So what will happen? It will become four times
+one plus five times two plus six times three. So what you will get, you are simply going to get
+four, 10, 18.  I'll just do a sum of a 32. All right. So this is what you will eventually get. This
+is the value you will get now this essentially talks about how two vectors are actually similar. Now
+when we talk about vectors being similar this number doesn't indicate. Okay, this number doesn't
+indicate anything doesn't mean anything. Okay, even without transpose we can't why can't we multiply
+because it's part of the matrix multiplication rule within the you can actually look at look it up
+because for matrix multiplication right for matrix multiplication. You might have heard about this
+that the row of the first sorry if a matrix is like this having shape a cross B and if you want to
+do a multiplication then it has to be B cross C like that. So these two things needs to match and in
+order to for us to perform the rows and columns to match one of them has to go for transpose. That's
+it. And typically the first one is what we transpose with. Okay, that's a matrix multiplication
+rule. As I was saying this number will not make any sense for that. There is a concept. and that
+concept is angle between two vectors.  So if I have a vector like this, two vectors, I'm just
+drawing it out. Let's call this u vector and v vector. So this angle is called theta. Now think and
+tell me if they are overlapping on top of each other, if two vectors are overlapping on top of each
+other, angle would be what? Angle would be what? Zero, right? Practically zero. There is no angle
+between them. So the formula for this is actually cos theta equals to v vector dot u vector and
+divide by the norm of V vector dot u vector. Now here this is a dot product just like what we have
+learned. This is a dot product what we have done in a product or anything. This part is
+multiplication of norm multiplication of norm. All right of two vector multiplication of norm of two
+vectors and when you do it, you will get some value around it. Let's say cos theta equals to 0.34.
+Now just hypothetically speaking 0.34 hypothetically speaking. Okay random number now from here will
+we be able to calculate the theta? Yes or no that is Theta would be cosine inverse of this 0.34 job
+done. Okay job done. So with that being said I want you to remember this concept for the next five
+minutes because we're going to understand a very important concept that is so hold on to that
+thought. Okay, hold on to this thought will come back to this in just five minutes. Let's get back
+to inner product or dot product. Once again for complex vector. The first one is a conjugate first.
+Okay, like what is a conjugate? Have you ever heard about this word conjugate anyone just swap
+science? I would say swap science conjugate. Okay swap science. So I'll just show you what a
+conjugate of a vector would look like. So complex vector, right? Complex vector. So if I have a
+complex vector, so it would look like this. I'm just taking a random vector X. Is this a complex
+vector? Yes or no? Yeah, 100%. So if you do a conjugate of this, if you do a conjugate of this, it
+will become one three minus two I that's it three minus two. I this is what conjugate means the sign
+of the complex part will change whatever it will flip. If it was positive, it will become negative
+negative. It will become positive. This is what conjugate means. Okay, just wanted to give you that
+experience. this part. Okay and look at this particular symbol. So when you define a conjugate we
+write it. So we write it with an asterisk. So in my case this X bar would be represented as a star
+to represent conjugate is this idea of conjugate clear for everybody simple right transpose is
+mandatory before conjugate not necessary not necessary conjugate is a separate concept conjugate
+transpose is separate concept. So when we use the word conjugate transpose, that's a separate
+concept. Okay. I just talked about conjugate conjugate transpose is a separate concept. Okay.  one
+did not become minus one because conjugate only works on the imaginary part of it only the imaginary
+part of it only this part not on because the complex vector it only works on the complex vector part
+of it not the whole vector. Okay. That's right now. Okay. So what is what is transpose versus
+conjugate transpose? I want you to make a quick read of it. You will be able to do it by yourself.
+I'm hundred percent sure just tell me if this is making sense or not to all of you just go through
+it make a read about it. Yeah straightforward concept right now what I want you to do is is get back
+into our discussion what we were discussing over here a quick question to all of you a quick
+question to all of you this value this particular value whatever written over here if this is
+actually zero then what is cos theta theta theta let's talk about theta what will be the value of
+theta 90 degree right 90 degree. So think in this way look at the formula cos theta equals to a
+vector dot product B vector divided by norm of a norm of B. Okay, if my cos theta is zero then theta
+is 90 degree which means my two vector my vectors are something like this. Frankly speaking if this
+is my a vector and this is my be better. It would look like this. Yes or no 90 degree just like you
+guys said. So this angle is my 90 degree. Now, what does it mean two things you have to learn first
+when two vectors are completely perpendicular to each other. are called orthogonal to each other
+orthogonal orthogonal vectors again perpendicular vectors orthogonal vectors doesn't really matters
+the same thing. Okay people usually get confused with this but it's the same thing now orthogonal
+vectors. But how do we know that orthogonal vectors will be See my RHS my right hand side this thing
+needs to be become zero when this thing can become zero. Tell me that this thing this whole thing
+this whole thing can be zero when my numerator is zero when my numerator is zero that is correct. If
+my dot product becomes zero, then can I say my two vectors are orthogonal to each other? Yes or no
+very frankly, right then I don't have to do all of these mumbo jumbo after this. can simply do a dot
+product of this and get the answer out. Okay. What are those double vertical lines of our a and b
+that is called a norm that's called a norm norm of a vector. Okay norm. I think I did not write the
+double line over there my bad one second at the start. This is norm double. I don't know what I was
+thinking, but this should be double norm. Okay, like this. Okay has to be linear independent to get
+a zero in the numerator not necessarily not necessarily round. I'm talking about two independent
+vectors doesn't necessarily be linear independent. Okay, so we are talking about two vectors being
+what is the relationship between the two vectors are they perpendicular or orthogonal to each other
+or not? That is what we are trying to find and for that that they does not necessarily have to be
+linearly independent. Okay, linearly independent is basically a way of solving equation. That's it.
+Okay. Now, so we'll roll back to our idea. I have just covered about norm. Okay. I have also covered
+about orthogonality. Now two vectors are orthogonal if their inner product is zero. We have just
+talked about it. Okay, the angle should be 90 degree or 270 is also okay for them to be called
+orthogonal. No, for 270.  It's one second how you are saying. So basically you're saying like this
+is that Is that the case in case in your you're representing it like this? No, right? It will not
+270 is not exactly here. Right? That's 180 exactly. We only take acute angles between the vector.
+Right? We only take one one side of not the acute angle the shortest if you when you say acute angle
+nickel, we only take only one direction either it's clockwise or anti-clockwise. Okay, like that a
+cause value can be zero at 270 also, right? I'll just show you the cost in case you're wondering
+cause theta image tick tick tick tick tick not I don't want to this I wanted the waveform. So is
+there any this is clear. See this is your zero. has value one. This is pi which is 180 minus one.
+Okay. This is your 90 again at zero after that's a repeating cycle right after that's a repeating
+cycle. So cos theta repeats at every every cycle of 360. It repeats after that. Okay. So technically
+the cos value that will be zero at 270 is an extended version of it. Okay, it's simply so you're
+talking about this point and this point right? mean if I I get it right. Yeah, so it's a repeating
+cycle. So it's it's one half of the wave is repeating whether you get it at 90 or 270 is really
+doesn't matter. Okay, so we have essentially covered everything except for one topic that is a set
+of vectors, is called orthonormality. Okay, another term orthonormality a set of vectors that are
+all at the right angle to each other and each length is exactly one exactly one. So when we talk
+about length, what exactly are we talking about over here guys? What terminology we are supposed to
+use we are supposed to use norm or magnitude anything. Okay norm or magnitude now now understand
+this whole flow. Okay, understand this whole flow. No, no, She has a see the cycle repeats over
+here. If you see this part cycle is up till here. Okay, or if you see very carefully the cycle is
+actually like this from one one crest to here. This is one cycle. Okay, so it is still one peak one
+peak one bottom one bottom like that. So it's repeating. is the whole cycle of it. So the cycle
+depends on how from where we are actually selling selecting it. So the absolute value is only
+between 0 to 90. Yes, it's just one cycle. You can consider if you select this cycle, this is the
+part it means you're taking the other half from this. Okay, so it's basically a repeating cycle only
+but depends on how you take the cycle if I'm taking the cycle from here I have to reach out till
+here like that. Okay, that's that's the main idea now if you see this is how we typically take minus
+pi to pi This is how I take it or anybody would take it cost Okay, but we don't typically take it
+from here to here that that's where the confusion came into the picture Okay, so minus 180 to 180
+now next what is normality orthonormality very simple two vectors are orthonormal if they're
+orthogonal and have a norm of exactly one exactly Exactly one. This is a very very simple
+definition. So technically we have covered our part one part two. will just talk about it part
+three. We will talk about it part four. We will talk about it. Okay. So these are micro concepts
+very easily to understand. We will talk about it in the next 30 minutes. Okay, so guys take a break
+of five minutes and then we will regroup and discuss about projection matrix operation and tensor
+products. All right, so please take a five minutes break and we regroup in 1235. Now, let's
+understand something called as a projection. Okay, vector projection. This is again important
+concept of projection. Now, if I draw a vector like this, let's say a vector and I have a vector
+like this like this. Do you agree that the shadow of this vector a will fall on this be better
+thinking that way and this is essentially what we call as projection. So basically what we are
+dealing over here is projection of a vector on B vector. So when we talk about projection, we are
+actually talking about this part the shadow will be casted on this part. like this part. this is
+projection of a on B and what is the formula for that the formula is very straightforward. You will
+write a vector dot B vector divided by the norm of B vector. Okay, the norm of B vector this
+particular formula this part just this part as a very special name as a very special name. This
+thing is called unit better and typically represented by the vector cap B cap like this. So you are
+looking at the final formula as a vector dot B cap like this. Okay, you need to vector. What is the
+specialty of you? unit vector the specialty of unit vector is the magnitude of this unit vector will
+be one the magnitude of this unit vector will be one. So unit vectors are typically used for us to
+understand the direction of the vectors understand the direction of the vectors since the magnitude
+is only one a constant value. is help us to understand the direction of any vectors. So I'll just go
+to projection now. It would be very easy for you to understand in this form. Yeah, absolutely. You
+will have all the documents all the notes this interactive play chart playroom.  Okay. Now, so now
+look at this. If you see this particular part, I'm talking about V vector and U vector. Okay. So we
+are actually dropping this projection of V on U and can you clearly see that we are calculating this
+projection the blue line everybody can see the blue line, right? So this is your projection. This is
+what we calculate and the general formula for projection is this now this may look a bit complicated
+if you read about it, but I have made it a more simplified version of the exact same thing. So
+projection of a vector is falling on B the formula would be a vector dot B vector that is doing a
+dot product of this divided by a norm of B vector. Okay, same thing. Look at the same thing same
+idea. If I take this vector, let's say this is B vector now B vector is projecting on a will the
+formula be same or slightly different? What do you think it would be different? Okay, it would be
+different because now B is being projected on a so we are trying to find this projection this
+projection. Okay, so it would be I'm writing simply projection B vector on a vector. The equation
+will slightly change. would be B vector dot a vector divided by the norm of a vector like this or
+you can simply write B vector dot a cap like this. So there are multiple problems over the internet.
+You can solve around this concept. See the concepts are not difficult. Okay, if you understand it in
+the right fashion, the concepts are not difficult at all. Now everybody clear with the idea of
+projection for any doubt guys any doubt with projection. Yes. Is this is this always going to be
+perpendicular? Yes. Okay. Yes, it is always going to be perpendicular. Yes. Okay. So look at this
+case.  the orientation a little bit. you see that the distance or that shadow is always
+perpendicular no matter how I change the vector no matter how I change the orientation of it. Okay,
+it's still perpendicular. It will always be perpendicular distance. Okay. So when I say shadow you
+may think the Sun is over here the light is being casted. So shadow should be like this. No shadow
+will be always perpendicular now for orthogonal vectors. It would be zero right? Yeah for orthogonal
+vectors. There can't be any shadow right exactly now. Now the whole whole concept of this projection
+part is what I have covered in a very short fact. Now these are actually detail notes which you will
+have you can definitely go through this. This would be very very helpful coming to the next chapter,
+which is your matrix operation matrix is a very very beautiful concepts throughout machine learning
+AI any space of quantum computing you will encounter matrix now matrix is nothing but combination of
+vectors. So if I have a matrix, let's say a 1 4 3 5 2 2 8 1 This is a matrix of shape three cross
+three. This is a matrix. Now matrix has lot of lot of properties. We will quickly talk about those
+properties. Okay matrix. The very first property we will talk about is transpose. We will write a
+transpose like this. So rows will become column, column will become rows. Look at this. This is a
+column. This is a column. This is a column. So this column will become a row. That is one, five,
+eight, four, two, one, three, two, one. See rows have become columns, columns have become rows. Does
+the shape of the matrix will change in this case? The shape of the matrix will change in this case.
+In this case, okay, that is the keyword. The answer is no. It will still remain three cross three.
+It will remain three cross three, okay? But if you're dealing with a different matrix like this B
+whose shape is five comma two, it means five rows and two columns, then what will be the B transpose
+shape? Exactly, it would be two comma five. Okay, so this is the one property that we have just
+learned about it. Now, next property is basically matrices as linear operators. operation, okay
+matrices as linear operation. Now, where does matrix actually come into the picture? You also have
+to understand that very quickly matrix comes into the picture. You can think of these are individual
+vectors put together right individual vectors put together. So if I simply take a I'll just copy it
+actually. Okay. So if I simply write something like 3a, what do you think it will happen? What do
+you think it will happen? It will simply multiply each element with three exactly right multiply
+each element with three. So now can I look at this a particular part as individual vectors? So can I
+see it like this as a as V1 V2 V3 inside this can I see it in thinking that way tell me guys right?
+So a matrix is nothing but a collection of vectors a matrix is nothing but a collection of vectors.
+So if you want to solve multiple equations at scale, you would use a matrix not a vector. Okay, same
+thing in machine learning. We solve multiple dot product computation along with it. Okay. So for
+that we use matrix and not vectors. So basically vector got evolved into matrix. You can think it in
+that way. Okay. That's a easy way to representation. Now I was talking about properties right from
+there. The property that we are talking about is unitary Matrix a Matrix that moves vector around
+without changing any length or rotation. could be a rotation or a reflection of a whole space. What
+does it mean in real linear algebra? See I use the word real it means there is no complex orthogonal
+Matrix preserve length in complex spaces. The corresponding concept is a unitary Matrix. So unitary
+Matrix is a concept for complex  a matrix U is unitary if and only if this particular format is
+followed. Okay. Now you may think this is essentially a multiplication U multiplied by U. Okay, but
+it's a conjugate. It's a conjugate. Okay. So what does it say that if you multiply you conjugate
+with original U matrix, it will give you an identity matrix. This is called as a identity matrix.
+Okay. I quickly show you identity matrix. This is an identity matrix. This is an identity matrix
+like the diagonals will be 1 everything else would be 0. Okay, diagonal will be 1 everything else
+would be 0. This is called an identity matrix and it is saying the exact same thing. We call it a
+unitary matrix of a complex vector space. If you multiply conjugate of that matrix along with its
+own matrix, you will get an identity matrix. Then we call it as a unitary matrix. Okay. I told you
+there are multiple concepts over here. These concepts will be eventually used going forward. Same
+thing. I'll have to talk about the hermitian matrix. Now the hermitian matrix is basically a matrix.
+Don't get confused by the terminologies guys. It's a very simple thing. Actually, this is a matrix H
+if this matrix is equal to the conjugate of it, then it's called a hermitian matrix. I told you
+there are a lot of terminologies over here. Original matrix equivalent to the conjugate matrix. This
+is called a hermitian hermitian matrix. Okay, take an example. Let's say this is my H I do a
+conjugate of this. Okay. So when you when people write H star over here, they actually first have to
+go and make it a transpose and then make it a conjugate. That's a conjugate transpose. We will do
+and if they come out to be same, are called the hermitian matrix. Okay. Now, why did we study this?
+Let me just tell you that part as well. The hermitian part why hermitian matrices are important.
+Okay. There is a small concept around this that small concept of this hermitian matrix are their
+eigenvalues are real. Now, this is a very very important concept eigenvalues are real. This is
+extremely useful because the eigenvalues of a general complex matrix can be complex for Hermitian
+matrix. Okay, the eigenvalue behaves like a real geometric quantities. Real Geometric quantities.
+I'll come to this once again. Let me just quickly help you understand this part of the Hermitian
+Matrix. See I'll just do it for you. I have H over here as 0 minus I 0 minus I and what was the
+other thing I 0 so I 0 so first we will transpose this H transpose. What will be the case it will be
+become 0 I minus I 0 and then you want to do a conjugate of this H star. What will it become 0 I
+will become minus I minus I will become I 0 will remain 0 now is this matching with this? Yes. If
+yes, this is the Hermitian matrix. Okay, that's it. Clear? Now why this is important because this
+property because of this property Hermitian matrix gives you the eigenvalues which are real
+eigenvalues. Now for a complex matrix, the eigenvalues could also be complex but for a Hermitian
+matrix the eigenvalue even if the Hermitian matrix is complex the eigenvalues will be a real
+geometric quantities which we can actually use and leverage. But for that you need to know what is
+eigenvalues and what is eigenvectors now there are two terms eigenvalues and eigenvectors. Okay, and
+eigenvector is a direction the matrix does not turn to it only stretches.  it simply means a direct
+an eigenvector is a direction the matrix does not turn it only simply stretches it only elongates
+the magnitude can change but the direction won't the eigenvalue is how much it stretches by so
+basically your eigenvalue is like the magnitude how much it stretches by vector talks about the Okay
+better talks about the direction now if I have a matrix if I have a matrix H I can decompose that
+matrix with another vector V with another vector V equals to lambda times that same vector V. it
+basically means here this particular vector is called the eigenvector and the lambda over here is
+called the eigenvalue. The transformation is very simple. You are trying to find such values and
+such vector combination which will represents this entire matrix along with that. vector
+combination. Let me see if we have some good example. So let's try to understand this. Let's take an
+example to solve or find eigenvectors.  We'll solve one small equation. So let me pull up. Okay,
+let's start with this. Okay. So going through this concepts can be very scary. So we'll solve one
+example to understand eigenvalue and eigenvectors. Now eigenvectors and values. So we are trying to
+find the eigenvalue and eigenvector of a matrix. So let's say I give you the matrix as 2, 1, 1, 2
+just intentionally taking up some smaller size. So what we have to do we have to get we know the
+formula. know the formula a V equals to lambda V. is V over here? What is V over here the vector
+eigenvector? Okay. This is my eigenvector and this lambda is my eigenvalue eigenvalue. So the
+question is how we can solve this thing. Okay, so we need to find the lambda our goal is to find
+lambda to do this the approaches you will take a determinant of a minus lambda. I equals to zero.
+This is the equation you will solve. What is I over here guys? What is I over here? identity matrix
+identity matrix. Okay. So what we are doing over here is a minus I that is a is two one one two
+minus lambda with I matrix would be one zero zero one is this this part clear the middle part right
+now what you have to do is just expand it it becomes two minus lambda then it becomes one then
+becomes one minus lambda or one zero and then it becomes two minus lambda. That's it. I have just
+done on that entire equation altogether. Now what you have to do is you have to find the determinant
+determinant of this matrix is nothing but you multiply this with this minus this with this you have
+to do this. So I will do 2 minus lambda 2 minus lambda minus 1 times 1 would be 1 if you solve this
+do you agree that this is nothing but a quadratic equation? Yes or no. if you solve this quadratic
+equation, how many lambda value we will get how many lambda value we will get we'll get two lambda
+values. We'll get two lambda values. It's a quadratic equation. Okay. I can solve this as I'll just
+write down this equation. This is nothing but 2 minus lambda whole square minus 1 if you expand this
+it will become a square plus b square minus 2 a b minus 1 equals to 0 so you solve this you will get
+some value. have the value written in front of me. So I'm not solving it lambda 1 would be 1 lambda
+2 would be 3 so we have got our eigenvalues everybody clear. We have got our eigenvalues. We have
+got our lambda right now for each lambda for each lambda over here. Can we find? our associated V
+that is also very simple. So we have we know our lambda right? So for this we will find our
+associated V see how we can find our associated V that also is very simple this particular part this
+particular part. will simply multiply it with the eigenvector. So look at this. will say a minus
+lambda I times that equals to 0 now tell me do we know all three of this? Yes or no. Do we have all
+the information around this we have all of them. So do one thing whatever the values they were like
+2 1 1 2 2 1 one, one, two minus lambda one, zero, one, zero, one like this. This is what you're to
+do. And for each value of lambda I told you, so that is first case lambda is one. If you plug lambda
+one over here and solve this whole equation, you will actually get a final answer like one, one,
+one, one like this. Okay. So what do you have to do? You're taking this one, one, one, one
+multiplied with this V. So let's take this V vector value as X and Y. Okay. Equal to zero. So if you
+do this, what are we getting? X plus Y. equal to zero x plus y equal to zero because I'm doing
+nothing x multiplied with this this multiplied with this getting the equation equal to equal to
+zero. Actually, this would be equated to like zero like this zero and zero like this. Okay. And
+finally if you solve this what you will get x equals to minus y now if you do x equals to minus y
+and if you put x equals to 1 what will be the case of y so I again vector 1 would be 1 and minus 1
+like this like this and similarly we are also need to solve it for lambda equals to 3. Then you will
+get a V2 of it again after that and that is a core idea of calculating these eigenvalues. Now the
+bigger question that I want to ask is do you agree that one one matrix can have multiple eigenvalues
+and eigenvectors? Yeah, is very much possible like we can see exactly very much possible. Okay, and
+this particular concept of eigenvalue and eigenvector. me just connect you with where this is used
+in AI or machine learning so that you can also connect that same thing into quantum computing as
+well in AI or machine learning.  using something called as a principal component analysis. Anybody
+heard about this algorithm principal component analysis typically known as PCA. Okay, there also
+this is used. Okay, there also it is used the same concept. I'm just giving you an application
+around how this can be used. Now we are almost wrapping up this part. Now this fourth part. I want
+you guys to go through it as far as the node once okay, no need to go over it right now. No need to
+go over it right now. This is the next part which is tensor. Okay. Now what is tensor? Let me give
+you a brief of that so that you guys can connect it very easily. See if you see the proper flow of
+the picture we started off with vectors then we move on to matrix and then we switched to the near
+higher concept of tensor. So what do you think if you understand the pattern between vectors and
+matrix? What do you think tensor would mean anyone? It's the same concept. Again, exactly. It is the
+same concept what we have seen. It's now a more higher combination. It's like a more higher
+combination. That's it. No difference at all whatsoever. So just to give you an idea, just to give
+you an idea, I'm just going to write down a format so that you can understand the format and the
+rest of the whole flow is same. If you understood matrix, you will understand tensor. So I know the
+class has been stretched by a little bit, but I just want to take two more minutes of your time. A
+is going to be A1, A2, just like this. Okay. And B is going to be B1, B2 like this. So these are my
+two vectors.  two vectors. Now if you want to do a tensor product of this, okay, tensor product of
+this, what does it mean? You will simply write like this, A, this symbol like this. It's called a
+tensor product. This will create more combinations around it, like all possible combination around
+it. What do we call this in join, SQL join? I forgot. In SQL join, it's called a cross product. It's
+called a cross product. Okay, so look how it will come. It will come as A1, B1, A1, B2, A2, B1, A2,
+B2, So this is basically called as a tensor product. Okay cross product in SQL. We call it a cross
+product. Okay. So think in this way. Why does this exactly gives us the idea of quantum computing
+because from here the quantum computing game actually starts. Okay. Oh, I think I made a mistake is
+the same thing right? No, no, no, it's the same thing. I have changed it. Look a 1 b 1 a 1 b 1 then
+a 1 b 2 then a 2 b 1 a 2 b 2 right? So it's all possible combination here. See so is there are doing
+I think it's fine, right? It's fine. It's correct only. Okay. possible combination. basically two
+times two now before does it occur in the same order the order in vector the order doesn't really
+matter over here. Ravi. Okay. Now what is quantum computing so famous for this is the last question.
+I'm wrapping up with what is quantum computing the most famous for tell me that like this one thing
+you have learned about right quantum computing cryptography anything. I'm not talking about the
+application. talking about the core heart of it. Why it is so special about its speed, right? It's
+speed is speed what we can't achieve with a normal computational bits. See when we when we say we
+want speed throughout our life history, human history. We have done this. If you see very carefully,
+speed versus accuracy. Tell me one thing. This is what we have done. Speed versus accuracy trade off
+throughout our human history before quantum computing. We have been doing this. Like if you achieve
+greater speed, you do a trade off with accuracy. If you get higher accuracy, it will take a lot of
+time to solve the problem. But quantum computing is solving this exact same thing. So if you want
+higher accuracy, then you essentially have to check all possible scenarios, all possible scenarios
+those all possible scenarios can't be done in one linear thread of motion and this is where
+different states more than two states or simultaneous states concepts is actually coming in to solve
+problems. So in in if I have to give you the analogy the idea is in CPU just like we have multi
+thread which does parallel processing and all of that here in quantum computing. We have the same
+concept. It is called as a combines combined state or multi-state. Okay, that is where the
+entanglement also comes in exactly and that is where the entanglement part also comes in this leads
+to that important concept of entanglement and that is where the whole idea comes in. So can I write
+the flow for you guys so that your course curriculum becomes easy? See we are looking at vectors it
+goes into tensor products. Whatever we have done this will lead to something called as multiple
+qubits, which I verbally explained that will lead to entanglement exactly and obviously entanglement
+and all this is the whole program that you're going to study about. Okay. Is the flow clear for
+everybody where exactly linear algebra sits and why you need to cover this basics. Okay, perfect. So
+with that being said, I am essentially done with the content of this class. Now what is left out for
+you guys is to shine and solve those assignments and how can you solve those assignments? You use
+this particular notebook as a reference. This will be shared along with my own handwritten notebook
+that will also be shared. Okay, so you can use it as a reference and go kill it. That's all I'm
+going to say. Okay, perfect. Perfect. I hope the session is done. Chaitanya over to
+you.
