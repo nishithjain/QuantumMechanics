@@ -2,7 +2,7 @@
 
 **Who these notes are for:** someone new to quantum computing who wants the maths explained slowly, with every step shown.
 
-> **How to read this.** The lecture had two halves. **Part I** (the first professor) is a big-picture tour of quantum computing. **Part II** (Professor Amit) is the actual maths: complex numbers. Most of these notes are about Part II, because that is the foundation everything else is built on. **The notes follow the same order as the transcript**, so you can read them side by side with the video. Anything that was *not* said in the lecture (extra examples, practice problems, a maths refresher) is labelled as an addition or placed in the Appendix at the end.
+> **How to read this.** The lecture had two halves. **Part I** is a big-picture tour of quantum computing. **Part II** is the actual maths: complex numbers. Most of these notes are about Part II, because that is the foundation everything else is built on. **The notes follow the same order as the transcript**, so you can read them side by side with the video. Anything that was *not* said in the lecture (extra examples, practice problems, a maths refresher) is labelled as an addition or placed in the Appendix at the end.
 
 **Follow-along map: transcript heading and the matching section of these notes**
 
@@ -72,7 +72,7 @@ The first speaker described the history of the field as three threads that run s
 | **1994** | **Shor's algorithm**: factors large numbers fast, so it can break **RSA** encryption. | First problem with real practical impact. |
 | **1995–96** | Shor invents **quantum error correction**. **Grover** invents fast search. | People doubted real hardware could work; error correction answered that. |
 | **2000s–2010s** | Real qubits appear. D-Wave builds commercial machines but could not clearly beat tuned classical algorithms. | Hardware era begins. |
-| **2018** | Preskill coins **NISQ** (Noisy Intermediate-Scale Quantum). | Machines with roughly 50–1000 noisy qubits. |
+| **2018** | The term **NISQ** (Noisy Intermediate-Scale Quantum) is coined. | Machines with roughly 50–1000 noisy qubits. |
 | **Later** | IBM puts quantum machines on the cloud. Google and IBM argue about "supremacy". | Quantum becomes accessible to everyone. |
 | **Now** | Error-correction era: aiming for fault-tolerant machines. | The current phase. |
 
@@ -122,13 +122,13 @@ Student questions were answered like this:
 - Sunday sessions are doubt-clearing with problem solving. Solutions are released after about two weeks.
 - Capstone projects: three small ones lead to a final application.
 - Certificate of participation: 60% attendance. Certificate of completion: 50% attendance and 50% score.
-- Books mentioned: a small online book on quantum computing for computer scientists (the one needing no physics), and the dense standard reference the lecturer called "Chuang's book" (almost certainly **Nielsen and Chuang**, *Quantum Computation and Quantum Information*; this is my inference, so confirm against the slides).
+- Books mentioned: a small online book on quantum computing for computer scientists (the one needing no physics), and the dense standard reference *Quantum Computation and Quantum Information* (confirm the exact edition against the slides).
 
 ---
 
 # 2. Why we need this maths (start of Part II)
 
-Professor Amit opened with a very simple picture. Learn it, because it is the map for the whole course.
+The Part II session opened with a very simple picture. Learn it, because it is the map for the whole course.
 
 ## 2.1 Bits vs qubits
 
@@ -279,7 +279,7 @@ The lecturer said not to worry about it yet. It is just a reason why quantum sys
 
 ## 2.4 The plan for the session
 
-Professor Amit gave the plan for the day like this:
+The lecturer gave the plan for the day like this:
 
 | When | Topics |
 |---|---|
@@ -344,7 +344,7 @@ Now suppose the coordinates are **complex numbers** instead of real numbers. The
 
 In other words: the **pictures** in class will use real vectors like $(5, 3)$ because they can be drawn. The **actual maths** (and quantum computing) uses complex vectors. Everything you learn from the real pictures carries over.
 
-There are nicer ways to picture a **single qubit**, in three dimensions. The lecturer said Professor Colin will show that later. (This 3-D picture is usually called the Bloch sphere. That name is mine, not the lecturer's.)
+There are nicer ways to picture a **single qubit**, in three dimensions. The lecturer said a later session will show that. (This 3-D picture is usually called the Bloch sphere. That name is mine, not the lecturer's.)
 
 ## 2.6 "Why do complex numbers appear in physics at all?"
 
@@ -438,7 +438,7 @@ The lecturer then zoomed out: inventing $i$ is not unusual. It is the **latest s
 
 He went through the number systems one at a time. For each one he pointed to an equation on his slide ("an equation like this") and said that the old numbers could not solve it, so a new kind of number was invented.
 
-> **About the equations below.** The slides are not part of the transcript, so the equations the professor actually wrote are not recorded. The equations here are the **standard textbook example for each step** and they match what he describes in words. They are my reconstruction, not a quote. If your slides use slightly different examples (for example $x + 1 = 0$ instead of $x + 5 = 0$), the idea is identical.
+> **About the equations below.** The slides are not part of the transcript, so the equations on the slides are not recorded. The equations here are the **standard textbook example for each step** and they match what the lecturer describes in words. They are my reconstruction, not a quote. If your slides use slightly different examples (for example $x + 1 = 0$ instead of $x + 5 = 0$), the idea is identical.
 
 ### The ladder at a glance
 
@@ -1068,6 +1068,97 @@ Every complex number can be written this way. This is the **polar form** (in its
 
 We get back $2$ and $3$, so $z = 2 + 3i$ is the same number in both descriptions.
 
+### Trigonometry basics: sine and cosine for any angle
+
+The right-angled triangle above only works for angles between $0^\circ$ and $90^\circ$. Complex numbers can point in any direction (for example $-1 + i$ points up and to the left), so we need $\cos\theta$ and $\sin\theta$ for **every** angle. The trick is to look at them on a **circle** instead of a triangle.
+
+#### The circle picture
+
+Draw a circle of radius $r$ centred at the origin. Start at the positive $x$-axis and turn **anticlockwise** by the angle $\theta$. You land on a point of the circle, and the coordinates of that point are
+
+$$
+(a, b) = (r\cos\theta,\ r\sin\theta)
+$$
+
+This is exactly the formula $a = r\cos\theta$, $b = r\sin\theta$ from above, now valid for all angles. On the **unit circle** ($r = 1$) the point is simply $(\cos\theta, \sin\theta)$. So:
+
+- $\cos\theta$ is **how far across** the point is (its $x$-coordinate);
+- $\sin\theta$ is **how high up** the point is (its $y$-coordinate).
+
+#### The four quadrants
+
+The two axes cut the plane into four **quadrants**. They are numbered **anticlockwise**, starting at the top right:
+
+| Quadrant | Where | Angles |
+|---|---|---|
+| I | top right | $0^\circ$ to $90^\circ$ |
+| II | top left | $90^\circ$ to $180^\circ$ |
+| III | bottom left | $180^\circ$ to $270^\circ$ |
+| IV | bottom right | $270^\circ$ to $360^\circ$ |
+
+**An easy way to remember the signs.** The first and second quadrants are the **top half** of the coordinate plane. Every point in the top half is **above** the $x$-axis, so its height $y$ is positive. And the height is exactly $\sin\theta$. Therefore
+
+> **In quadrants I and II (the top half), $\sin\theta > 0$.**
+> In quadrants III and IV (the bottom half), $\sin\theta < 0$.
+
+In the same way, look at left and right. Quadrants I and IV are the **right half**, where the $x$-coordinate is positive, so $\cos\theta > 0$. Quadrants II and III are the **left half**, where $x$ is negative, so $\cos\theta < 0$.
+
+![The unit circle with the plane split into quadrants I to IV. The top half (quadrants I and II) is shaded blue and has sin positive; the bottom half is grey and has sin negative. Two sample points at 50 degrees and 130 degrees show cos as the sideways distance and sin as the height](images/trig-quadrants-top-half.svg)
+
+In the picture, the green segment is $\sin\theta$ (the height) and the red segment is $\cos\theta$ (the sideways distance). At $50^\circ$ the red segment points right (cos positive). At $130^\circ$ it points left (cos negative), but the green segment still points up, because $130^\circ$ is also in the top half.
+
+| Quadrant | $\cos\theta$ (sideways) | $\sin\theta$ (height) |
+|---|---|---|
+| I (top right) | $+$ | $+$ |
+| II (top left) | $-$ | $+$ |
+| III (bottom left) | $-$ | $-$ |
+| IV (bottom right) | $+$ | $-$ |
+
+**Mirror trick for the second quadrant.** An angle in quadrant II can be written as $180^\circ - \theta$ with $\theta$ in quadrant I. Its point is the mirror image of the first-quadrant point across the $y$-axis, so the height stays the same and the sideways distance flips sign:
+
+$$
+\sin(180^\circ - \theta) = \sin\theta
+\qquad
+\cos(180^\circ - \theta) = -\cos\theta
+$$
+
+For example, $135^\circ = 180^\circ - 45^\circ$, so $\sin 135^\circ = \dfrac{\sqrt2}{2}$ and $\cos 135^\circ = -\dfrac{\sqrt2}{2}$. This is why $-1 + i = \sqrt2\left(\cos 135^\circ + i\sin 135^\circ\right)$: check that $\sqrt2\cdot\left(-\tfrac{\sqrt2}{2}\right) = -1$ and $\sqrt2\cdot\tfrac{\sqrt2}{2} = 1$.
+
+#### The values you should know by heart
+
+Five angles appear again and again in quantum computing. Here are their sine and cosine:
+
+| Degrees $\theta$ | Radians $\theta$ | $\sin\theta$ | $\cos\theta$ |
+|---|---|---|---|
+| $0^\circ$ | $0$ | $\frac{\sqrt{0}}{2}=0$ | $\frac{\sqrt{4}}{2}=1$ |
+| $30^\circ$ | $\frac{\pi}{6}$ | $\frac{\sqrt{1}}{2}=\frac{1}{2}$ | $\frac{\sqrt{3}}{2}$ |
+| $45^\circ$ | $\frac{\pi}{4}$ | $\frac{\sqrt{2}}{2}$ | $\frac{\sqrt{2}}{2}$ |
+| $60^\circ$ | $\frac{\pi}{3}$ | $\frac{\sqrt{3}}{2}$ | $\frac{\sqrt{1}}{2}=\frac{1}{2}$ |
+| $90^\circ$ | $\frac{\pi}{2}$ | $\frac{\sqrt{4}}{2}=1$ | $\frac{\sqrt{0}}{2}=0$ |
+
+**How to read it, and a trick to remember it.**
+
+- Look at the **sine column** from top to bottom. The numbers under the square root are $0, 1, 2, 3, 4$ (all over $2$). Just count up: $\sqrt0, \sqrt1, \sqrt2, \sqrt3, \sqrt4$.
+- The **cosine column** is the same list **counted backwards**: $\sqrt4, \sqrt3, \sqrt2, \sqrt1, \sqrt0$.
+- Some of them simplify, because $\sqrt0 = 0$, $\sqrt1 = 1$ and $\sqrt4 = 2$. That is why $\sin 0^\circ = \frac{0}{2} = 0$, $\sin 30^\circ = \frac12$, $\sin 90^\circ = \frac22 = 1$, and similarly for cosine.
+- The columns are mirror images of each other because $\sin\theta = \cos(90^\circ - \theta)$. For example $\sin 30^\circ = \cos 60^\circ = \tfrac12$.
+- At $45^\circ$ the point is on the diagonal, so across and up are equal: $\sin 45^\circ = \cos 45^\circ = \frac{\sqrt2}{2}$. This is the same number as $\frac{1}{\sqrt2}$ (multiply top and bottom by $\sqrt2$), which you saw in the $1 + i$ example.
+
+**Quick check.** Each row must satisfy $\cos^2\theta + \sin^2\theta = 1$ (Pythagoras on the unit circle). For $30^\circ$: $\left(\tfrac{\sqrt3}{2}\right)^2 + \left(\tfrac12\right)^2 = \tfrac34 + \tfrac14 = 1$. For $45^\circ$: $\tfrac12 + \tfrac12 = 1$.
+
+Here are the same five points on the unit circle. Each point is $(\cos\theta, \sin\theta)$, so the table can be read straight off the picture:
+
+![The first quarter of the unit circle with the points for 0, 30, 45, 60 and 90 degrees labelled with their radians and their coordinates (cos, sin)](images/trig-special-angles-circle.svg)
+
+**Why are these values what they are?** They come from two familiar shapes (you can rebuild the table from them if you forget it):
+
+- **Half of a square** with side $1$: it is a right triangle with two equal legs of length $1$ and two angles of $45^\circ$. By Pythagoras the hypotenuse is $\sqrt{1^2 + 1^2} = \sqrt2$. So $\sin 45^\circ = \dfrac{\text{opposite}}{\text{hypotenuse}} = \dfrac{1}{\sqrt2} = \dfrac{\sqrt2}{2}$, and $\cos 45^\circ$ is the same.
+- **Half of an equilateral triangle** with side $2$: cut it down the middle. You get a right triangle with hypotenuse $2$, short leg $1$ (half of the base) and long leg $\sqrt{2^2 - 1^2} = \sqrt3$. The angles are $30^\circ$ (opposite the short leg) and $60^\circ$. So $\sin 30^\circ = \tfrac12$, $\cos 30^\circ = \tfrac{\sqrt3}{2}$, $\sin 60^\circ = \tfrac{\sqrt3}{2}$, $\cos 60^\circ = \tfrac12$.
+
+![A 45-45-90 triangle with sides 1, 1 and root 2, and a 30-60-90 triangle with sides 1, root 3 and 2, each with the sine and cosine values read off](images/trig-special-triangles.svg)
+
+(The values for $0^\circ$ and $90^\circ$ come from the circle: at $0^\circ$ the point is $(1, 0)$ and at $90^\circ$ it is $(0, 1)$.)
+
 ### From $(a, b)$ to $(r, \theta)$
 
 $$
@@ -1465,6 +1556,10 @@ Putting the pieces together gives the rule above. This is the whole reason for w
 - Its **angle** from the real axis is $\theta_1 + \theta_2$.
 - Its **length** is $r_1 r_2$, the product of the two lengths.
 
+In the picture below, $z_1$ has length $2$ at $20^\circ$ and $z_2$ has length $1.5$ at $60^\circ$. The product $z_1 z_2$ (red) has length $2 \times 1.5 = 3$ and sits at angle $20^\circ + 60^\circ = 80^\circ$. The red arc measures the angle $\theta_1 + \theta_2$ from the real axis; the dashed circle has radius $3$ and shows that the tip of the product lies at distance $r_1 r_2$ from the origin.
+
+![Two arrows z1 (length 2, angle 20 degrees) and z2 (length 1.5, angle 60 degrees) and their product, a red arrow of length 3 at angle 80 degrees, with the angle arcs theta 1, theta 2 and theta 1 plus theta 2 from the real axis](images/multiplication-rule-lengths-angles.svg)
+
 His point: "if I tell you where the initial two complex numbers were, you can figure out where the new complex number is." You never have to expand brackets. You just read off the two lengths and the two angles, multiply the lengths, and add the angles. (The picture for a specific example is in section 13.4.)
 
 > **Transcript note:** the transcript says "its angle will be theta plus 1". It means $\theta_1 + \theta_2$.
@@ -1472,6 +1567,18 @@ His point: "if I tell you where the initial two complex numbers were, you can fi
 ## 13.2 Multiplying by a number on the unit circle only rotates
 
 If $\lvert w\rvert = 1$, then $\lvert zw\rvert = \lvert z\rvert$. Length stays the same, only the angle changes. So **multiplying by $e^{i\phi}$ rotates $z$ by $\phi$**, without changing how big it is.
+
+**Why.** Take $w = e^{i\phi}$. Its length is $r_2 = 1$ and its angle is $\phi$. The rule from 13.1 then says
+
+$$
+zw = (r_1\cdot 1)\, e^{i(\theta_1 + \phi)} = r_1\, e^{i(\theta_1 + \phi)}
+$$
+
+The length is still $r_1$ (multiplying by $1$ changes nothing) and the angle has grown by $\phi$. In the picture, $z$ has length $2.6$ at $25^\circ$ and $w = e^{i\,45^\circ}$ is the short purple arrow of length $1$. The product $zw$ is the same length as $z$ (it stays on the dashed circle) but is turned by $45^\circ$ anticlockwise, to $25^\circ + 45^\circ = 70^\circ$.
+
+![The arrow z of length 2.6 at 25 degrees is turned by 45 degrees along a dashed circle to zw, which has the same length at 70 degrees; w is a short arrow of length 1 at 45 degrees](images/multiplication-by-unit-number-rotates.svg)
+
+(Section 13.3 below is the special case $\phi = 90^\circ$, that is $w = i$.)
 
 ## 13.3 Multiplying by $i$ rotates by 90°
 
@@ -1991,6 +2098,8 @@ And the identity that follows from Pythagoras:
 $$
 \cos^2\theta + \sin^2\theta = 1
 $$
+
+More on this (the four quadrants, the signs of $\cos$ and $\sin$, and the values for $30^\circ$, $45^\circ$, $60^\circ$) is in section 10.3, "Trigonometry basics".
 
 > **Note on the transcript:** the lecturer briefly said "cos θ is b by h" and then corrected himself. The correct statement, with $a$ next to the angle, is $\cos\theta = a/r$.
 
