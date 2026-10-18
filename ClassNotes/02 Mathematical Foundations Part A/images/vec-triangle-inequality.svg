@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 360" width="700" height="360" font-family="Arial, Helvetica, sans-serif"><defs><marker id="m444" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#444"/></marker><marker id="m1f5fbf" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#1f5fbf"/></marker><marker id="m2e8b2e" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#2e8b2e"/></marker><marker id="md62828" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#d62828"/></marker></defs><rect width="700" height="360" fill="#ffffff"/>
+<text x="350.0" y="24.0" font-size="16" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">Triangle inequality: the direct path is never longer</text>
+<line x1="60.0" y1="331.4" x2="60.0" y2="130.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="98.0" y1="331.4" x2="98.0" y2="130.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="136.0" y1="331.4" x2="136.0" y2="130.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="174.0" y1="331.4" x2="174.0" y2="130.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="212.0" y1="331.4" x2="212.0" y2="130.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="250.0" y1="331.4" x2="250.0" y2="130.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="288.0" y1="331.4" x2="288.0" y2="130.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="326.0" y1="331.4" x2="326.0" y2="130.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.4" y1="320.0" x2="348.8" y2="320.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.4" y1="282.0" x2="348.8" y2="282.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.4" y1="244.0" x2="348.8" y2="244.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.4" y1="206.0" x2="348.8" y2="206.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.4" y1="168.0" x2="348.8" y2="168.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.4" y1="130.0" x2="348.8" y2="130.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.4" y1="320.0" x2="348.8" y2="320.0" stroke="#444" stroke-width="1.5" marker-end="url(#m444)"/>
+<line x1="60.0" y1="331.4" x2="60.0" y2="130.0" stroke="#444" stroke-width="1.5" marker-end="url(#m444)"/>
+<line x1="136.0" y1="206.0" x2="326.0" y2="168.0" stroke="#cc9999" stroke-width="1.4" stroke-dasharray="5,4"/>
+<line x1="250.0" y1="282.0" x2="326.0" y2="168.0" stroke="#777777" stroke-width="1.4" stroke-dasharray="5,4"/>
+<line x1="60.0" y1="320.0" x2="250.0" y2="282.0" stroke="#1f5fbf" stroke-width="3" marker-end="url(#m1f5fbf)"/>
+<line x1="250.0" y1="282.0" x2="326.0" y2="168.0" stroke="#2e8b2e" stroke-width="3" marker-end="url(#m2e8b2e)"/>
+<line x1="60.0" y1="320.0" x2="326.0" y2="168.0" stroke="#d62828" stroke-width="3.5" marker-end="url(#md62828)"/>
+<line x1="60.0" y1="320.0" x2="136.0" y2="206.0" stroke="#2e8b2e" stroke-width="1.8" stroke-dasharray="5,4" marker-end="url(#m2e8b2e)"/>
+<text x="155.0" y="339.0" font-size="13" fill="#1f5fbf" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">u,  &#8214;u&#8214; = 5.10</text>
+<text x="298.0" y="241.0" font-size="13" fill="#2e8b2e" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">v,  &#8214;v&#8214; = 3.61</text>
+<text x="228.8" y="208.1" font-size="13" fill="#d62828" text-anchor="end" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">&#8214;u + v&#8214; = 8.06</text>
+<text x="334.0" y="162.0" font-size="13" fill="#d62828" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">u + v</text>
+<text x="400.0" y="90.0" font-size="17" fill="#222222" text-anchor="start" font-weight="bold">&#8214;u + v&#8214; &#8804; &#8214;u&#8214; + &#8214;v&#8214;</text>
+<text x="400.0" y="120.0" font-size="14" fill="#222222" text-anchor="start">8.06  &#8804;  5.10 + 3.61 = 8.71   &#10003;</text>
+<text x="400.0" y="160.0" font-size="13" fill="#222222" text-anchor="start">Walk from O straight to u + v (red),</text>
+<text x="400.0" y="180.0" font-size="13" fill="#222222" text-anchor="start">or take the detour: first u, then v.</text>
+<text x="400.0" y="200.0" font-size="13" fill="#222222" text-anchor="start" font-weight="bold">The detour is never shorter.</text>
+<rect x="388.0" y="232.0" width="290.0" height="82.0" rx="6" fill="#f4f7fc" stroke="#9ab" stroke-width="1.2"/>
+<text x="400.0" y="256.0" font-size="14" fill="#222222" text-anchor="start" font-weight="bold">Cauchy&#8211;Schwarz</text>
+<text x="400.0" y="278.0" font-size="14" fill="#222222" text-anchor="start">|&#10216;u, v&#10217;| &#8804; &#8214;u&#8214; &#8214;v&#8214;</text>
+<text x="400.0" y="300.0" font-size="12" fill="#777777" text-anchor="start">equality only if u, v are parallel</text>
+</svg>

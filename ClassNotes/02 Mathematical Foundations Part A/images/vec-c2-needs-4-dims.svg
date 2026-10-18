@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 380" width="620" height="380" font-family="Arial, Helvetica, sans-serif"><defs><marker id="m444" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#444"/></marker><marker id="m1f5fbf" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#1f5fbf"/></marker></defs><rect width="620" height="380" fill="#ffffff"/>
+<text x="310.0" y="24.0" font-size="16" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">Why we cannot draw a vector in C&#178;</text>
+<text x="160.0" y="56.0" font-size="14" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">plane for z&#8321;</text>
+<line x1="80.0" y1="278.0" x2="80.0" y2="94.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="120.0" y1="278.0" x2="120.0" y2="94.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="160.0" y1="278.0" x2="160.0" y2="94.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="200.0" y1="278.0" x2="200.0" y2="94.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="240.0" y1="278.0" x2="240.0" y2="94.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="64.0" y1="270.0" x2="276.0" y2="270.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="64.0" y1="230.0" x2="276.0" y2="230.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="64.0" y1="190.0" x2="276.0" y2="190.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="64.0" y1="150.0" x2="276.0" y2="150.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="64.0" y1="110.0" x2="276.0" y2="110.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="64.0" y1="190.0" x2="276.0" y2="190.0" stroke="#444" stroke-width="1.5" marker-end="url(#m444)"/>
+<line x1="160.0" y1="278.0" x2="160.0" y2="94.0" stroke="#444" stroke-width="1.5" marker-end="url(#m444)"/>
+<text x="274.0" y="206.0" font-size="13" fill="#444" text-anchor="end">Re</text>
+<text x="168.0" y="104.0" font-size="13" fill="#444" text-anchor="start">Im</text>
+<line x1="160.0" y1="190.0" x2="200.0" y2="150.0" stroke="#1f5fbf" stroke-width="2.5" marker-end="url(#m1f5fbf)"/>
+<circle cx="200.0" cy="150.0" r="4.5" fill="#1f5fbf"/>
+<text x="208.0" y="142.0" font-size="13" fill="#1f5fbf" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">z&#8321; = 1 + i</text>
+<text x="460.0" y="56.0" font-size="14" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">plane for z&#8322;</text>
+<line x1="380.0" y1="278.0" x2="380.0" y2="94.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="420.0" y1="278.0" x2="420.0" y2="94.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="460.0" y1="278.0" x2="460.0" y2="94.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="500.0" y1="278.0" x2="500.0" y2="94.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="540.0" y1="278.0" x2="540.0" y2="94.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="364.0" y1="270.0" x2="576.0" y2="270.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="364.0" y1="230.0" x2="576.0" y2="230.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="364.0" y1="190.0" x2="576.0" y2="190.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="364.0" y1="150.0" x2="576.0" y2="150.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="364.0" y1="110.0" x2="576.0" y2="110.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="364.0" y1="190.0" x2="576.0" y2="190.0" stroke="#444" stroke-width="1.5" marker-end="url(#m444)"/>
+<line x1="460.0" y1="278.0" x2="460.0" y2="94.0" stroke="#444" stroke-width="1.5" marker-end="url(#m444)"/>
+<text x="574.0" y="206.0" font-size="13" fill="#444" text-anchor="end">Re</text>
+<text x="468.0" y="104.0" font-size="13" fill="#444" text-anchor="start">Im</text>
+<line x1="460.0" y1="190.0" x2="540.0" y2="190.0" stroke="#1f5fbf" stroke-width="2.5" marker-end="url(#m1f5fbf)"/>
+<circle cx="540.0" cy="190.0" r="4.5" fill="#1f5fbf"/>
+<text x="536.0" y="178.0" font-size="13" fill="#1f5fbf" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">z&#8322; = 2</text>
+<text x="310.0" y="190.0" font-size="40" fill="#777777" text-anchor="middle" font-weight="bold">+</text>
+<text x="310.0" y="300.0" font-size="15" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">v = (z&#8321;, z&#8322;) = (1 + i, 2)</text>
+<text x="310.0" y="324.0" font-size="13" fill="#222222" text-anchor="middle">Each complex number needs a whole plane (2 real numbers).</text>
+<text x="310.0" y="344.0" font-size="13" fill="#222222" text-anchor="middle">So v is 4 real numbers: (1, 1, 2, 0). That needs 4 dimensions.</text>
+<text x="310.0" y="364.0" font-size="13" fill="#d62828" text-anchor="middle" font-weight="bold">We only have 3 to draw in, so we draw R&#178; cartoons and trust the algebra.</text>
+</svg>

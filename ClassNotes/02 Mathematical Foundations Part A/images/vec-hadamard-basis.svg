@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 430" width="700" height="430" font-family="Arial, Helvetica, sans-serif"><defs><marker id="mccc" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#ccc"/></marker><marker id="md62828" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#d62828"/></marker><marker id="m2e8b2e" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#2e8b2e"/></marker><marker id="m1f5fbf" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#1f5fbf"/></marker><marker id="m7b3fa0" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#7b3fa0"/></marker></defs><rect width="700" height="430" fill="#ffffff"/>
+<text x="350.0" y="24.0" font-size="16" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">Two bases of the same plane: {e&#8321;, e&#8322;} and {h+, h&#8722;}</text>
+<line x1="60.5" y1="270.0" x2="341.0" y2="270.0" stroke="#ccc" stroke-width="1.5" marker-end="url(#mccc)"/>
+<line x1="120.0" y1="431.5" x2="120.0" y2="49.0" stroke="#ccc" stroke-width="1.5" marker-end="url(#mccc)"/>
+<line x1="205.0" y1="185.0" x2="290.0" y2="270.0" stroke="#777777" stroke-width="1.4" stroke-dasharray="5,4"/>
+<line x1="205.0" y1="355.0" x2="290.0" y2="270.0" stroke="#777777" stroke-width="1.4" stroke-dasharray="5,4"/>
+<line x1="120.0" y1="270.0" x2="290.0" y2="270.0" stroke="#d62828" stroke-width="3.5" marker-end="url(#md62828)"/>
+<line x1="120.0" y1="270.0" x2="120.0" y2="100.0" stroke="#2e8b2e" stroke-width="3.5" marker-end="url(#m2e8b2e)"/>
+<line x1="120.0" y1="270.0" x2="240.2" y2="149.8" stroke="#1f5fbf" stroke-width="3.5" marker-end="url(#m1f5fbf)"/>
+<line x1="120.0" y1="270.0" x2="240.2" y2="390.2" stroke="#7b3fa0" stroke-width="3.5" marker-end="url(#m7b3fa0)"/>
+<path d="M129.9,260.1 L139.8,270.0 L129.9,279.9" fill="none" stroke="#555" stroke-width="1.2"/>
+<circle cx="120.0" cy="270.0" r="4" fill="#222222"/>
+<text x="298.0" y="275.0" font-size="15" fill="#d62828" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">e&#8321;</text>
+<text x="128.0" y="105.0" font-size="15" fill="#2e8b2e" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">e&#8322;</text>
+<text x="248.2" y="143.8" font-size="15" fill="#1f5fbf" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">h+</text>
+<text x="248.2" y="404.2" font-size="15" fill="#7b3fa0" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">h&#8722;</text>
+<circle cx="205.0" cy="185.0" r="3.5" fill="#1f5fbf"/>
+<text x="195.0" y="179.0" font-size="11" fill="#1f5fbf" text-anchor="end" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">(1/&#8730;2)h+</text>
+<circle cx="205.0" cy="355.0" r="3.5" fill="#7b3fa0"/>
+<text x="195.0" y="371.0" font-size="11" fill="#7b3fa0" text-anchor="end" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">(1/&#8730;2)h&#8722;</text>
+<text x="350.0" y="70.0" font-size="14" fill="#1f5fbf" text-anchor="start" font-weight="bold">h+ = (1/&#8730;2)(1, 1)</text>
+<text x="350.0" y="92.0" font-size="14" fill="#7b3fa0" text-anchor="start" font-weight="bold">h&#8722; = (1/&#8730;2)(1, &#8722;1)</text>
+<text x="350.0" y="114.0" font-size="12.5" fill="#777777" text-anchor="start">Both have length 1 and they are perpendicular.</text>
+<rect x="338.0" y="128.0" width="340.0" height="112.0" rx="6" fill="#f4f7fc" stroke="#9ab" stroke-width="1.2"/>
+<text x="350.0" y="152.0" font-size="14" fill="#222222" text-anchor="start" font-weight="bold">Same vector, different coordinates</text>
+<text x="350.0" y="176.0" font-size="13" fill="#d62828" text-anchor="start" font-weight="bold">e&#8321; in {e&#8321;, e&#8322;}:  (1, 0)</text>
+<text x="350.0" y="196.0" font-size="13" fill="#d62828" text-anchor="start" font-weight="bold">e&#8321; in {h+, h&#8722;}:  (1/&#8730;2, 1/&#8730;2)</text>
+<text x="350.0" y="220.0" font-size="13" fill="#2e8b2e" text-anchor="start" font-weight="bold">e&#8322; in {h+, h&#8722;}:  (1/&#8730;2, &#8722;1/&#8730;2)</text>
+<text x="350.0" y="268.0" font-size="14" fill="#d62828" text-anchor="start" font-weight="bold">e&#8321; = (h+ + h&#8722;)/&#8730;2</text>
+<text x="350.0" y="290.0" font-size="14" fill="#2e8b2e" text-anchor="start" font-weight="bold">e&#8322; = (h+ &#8722; h&#8722;)/&#8730;2</text>
+<text x="350.0" y="322.0" font-size="13" fill="#222222" text-anchor="start" font-weight="bold">In general, for v = (&#945;, &#946;):</text>
+<text x="350.0" y="344.0" font-size="13" fill="#222222" text-anchor="start">coordinates in {h+, h&#8722;} = ((&#945; + &#946;)/&#8730;2, (&#945; &#8722; &#946;)/&#8730;2)</text>
+<text x="350.0" y="410.0" font-size="11" fill="#777777" text-anchor="start">Real cartoon: the entries happen to be real, so we can draw it.</text>
+</svg>

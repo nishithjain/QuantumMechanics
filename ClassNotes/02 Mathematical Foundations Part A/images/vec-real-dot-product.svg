@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="680" height="400" font-family="Arial, Helvetica, sans-serif"><defs><marker id="m444" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#444"/></marker><marker id="md62828" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#d62828"/></marker><marker id="m1f5fbf" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#1f5fbf"/></marker></defs><rect width="680" height="400" fill="#ffffff"/>
+<text x="340.0" y="24.0" font-size="16" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">The real dot product and its picture</text>
+<line x1="60.0" y1="362.0" x2="60.0" y2="22.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="100.0" y1="362.0" x2="100.0" y2="22.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="140.0" y1="362.0" x2="140.0" y2="22.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="180.0" y1="362.0" x2="180.0" y2="22.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="220.0" y1="362.0" x2="220.0" y2="22.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="260.0" y1="362.0" x2="260.0" y2="22.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="300.0" y1="362.0" x2="300.0" y2="22.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.0" y1="350.0" x2="316.0" y2="350.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.0" y1="310.0" x2="316.0" y2="310.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.0" y1="270.0" x2="316.0" y2="270.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.0" y1="230.0" x2="316.0" y2="230.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.0" y1="190.0" x2="316.0" y2="190.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.0" y1="150.0" x2="316.0" y2="150.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.0" y1="110.0" x2="316.0" y2="110.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.0" y1="70.0" x2="316.0" y2="70.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.0" y1="30.0" x2="316.0" y2="30.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="52.0" y1="350.0" x2="316.0" y2="350.0" stroke="#444" stroke-width="1.5" marker-end="url(#m444)"/>
+<line x1="60.0" y1="362.0" x2="60.0" y2="22.0" stroke="#444" stroke-width="1.5" marker-end="url(#m444)"/>
+<text x="314.0" y="366.0" font-size="13" fill="#444" text-anchor="end">x</text>
+<text x="68.0" y="32.0" font-size="13" fill="#444" text-anchor="start">y</text>
+<line x1="60.0" y1="350.0" x2="180.0" y2="70.0" stroke="#d62828" stroke-width="3" marker-end="url(#md62828)"/>
+<line x1="60.0" y1="350.0" x2="260.0" y2="310.0" stroke="#1f5fbf" stroke-width="3" marker-end="url(#m1f5fbf)"/>
+<line x1="260.0" y1="310.0" x2="105.5" y2="243.8" stroke="#777777" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="60.0" y1="350.0" x2="105.5" y2="243.8" stroke="#2e8b2e" stroke-width="7" stroke-opacity="0.55"/>
+<path d="M101.6,253.0 L110.8,256.9 L114.7,247.7" fill="none" stroke="#555" stroke-width="1.2"/>
+<path d="M111.0,339.8 A52,52 0 0 0 80.5,302.2" fill="none" stroke="#555" stroke-width="1.8"/>
+<text x="115.9" y="308.6" font-size="16" fill="#333" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">&#952;</text>
+<circle cx="260.0" cy="310.0" r="4.5" fill="#1f5fbf"/>
+<circle cx="180.0" cy="70.0" r="4.5" fill="#d62828"/>
+<text x="268.0" y="314.0" font-size="13" fill="#1f5fbf" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">u = (5, 1)</text>
+<text x="188.0" y="68.0" font-size="13" fill="#d62828" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">v = (3, 7)</text>
+<text x="119.5" y="261.8" font-size="12" fill="#2e8b2e" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">projection of u on v</text>
+<text x="340.0" y="90.0" font-size="15" fill="#222222" text-anchor="start" font-weight="bold">u &#183; v = u&#8321;v&#8321; + u&#8322;v&#8322;</text>
+<text x="340.0" y="116.0" font-size="15" fill="#222222" text-anchor="start" font-weight="bold">= 5&#183;3 + 1&#183;7 = 15 + 7 = 22</text>
+<text x="340.0" y="150.0" font-size="14" fill="#222222" text-anchor="start">The same number as   &#8214;u&#8214; &#183; &#8214;v&#8214; &#183; cos &#952;</text>
+<text x="340.0" y="180.0" font-size="13" fill="#2e8b2e" text-anchor="start" font-weight="bold">&#8214;u&#8214; cos &#952; = length of the green projection</text>
+<text x="340.0" y="200.0" font-size="13" fill="#222222" text-anchor="start">so  u &#183; v = (green length) &#215; &#8214;v&#8214;</text>
+<rect x="328.0" y="228.0" width="330.0" height="118.0" rx="6" fill="#f4f7fc" stroke="#9ab" stroke-width="1.2"/>
+<text x="340.0" y="252.0" font-size="14" fill="#222222" text-anchor="start" font-weight="bold">What the dot product gives you</text>
+<text x="340.0" y="274.0" font-size="13" fill="#222222" text-anchor="start">length:   &#8214;v&#8214;&#178; = v &#183; v</text>
+<text x="340.0" y="294.0" font-size="13" fill="#222222" text-anchor="start">angle:    cos &#952; = u &#183; v / (&#8214;u&#8214;&#8214;v&#8214;)</text>
+<text x="340.0" y="314.0" font-size="13" fill="#222222" text-anchor="start">perpendicular:   u &#183; v = 0</text>
+<text x="340.0" y="336.0" font-size="11" fill="#777777" text-anchor="start">(cosine similarity in vector search)</text>
+</svg>
