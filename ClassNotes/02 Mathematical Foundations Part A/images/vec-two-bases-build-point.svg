@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" width="760" height="460" font-family="Arial, Helvetica, sans-serif"><defs><marker id="m444" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#444"/></marker><marker id="m2e8b2e" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#2e8b2e"/></marker><marker id="md62828" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#d62828"/></marker><marker id="m1f5fbf" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#1f5fbf"/></marker><marker id="m7b3fa0" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#7b3fa0"/></marker><marker id="me68a00" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#e68a00"/></marker></defs><rect width="760" height="460" fill="#ffffff"/>
+<text x="380.0" y="26.0" font-size="16" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">The same point (3, 1), written in two bases</text>
+<text x="175.0" y="58.0" font-size="14" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">Standard basis  (1, 0) and (0, 1)</text>
+<line x1="34.2" y1="331.2" x2="34.2" y2="175.2" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="86.2" y1="331.2" x2="86.2" y2="175.2" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="138.2" y1="331.2" x2="138.2" y2="175.2" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="190.2" y1="331.2" x2="190.2" y2="175.2" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="242.2" y1="331.2" x2="242.2" y2="175.2" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="34.2" y1="331.2" x2="273.4" y2="331.2" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="34.2" y1="279.2" x2="273.4" y2="279.2" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="34.2" y1="227.2" x2="273.4" y2="227.2" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="34.2" y1="175.2" x2="273.4" y2="175.2" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="34.2" y1="300.0" x2="273.4" y2="300.0" stroke="#444" stroke-width="1.4" marker-end="url(#m444)"/>
+<line x1="55.0" y1="331.2" x2="55.0" y2="175.2" stroke="#444" stroke-width="1.4" marker-end="url(#m444)"/>
+<polygon points="55.0,300.0 211.0,300.0 211.0,248.0 55.0,248.0" fill="#d6e6fa" stroke="none" stroke-width="1.2" fill-opacity="0.9"/>
+<line x1="211.0" y1="300.0" x2="211.0" y2="248.0" stroke="#2e8b2e" stroke-width="2.2" stroke-dasharray="6,4" marker-end="url(#m2e8b2e)"/>
+<line x1="55.0" y1="248.0" x2="211.0" y2="248.0" stroke="#d62828" stroke-width="1.4" stroke-dasharray="5,4"/>
+<line x1="55.0" y1="300.0" x2="211.0" y2="300.0" stroke="#d62828" stroke-width="3.2" marker-end="url(#md62828)"/>
+<line x1="55.0" y1="300.0" x2="55.0" y2="248.0" stroke="#2e8b2e" stroke-width="3.2" marker-end="url(#m2e8b2e)"/>
+<line x1="55.0" y1="300.0" x2="211.0" y2="248.0" stroke="#1f5fbf" stroke-width="2.6" marker-end="url(#m1f5fbf)"/>
+<circle cx="211.0" cy="248.0" r="5" fill="#1f5fbf"/>
+<circle cx="55.0" cy="300.0" r="3.5" fill="#222222"/>
+<text x="107.0" y="318.0" font-size="13" fill="#d62828" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">(1, 0)</text>
+<text x="211.0" y="318.0" font-size="12" fill="#d62828" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">3 of them</text>
+<text x="47.0" y="242.0" font-size="13" fill="#2e8b2e" text-anchor="end" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">(0, 1)</text>
+<text x="219.0" y="240.0" font-size="14" fill="#1f5fbf" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">(3, 1)</text>
+<text x="175.0" y="360.0" font-size="13" fill="#1f5fbf" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">(3, 1) = 3&#183;(1, 0) + 1&#183;(0, 1)</text>
+<text x="175.0" y="382.0" font-size="12" fill="#777777" text-anchor="middle" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">Go 3 along (1, 0), then 1 along (0, 1).</text>
+<text x="545.0" y="58.0" font-size="14" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">Another basis  (1, 1) and (1, -1)</text>
+<line x1="376.6" y1="388.4" x2="376.6" y2="164.8" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="428.6" y1="388.4" x2="428.6" y2="164.8" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="480.6" y1="388.4" x2="480.6" y2="164.8" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="532.6" y1="388.4" x2="532.6" y2="164.8" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="584.6" y1="388.4" x2="584.6" y2="164.8" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="376.6" y1="388.4" x2="623.6" y2="388.4" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="376.6" y1="336.4" x2="623.6" y2="336.4" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="376.6" y1="284.4" x2="623.6" y2="284.4" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="376.6" y1="232.4" x2="623.6" y2="232.4" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="376.6" y1="180.4" x2="623.6" y2="180.4" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="376.6" y1="300.0" x2="623.6" y2="300.0" stroke="#444" stroke-width="1.4" marker-end="url(#m444)"/>
+<line x1="400.0" y1="388.4" x2="400.0" y2="164.8" stroke="#444" stroke-width="1.4" marker-end="url(#m444)"/>
+<polygon points="400.0,300.0 504.0,196.0 556.0,248.0 452.0,352.0" fill="#fde8c8" stroke="#e6c48a" stroke-width="1.2" fill-opacity="0.85"/>
+<line x1="504.0" y1="196.0" x2="556.0" y2="248.0" stroke="#7b3fa0" stroke-width="2.0" stroke-dasharray="6,4" marker-end="url(#m7b3fa0)"/>
+<line x1="452.0" y1="352.0" x2="556.0" y2="248.0" stroke="#e68a00" stroke-width="1.6" stroke-dasharray="5,4"/>
+<line x1="400.0" y1="300.0" x2="504.0" y2="196.0" stroke="#e68a00" stroke-width="3.2" marker-end="url(#me68a00)"/>
+<line x1="400.0" y1="300.0" x2="452.0" y2="352.0" stroke="#7b3fa0" stroke-width="3.2" marker-end="url(#m7b3fa0)"/>
+<line x1="400.0" y1="300.0" x2="556.0" y2="248.0" stroke="#1f5fbf" stroke-width="2.6" marker-end="url(#m1f5fbf)"/>
+<circle cx="452.0" cy="248.0" r="4" fill="#e68a00"/>
+<circle cx="556.0" cy="248.0" r="5" fill="#1f5fbf"/>
+<circle cx="400.0" cy="300.0" r="3.5" fill="#222222"/>
+<text x="460.0" y="240.0" font-size="13" fill="#e68a00" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">(1, 1)</text>
+<text x="512.0" y="192.0" font-size="13" fill="#e68a00" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">2&#183;(1, 1)</text>
+<text x="460.0" y="368.0" font-size="13" fill="#7b3fa0" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">(1, -1)</text>
+<text x="564.0" y="238.0" font-size="14" fill="#1f5fbf" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">(3, 1)</text>
+<text x="545.0" y="400.0" font-size="13" fill="#1f5fbf" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">(3, 1) = 2&#183;(1, 1) + 1&#183;(1, -1)</text>
+<text x="545.0" y="422.0" font-size="12" fill="#777777" text-anchor="middle" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">Go twice along (1, 1), then once along (1, -1).</text>
+</svg>

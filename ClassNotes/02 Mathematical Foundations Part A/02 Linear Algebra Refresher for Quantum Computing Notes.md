@@ -1,17 +1,6 @@
-# Mathematical Foundations Part B: Vectors and Inner Products — Detailed Beginner Notes
+# Mathematical Foundations Part B: Vectors and Inner Products — Detailed Notes
 
-**Sources:**
-
-- [02_Linear_Algebra_Refresher_Corrected_Transcript.md](02_Linear_Algebra_Refresher_Corrected_Transcript.md) (corrected transcript of the lecture, Prof. Amit Kumar, IIT Delhi, Quantum Computing and AI programme)
-- The lecture slides (`02 Linear_Algebra_Refresher_for_Quantum_Computing.pdf`). Only the **vector part** of the deck is used here: from the slide *"From Arrows to Lists of Numbers"* to the slide *"Worked Example: Rewriting a Vector in the Hadamard Basis"*. The earlier slides in the PDF are the complex-number slides, which are covered in the Part A notes on complex numbers.
-
-**Who these notes are for:** someone new to quantum computing who has just finished complex numbers and now meets vectors. Every step of the maths is shown.
-
-> **How to read this.** The notes follow **the same order as the transcript**, so you can read them side by side with the video. Each section starts with a line saying which part of the lecture it covers and which slide goes with it. Things the lecturer said only in passing are expanded. Things that were **not** in the lecture (extra examples, an extra practice set, a refresher) are labelled as additions, or are placed in the appendices at the end. Where the transcript is garbled, a **Transcript note** tells you what was most likely meant.
-
-> **Real cartoons.** The lecturer says it again and again: *"when I draw a picture, I always draw real numbers, because I cannot draw complex numbers. But the algebra is for complex numbers."* All the pictures below are drawn in $\mathbb{R}^2$ or $\mathbb{R}^3$ for intuition. Whenever the maths needs complex numbers, the notes say so.
-
-**Notation used in the slides (slide "Notation We Will Use")**
+**Notation used**
 
 | Object | Notation | Example |
 |---|---|---|
@@ -23,22 +12,7 @@
 | Inner product | $\langle \mathbf{u}, \mathbf{v}\rangle$ | a complex number |
 | Norm (length) | $\lVert \mathbf{v}\rVert$ | a non-negative real number |
 
-In the text below, plain letters such as $u$, $v$ are also used for vectors when it is clear from the context (the lecturer does this when speaking).
-
-**Follow-along map: transcript heading and the matching section of these notes**
-
-| Heading in the transcript | Section here |
-|---|---|
-| Opening and transition to vectors (slides "From Arrows to Lists of Numbers", "Operations on $\mathbb{C}^n$", "Vector Space over $\mathbb{C}$") | 1 to 3 |
-| Linear combinations and span (slides 7–8) | 4 |
-| Subspaces (slide 9) | 5 |
-| Linear independence (slides 10–14) | 6 |
-| Basis and dimension (slides 15–17) | 7 |
-| Change of basis and coordinates (slides 18–23) | 8 and 9 |
-| Dot product, the complex inner product, norm (slides 24–40) | 10 to 12 |
-| Inequalities and orthogonality (slides 41–46) | 13 and 14 |
-| Orthonormal bases and coordinate extraction (slides 47–53) | 15 |
-| Review, questions and next session | 16 |
+In the text below, plain letters such as $u$, $v$ are also used for vectors when it is clear from the context.
 
 ---
 
@@ -70,25 +44,23 @@ In the text below, plain letters such as $u$, $v$ are also used for vectors when
 
 # 1. From numbers to vectors
 
-*Transcript: "Opening and transition to vectors". Slide: "From Arrows to Lists of Numbers".*
-
 ## 1.1 Where we are in the course
 
-This is the **second session of the day**. In the first session you learned complex numbers. The lecturer strongly suggests trying the questions at the end of those slides, and says that more will be sent: *"till you try and become comfortable with these things, you will not enjoy this."*
+This is the **second session of the day**. In the first session we learned complex numbers.
 
 Now we move to the next stage. **Instead of single numbers, we deal with vectors.**
 
 ## 1.2 A vector is a list of numbers
 
-For real numbers, the lecturer says a vector is simply **a list of real numbers**.
+For real numbers, the vector is simply **a list of real numbers**.
 
 - $\mathbf{v}$ with **two** numbers is in $\mathbb{R}^2$. In the slide, $\mathbf{v} = \begin{pmatrix} 2 \\ 1 \end{pmatrix}$.
 - A list of **three** numbers is in $\mathbb{R}^3$.
-- A list of **four** numbers is in $\mathbb{R}^4$. The lecturer's example is $2.3,\ -6,\ 3,\ 5.1$.
+- A list of **four** numbers is in $\mathbb{R}^4$. The example is ($2.3,\ -6,\ 3,\ 5.1$).
 
 The name $\mathbb{R}^n$ means "lists of $n$ real numbers". The little $n$ is the length of the list.
 
-The same idea works for complex numbers. A vector of **$n$ complex numbers** is a list of $n$ complex numbers, and the set of all of them is called $\mathbb{C}^n$. The lecturer's example (the slide shows it as a column) has first entry $1 + i$ and second entry $2$:
+The same idea works for complex numbers. A vector of **$n$ complex numbers** is a list of $n$ complex numbers, and the set of all of them is called $\mathbb{C}^n$. The example (the slide shows it as a column) has first entry $1 + i$ and second entry $2$:
 
 $$
 \mathbf{v} = \begin{pmatrix} 1 + i \\ 2 \end{pmatrix} \in \mathbb{C}^2
@@ -104,12 +76,12 @@ Here is the real picture. The arrow on the left is just a drawing of the list $(
 
 ## 1.3 Why do we deal with vectors of complex numbers?
 
-The lecturer's reason, in one line: **a qubit is described by complex numbers, and several qubits need more of them.**
+The reason, in one line: **a qubit is described by complex numbers, and several qubits need more of them.**
 
 - One qubit is represented using **two complex amplitudes**. So a one-qubit state is a vector in $\mathbb{C}^2$.
 - With several qubits, the vectors have **more complex coordinates**.
 
-(He says he has not yet told you what a qubit is. That comes in the next lecture. For now, just accept that these vectors are the objects quantum computing works with.)
+(We have not yet been told what a qubit is. That comes in the next lecture. For now, just accept that these vectors are the objects quantum computing works with.)
 
 ## 1.4 The visualisation problem
 
@@ -122,7 +94,7 @@ Now take a vector with **two complex** coordinates, such as $(1 + i,\ 2)$. Remem
 
 ![Two complex planes side by side, one with the point 1 + i and one with the point 2, showing that a vector in C squared needs four real numbers](images/vec-c2-needs-4-dims.svg)
 
-Altogether the vector is **four real numbers**, $(1, 1, 2, 0)$. To draw four real numbers we would need **four dimensions**, and we only have three. The lecturer's conclusion:
+Altogether the vector is **four real numbers**, $(1, 1, 2, 0)$. To draw four real numbers we would need **four dimensions**, and we only have three. The conclusion:
 
 > *"We cannot draw a pair of complex numbers... So when I explain, I will draw them in two dimensions, but when we actually have to think about them, we will think in terms of $\mathbb{C}^n$. This is a translation that we will do as we go."*
 
@@ -137,13 +109,11 @@ Altogether the vector is **four real numbers**, $(1, 1, 2, 0)$. To draw four rea
 
 # 2. Adding vectors and scaling vectors
 
-*Transcript: still "Opening and transition to vectors". Slide: "Operations on $\mathbb{C}^n$".*
-
 ## 2.1 Adding two vectors
 
 It is very similar to adding complex numbers. **Add each coordinate separately.** This is why it is called "entrywise" addition.
 
-The lecturer's example in $\mathbb{C}^2$ (the slide):
+The example in $\mathbb{C}^2$ (the slide):
 
 $$
 \begin{pmatrix} 1 + i \\ 2 \end{pmatrix} + \begin{pmatrix} 3 \\ -i \end{pmatrix}
@@ -153,11 +123,11 @@ $$
 
 First entries: $1 + i$ and $3$ give $4 + i$. Second entries: $2$ and $-i$ give $2 - i$.
 
-In the real plane, adding vectors has a picture: draw both arrows from the origin, complete the **parallelogram**, and the fourth corner is the sum. (The lecturer uses this parallelogram again in section 5.)
+In the real plane, adding vectors has a picture: draw both arrows from the origin, complete the **parallelogram**, and the fourth corner is the sum. (This parallelogram is used again in section 5.)
 
 ## 2.2 Multiplying a vector by a number (scalar multiplication)
 
-*"Multiplying two vectors, it's not clear what it means."* (He will not define a vector times a vector at all.)
+*"Multiplying two vectors, it's not clear what it means."* (A vector times a vector is not defined at all.)
 
 But you **can** multiply a vector by a **number** (in this setting a complex number, called a **scalar**). Multiply **every coordinate** by that number. For $\mathbf{b} = (b_1, b_2)$ and a complex number $z$:
 
@@ -182,19 +152,66 @@ Here is what both operations look like for real vectors. On the left, adding $\m
 
 ## 2.3 Two questions from the class
 
-**Question: "Is a vector something with magnitude and direction?"** That is how we think of force or momentum in the real world. The lecturer's answer: with complex numbers it is more complicated, so **do not think of a vector as "magnitude and direction"**. Think of it as *something with many components*.
+**Question: "Is a vector something with magnitude and direction?"** That is how we think of force or momentum in the real world. The answer: with complex numbers it is more complicated, so **do not think of a vector as "magnitude and direction"**. Think of it as *something with many components*.
 
 **Question: "Why can't $n$ complex numbers be shown as $n$ separate points in a 2D plane?"**
 
-You can draw $z_1$ in one plane and $z_2$ in another. The problem: *"when I do various operations on them, they will get mixed up with each other."* The two numbers behave as **one object**, not as two independent things.
+Both $(2, 3)$ and $2 + 3i$ can be drawn as an arrow ending at the point $(2, 3)$. The confusion is **what we mean by a coordinate**. Here is the distinction, then the answer to the question.
 
-He gives a simpler analogy. Why not think of the vector $(2, 1)$ as the number $2$ on one number line and the number $1$ on another? You can, but the pair $(2, 1)$ *jointly* is different from just "the number 2 and the number 1". There is a relation between the two entries, and that relation is preserved when you do transformations. So we think of the pair as **one point in a plane**, not as two unrelated numbers.
+**1. A vector with real coordinates.** $\mathbf{v} = (2, 3)$ is a list of **two real numbers**: first coordinate $2$, second coordinate $3$. Move 2 horizontally and 3 vertically. This vector lives in $\mathbb{R}^2$ (“2” means two real coordinates).
+
+**2. One complex number (not a vector yet).** $z = 2 + 3i$ is **one** complex number, but it carries two real pieces of information: real part $2$, imaginary part $3$. So it can be drawn on the complex plane at $(2, 3)$.
+
+| Expression | What the coordinates are |
+|---|---|
+| $(2, 3) \in \mathbb{R}^2$ | Two **real** numbers (two coordinates) |
+| $2 + 3i \in \mathbb{C}$ | **One** complex number (one coordinate, two real parts inside it) |
+
+The picture can look the same; the **type** of object is different.
+
+**3. A vector whose entries are complex numbers.** A vector in $\mathbb{C}^2$ is a list whose **entries** are complex numbers, for example
+
+$$
+\mathbf{w} = (2 + 3i,\; 4 + i).
+$$
+
+Compare:
+
+$$
+\begin{aligned}
+\mathbf{v} &= (2,\; 3) &&\text{two real entries}\\
+\mathbf{w} &= (2 + 3i,\; 4 + i) &&\text{two complex entries}
+\end{aligned}
+$$
+
+For $\mathbf{w}$, the **first coordinate** is the whole number $2 + 3i$; the **second** is $4 + i$. The $2$ and $3$ are parts of the **first** entry only — they are not the two coordinates of $\mathbf{w}$.
+
+To specify $\mathbf{w}$ completely you need **four** real numbers:
+
+| Complex entry | Real part | Imaginary part |
+|---|---|---|
+| First: $2 + 3i$ | $2$ | $3$ |
+| Second: $4 + i$ | $4$ | $1$ |
+
+So $\mathbf{w} \in \mathbb{C}^2$ has **two complex coordinates**, which is the same information as **four real** numbers. (Section 1.4 counts the same way for $(1 + i,\, 2)$.)
+
+> **Rule of thumb.** One **real** coordinate holds one real number. One **complex** coordinate holds two real numbers (real and imaginary parts). “Two coordinates” does not always mean “two real numbers” — it depends what kind of numbers the coordinates are.
+
+**4. Can we still draw something?** Yes, on one sheet you can draw **two labelled arrows**: one for the first entry $(2, 3)$ (meaning $2 + 3i$) and one for the second $(4, 1)$ (meaning $4 + i$). Together they describe **one** vector in $\mathbb{C}^2$.
+
+What you **cannot** do in the usual 2D picture is represent that whole vector as **one** arrow with only two real coordinates: the object needs four real degrees of freedom, not two.
+
+**Why $n$ points on one ordinary plane is not enough.** You *can* put $z_1$ and $z_2$ on planes (or two points on one diagram), but in quantum linear algebra they are **one column vector**. When you add vectors or multiply by a complex scalar, **both entries are updated together** (section 2.1–2.2). They are not two unrelated dots; they are one object.
+
+In the lecture: *"when I do various operations on them, they will get mixed up with each other."*
+
+**Shorter analogy (real case).** Why not read $(2, 1)$ as “the number $2$” and “the number $1$” on separate lines? You can draw that, but the pair $(2, 1)$ **together** is one vector in a plane — the entries stay tied when we transform the vector. The same idea applies in $\mathbb{C}^2$, with complex entries and four underlying real numbers.
 
 ## 2.4 The zero vector, the negative of a vector, rows and columns
 
 - **Zero vector:** every component is $0$. The slide writes $\mathbf{0} = (0, \dots, 0)^T$.
 - **Negative of a vector:** multiply everything by $-1$. That is, $-\mathbf{v} = (-1)\,\mathbf{v}$: negate every entry.
-- **Row vector and column vector.** A vector can be written standing up (a **column vector**) or lying down (a **row vector**). The lecturer: *"if I write something like this and something like this, they are not the same thing."* Taking the **transpose** (the little $T$ in $(v_1, \dots, v_n)^T$) turns a row into a column. The transpose of the row is the column.
+- **Row vector and column vector.** A vector can be written standing up (a **column vector**) or lying down (a **row vector**). In the lecture: *"if I write something like this and something like this, they are not the same thing."* Taking the **transpose** (the little $T$ in $(v_1, \dots, v_n)^T$) turns a row into a column. The transpose of the row is the column.
 
 So the little $T$ in the slide just says: "this list is meant to be written as a column."
 
@@ -206,13 +223,13 @@ These are the same rules you know for ordinary numbers (the slide lists them aga
 - **Grouping does not matter:** $(\mathbf{u} + \mathbf{v}) + \mathbf{w} = \mathbf{u} + (\mathbf{v} + \mathbf{w})$.
 - **A vector plus its negative is zero:** $\mathbf{v} + (-\mathbf{v}) = \mathbf{0}$.
 
-The lecturer says: *"these are the usual rules that we are all familiar with."*
+In the lecture: *"these are the usual rules that we are all familiar with."*
 
 ---
 
 # 3. Vector spaces
 
-*Transcript: end of "Opening and transition to vectors". Slides: "Vector Space over $\mathbb{C}$: Definition" and "Examples and Non-Examples".*
+> **The floor picture (sections 3–7).** Picture movement on a flat floor: east–west and north–south. A vector is an **instruction for movement**. For example $(3, 2)$ means “move 3 steps east and 2 steps north.” Negative entries mean the opposite direction: $(-3, 0)$ is 3 steps west. The next five sections use this same picture for **vector space**, **linear combination**, **span**, **subspace**, **independence**, **basis**, and **dimension**. In quantum computing the vectors live in $\mathbb{C}^n$ and scalars can be complex; the floor is our real $\mathbb{R}^2$ cartoon.
 
 ## 3.1 What is a vector space?
 
@@ -221,12 +238,20 @@ A **vector space** is **a collection of vectors in which you can do two operatio
 1. **Add** two vectors: $\mathbf{u} + \mathbf{v}$ is again in the collection.
 2. **Multiply a vector by a number** $\alpha$: $\alpha\mathbf{v}$ is again in the collection.
 
-The lecturer warns that the official definition is abstract, so keep a concrete picture in the back of your mind: **think of $\mathbb{C}^n$**.
+The official definition is abstract, so keep a concrete picture in the back of your mind: **think of $\mathbb{C}^n$**.
+
+**On the floor (vector space = the whole world of allowed movements).** Allow every movement on the flat floor: east, west, north, south, and any diagonal. That collection is a vector space because:
+
+- adding two movements gives another allowed movement, for example $(3, 2) + (1, 4) = (4, 6)$;
+- scaling a movement by any real number is allowed, for example $2(3, 2) = (6, 4)$ (double the trip) or $-1\cdot(3, 2) = (-3, -2)$ (reverse it);
+- zero movement $(0, 0)$ is included.
+
+> **Remember:** a vector space is a world where **adding** and **scaling** work and the usual rules of algebra hold (section 3.2). Vectors can also be lists of complex numbers, matrices, or polynomials; the floor arrows are our starting example.
 
 - If the numbers $\alpha$ are allowed to be **complex**, it is called a **complex vector space**. (This is what we need.)
 - If $\alpha$ is only allowed to be **real**, it is called a **real vector space**.
 
-So $\mathbb{C}^2$, $\mathbb{C}^3$, and so on are all vector spaces. He adds that there are "more complex" vector spaces too, and that he will come back to them.
+So $\mathbb{C}^2$, $\mathbb{C}^3$, and so on are all vector spaces. There are also "more complex" vector spaces, which will be revisited later.
 
 ## 3.2 The eight rules (slide)
 
@@ -263,11 +288,9 @@ The last row matters a lot. **Quantum states are unit vectors, so the set of qua
 
 # 4. Linear combinations and span
 
-*Transcript: "Linear combinations and span (slides 7–8)". Slide: "Linear Combinations and Span".*
-
 ## 4.1 Two small questions first
 
-- **"What is the use of a zero vector?"** The lecturer: zero lets you define **negation**. Without a zero vector there would be no "$\mathbf{v}$ plus its negative equals $\mathbf{0}$". It is just a special vector that makes the rules work.
+- **"What is the use of a zero vector?"** Zero lets us define **negation**. Without a zero vector there would be no "$\mathbf{v}$ plus its negative equals $\mathbf{0}$". It is just a special vector that makes the rules work.
 - **Row vs column representation.** The two forms hold the same numbers, *"but we will treat them differently, as you will see"* (this matters in section 11).
 
 ## 4.2 Linear combination
@@ -278,13 +301,23 @@ $$
 \alpha_1 \mathbf{v}_1 + \alpha_2 \mathbf{v}_2 + \cdots + \alpha_k \mathbf{v}_k, \qquad \alpha_j \in \mathbb{C}
 $$
 
-This is called a **linear combination** of $\mathbf{v}_1, \dots, \mathbf{v}_k$. The numbers $\alpha_j$ are the **weights** (you can pick them to be real or complex).
+This is called a **linear combination** of $\mathbf{v}_1, \dots, \mathbf{v}_k$. The numbers $\alpha_j$ are the **weights** or **coefficients** (they can be real or complex).
 
 In words: *"scale each vector by some number, then add."*
 
+**On the floor.** Let $\mathbf{u} = (1, 0)$ (one step east) and $\mathbf{v} = (0, 1)$ (one step north). Then
+
+$$
+3\mathbf{u} + 2\mathbf{v} = 3(1, 0) + 2(0, 1) = (3, 2),
+$$
+
+the same instruction as “3 east, 2 north.” The coefficients $3$ and $2$ tell how much of each direction to use.
+
+> **Remember:** linear combination = **multiply, then add.**
+
 ## 4.3 Span
 
-Take two vectors $\mathbf{v}_1$ and $\mathbf{v}_2$. The lecturer lists a few of the many combinations you could make:
+Take two vectors $\mathbf{v}_1$ and $\mathbf{v}_2$. Here are a few of the many combinations we could make:
 
 $$
 5\mathbf{v}_1 + \mathbf{v}_2,\quad 3\mathbf{v}_1 + 6\mathbf{v}_2,\quad 1.5\,\mathbf{v}_1 + i\,\mathbf{v}_2,\quad (2.1 + 3i)\,\mathbf{v}_1 + 6i\,\mathbf{v}_2, \quad \dots
@@ -296,7 +329,16 @@ $$
 \operatorname{span}\{\mathbf{v}_1, \dots, \mathbf{v}_k\} = \{\alpha_1\mathbf{v}_1 + \cdots + \alpha_k\mathbf{v}_k : \alpha_j \in \mathbb{C}\}
 $$
 
-> **Why quantum computing cares (slide).** *A quantum "superposition" is exactly a linear combination.* The lecturer says it again later: a qubit will turn out to be a linear combination of the classical bits, so span "will come right away" in the next lecture.
+**On the floor.**
+
+- With $\mathbf{u} = (1, 0)$ and $\mathbf{v} = (0, 1)$, suitable coefficients reach **every** point on the floor: $\operatorname{span}\{\mathbf{u}, \mathbf{v}\}$ is the **whole plane**.
+- With only $\mathbf{u} = (1, 0)$, we get $\alpha\mathbf{u} = (\alpha, 0)$: east–west movement only. The north–south coordinate stays $0$. So $\operatorname{span}\{\mathbf{u}\}$ is the **east–west line through the origin**.
+
+A single linear combination is **one** destination. The **span** is the set of **all** destinations you can reach with those directions.
+
+> **Remember:** span = **all possible destinations** from the chosen vectors.
+
+> **Why quantum computing cares.** *A quantum "superposition" is exactly a linear combination.* A qubit state will be a linear combination of basis directions; the span is the set of all states built from those directions.
 
 It is very hard to picture a span of complex vectors. So, as promised, we fall back on **real vectors** to build intuition. *"There is always a difference between real and complex, but when you try to visualise, you will always visualise in terms of real vector space."*
 
@@ -314,11 +356,11 @@ If you take **all** real numbers $\alpha$, you get the **entire line** through t
 
 ![The span of the single vector (1, 3): the whole line through the origin, with points 2v1, minus v1 and minus 2v1 marked](images/vec-span-one-vector.svg)
 
-> **Span of one vector = a line through the origin.** The lecturer: *"span of $V_1$ will be the line which goes through the origin $O$ and the entire vector."*
+> **Span of one vector = a line through the origin.** In the lecture: *"span of $V_1$ will be the line which goes through the origin $O$ and the entire vector."*
 
 ## 4.5 Span of two vectors in the plane
 
-Now two vectors. The lecturer starts with $\mathbf{v}_1 = (1, 3)$ and $\mathbf{v}_2 = (2, 0)$, then simplifies the question and uses the two simplest vectors, $(1, 0)$ and $(0, 1)$. These two have a special name: $\mathbf{e}_1$ and $\mathbf{e}_2$.
+Now two vectors. We start with $\mathbf{v}_1 = (1, 3)$ and $\mathbf{v}_2 = (2, 0)$, then simplify the question and use the two simplest vectors, $(1, 0)$ and $(0, 1)$. These two have a special name: $\mathbf{e}_1$ and $\mathbf{e}_2$.
 
 Take $5\,(1, 0) + 6\,(0, 1)$. That is $(5, 0) + (0, 6) = (5, 6)$. In general, **any point $(x, y)$** is
 
@@ -330,13 +372,11 @@ So every point of the plane is a linear combination of the two vectors. **The sp
 
 ![The point (5, 6) written as 5 e1 + 6 e2, with the whole plane shaded to show that the span of e1 and e2 is every point of the plane](images/vec-span-plane.svg)
 
-> **Transcript note:** the transcript says "I will get the point 6 comma 5". The arithmetic gives $(5, 6)$. Above, $5\cdot\mathbf{e}_1 + 6\cdot\mathbf{e}_2 = (5, 6)$.
-
-(The lecturer's first pair $(1, 3)$ and $(2, 0)$ also span the whole plane, because they do not point along the same line. We will see the exact condition in section 6.)
+(The first pair $(1, 3)$ and $(2, 0)$ also span the whole plane, because they do not point along the same line. We will see the exact condition in section 6.)
 
 ## 4.6 Span of two vectors in 3D
 
-Imagine you are in **3D** and you are given two vectors (the lecturer's illustration: one with coordinates like $(1, 2, 3)$ and another like $(1, 3, 5)$). What is their span?
+Imagine you are in **3D** and you are given two vectors (the illustration: one with coordinates like $(1, 2, 3)$ and another like $(1, 3, 5)$). What is their span?
 
 - All combinations $\alpha\mathbf{a} + \beta\mathbf{b}$ with any numbers $\alpha, \beta$.
 - Only two vectors, so you **cannot fill the whole 3D space**.
@@ -344,7 +384,7 @@ Imagine you are in **3D** and you are given two vectors (the lecturer's illustra
 
 ![A flat plane through the origin spanned by two vectors a = (1, 2, 3) and b = (1, 3, 5) in 3D](images/vec-span-3d-plane.svg)
 
-**What does "the plane through the triangle" mean?** (The lecturer was asked this.) Think about how you describe a line and a plane:
+**What does "the plane through the triangle" mean?** (This was asked in class.) Think about how you describe a line and a plane:
 
 - To fix a **line** you need **two points** on it. If one of them is the origin, you need only one more point (one vector).
 - To fix a **flat plane** in 3D you need **three points** on it. If one of them is the origin, you need two more points (two vectors).
@@ -357,18 +397,16 @@ There is one exception to be careful about. Back in 2D, suppose $\mathbf{v}_1$ a
 
 If instead $\mathbf{v}_1, \mathbf{v}_2$ are *not* on a common line, the span is the whole 2D plane (take $\mathbf{v}_1, 2\mathbf{v}_1, 3\mathbf{v}_1, \dots$ and $\mathbf{v}_2, 2\mathbf{v}_2, \dots$ and add them: you reach every point between).
 
-The lecturer: *"that's a very special case. In general, if this does not happen, their span will be the whole plane."* This is exactly the idea of **linear independence** in section 6.
+In the lecture: *"that's a very special case. In general, if this does not happen, their span will be the whole plane."* This is exactly the idea of **linear independence** in section 6.
 
 ## 4.8 Questions from the class
 
 - **"In the picture, are $\alpha$ and $\beta$ real or complex?"** For quantum computing they are **complex**. But in the drawings they are real, because *"it's very hard to visualise what happens when you take complex numbers."*
-- **"Do the vectors need to have the same dimension?"** Yes. To add two vectors they must have the same number of entries (the lecturer says "the same rows and columns"). All the $\mathbf{v}_j$ in a combination live in the same space.
+- **"Do the vectors need to have the same dimension?"** Yes. To add two vectors they must have the same number of entries (in the lecture: "the same rows and columns"). All the $\mathbf{v}_j$ in a combination live in the same space.
 
 ---
 
 # 5. Subspaces
-
-*Transcript: "Subspaces (slide 9)". Slide: "Subspaces".*
 
 ## 5.1 The idea
 
@@ -377,25 +415,81 @@ Say we have a big vector space, such as 3D space. A **subspace** is a **smaller 
 - a **line through the origin** in 3D is a subspace;
 - a **plane through the origin** in 3D is a subspace.
 
-The formal test (from the slide): a subset $W$ of $V$ is a subspace if, whenever $\mathbf{u}, \mathbf{w} \in W$ and $\alpha \in \mathbb{C}$,
+**On the floor.** The **east–west line through the origin** is a subspace of the whole floor:
+
+- $(0, 0)$ is on the line (zero movement);
+- adding movements along the line stays on the line, for example $(2, 0) + (-5, 0) = (-3, 0)$;
+- scaling keeps you on the line, for example $3(2, 0) = (6, 0)$.
+
+A line **one step north** of the start, described by $y = 1$, is **not** a subspace: it does not contain $(0, 0)$, and scaling a point on that line would leave the line.
+
+> **Remember:** a subspace is a **smaller space inside a bigger one**, with the same add-and-scale rules. It can be the whole space or just $\{\mathbf{0}\}$.
+
+### The formal test (what the slide is really saying)
+
+Notation first:
+
+| Symbol | Meaning |
+|---|---|
+| $V$ | The **big** vector space you start with (for example all of $\mathbb{C}^2$, or the whole floor). |
+| $W$ | A **smaller collection** of vectors picked out of $V$ (for example only vectors on the east–west line). |
+| $\mathbf{u}, \mathbf{w} \in W$ | Both vectors are **already inside** that smaller collection. |
+| $\alpha \in \mathbb{C}$ | Any complex number (a real number like $2$ or $-5$ counts too). |
+
+$W$ is a **subspace** of $V$ only if these two rules always work:
 
 $$
 \mathbf{u} + \mathbf{w} \in W \qquad\text{and}\qquad \alpha\mathbf{u} \in W
 $$
 
-In words: **if you add two vectors of $W$, or scale one, you never leave $W$.** The lecturer says it like this: *"I get the same vector set... I remain in the same set. So you do not go out of it."*
+**Rule 1 — closed under addition.** Pick any two vectors that are both in $W$. Add them. The sum must land **back in $W$**, not outside it.
+
+**Rule 2 — closed under scaling.** Pick any vector in $W$ and any scalar $\alpha$. Multiply. The result must land **back in $W$**.
+
+Together, these are exactly: *"If I add or scale using only vectors from $W$, I never escape $W$."* That is what the quote means by *"I remain in the same set."*
+
+**Floor example (passes the test).** Let $V$ be the whole floor $\mathbb{R}^2$ and let $W$ be the east–west line: all vectors $(x, 0)$.
+
+- $\mathbf{u} = (2, 0)$ and $\mathbf{w} = (-5, 0)$ are in $W$. Their sum is $(-3, 0)$ — still on the line, still in $W$. Rule 1 works.
+- $\mathbf{u} = (2, 0)$ and $\alpha = 3$. Then $3\mathbf{u} = (6, 0)$ — still on the line. Rule 2 works.
+
+So the east–west line is a subspace.
+
+**Floor example (fails the test).** Let $W$ be the line $y = 1$ (one step north of the origin): vectors like $(2, 1)$, $(-1, 1)$.
+
+- $\mathbf{u} = (2, 1)$ and $\mathbf{w} = (-1, 1)$ are in $W$. Their sum is $(1, 2)$. The second coordinate is $2$, not $1$, so the sum is **not** on the line $y = 1$. Rule 1 already fails.
+- Even worse: $\alpha = 0$ gives $0\cdot(2, 1) = (0, 0)$, which is not on $y = 1$. Rule 2 fails too.
+
+In the picture, $\mathbf{u}$ and $\mathbf{w}$ lie on the red line $y = 1$, but the parallelogram sum $\mathbf{u}+\mathbf{w}$ lands at $(1, 2)$, off that line. The origin is marked too: $0\cdot\mathbf{u}$ would send you there, which is also not on $y = 1$.
+
+![The line y equals 1 in the plane: vectors u equals (2, 1) and w equals (-1, 1) on the line, their sum u plus w at (1, 2) off the line, and the origin not on y equals 1](images/vec-subspace-y-equals-one-fails.svg)
+
+So that shifted line is **not** a subspace.
+
+**Why both rules matter.**
+
+- **Addition** is how we combine movements. If adding two allowed movements could leave the collection, it would not behave like a vector space.
+- **Scaling** includes multiplying by $0$ (you get $\mathbf{0}$), by negative numbers (reverse direction), and by complex numbers in $\mathbb{C}^n$. If scaling could kick you out, the collection is not closed.
+
+**Quick checklist.** To show $W$ is a subspace, you do **not** have to list every vector in $W$. You show: whenever inputs lie in $W$, the outputs of **add** and **scale** also lie in $W$. (Section 5.3 explains why scaling by $0$ forces the origin to be in every subspace.)
+
+> **One-line summary:** $W$ is a subspace when it is a part of $V$ that you cannot fall out of by adding or scaling.
 
 ## 5.2 Why a plane through the origin passes the test
 
 Take a plane through the origin in 3D. Pick two vectors in the plane and add them. How? **Complete the parallelogram** and take the far corner. That corner stays **inside the plane**, because the whole parallelogram lies in the plane. Now scale one of the vectors by any number: it stays on its line, and that line lies in the plane. So the plane never lets you escape.
 
+In the picture, $\mathbf{u}$ and $\mathbf{w}$ both lie in the blue plane. The dashed sides complete the parallelogram, and the far corner $\mathbf{u}+\mathbf{w}$ is still on the plane. The longer arrow $2\mathbf{u}$ is $\mathbf{u}$ scaled by $2$: it stays on the same line, and that line lies in the plane too.
+
+![A tilted plane through the origin, with vectors u and w, the parallelogram they form, and the far corner u plus w still on the plane; 2u continues along u and stays in the plane](images/vec-plane-parallelogram-sum.svg)
+
 (The picture of the plane in section 4.6 is a good one to keep in mind.)
 
 ## 5.3 The origin must always be in a subspace
 
-Pick any vector in the subspace and multiply it by $0$. You get the zero vector, with all coordinates $0$. **So every subspace must contain the origin.** The lecturer says this is *"a mistake people often make."*
+Pick any vector in the subspace and multiply it by $0$. You get the zero vector, with all coordinates $0$. **So every subspace must contain the origin.** This is *"a mistake people often make."*
 
-The picture below is the lecturer's green vs red line:
+The picture below shows a green line versus a red line:
 
 - **Green line (through the origin):** a subspace. Add two points on it and you land on it again.
 - **Red line (shifted away from the origin):** **not** a subspace. Take any point on it and multiply by $0$: you land on the origin, but the origin is not on this line.
@@ -410,11 +504,8 @@ Another way to think about it: take some vectors and look at their **span** (all
 - span of two independent vectors in 3D: a plane through the origin (a 2-dimensional subspace)
 
 ---
+
 # 6. Linear independence
-
-*Transcript: "Linear independence (slides 10–14)". Slides: "Linear Independence" and "A Complex Twist".*
-
-The lecturer calls this *"a technical definition... we will not use it very often, but you need to know what this is."*
 
 ## 6.1 Start from the picture
 
@@ -428,14 +519,19 @@ Here are the two situations side by side:
 
 > A set of vectors is **linearly independent** if **none of them can be written in terms of the others.** Otherwise they are **linearly dependent**.
 
-The lecturer's examples:
+Examples:
 
 - $\mathbf{v}_1 = (1, 2)$ and $\mathbf{v}_2 = (5, 10)$. Since $\mathbf{v}_2 = 5\,\mathbf{v}_1$, one can be expressed in terms of the other, so they are **dependent**.
 - Three vectors with $\mathbf{v}_3 = \mathbf{v}_1 + 2\mathbf{v}_2$. Here $\mathbf{v}_3$ is built from the other two, so the set is **dependent**.
 
-> **Transcript note:** at one point the transcript says "anytime you have a set of vectors where one of them can be expressed as a linear combination of the others, they are called linearly independent". The lecturer means **linearly dependent**. (The next sentence, "otherwise, linearly independent", confirms it.)
+**On the floor.**
 
-The lecturer's reminder: *"You always have to keep a picture in mind. The thing about linear algebra is that if you do not keep a picture in mind, you will get confused."*
+- $\mathbf{u} = (1, 0)$ and $\mathbf{v} = (0, 1)$: you cannot get northward movement using only east–west steps. Each vector adds something the other cannot. They are **linearly independent**.
+- $\mathbf{u} = (1, 0)$ and $\mathbf{w} = (2, 0)$: since $\mathbf{w} = 2\mathbf{u}$, the second direction is redundant. They are **linearly dependent**.
+
+> **Remember:** independent = **no unnecessary vector.** More precisely: no vector in the set can be built as a linear combination of the others.
+
+A reminder: *"You always have to keep a picture in mind. The thing about linear algebra is that if you do not keep a picture in mind, you will get confused."*
 
 ## 6.3 Why does a combination of two vectors stay in "their" plane?
 
@@ -478,7 +574,7 @@ $$
 
 So $\mathbf{v}_2$ is a multiple of $\mathbf{v}_1$: they are dependent.
 
-The lecturer: *"It's an extremely basic definition, and you have to know what it is saying."*
+In the lecture: *"It's an extremely basic definition, and you have to know what it is saying."*
 
 ## 6.6 Each independent vector adds one dimension
 
@@ -496,7 +592,7 @@ If the third vector *were* in the plane, the three would still only span that pl
 
 ## 6.7 A complex twist
 
-*Slide: "A Complex Twist".* The lecturer warns: *"we are dealing with complex numbers and not real numbers. Always remember this fact. Our intuition will come from real numbers, but when we write down our equations, we will use complex numbers."*
+*Slide: "A Complex Twist".* The warning: *"we are dealing with complex numbers and not real numbers. Always remember this fact. Our intuition will come from real numbers, but when we write down our equations, we will use complex numbers."*
 
 Take
 
@@ -519,15 +615,11 @@ So $\mathbf{w}$ **is** a multiple of $\mathbf{u}$. Over $\mathbb{C}$ they are **
 
 > **Moral (slide).** *"Parallel" in $\mathbb{C}^n$ means "a complex multiple". Vectors that look different can be the same direction.* This is the same phenomenon as **global phase** in quantum computing: $\boldsymbol\psi$ and $e^{i\varphi}\boldsymbol\psi$ point in the same complex direction. (Phases come back in the next lecture.)
 
-The lecturer: *"It is just a sort of a technicality. Usually it will not matter, but you should remember this."* And: *"always in my diagrams I mean a real number, but in reality they have to be complex."*
+In the lecture: *"It is just a sort of a technicality. Usually it will not matter, but you should remember this."* And: *"always in my diagrams I mean a real number, but in reality they have to be complex."*
 
 ---
 
 # 7. Basis and dimension
-
-*Transcript: "Basis and dimension (slides 15–17)". Slides: "Basis and Dimension" and "The Standard Basis of $\mathbb{C}^2$ and Qubits".*
-
-*"This is one key definition... let me write it down because it is very important."*
 
 ## 7.1 Independence and dimension
 
@@ -554,9 +646,20 @@ A **basis** of a vector space $V$ is a set of vectors $\mathbf{b}_1, \dots, \mat
 
 In short: **a basis is a linearly independent set that spans the space.**
 
-The lecturer says this will matter *"all the time. The entire course, you will be dealing with basis"*, so make sure the idea is clear.
+**On the floor.** $\{(1, 0), (0, 1)\}$ is a basis because you can reach every point and neither vector is redundant.
 
-> **Not the same as orthogonality.** One student asked whether a basis has to be perpendicular. The lecturer: *"It has nothing to do with orthogonality. Let us not confuse things. Orthogonality is a different concept"* (it comes in section 14).
+| Chosen vectors on the floor | Basis for the plane? | Reason |
+|---|---|---|
+| $(1, 0)$ only | No | Cannot reach north or south |
+| $(1, 0)$, $(2, 0)$ | No | Redundant; span is only the east–west line |
+| $(1, 0)$, $(0, 1)$ | Yes | Reach everywhere; no redundancy |
+| $(1, 0)$, $(0, 1)$, $(1, 1)$ | No | Third equals first plus second |
+
+> **Remember:** a basis = **enough vectors to reach everywhere, with no extras.**
+
+This will matter *"all the time. The entire course, you will be dealing with basis"*, so make sure the idea is clear.
+
+> **Not the same as orthogonality.** One student asked whether a basis has to be perpendicular. In the lecture: *"It has nothing to do with orthogonality. Let us not confuse things. Orthogonality is a different concept"* (it comes in section 14).
 
 ## 7.4 Can a span be a curved shape?
 
@@ -586,19 +689,35 @@ $$
 
 *Check with numbers:* take $(x, y) = (3, 1)$. Then $\alpha = 2$, $\beta = 1$, and $2\,(1, 1) + 1\,(1, -1) = (2 + 1,\ 2 - 1) = (3, 1)$. It works.
 
-> **Transcript note:** the transcript reads "alpha will be x plus y by 2 times 1 comma 1 plus x minus y over 2 times...". It is saying exactly the result above: $(x, y) = \dfrac{x + y}{2}\,(1, 1) + \dfrac{x - y}{2}\,(1, -1)$.
-
 So $(1, 1)$ and $(1, -1)$ **form a basis**. Everything here was in $\mathbb{R}^2$; for $\mathbb{C}^2$ the same vectors work with complex weights.
+
+The picture below is the same point $(3, 1)$ written in two ways. On the left, the **basis vectors** are $(1, 0)$ and $(0, 1)$; the **coordinates** are $3$ and $1$ (how many of each you need). On the right, the basis vectors are $(1, 1)$ and $(1, -1)$; the coordinates are $2$ and $1$. The **arrow to $(3, 1)$** is the same vector in both panels; only the basis and the coordinate numbers change.
+
+![The point (3, 1) built from the standard basis as 3 times (1, 0) plus 1 times (0, 1), and from the basis (1, 1) and (1, -1) as 2 times (1, 1) plus 1 times (1, -1)](images/vec-two-bases-build-point.svg)
 
 ## 7.6 Dimension
 
-If a vector space is a line, a basis has just **one** vector: the lecturer's example is a line where $\mathbf{v}_1$ and $\mathbf{v}_2$ both lie on it. They span the line, **but they are not a basis**, because on a 1-dimensional line the basis has to have only one vector. So the basis is either just $\mathbf{v}_1$ or just $\mathbf{v}_2$. *"They have to be independent of each other."*
+If a vector space is a line, a basis has just **one** vector: the example is a line where $\mathbf{v}_1$ and $\mathbf{v}_2$ both lie on it. They span the line, **but they are not a basis**, because on a 1-dimensional line the basis has to have only one vector. So the basis is either just $\mathbf{v}_1$ or just $\mathbf{v}_2$. *"They have to be independent of each other."*
 
 The general fact (slide): **all bases of a space have the same size. That size is the dimension**, written $\dim V$.
 
 > **Dimension = how many basis vectors there are.** A line has dimension 1, a plane has dimension 2, and $\mathbb{C}^n$ has dimension $n$.
 
-## 7.7 The standard basis of $\mathbb{C}^n$ (slides)
+**On the floor.**
+
+| Space | Number of basis vectors | Dimension |
+|---|---|---|
+| East–west line through the origin | 1 | 1 |
+| Flat floor (plane) | 2 | 2 |
+| Ordinary 3D space | 3 | 3 |
+
+Every basis for the same space has the same number of vectors.
+
+> **Remember:** dimension **counts** the basis vectors.
+
+**The whole story in one line.** In a vector space we form **linear combinations**. All their possible results form a **span**. That span is a **subspace**. If the chosen vectors have no redundancy, they are **independent**. If they also cover the whole space, they form a **basis**. Count the basis vectors to get the **dimension**.
+
+## 7.7 The standard basis of $\mathbb{C}^n$ 
 
 $$
 \mathbf{e}_1 = (1, 0, \dots, 0)^T,\ \dots,\ \mathbf{e}_n = (0, \dots, 0, 1)^T, \qquad\text{so}\quad \dim_{\mathbb{C}}\mathbb{C}^n = n
@@ -625,49 +744,112 @@ $$
 
 # 8. Coordinates and change of basis
 
-*Transcript: "Change of basis and coordinates (slides 18–23)". Slides: "Basis and Dimension" (coordinates), "The Standard Basis of $\mathbb{C}^2$ and Qubits", "A Second Basis: $h_+$ and $h_-$".*
+This section is about one idea: **once you fix a basis, every vector has a recipe** (how much of each basis vector to add). The recipe is written as numbers; those numbers are the **coordinates**. The thing that often feels confusing is that **both the basis and the vector you are describing are vectors**. They play different roles.
 
-## 8.1 Coordinates
+## 8.1 Three things to keep separate
 
-If $\mathbf{b}_1, \mathbf{b}_2$ is a basis of the plane, then **every vector** can be written as
+| What | Symbol (typical) | Is it a vector? | Role |
+|---|---|---|---|
+| **Basis vectors** | $\mathbf{b}_1$, $\mathbf{b}_2$ (or $\mathbf{e}_1$, $\mathbf{e}_2$) | Yes | Fixed "direction arrows" you agree to use as building blocks. There are **two** of them in the plane. |
+| **The vector you are describing** | $\mathbf{v}$ (or a column like $\begin{pmatrix}\alpha\\\beta\end{pmatrix}$) | Yes | **One** object: the point / arrow you care about. |
+| **Coordinates** | $\alpha_1$, $\alpha_2$ (or $\alpha$, $\beta$) | **No** — they are **numbers** (scalars) | How much of each basis vector to add. They are **not** basis vectors. |
+
+**Short rule.** Basis vectors are the **ingredients**. The vector $\mathbf{v}$ is the **dish**. Coordinates are the **amounts** in the recipe.
+
+**Analogy (real plane).** Basis vectors might be "one step east" and "one step north". The vector $\mathbf{v}$ is a particular trip from the origin. Coordinates might be $(3, 1)$ meaning: $3$ steps east and $1$ step north. The steps east/north are not the same thing as the numbers $3$ and $1$.
+
+**In $\mathbb{C}^2$.** The same picture works; $\alpha$ and $\beta$ can be **complex** numbers. $\mathbf{e}_1$ and $\mathbf{e}_2$ are still vectors; $\alpha$ and $\beta$ are still just numbers.
+
+## 8.2 Writing every vector in terms of a basis
+
+If $\{\mathbf{b}_1, \mathbf{b}_2\}$ is a **basis** of the plane (section 7), then **every** vector $\mathbf{v}$ in that plane can be written as
 
 $$
 \mathbf{v} = \alpha_1\mathbf{b}_1 + \alpha_2\mathbf{b}_2
 $$
 
-The numbers $\alpha_1, \alpha_2$ are the **coordinates of $\mathbf{v}$ in that basis**. In the slide's words: *every $\mathbf{v}$ is a unique combination $\mathbf{v} = \sum_j c_j\mathbf{b}_j$; the $c_j$ are its coordinates.*
+- $\mathbf{b}_1$ and $\mathbf{b}_2$ are **not** chosen fresh for each $\mathbf{v}$. You fix a basis once (for example $(1,0)$ and $(0,1)$, or $(1,1)$ and $(1,-1)$).
+- $\alpha_1$ and $\alpha_2$ **depend on** $\mathbf{v}$. Different vectors need different amounts.
 
-## 8.2 The coordinates are unique
-
-*"Very, very important."* A vector has **exactly one** way to be written in terms of a basis.
-
-Why? Suppose $\mathbf{b}_1, \mathbf{b}_2$ are a basis (any two points not on a common line). Imagine a vector could be written in two ways:
+**Example (standard basis).** Take $\mathbf{b}_1 = (1, 0)$, $\mathbf{b}_2 = (0, 1)$ and $\mathbf{v} = (3, 1)$. Then
 
 $$
-\mathbf{v} = 5\mathbf{b}_1 + 7\mathbf{b}_2 \qquad\text{and also}\qquad \mathbf{v} = -3\mathbf{b}_1 + 2\mathbf{b}_2
+\mathbf{v} = 3\,(1, 0) + 1\,(0, 1)
 $$
 
-Then the two right-hand sides are equal:
+So **in this basis** the coordinates of $\mathbf{v}$ are $(3, 1)$. Those numbers are the $\alpha_1$ and $\alpha_2$ in the formula.
+
+**Example (other basis).** Same $\mathbf{v} = (3, 1)$, but now $\mathbf{b}_1 = (1, 1)$, $\mathbf{b}_2 = (1, -1)$. From section 7.5,
 
 $$
-5\mathbf{b}_1 + 7\mathbf{b}_2 = -3\mathbf{b}_1 + 2\mathbf{b}_2 \;\Longrightarrow\; 8\mathbf{b}_1 = -5\mathbf{b}_2
+\mathbf{v} = 2\,(1, 1) + 1\,(1, -1)
 $$
 
-That says $\mathbf{b}_1$ is a multiple of $\mathbf{b}_2$, so they are **dependent**. But a basis is independent. Contradiction. So there cannot be two different ways. (This is why independence is part of the definition of a basis.)
+So **in this basis** the coordinates of $\mathbf{v}$ are $(2, 1)$ — not $(3, 1)$. The vector is the same; the coordinate numbers changed because the basis changed (see the figure in section 7.5).
 
-Here, the pair $(5, 7)$ would be "the coordinates of $\mathbf{v}$". They are special to that vector only.
+> **Common confusion.** "$(3, 1)$" sometimes means the **vector** (the list in the standard basis) and sometimes people say "the coordinates are $(2, 1)$" in another basis. Always ask: **coordinates in which basis?**
 
-## 8.3 Coordinates in the standard basis
+## 8.3 Coordinates are unique (for a fixed basis)
 
-In $\mathbb{C}^2$, the basis $\mathbf{e}_1, \mathbf{e}_2$ is *"always the easiest basis to write down."* A pair of complex numbers $(\alpha, \beta)$ is
+For a **fixed** basis $\mathbf{b}_1, \mathbf{b}_2$, a vector has **exactly one** recipe. It cannot be written in two different ways using the same basis.
+
+Suppose $\mathbf{b}_1, \mathbf{b}_2$ are any two independent vectors in the plane (not on one line). If the same $\mathbf{v}$ could be written as
 
 $$
-\alpha\,\mathbf{e}_1 + \beta\,\mathbf{e}_2
+\mathbf{v} = 5\mathbf{b}_1 + 7\mathbf{b}_2 \qquad\text{and also}\qquad \mathbf{v} = -3\mathbf{b}_1 + 2\mathbf{b}_2,
 $$
 
-So **in the basis $\{\mathbf{e}_1, \mathbf{e}_2\}$ its coordinates are $\alpha, \beta$**. This matches exactly what we normally call "the coordinates".
+then subtract one expression from the other:
 
-## 8.4 A second basis: $\mathbf{h}_+$ and $\mathbf{h}_-$ (slide)
+$$
+5\mathbf{b}_1 + 7\mathbf{b}_2 = -3\mathbf{b}_1 + 2\mathbf{b}_2
+\;\Longrightarrow\;
+8\mathbf{b}_1 = -5\mathbf{b}_2
+$$
+
+So $\mathbf{b}_1$ is a multiple of $\mathbf{b}_2$ (move everything to one side: $\mathbf{b}_1 = -\tfrac{5}{8}\mathbf{b}_2$). That means $\mathbf{b}_1$ and $\mathbf{b}_2$ are **linearly dependent** — they do not form a basis. Contradiction.
+
+So for a true basis there is only one pair $(\alpha_1, \alpha_2)$. That pair **is** the coordinates of $\mathbf{v}$ in that basis. In the example above, if the first writing were correct, the coordinates would be $(5, 7)$ and no other pair would work.
+
+**Why independence matters.** Uniqueness of coordinates is exactly why a basis must be **independent** as well as **spanning**. If two basis directions were really the same line, you could swap amounts between them in many ways and the same $\mathbf{v}$ would have many recipes.
+
+## 8.4 Coordinates in the standard basis of $\mathbb{C}^2$
+
+The **standard basis** is the easiest one to write down:
+
+$$
+\mathbf{e}_1 = \begin{pmatrix}1\\0\end{pmatrix}, \qquad \mathbf{e}_2 = \begin{pmatrix}0\\1\end{pmatrix}
+$$
+
+Take **any** vector written as a column of two complex numbers:
+
+$$
+\mathbf{v} = \begin{pmatrix}\alpha\\\beta\end{pmatrix}
+$$
+
+Here $\alpha$ and $\beta$ are **scalars** (complex numbers). Expand using $\mathbf{e}_1$ and $\mathbf{e}_2$:
+
+$$
+\begin{pmatrix}\alpha\\\beta\end{pmatrix}
+= \alpha \begin{pmatrix}1\\0\end{pmatrix} + \beta \begin{pmatrix}0\\1\end{pmatrix}
+= \alpha\,\mathbf{e}_1 + \beta\,\mathbf{e}_2
+$$
+
+**How to read this without mixing things up.**
+
+| Object | In this example |
+|---|---|
+| Basis vectors | $\mathbf{e}_1$, $\mathbf{e}_2$ (the columns with a $1$ in one row and $0$ in the other) |
+| The vector | $\mathbf{v} = \begin{pmatrix}\alpha\\\beta\end{pmatrix}$ — one column |
+| Coordinates **in** $\{\mathbf{e}_1, \mathbf{e}_2\}$ | $(\alpha, \beta)$ — the same two numbers that appear **inside** the column |
+
+So in the standard basis, "the entries of the column" and "the coordinates" are the **same** thing. That is why the standard basis feels so natural.
+
+**Qubits (same slide as section 7.7).** A one-qubit state is a vector in $\mathbb{C}^2$ of this form. We write it as $\alpha\,\mathbf{e}_1 + \beta\,\mathbf{e}_2$. The basis vectors $\mathbf{e}_1$ and $\mathbf{e}_2$ are associated with classical bit values $0$ and $1$. The numbers $\alpha$ and $\beta$ are amplitudes (coordinates in this basis), not separate vectors. With $n$ qubits, the space has dimension $2^n$ over $\mathbb{C}$ (see the table in section 7.7).
+
+**If you use another basis** (for example $\mathbf{h}_+, \mathbf{h}_-$ in the next section), the **same** $\mathbf{v}$ is still one column, but the coordinate pair $(\alpha_1, \alpha_2)$ in that new basis is usually **different** from $(\alpha, \beta)$. The vector does not change; the recipe changes.
+
+## 8.5 A second basis: $\mathbf{h}_+$ and $\mathbf{h}_-$
 
 Here is another basis of $\mathbb{C}^2$:
 
@@ -675,7 +857,7 @@ $$
 \mathbf{h}_+ = \frac{1}{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix}, \qquad \mathbf{h}_- = \frac{1}{\sqrt2}\begin{pmatrix}1\\-1\end{pmatrix}
 $$
 
-(The lecturer calls them $H_1, H_2$ on the board.)
+(On the board they are called $H_1, H_2$.)
 
 **Why a basis?**
 
@@ -702,21 +884,95 @@ $$
 \boxed{\ \text{coordinates in } \{\mathbf{h}_+, \mathbf{h}_-\} = \left(\frac{\alpha + \beta}{\sqrt2},\ \frac{\alpha - \beta}{\sqrt2}\right)\ }
 $$
 
-> **Transcript note:** the transcript reads "alpha plus beta by 2 times root 2" for these coordinates. The slide has $\dfrac{\alpha + \beta}{\sqrt2}$ and $\dfrac{\alpha - \beta}{\sqrt2}$; the "$\sqrt2$ cancels against $\sqrt2$" remark in the transcript is the step $\sqrt2\cdot\dfrac{1}{\sqrt2} = 1$.
+## 8.6 The picture: same point, different coordinates
 
-## 8.5 The picture: same point, different coordinates
+Sections 8.1–8.2 said: fix a basis, then every vector has a **recipe** (how much of each basis arrow to add). The numbers in that recipe are the **coordinates**. This section is the **geometry** of that idea: one fixed arrow $P$ from the origin, two different bases, two different recipes.
 
-Here is what it means to **change the basis**. The lecturer draws a point with coordinates like $(5, 3)$ in the usual axes: drop a perpendicular to the $x$-axis and you read $5$; drop one to the $y$-axis and you read $3$. Then he changes the basis to two new arrows $\mathbf{b}_1, \mathbf{b}_2$. The **same point** now has different coordinates, say $(1, 1)$, meaning the point is $\mathbf{b}_1 + \mathbf{b}_2$. You find the new coordinates by drawing lines **parallel** to the two new axes.
+### One point, two ways to describe it
 
-(To keep the numbers consistent, the picture below uses the point $P = (4, 3)$, with the new basis $\mathbf{b}_1 = (3, 1)$, $\mathbf{b}_2 = (1, 2)$. Check: $\mathbf{b}_1 + \mathbf{b}_2 = (4, 3)$.)
+Work in the real plane $\mathbb{R}^2$ (the floor cartoon). Let $P$ be the point with **standard** coordinates $(4, 3)$ — meaning the column $\begin{pmatrix}4\\3\end{pmatrix}$ if we use $\mathbf{e}_1, \mathbf{e}_2$.
+
+**Step 1 — read $(4, 3)$ in the standard basis $\{\mathbf{e}_1, \mathbf{e}_2\}$.**
+
+- $\mathbf{e}_1 = (1, 0)$ is one unit along the $x$-axis; $\mathbf{e}_2 = (0, 1)$ is one unit along the $y$-axis.
+- From the origin, go $4$ steps along $\mathbf{e}_1$ and $3$ steps along $\mathbf{e}_2$. You land on $P$.
+- On the graph, the usual trick works because the axes are perpendicular: drop a vertical line from $P$ to the $x$-axis — you hit $x = 4$. Drop a horizontal line to the $y$-axis — you hit $y = 3$.
+
+So the recipe in the **standard** basis is
+
+$$
+P = 4\mathbf{e}_1 + 3\mathbf{e}_2.
+$$
+
+The coordinate pair **in** $\{\mathbf{e}_1, \mathbf{e}_2\}$ is $(4, 3)$: first number = how much $\mathbf{e}_1$, second = how much $\mathbf{e}_2$ (section 8.1).
+
+**Step 2 — keep $P$ fixed, change only the basis.**
+
+Now agree on a **different** pair of building blocks (still a basis of the plane):
+
+$$
+\mathbf{b}_1 = (3, 1), \qquad \mathbf{b}_2 = (1, 2).
+$$
+
+These are two ordinary vectors from the origin — not perpendicular, not unit length. They point in new directions, but they still **span** the plane (they are not multiples of each other).
+
+**Step 3 — find the new recipe for the same $P$.**
+
+Add the basis vectors once each:
+
+$$
+\mathbf{b}_1 + \mathbf{b}_2 = (3, 1) + (1, 2) = (4, 3).
+$$
+
+That is exactly $P$. So we do **not** need four of $\mathbf{e}_1$ and three of $\mathbf{e}_2$ anymore; in the new basis we need **one** of each block:
+
+$$
+P = (4, 3) = 1\,\mathbf{b}_1 + 1\,\mathbf{b}_2.
+$$
+
+| Basis used | Recipe for the vector $P$ | Coordinates of $P$ in that basis |
+|---|---|---|
+| $\mathbf{e}_1, \mathbf{e}_2$ | $4\mathbf{e}_1 + 3\mathbf{e}_2$ | $(4, 3)$ |
+| $\mathbf{b}_1, \mathbf{b}_2$ | $1\mathbf{b}_1 + 1\mathbf{b}_2$ | $(1, 1)$ |
+
+**The arrow stays in the same place. The recipe changes.**
+
+$P$ is still the same tip of the blue arrow in the figure. Nothing moved on the floor. What changed is **which directions you count in** and **how many steps along each**. Writing “coordinates $(1, 1)$ in $\{\mathbf{b}_1, \mathbf{b}_2\}$” means: **one** $\mathbf{b}_1$ plus **one** $\mathbf{b}_2$ — not “$1$ along $x$ and $1$ along $y$”. The first slot is always “how much $\mathbf{b}_1$”; the second is “how much $\mathbf{b}_2$”.
+
+> **Coordinates tell you how to combine the basis vectors.** Change the basis and the coordinate numbers change; the vector $P$ does not.
+
+### How the right-hand panel of the picture works
+
+The left panel uses perpendiculars to $x$ and $y$ because $\mathbf{e}_1$ and $\mathbf{e}_2$ are axis-aligned. The right panel uses the **parallelogram rule** for the new basis.
+
+1. Draw $\mathbf{b}_1$ from the origin (orange). Draw $\mathbf{b}_2$ from the origin (green). Both tips lie on lines through the origin — those lines are the “new axes”, even though they are skewed.
+2. To build $1\mathbf{b}_1 + 1\mathbf{b}_2$, walk along $\mathbf{b}_1$, then along a copy of $\mathbf{b}_2$ placed at the tip of $\mathbf{b}_1$ (or the other order). The far corner of that parallelogram is $P$.
+3. To **read off** coordinates $(c_1, c_2)$ in $\{\mathbf{b}_1, \mathbf{b}_2\}$ for **any** point: draw lines through $P$ **parallel** to $\mathbf{b}_2$ until they meet the line through the origin along $\mathbf{b}_1$ — that meeting point tells you $c_1\mathbf{b}_1$. Similarly, lines parallel to $\mathbf{b}_1$ meet the $\mathbf{b}_2$-line and give $c_2\mathbf{b}_2$. For our $P$, both weights come out $1$, so $(c_1, c_2) = (1, 1)$.
+
+The dashed gray segments in the figure are those parallel lines: they show that $P$ is reached by one $\mathbf{b}_1$-step and one $\mathbf{b}_2$-step from the origin.
+
+### Same numbers, algebraically (optional check)
+
+If $P = c_1\mathbf{b}_1 + c_2\mathbf{b}_2$ with $\mathbf{b}_1 = (3,1)$ and $\mathbf{b}_2 = (1,2)$, then
+
+$$
+c_1\begin{pmatrix}3\\1\end{pmatrix} + c_2\begin{pmatrix}1\\2\end{pmatrix} = \begin{pmatrix}4\\3\end{pmatrix}
+\quad\Longrightarrow\quad
+\begin{cases}
+3c_1 + c_2 = 4 \\
+c_1 + 2c_2 = 3
+\end{cases}
+$$
+
+Subtract or substitute: $c_1 = 1$, $c_2 = 1$. That matches the table and the picture.
 
 ![The same point P drawn in the standard basis with coordinates (4, 3) and in a new basis with coordinates (1, 1)](images/vec-coordinates-two-bases.svg)
 
-> **Coordinates tell you how to combine the basis vectors.** Change the basis vectors and the coordinates change, but the vector itself is the same.
+**Takeaway.** $(4, 3)$ and $(1, 1)$ are **not** two different points. They are two **labels** for the same vector $P$, measured against two different bases. Always ask: coordinates **in which basis?** (Section 8.2.)
 
-## 8.6 What happens to $\mathbf{e}_1$ and $\mathbf{e}_2$ in the new basis
+## 8.7 What happens to $\mathbf{e}_1$ and $\mathbf{e}_2$ in the new basis
 
-Take $\mathbf{e}_1 = (1, 0)$. In the old basis, its coordinates were $(1, 0)$, since $\mathbf{e}_1 = 1\cdot\mathbf{e}_1 + 0\cdot\mathbf{e}_2$. In the basis $\{\mathbf{h}_+, \mathbf{h}_-\}$, use the formula from section 8.4 with $(\alpha, \beta) = (1, 0)$:
+Take $\mathbf{e}_1 = (1, 0)$. In the old basis, its coordinates were $(1, 0)$, since $\mathbf{e}_1 = 1\cdot\mathbf{e}_1 + 0\cdot\mathbf{e}_2$. In the basis $\{\mathbf{h}_+, \mathbf{h}_-\}$, use the formula from section 8.5 with $(\alpha, \beta) = (1, 0)$:
 
 $$
 \left(\frac{1 + 0}{\sqrt2},\ \frac{1 - 0}{\sqrt2}\right) = \left(\frac{1}{\sqrt2},\ \frac{1}{\sqrt2}\right)
@@ -738,9 +994,9 @@ $$
 
 *In the picture the entries happen to be real, so it can be drawn. This is the "real cartoon".* The two blue and purple arrows are perpendicular to each other and both have length 1. The red arrow $\mathbf{e}_1$ is the diagonal of the dashed parallelogram built from $\tfrac{1}{\sqrt2}\mathbf{h}_+$ and $\tfrac{1}{\sqrt2}\mathbf{h}_-$.
 
-## 8.7 Try it: the vector $(2, 4i)$
+## 8.8 Try it: the vector $(2, 4i)$
 
-The lecturer's example (it is also a slide problem): how do you write $(2, 4i)$ in the basis $\{\mathbf{e}_1, \mathbf{e}_2\}$? *"Very simple."*
+The example (it is also a slide problem): how do you write $(2, 4i)$ in the basis $\{\mathbf{e}_1, \mathbf{e}_2\}$? *"Very simple."*
 
 $$
 \begin{pmatrix}2\\4i\end{pmatrix} = 2\,\mathbf{e}_1 + 4i\,\mathbf{e}_2
@@ -748,7 +1004,7 @@ $$
 
 So the coordinates are $(2, 4i)$.
 
-Then he asks you to find its coordinates in $\{\mathbf{h}_+, \mathbf{h}_-\}$. Use the boxed formula with $\alpha = 2$ and $\beta = 4i$:
+Then we find its coordinates in $\{\mathbf{h}_+, \mathbf{h}_-\}$. Use the boxed formula with $\alpha = 2$ and $\beta = 4i$:
 
 $$
 \left(\frac{2 + 4i}{\sqrt2},\ \frac{2 - 4i}{\sqrt2}\right)
@@ -756,7 +1012,7 @@ $$
 
 *Check the first entry:* $\dfrac{1}{\sqrt2}\left(\dfrac{2 + 4i}{\sqrt2} + \dfrac{2 - 4i}{\sqrt2}\right) = \dfrac{1}{\sqrt2}\cdot\dfrac{4}{\sqrt2} = 2$. ✓ *Second entry:* $\dfrac{1}{\sqrt2}\left(\dfrac{2 + 4i}{\sqrt2} - \dfrac{2 - 4i}{\sqrt2}\right) = \dfrac{1}{\sqrt2}\cdot\dfrac{8i}{\sqrt2} = 4i$. ✓
 
-## 8.8 The first summary (lecturer's recap of this half)
+## 8.9 The first summary (recap of this half)
 
 - A vector space can be thought of as **a list (column) of complex numbers**.
 - **Span:** take some vectors and try out all ways of combining them: $\alpha_1\mathbf{v}_1 + \cdots + \alpha_n\mathbf{v}_n$ ("multiply them by some numbers and add them").
@@ -767,9 +1023,7 @@ $$
 
 # 9. Questions before the break
 
-*Transcript: the passage "And so, this is what we have done so far... let's take a short break".*
-
-The lecturer says there is nothing to submit right now. You should try the slide problems and come prepared. When a graded assignment is given, the deadline will be announced.
+There is nothing to submit right now. We should try the slide problems and come prepared. When a graded assignment is given, the deadline will be announced.
 
 ## 9.1 Practice: basis problems (slide "Problems")
 
@@ -801,18 +1055,16 @@ Try these first, then check the solutions.
 - In 2D, any basis has exactly two vectors. If you show two vectors are independent, they automatically span, so they are a basis.
 - In 3D: three vectors that span 3D are automatically independent, and three independent vectors automatically span 3D.
 
-**"Any subspace of a vector space with the same dimension as the space..."** (the question is garbled, but the lecturer says: absolutely.) A subspace with the *same* dimension as the whole space is the whole space.
+**"Any subspace of a vector space with the same dimension as the space..."** (the question is garbled, but the answer is: absolutely.) A subspace with the *same* dimension as the whole space is the whole space.
 
 **"Is changing the basis a linear transformation?"** It is *one example* of one. Linear transformations are more general than changing basis, as you will see when matrices come.
 
 **"Is a basis a subset of vectors that span the $n$-dimensional space?"** Yes. If a space has dimension $n$, any basis has exactly $n$ vectors. But the vectors must be independent: for a line, $\mathbf{v}_1$ and $\mathbf{v}_2$ on the line span it, yet they are not a basis, because a line needs only one.
 
-**"Why use real vectors for the basis with complex coordinates?"** The lecturer: the examples are drawn with real numbers. In the course itself we only deal with complex numbers.
+**"Why use real vectors for the basis with complex coordinates?"** The examples are drawn with real numbers. In the course itself we only deal with complex numbers.
 
 ---
 # 10. The dot product (real numbers)
-
-*Transcript: "So let us come to dot product". Slide: "Warm-up: The Real Dot Product".*
 
 Back to **high-school maths**. The dot product takes **two vectors** and gives you **one number**.
 
@@ -834,17 +1086,49 @@ It is just a number. What does that number mean?
 
 ## 10.2 The picture: length times length times cosine
 
+### What $\lVert\mathbf{u}\rVert$ and $\lVert\mathbf{v}\rVert$ mean
+
+The double bars $\lVert\cdot\rVert$ mean **length** (also called the **norm**) of a vector. Think of the arrow from the origin to the point: $\lVert\mathbf{u}\rVert$ is how long that arrow is — the straight-line distance from the tip back to the origin. The same for $\lVert\mathbf{v}\rVert$ and $\mathbf{v}$.
+
+| Symbol | Reads as | Meaning |
+|---|---|---|
+| $\lVert\mathbf{u}\rVert$ | "norm of $\mathbf{u}$" or "length of $\mathbf{u}$" | Size of the arrow $\mathbf{u}$ |
+| $\lVert\mathbf{v}\rVert$ | "norm of $\mathbf{v}$" or "length of $\mathbf{v}$" | Size of the arrow $\mathbf{v}$ |
+
+**Do not confuse** $\lVert\mathbf{u}\rVert$ (length of a **vector**) with $\lvert u_1\rvert$ (absolute value of a **single number**). The double bars are reserved for vectors.
+
+**Real plane, from coordinates.** If $\mathbf{u} = (u_1, u_2)$ in $\mathbb{R}^2$, the length comes from the Pythagorean theorem on the horizontal and vertical steps:
+
+$$
+\lVert\mathbf{u}\rVert = \sqrt{u_1^2 + u_2^2}.
+$$
+
+For the vectors in section 10.1, $\mathbf{u} = (5, 1)$ and $\mathbf{v} = (3, 7)$:
+
+$$
+\lVert\mathbf{u}\rVert = \sqrt{5^2 + 1^2} = \sqrt{26}, \qquad
+\lVert\mathbf{v}\rVert = \sqrt{3^2 + 7^2} = \sqrt{58}.
+$$
+
+Those are just numbers (about $5.1$ and $7.6$). They are **not** vectors — they measure how far each arrow reaches.
+
+**Same idea as "length squared" from the dot product.** When a vector is dotted with itself, $\mathbf{u}\cdot\mathbf{u} = u_1^2 + u_2^2 = \lVert\mathbf{u}\rVert^2$. So the norm is the square root of that sum. Section 12 gives the full definition for complex vectors too ($\lVert\mathbf{v}\rVert = \sqrt{\lvert v_1\rvert^2 + \cdots}$).
+
+### The geometric formula
+
 If $\theta$ is the angle between $\mathbf{u}$ and $\mathbf{v}$, then
 
 $$
 \mathbf{u}\cdot\mathbf{v} = \lVert\mathbf{u}\rVert\,\lVert\mathbf{v}\rVert\,\cos\theta
 $$
 
+In words: the dot product is **(length of $\mathbf{u}$) $\times$ (length of $\mathbf{v}$) $\times$ (cosine of the angle between them)**. Two long arrows that point nearly the same way give a large positive dot product; two long arrows at right angles give $0$ because $\cos 90^\circ = 0$.
+
 Another way to see it: **project $\mathbf{u}$ onto the line that $\mathbf{v}$ spans** (drop a perpendicular from the tip of $\mathbf{u}$ onto that line). The green piece in the picture below has length $\lVert\mathbf{u}\rVert\cos\theta$. Why? Recall from trigonometry: in a right-angled triangle with hypotenuse $r$ and the side next to the angle $a$, $\cos\theta = a/r$, so $a = r\cos\theta$. Here $r$ is $\lVert\mathbf{u}\rVert$ and $a$ is the green length. The dot product is that **projection length times the length of $\mathbf{v}$**.
 
 ![The vectors u = (5, 1) and v = (3, 7) with the angle theta between them and the projection of u onto v drawn in green; the dot product is 22](images/vec-real-dot-product.svg)
 
-The lecturer adds that this is exactly **cosine similarity**, as in vector retrieval (searching for similar items).
+This is exactly **cosine similarity**, as used in vector retrieval (searching for similar items).
 
 ## 10.3 What the dot product gives you
 
@@ -854,7 +1138,7 @@ The lecturer adds that this is exactly **cosine similarity**, as in vector retri
 | **Angle** | $\cos\theta = \dfrac{\mathbf{u}\cdot\mathbf{v}}{\lVert\mathbf{u}\rVert\lVert\mathbf{v}\rVert}$ | rearrange the formula above |
 | **Perpendicular?** | $\mathbf{u}\cdot\mathbf{v} = 0$ | $\cos 90^\circ = 0$ |
 
-The slide says: *"Goal: the same toolkit for $\mathbb{C}^n$. In QC it will also give probabilities."* (When a student asked "how does the dot product give probability?", the lecturer replied: not yet, probability shows up "five slides down the line", after we meet qubits.)
+The slide says: *"Goal: the same toolkit for $\mathbb{C}^n$. In QC it will also give probabilities."* (When a student asked "how does the dot product give probability?", the reply was: not yet, probability shows up "five slides down the line", after we meet qubits.)
 
 ## 10.4 Perpendicular non-zero vectors are independent
 
@@ -868,7 +1152,7 @@ $$
 
 Since $\mathbf{u}\perp\mathbf{v}$, the second term is $0$. So $\alpha_1\,(\mathbf{u}\cdot\mathbf{u}) = 0$. Now $\mathbf{u}\cdot\mathbf{u} = \lVert\mathbf{u}\rVert^2 \neq 0$ (because $\mathbf{u}\neq\mathbf{0}$), so $\alpha_1 = 0$. In the same way (dot with $\mathbf{v}$) we get $\alpha_2 = 0$. Both weights are zero, so the vectors are independent. $\blacksquare$
 
-Consequences, in the lecturer's words:
+Consequences:
 
 - Three vectors that are all perpendicular to each other are independent.
 - **An easy way to build a basis:** in $\mathbb{R}^2$, take one vector and another one perpendicular to it. They are automatically independent, so they form a basis. In 3D, three mutually perpendicular vectors form a basis.
@@ -878,8 +1162,6 @@ Consequences, in the lecturer's words:
 ---
 
 # 11. The complex inner product
-
-*Transcript: "Does the same definition work for complex numbers?" Slides: "The Conjugate Transpose $\mathbf{v}^\dagger$", "Why Do We Need the Conjugate?", "The Inner Product on $\mathbb{C}^n$", "Properties of the Inner Product".*
 
 ## 11.1 The question: does the same definition work?
 
@@ -910,7 +1192,7 @@ $$
 1\cdot 1 + i\cdot i = 1 + (-1) = 0
 $$
 
-A **non-zero** vector with "length" zero. The lecturer: *"We would be in a very strange situation where $\mathbf{v}\cdot\mathbf{v}$ will be 0, but $\mathbf{v}$ is not a zero vector. I don't want this."*
+A **non-zero** vector with "length" zero. In the lecture: *"We would be in a very strange situation where $\mathbf{v}\cdot\mathbf{v}$ will be 0, but $\mathbf{v}$ is not a zero vector. I don't want this."*
 
 ## 11.3 The fix: conjugate one of the vectors
 
@@ -924,7 +1206,7 @@ The key point (slide): *$\overline{z}z = \lvert z\rvert^2 \ge 0$ is what makes l
 
 ## 11.4 The conjugate transpose $\mathbf{v}^\dagger$
 
-Two ingredients, in the lecturer's words:
+Two ingredients:
 
 1. **Conjugate** every entry of the vector. For $\mathbf{v}$, take each entry and flip the sign of its imaginary part.
 2. **Transpose:** turn the column into a row. *"Why do I want a row? Because I want to use the rules of matrix multiplication."*
@@ -949,7 +1231,7 @@ $$
 (\alpha\mathbf{v})^\dagger = \overline{\alpha}\,\mathbf{v}^\dagger
 $$
 
-The lecturer: *"conjugate of $\alpha\mathbf{v}$ is the conjugate of $\alpha$ times the conjugate of $\mathbf{v}$."*
+In the lecture: *"conjugate of $\alpha\mathbf{v}$ is the conjugate of $\alpha$ times the conjugate of $\mathbf{v}$."*
 
 ## 11.5 The definition of the inner product (slide)
 
@@ -957,22 +1239,86 @@ $$
 \boxed{\ \langle\mathbf{u}, \mathbf{v}\rangle = \mathbf{u}^\dagger\mathbf{v} = \sum_{j=1}^{n}\overline{u_j}\,v_j\ }
 $$
 
-**Conjugate the first vector, not the second.** (The lecturer says "people often make mistakes here".)
+**Conjugate the first vector, not the second.** (People often make mistakes here.)
 
 **Why a row times a column?** A $1\times n$ matrix (the row $\mathbf{u}^\dagger$) times an $n\times 1$ matrix (the column $\mathbf{v}$) gives a $1\times 1$ matrix, which is a single number. It is a fancy way of writing the sum $\overline{u_1}v_1 + \overline{u_2}v_2 + \cdots$.
 
 Two things to note:
 
-- The lecturer often says "dot product" when he means this **inner product**. The slides call it the inner product. They are the same idea (with conjugates for complex vectors).
+- "Dot product" is often said when the **inner product** is meant. The slides call it the inner product. They are the same idea (with conjugates for complex vectors).
 - With this definition, $\langle\mathbf{v}, \mathbf{v}\rangle = \overline{v_1}v_1 + \cdots + \overline{v_n}v_n = \lvert v_1\rvert^2 + \cdots + \lvert v_n\rvert^2$, exactly the length squared we wanted.
 
-**Example 1 (slide).** $\mathbf{u} = \begin{pmatrix}1\\ i\end{pmatrix}$ and $\mathbf{v} = \begin{pmatrix}i\\ 1\end{pmatrix}$:
+**Example 1 (slide).** $\mathbf{u} = \begin{pmatrix}1\\ i\end{pmatrix}$ and $\mathbf{v} = \begin{pmatrix}i\\ 1\end{pmatrix}$. We compute $\langle\mathbf{u}, \mathbf{v}\rangle$ slowly, **conjugate first** (always the **first** vector in the brackets).
+
+**Step 0 — what “conjugate” means on one number.**
+
+A complex number is $z = a + bi$ with real $a, b$. Its **complex conjugate** $\overline{z}$ keeps the real part and flips the sign of the imaginary part:
 
 $$
-\langle\mathbf{u}, \mathbf{v}\rangle = \overline{1}\cdot i + \overline{i}\cdot 1 = i + (-i) = 0
+\overline{a + bi} = a - bi.
 $$
 
-*"This is not clear by just looking at them, because now we are living in the complex world and cannot visualise them."* But the number $0$ tells you they are **perpendicular** in the sense of the next sections.
+Examples you need here:
+
+| $z$ | $\overline{z}$ | Why |
+|---|---|---|
+| $1$ | $1$ | Purely real: nothing to flip |
+| $i$ | $-i$ | $i = 0 + 1\cdot i$, so $\overline{i} = 0 - 1\cdot i = -i$ |
+| $-i$ | $i$ | Same rule |
+
+Useful check: $\overline{z}\,z = \lvert z\rvert^2$ (a **real** number $\ge 0$). For $z = i$: $(-i)\cdot i = -i^2 = 1$.
+
+**Step 1 — write the definition with coordinates.**
+
+$\mathbf{u}$ has entries $u_1 = 1$, $u_2 = i$. $\mathbf{v}$ has $v_1 = i$, $v_2 = 1$. The rule is **conjugate the $u$’s, multiply by the matching $v$’s, add**:
+
+$$
+\langle\mathbf{u}, \mathbf{v}\rangle = \overline{u_1}\,v_1 + \overline{u_2}\,v_2 = \overline{1}\cdot i + \overline{i}\cdot 1.
+$$
+
+Nothing is conjugated in $\mathbf{v}$ in this formula. If you accidentally conjugate both vectors, or conjugate $\mathbf{v}$ instead of $\mathbf{u}$, you get a different (wrong) answer.
+
+**Step 2 — conjugate each entry of $\mathbf{u}$ (first vector only).**
+
+$$
+\overline{u_1} = \overline{1} = 1, \qquad \overline{u_2} = \overline{i} = -i.
+$$
+
+So the sum becomes
+
+$$
+\langle\mathbf{u}, \mathbf{v}\rangle = (1)\cdot i + (-i)\cdot 1.
+$$
+
+**Step 3 — multiply and add.**
+
+- First term: $1\cdot i = i$.
+- Second term: $(-i)\cdot 1 = -i$.
+- Total: $i + (-i) = 0$.
+
+$$
+\boxed{\ \langle\mathbf{u}, \mathbf{v}\rangle = 0\ }
+$$
+
+**Same calculation with $\mathbf{u}^\dagger$ (row) times $\mathbf{v}$ (column).**
+
+Turn $\mathbf{u}$ into a row of conjugated entries (section 11.4):
+
+$$
+\mathbf{u}^\dagger = \begin{pmatrix}\overline{1} & \overline{i}\end{pmatrix} = \begin{pmatrix}1 & -i\end{pmatrix}.
+$$
+
+Matrix multiply (row $\times$ column):
+
+$$
+\mathbf{u}^\dagger\mathbf{v}
+= \begin{pmatrix}1 & -i\end{pmatrix}\begin{pmatrix}i\\ 1\end{pmatrix}
+= 1\cdot i + (-i)\cdot 1 = 0.
+$$
+
+**What does $0$ mean?** In the real plane, $\mathbf{u}\cdot\mathbf{v} = 0$ means the arrows are perpendicular. In $\mathbb{C}^2$ we cannot draw the picture as easily, but the **same definition** is used: inner product $0$ means **orthogonal** (perpendicular in the complex sense). These two non-zero vectors are orthogonal even though their entries look “mixed up”.
+
+*"This is not clear by just looking at them, because now we are living in the complex world and cannot visualise them."* The algebra is what you trust: conjugate the **first** vector, then $\sum \overline{u_j}v_j$.
 
 **Example 2 (slide).** The basis vectors of $\mathbb{C}^2$:
 
@@ -1014,21 +1360,19 @@ For all $\mathbf{u}, \mathbf{v}, \mathbf{w}$ and $\alpha, \beta \in \mathbb{C}$:
 
 A consequence of 1 and 2: $\langle\alpha\mathbf{u}, \mathbf{v}\rangle = \overline{\alpha}\langle\mathbf{u}, \mathbf{v}\rangle$ ("anti-linear in the first slot").
 
-Property 3 is the one the whole definition was designed for: *"If $\langle\mathbf{v}, \mathbf{v}\rangle$ is 0, then $\mathbf{v}$ has to be 0, otherwise it will never be 0. That is how we have designed this thing."* The slide adds that any function satisfying 1 to 3 on a vector space is called an inner product. The one we use on $\mathbb{C}^n$ is $\sum\overline{u_j}v_j$. (When asked whether there can be other definitions, the lecturer says "technically you can, but let us not go there".)
+Property 3 is the one the whole definition was designed for: *"If $\langle\mathbf{v}, \mathbf{v}\rangle$ is 0, then $\mathbf{v}$ has to be 0, otherwise it will never be 0. That is how we have designed this thing."* The slide adds that any function satisfying 1 to 3 on a vector space is called an inner product. The one we use on $\mathbb{C}^n$ is $\sum\overline{u_j}v_j$. (When asked whether there can be other definitions, the answer was "technically you can, but let us not go there".)
 
-## 11.9 Recap of the idea (the lecturer repeats it)
+## 11.9 Recap of the idea (repeated in the lecture)
 
 1. The real dot product $\sum u_jv_j$ would fail for complex vectors (it gives $0$ for $(1, i)$).
 2. So we **conjugate the first vector**: $\overline{u_1}v_1 + \overline{u_2}v_2 + \cdots$.
 3. Then $\langle\mathbf{v}, \mathbf{v}\rangle$ is the length squared, which is real and positive.
 
-*Two small answers:* a student asked about "the bra of the ket". The lecturer is **not using that notation yet** (the next lecturer, Colin, will). Another asked how this gives probability. Not yet: see section 13.
+*Two small answers:* a student asked about "the bra of the ket". That notation is **not used yet** (it comes in the next lecture, from Colin). Another asked how this gives probability. Not yet: see section 13.
 
 ---
 
 # 12. Norm (length) and unit vectors
-
-*Transcript: "Norm, normalisation, and unit vectors (slides 37–40)". Slides: "Norm (Length)" and "Normalisation and Quantum States".*
 
 ## 12.1 The norm
 
@@ -1045,7 +1389,7 @@ So $\langle\mathbf{v}, \mathbf{v}\rangle = \lVert\mathbf{v}\rVert^2$, matching w
 
 **Why $\lVert\alpha\mathbf{v}\rVert = \lvert\alpha\rvert\lVert\mathbf{v}\rVert$?** Compute the square: $\langle\alpha\mathbf{v}, \alpha\mathbf{v}\rangle$. The $\alpha$ in the first slot comes out conjugated, the one in the second comes out as is. So we get $\overline{\alpha}\,\alpha\,\langle\mathbf{v}, \mathbf{v}\rangle = \lvert\alpha\rvert^2\lVert\mathbf{v}\rVert^2$. Take the square root.
 
-**Example (slide, and the lecturer's example).**
+**Example (slide and lecture).**
 
 $$
 \left\lVert\begin{pmatrix}1\\ 1 + i\end{pmatrix}\right\rVert = \sqrt{1 + \lvert 1 + i\rvert^2} = \sqrt{1 + 2} = \sqrt3
@@ -1069,18 +1413,18 @@ $$
 \hat{\mathbf{v}} = \frac{\mathbf{v}}{\lVert\mathbf{v}\rVert}
 $$
 
-As the lecturer says, if a vector has length 10, multiply all its coordinates by $\tfrac{1}{10}$ and the new vector has length 1.
+For example, if a vector has length 10, multiply all its coordinates by $\tfrac{1}{10}$ and the new vector has length 1.
 
-![A vector (3, 4) of length 5 scaled to length 1 so that it lands on the unit circle at (3/5, 4/5), with the lecturer's examples](images/vec-normalise-unit-circle.svg)
+![A vector (3, 4) of length 5 scaled to length 1 so that it lands on the unit circle at (3/5, 4/5), with the examples](images/vec-normalise-unit-circle.svg)
 
-**The lecturer's examples.**
+**Examples.**
 
 - $\mathbf{v} = \begin{pmatrix}1\\ 1 + i\end{pmatrix}$ has length $\sqrt3$, so $\hat{\mathbf{v}} = \dfrac{1}{\sqrt3}\begin{pmatrix}1\\ 1 + i\end{pmatrix}$.
 - $\mathbf{v} = (1, -1)$ has length $\sqrt{1^2 + 1^2} = \sqrt2$, so $\hat{\mathbf{v}} = \dfrac{1}{\sqrt2}(1, -1)$.
 
 ## 12.4 Why the $\tfrac{1}{\sqrt2}$ in $\mathbf{h}_\pm$
 
-Now the "mystery" of section 8.4 is solved: $(1, 1)$ and $(1, -1)$ each have length $\sqrt2$, and the factor $\tfrac{1}{\sqrt2}$ **normalises** them. So $\mathbf{h}_+$ and $\mathbf{h}_-$ have length 1. The lecturer: *"I like vectors which have length 1, because those are the vectors which will arise in quantum computing."*
+Now the "mystery" of section 8.5 is solved: $(1, 1)$ and $(1, -1)$ each have length $\sqrt2$, and the factor $\tfrac{1}{\sqrt2}$ **normalises** them. So $\mathbf{h}_+$ and $\mathbf{h}_-$ have length 1. In the lecture: *"I like vectors which have length 1, because those are the vectors which will arise in quantum computing."*
 
 **Quantum states are unit vectors (slide).** A qubit state is
 
@@ -1093,8 +1437,6 @@ $$
 ---
 
 # 13. Two inequalities
-
-*Transcript: "Inequalities and orthogonality (slides 41–46)". Slide: "Two Inequalities You Will Use Constantly".*
 
 *"Two facts that you always have to know."*
 
@@ -1132,8 +1474,6 @@ The picture: draw $\mathbf{u}$ and $\mathbf{v}$ head to tail. Then $\mathbf{u} +
 
 # 14. Orthogonality
 
-*Transcript: "Inequalities and orthogonality (slides 41–46)", second half. Slide: "Orthogonality".*
-
 ## 14.1 The definition
 
 Two vectors are **orthogonal** (perpendicular), written $\mathbf{u}\perp\mathbf{v}$, if
@@ -1148,7 +1488,7 @@ Examples (slide):
 - $\langle\mathbf{h}_+, \mathbf{h}_-\rangle = \dfrac12\,(1\cdot 1 + 1\cdot(-1)) = 0$.
 - $\begin{pmatrix}1\\ i\end{pmatrix}\perp\begin{pmatrix}i\\ 1\end{pmatrix}$ (computed in section 11.5).
 
-The lecturer points out that $\mathbf{h}_+$ and $\mathbf{h}_-$ **do not "interfere"** through the $\tfrac{1}{\sqrt2}$ factors: you multiply $1\cdot 1$ and $1\cdot(-1)$, giving $0$. He keeps the $\tfrac{1}{\sqrt2}$ because **their lengths are 1**. *"These are the two most important vectors you will see in quantum computing."*
+Note that $\mathbf{h}_+$ and $\mathbf{h}_-$ **do not "interfere"** through the $\tfrac{1}{\sqrt2}$ factors: you multiply $1\cdot 1$ and $1\cdot(-1)$, giving $0$. The $\tfrac{1}{\sqrt2}$ is kept because **their lengths are 1**. *"These are the two most important vectors you will see in quantum computing."*
 
 ## 14.2 Pythagoras's theorem
 
@@ -1178,13 +1518,11 @@ In the picture below, $\mathbf{u} = (3, 1)$ and $\mathbf{v} = (-1, 3)$ are perpe
 
 **"Perpendicular vectors always form a basis. Is the opposite true: is every basis perpendicular?"** **No.** In $\mathbb{R}^2$, two vectors that are *not* perpendicular can still form a basis. (For example $(1, 0)$ and $(1, 1)$.) However, there is a theorem: *every subspace has some basis made of perpendicular vectors.* But not every basis is orthogonal.
 
-**"Why was the word Hadamard used?"** Do not be scared of it. The lecturer never used the word in his explanation; $\mathbf{h}_+$ and $\mathbf{h}_-$ are just *a pair of vectors, a basis*. They are called Hadamard vectors because a mathematician named **Hadamard** studied them. (The Pauli basis is something for much later.)
+**"Why was the word Hadamard used?"** Do not be scared of it. The word was never used in the explanation; $\mathbf{h}_+$ and $\mathbf{h}_-$ are just *a pair of vectors, a basis*. They are called Hadamard vectors because a mathematician named **Hadamard** studied them. (The Pauli basis is something for much later.)
 
 ---
 
 # 15. Orthonormal bases
-
-*Transcript: "Orthonormal bases and coordinate extraction (slides 47–53)". Slides: "Orthonormal Bases", "Coordinates in an ONB: Just Take Inner Products", "Worked Example: Rewriting a Vector in the Hadamard Basis".*
 
 *"Now comes the most important statement about bases. We will use this a lot."*
 
@@ -1239,9 +1577,7 @@ $$
 \langle\mathbf{c}_+, \mathbf{c}_-\rangle = \tfrac12\left(\overline{1}\cdot1 + \overline{i}\cdot(-i)\right) = \tfrac12\left(1 + (-i)(-i)\right) = \tfrac12\left(1 + i^2\right) = \tfrac12(1 - 1) = 0
 $$
 
-> **Transcript note:** the lecturer's spoken version of this check is jumbled ("$i$ into $-i$ is plus 1, not minus 1, but remember we have to take the conjugate, so this becomes $i$ minus 1, is 0"). The line above is the clean computation. The key point he makes: you must conjugate the first vector, and without the conjugate you would get the wrong sign.
-
-He also stresses: **for the Hadamard basis you can see in the picture that the two vectors are perpendicular. For the circular basis you cannot**, because the vectors live in $\mathbb{C}^2$ and cannot be drawn. You have to do the calculation.
+It is also stressed: **for the Hadamard basis you can see in the picture that the two vectors are perpendicular. For the circular basis you cannot**, because the vectors live in $\mathbb{C}^2$ and cannot be drawn. You have to do the calculation.
 
 ## 15.4 The big payoff: coordinates are just inner products
 
@@ -1271,7 +1607,7 @@ $$
 
 > **Conjugate on the first slot only.** The coordinate along $\mathbf{e}_j$ is $\langle\mathbf{e}_j, \mathbf{v}\rangle$, with the **basis vector first**. If you put them the other way round, you get the conjugate of the right answer.
 
-**What the lecturer says in words.** *"If you want to find the coordinates of $\mathbf{v}$ with respect to this basis, all you have to do is to take the dot product."* The coordinate along $\mathbf{e}_1$ is $\langle\mathbf{e}_1, \mathbf{v}\rangle$ (the perpendicular projection of $\mathbf{v}$ along $\mathbf{e}_1$), along $\mathbf{e}_2$ it is $\langle\mathbf{e}_2, \mathbf{v}\rangle$, and so on. **No equations to solve:** each coordinate is one inner product. That is why we like orthonormal bases so much.
+**In words.** *"If you want to find the coordinates of $\mathbf{v}$ with respect to this basis, all you have to do is to take the dot product."* The coordinate along $\mathbf{e}_1$ is $\langle\mathbf{e}_1, \mathbf{v}\rangle$ (the perpendicular projection of $\mathbf{v}$ along $\mathbf{e}_1$), along $\mathbf{e}_2$ it is $\langle\mathbf{e}_2, \mathbf{v}\rangle$, and so on. **No equations to solve:** each coordinate is one inner product. That is why we like orthonormal bases so much.
 
 ## 15.5 Worked example: rewriting a vector in the Hadamard basis (slide)
 
@@ -1313,7 +1649,7 @@ The picture below is a **real cartoon** of the same idea with $\mathbf{v} = (3/5
 
 ## 15.6 The length of a vector from its coordinates
 
-The lecturer's last result. Suppose $\mathbf{v} = v_1\mathbf{e}_1 + \cdots + v_n\mathbf{e}_n$ in an orthonormal basis. What is $\lVert\mathbf{v}\rVert^2 = \langle\mathbf{v}, \mathbf{v}\rangle$?
+The last result. Suppose $\mathbf{v} = v_1\mathbf{e}_1 + \cdots + v_n\mathbf{e}_n$ in an orthonormal basis. What is $\lVert\mathbf{v}\rVert^2 = \langle\mathbf{v}, \mathbf{v}\rangle$?
 
 Expand $\langle v_1\mathbf{e}_1 + \cdots,\ v_1\mathbf{e}_1 + \cdots\rangle$. All the cross terms $\langle\mathbf{e}_i, \mathbf{e}_j\rangle$ with $i \ne j$ are $0$ (perpendicular), and each $\langle\mathbf{e}_i, \mathbf{e}_i\rangle = 1$. What survives is
 
@@ -1321,9 +1657,9 @@ $$
 \lVert\mathbf{v}\rVert^2 = \overline{v_1}v_1 + \cdots + \overline{v_n}v_n = \lvert v_1\rvert^2 + \cdots + \lvert v_n\rvert^2
 $$
 
-and each $v_i = \langle\mathbf{e}_i, \mathbf{v}\rangle$. In words: **the squared length is the sum of the squared sizes of the coordinates in any orthonormal basis.** The lecturer's geometric statement: if you give two different orthonormal bases and the coordinates of $\mathbf{v}$ along each, the length is $\lvert v_1\rvert^2 + \lvert v_2\rvert^2$ in both. It does not depend on which orthonormal basis you use.
+and each $v_i = \langle\mathbf{e}_i, \mathbf{v}\rangle$. In words: **the squared length is the sum of the squared sizes of the coordinates in any orthonormal basis.** The geometric statement: if we are given two different orthonormal bases and the coordinates of $\mathbf{v}$ along each, the length is $\lvert v_1\rvert^2 + \lvert v_2\rvert^2$ in both. It does not depend on which orthonormal basis you use.
 
-**Check with the example.** In the standard basis: $\left\lvert\tfrac35\right\rvert^2 + \left\lvert\tfrac{4i}{5}\right\rvert^2 = \tfrac{9}{25} + \tfrac{16}{25} = 1$. In the Hadamard basis: $\lvert c_+\rvert^2 + \lvert c_-\rvert^2 = \tfrac{\lvert3 + 4i\rvert^2}{50} + \tfrac{\lvert3 - 4i\rvert^2}{50} = \tfrac{25}{50} + \tfrac{25}{50} = 1$. Same answer. (The lecturer admits: *"this did go a bit fast; when you do the exercises, you will understand."*)
+**Check with the example.** In the standard basis: $\left\lvert\tfrac35\right\rvert^2 + \left\lvert\tfrac{4i}{5}\right\rvert^2 = \tfrac{9}{25} + \tfrac{16}{25} = 1$. In the Hadamard basis: $\lvert c_+\rvert^2 + \lvert c_-\rvert^2 = \tfrac{\lvert3 + 4i\rvert^2}{50} + \tfrac{\lvert3 - 4i\rvert^2}{50} = \tfrac{25}{50} + \tfrac{25}{50} = 1$. Same answer. (As said in the lecture: *"this did go a bit fast; when you do the exercises, you will understand."*)
 
 ## 15.7 Practice: inner product problems (slide "Problems")
 
@@ -1347,12 +1683,10 @@ Let $\mathbf{u} = \begin{pmatrix}1\\ i\end{pmatrix}$ and $\mathbf{v} = \begin{pm
 
 # 16. Review and what comes next
 
-*Transcript: "Review, questions and next session". Slide: "Summary: Vector Spaces over $\mathbb{C}$".*
-
-## 16.1 What did we really do? (the lecturer's recap)
+## 16.1 What did we really do? (recap)
 
 1. We introduced the **conjugate** and used it to define the **dot (inner) product**. We defined it that way because we want $\mathbf{v}\cdot\mathbf{v}$ to be a real number equal to the length squared. That is why the conjugate was needed.
-2. We used the inner product to define **perpendicular** (orthogonal): two vectors are perpendicular if their inner product is $0$. *(Up to here, he says, everything is easy.)*
+2. We used the inner product to define **perpendicular** (orthogonal): two vectors are perpendicular if their inner product is $0$. *(Up to here, everything is easy.)*
 3. When you **change the basis, the coordinates of a vector change.** You are writing the same vector as a combination of different vectors.
 4. If the basis is **orthonormal** (perpendicular and of length 1), finding the coordinates is **very easy**: each coordinate is one inner product.
 
@@ -1367,12 +1701,12 @@ Let $\mathbf{u} = \begin{pmatrix}1\\ i\end{pmatrix}$ and $\mathbf{v} = \begin{pm
 - **Qubits:** $\mathbf{e}_1, \mathbf{e}_2$ are the standard basis of $\mathbb{C}^2$; $n$ qubits live in $\mathbb{C}^{2^n}$.
 - **Missing so far:** *we can add and scale, but we cannot yet measure lengths or angles.* The inner product (sections 10 to 15) filled that gap.
 
-## 16.3 What the lecturer wants you to do
+## 16.3 What we should do next
 
 - Do the slide problems. *"You will feel like you understand the concepts but are not able to connect them. That is fine. The moment you do more examples, it will click."* (Not being able to connect them means not yet seeing why they matter in quantum computing. That comes with the applications.)
 - At the very least, know **how to define the inner product of two vectors**, and **what it means to define the length of a vector**.
 - This is **only the beginning** and the course is heavy on maths. **Matrices and linear transformations** have not even started. They come next session. *"If I don't do that, you will not be able to understand what is going on in quantum."*
-- **Tomorrow** (next session): no new concepts. Exercises first, with the teaching assistant. The lecturer plans to start the session and go over some of the exercises. The **Pauli basis** is much later.
+- **Tomorrow** (next session): no new concepts. Exercises first, with the teaching assistant. The session starts by going over some of the exercises. The **Pauli basis** is much later.
 - The slides will be shared. *There is no submission for these exercises right now.*
 
 ---
@@ -1479,7 +1813,7 @@ These are **not** from the lecture. Try them, then check.
 3. $\lVert\mathbf{v}\rVert = \sqrt{3^2 + \lvert4i\rvert^2} = \sqrt{9 + 16} = 5$, so $\hat{\mathbf{v}} = \left(\tfrac35,\ \tfrac{4i}{5}\right)^T$. (This is the vector from the worked example in section 15.5.)
 4. **Yes.** $\overline{1}\cdot1 + \overline{1}\cdot(-1) = 1 - 1 = 0$.
 5. $\langle\mathbf{c}_+, \mathbf{e}_1\rangle = \tfrac{1}{\sqrt2}\left(\overline{1}\cdot1 + \overline{i}\cdot0\right) = \tfrac{1}{\sqrt2}$ and $\langle\mathbf{c}_-, \mathbf{e}_1\rangle = \tfrac{1}{\sqrt2}$. So $\mathbf{e}_1 = \tfrac{1}{\sqrt2}\mathbf{c}_+ + \tfrac{1}{\sqrt2}\mathbf{c}_-$. *Check:* $\tfrac{1}{\sqrt2}\cdot\tfrac{1}{\sqrt2}\left[(1, i) + (1, -i)\right] = \tfrac12(2, 0) = (1, 0)$. ✓
-6. **A basis but not orthogonal.** They are independent (neither is a multiple of the other), so in 2D they form a basis. But $(1, 0)\cdot(1, 1) = 1 \ne 0$, so they are not perpendicular. This is the lecturer's point that every basis need not be orthogonal.
+6. **A basis but not orthogonal.** They are independent (neither is a multiple of the other), so in 2D they form a basis. But $(1, 0)\cdot(1, 1) = 1 \ne 0$, so they are not perpendicular. This is the point that not every basis need be orthogonal.
 
 ---
 
@@ -1507,4 +1841,4 @@ For an angle $\theta$ in a right-angled triangle, $\cos\theta = \dfrac{\text{sid
 
 ## B.4 Solving two equations in two unknowns
 
-To solve $\alpha + \beta = x$ and $\alpha - \beta = y$: **add** the equations to get $2\alpha = x + y$, and **subtract** them to get $2\beta = x - y$. This is used in sections 7.5 and 8.4.
+To solve $\alpha + \beta = x$ and $\alpha - \beta = y$: **add** the equations to get $2\alpha = x + y$, and **subtract** them to get $2\beta = x - y$. This is used in sections 7.5 and 8.5.
