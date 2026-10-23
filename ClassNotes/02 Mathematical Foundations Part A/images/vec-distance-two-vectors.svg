@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" width="640" height="420" font-family="Arial, Helvetica, sans-serif"><defs><marker id="m555" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#555"/></marker><marker id="m888" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#888"/></marker><marker id="m2e8b2e" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#2e8b2e"/></marker><marker id="me68a00" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#e68a00"/></marker></defs><rect width="640" height="420" fill="#ffffff"/>
+<text x="320.0" y="26.0" font-size="16" fill="#222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">Distance between u and v: movement v &#8722; u has length 5</text>
+<line x1="50.0" y1="340.0" x2="50.0" y2="60.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="90.0" y1="340.0" x2="90.0" y2="60.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="130.0" y1="340.0" x2="130.0" y2="60.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="170.0" y1="340.0" x2="170.0" y2="60.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="210.0" y1="340.0" x2="210.0" y2="60.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="250.0" y1="340.0" x2="250.0" y2="60.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="40.0" y1="300.0" x2="260.0" y2="300.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="40.0" y1="260.0" x2="260.0" y2="260.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="40.0" y1="220.0" x2="260.0" y2="220.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="40.0" y1="180.0" x2="260.0" y2="180.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="40.0" y1="140.0" x2="260.0" y2="140.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="40.0" y1="100.0" x2="260.0" y2="100.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="50.0" y1="340.0" x2="250.0" y2="340.0" stroke="#555" stroke-width="1.4" marker-end="url(#m555)"/>
+<line x1="50.0" y1="340.0" x2="50.0" y2="70.0" stroke="#555" stroke-width="1.4" marker-end="url(#m555)"/>
+<text x="242.0" y="356.0" font-size="13" fill="#555" text-anchor="end">x</text>
+<text x="58.0" y="78.0" font-size="13" fill="#555" text-anchor="start">y</text>
+<line x1="50.0" y1="340.0" x2="90.0" y2="300.0" stroke="#888" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#m888)"/>
+<line x1="50.0" y1="340.0" x2="210.0" y2="140.0" stroke="#888" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#m888)"/>
+<line x1="90.0" y1="300.0" x2="210.0" y2="140.0" stroke="#e68a00" stroke-width="3.2" marker-end="url(#me68a00)"/>
+<line x1="90.0" y1="300.0" x2="210.0" y2="300.0" stroke="#2e8b2e" stroke-width="2.2" stroke-dasharray="5,4" marker-end="url(#m2e8b2e)"/>
+<line x1="210.0" y1="300.0" x2="210.0" y2="140.0" stroke="#2e8b2e" stroke-width="2.2" stroke-dasharray="5,4" marker-end="url(#m2e8b2e)"/>
+<path d="M202.0,292.0 L202.0,300.0 L210.0,300.0" fill="none" stroke="#555" stroke-width="1.2"/>
+<circle cx="50.0" cy="340.0" r="4" fill="#222"/>
+<circle cx="90.0" cy="300.0" r="5.5" fill="#1f5fbf"/>
+<circle cx="210.0" cy="140.0" r="5.5" fill="#1f5fbf"/>
+<text x="58.0" y="358.0" font-size="12" fill="#222" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">O</text>
+<text x="78.0" y="318.0" font-size="14" fill="#1f5fbf" text-anchor="end" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">u = (1, 1)</text>
+<text x="222.0" y="132.0" font-size="14" fill="#1f5fbf" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">v = (4, 5)</text>
+<text x="150.0" y="208.0" font-size="14" fill="#e68a00" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">v &#8722; u = (3, 4)</text>
+<text x="150.0" y="318.0" font-size="13" fill="#2e8b2e" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">3 right</text>
+<text x="228.0" y="228.0" font-size="13" fill="#2e8b2e" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">4 up</text>
+<text x="320.0" y="200.0" font-size="13" fill="#222" text-anchor="start" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">&#8214;v &#8722; u&#8214; = &#8730;(3&#178; + 4&#178;) = 5</text>
+<text x="320.0" y="100.0" font-size="13" fill="#555" text-anchor="start" font-weight="bold">Movement from u to v:</text>
+<text x="320.0" y="122.0" font-size="12.5" fill="#555" text-anchor="start">destination &#8722; start</text>
+<text x="320.0" y="144.0" font-size="12.5" fill="#555" text-anchor="start">= v &#8722; u</text>
+<text x="320.0" y="280.0" font-size="12" fill="#777" text-anchor="start">Gray dashed: position vectors</text>
+<text x="320.0" y="300.0" font-size="12" fill="#777" text-anchor="start">from the origin O</text>
+<text x="320.0" y="340.0" font-size="11.5" fill="#777" text-anchor="start">Check: u + (v &#8722; u) = v</text>
+<text x="320.0" y="400.0" font-size="11" fill="#777" text-anchor="middle">u &#8722; v = (&#8722;3, &#8722;4) points back; same length 5</text>
+</svg>

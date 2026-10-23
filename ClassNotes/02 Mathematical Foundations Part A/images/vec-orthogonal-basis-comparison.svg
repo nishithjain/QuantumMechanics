@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" width="720" height="280" font-family="Arial, Helvetica, sans-serif"><rect width="720" height="280" fill="#ffffff"/>
+<text x="360.0" y="22.0" font-size="15" fill="#222" text-anchor="middle" font-weight="bold">Same plane, different bases (equal axis scale)</text>
+<text x="120.0" y="48.0" font-size="12" fill="#222" text-anchor="middle" font-weight="bold">Orthonormal {e&#8321;, e&#8322;}</text>
+<text x="360.0" y="48.0" font-size="12" fill="#222" text-anchor="middle" font-weight="bold">Orthogonal, not unit {(2,0), (0,3)}</text>
+<text x="600.0" y="48.0" font-size="12" fill="#222" text-anchor="middle" font-weight="bold">Basis, not orthogonal {(1,0), (1,1)}</text>
+<line x1="40.0" y1="220.0" x2="200.0" y2="220.0" stroke="#555" stroke-width="1.2"/>
+<line x1="40.0" y1="220.0" x2="40.0" y2="80.0" stroke="#555" stroke-width="1.2"/>
+<line x1="40.0" y1="220.0" x2="120.0" y2="220.0" stroke="#d62828" stroke-width="2.5"/>
+<line x1="40.0" y1="220.0" x2="40.0" y2="140.0" stroke="#2e8b2e" stroke-width="2.5"/>
+<line x1="280.0" y1="220.0" x2="440.0" y2="220.0" stroke="#555" stroke-width="1.2"/>
+<line x1="280.0" y1="220.0" x2="280.0" y2="80.0" stroke="#555" stroke-width="1.2"/>
+<line x1="280.0" y1="220.0" x2="360.0" y2="220.0" stroke="#d62828" stroke-width="2.5"/>
+<line x1="280.0" y1="220.0" x2="280.0" y2="100.0" stroke="#2e8b2e" stroke-width="2.5"/>
+<line x1="520.0" y1="220.0" x2="680.0" y2="220.0" stroke="#555" stroke-width="1.2"/>
+<line x1="520.0" y1="220.0" x2="520.0" y2="80.0" stroke="#555" stroke-width="1.2"/>
+<line x1="520.0" y1="220.0" x2="600.0" y2="220.0" stroke="#d62828" stroke-width="2.5"/>
+<line x1="520.0" y1="220.0" x2="600.0" y2="140.0" stroke="#2e8b2e" stroke-width="2.5"/>
+<text x="120.0" y="248.0" font-size="11" fill="#555" text-anchor="middle">perpendicular, length 1</text>
+<text x="360.0" y="248.0" font-size="11" fill="#555" text-anchor="middle">perpendicular, lengths 2 and 3</text>
+<text x="600.0" y="248.0" font-size="11" fill="#555" text-anchor="middle">not perpendicular</text>
+<text x="360.0" y="270.0" font-size="10.5" fill="#777" text-anchor="middle">Only the first is an orthonormal basis (ONB).</text>
+</svg>

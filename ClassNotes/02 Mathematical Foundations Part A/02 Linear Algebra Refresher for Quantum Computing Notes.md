@@ -11,8 +11,11 @@
 | Conjugate transpose | $\mathbf{v}^\dagger$, $A^\dagger$ | "$\mathbf{v}$ dagger" |
 | Inner product | $\langle \mathbf{u}, \mathbf{v}\rangle$ | a complex number |
 | Norm (length) | $\lVert \mathbf{v}\rVert$ | a non-negative real number |
+| Standard coordinates | $\alpha$, $\beta$ | scalars in $\{\mathbf{e}_1, \mathbf{e}_2\}$ |
+| Hadamard coordinates | $a_+$, $a_-$ | scalars in $\{\mathbf{h}_+, \mathbf{h}_-\}$ |
+| Circular coordinates | $r_+$, $r_-$ | scalars in $\{\mathbf{c}_+, \mathbf{c}_-\}$ |
 
-In the text below, plain letters such as $u$, $v$ are also used for vectors when it is clear from the context.
+In the text below, plain letters such as $u$, $v$ are also used for vectors when it is clear from the context. **Bold** letters are vectors; **$a_\pm$** and **$r_\pm$** are scalars (coordinates), not to be confused with circular basis vectors $\mathbf{c}_\pm$.
 
 ---
 
@@ -26,16 +29,17 @@ In the text below, plain letters such as $u$, $v$ are also used for vectors when
 6. [Linear independence](#6-linear-independence)
 7. [Basis and dimension](#7-basis-and-dimension)
 8. [Coordinates and change of basis](#8-coordinates-and-change-of-basis)
-9. [Questions before the break](#9-questions-before-the-break)
-10. [The dot product (real numbers)](#10-the-dot-product-real-numbers)
-11. [The complex inner product](#11-the-complex-inner-product)
-12. [Norm (length) and unit vectors](#12-norm-length-and-unit-vectors)
-13. [Two inequalities](#13-two-inequalities)
-14. [Orthogonality](#14-orthogonality)
-15. [Orthonormal bases](#15-orthonormal-bases)
-16. [Review and what comes next](#16-review-and-what-comes-next)
-17. [One-page cheat sheet](#17-one-page-cheat-sheet)
-18. [Glossary](#18-glossary)
+9. [Core ideas at a glance](#9-core-ideas-at-a-glance)
+10. [Questions before the break](#10-questions-before-the-break)
+11. [The dot product (real numbers)](#11-the-dot-product-real-numbers)
+12. [The complex inner product](#12-the-complex-inner-product)
+13. [Norm (length) and unit vectors](#13-norm-length-and-unit-vectors)
+14. [Two inequalities](#14-two-inequalities)
+15. [Orthogonality](#15-orthogonality)
+16. [Orthonormal bases and Parseval’s identity](#16-orthonormal-bases-and-parsevals-identity)
+17. [Review and what comes next](#17-review-and-what-comes-next)
+18. [One-page cheat sheet](#18-one-page-cheat-sheet)
+19. [Glossary](#19-glossary)
 
 - [Appendix A: Extra practice (my additions)](#appendix-a-extra-practice-my-additions)
 - [Appendix B: Maths you need first (refresher)](#appendix-b-maths-you-need-first-refresher)
@@ -282,7 +286,7 @@ The slide puts it in one sentence: *"In words: you can add and scale, and the or
 | $\mathbb{R}^2$ with complex scalars | **No** | $i\cdot(1, 0)^T = (i, 0)^T$ is not in $\mathbb{R}^2$, so scaling leaves the set |
 | Unit vectors in $\mathbb{C}^2$ | **No** | $\mathbf{e}_1 + \mathbf{e}_1$ has length $2$, so adding leaves the set |
 
-The last row matters a lot. **Quantum states are unit vectors, so the set of quantum states is not itself a vector space.** The states *live inside* a vector space ($\mathbb{C}^{2^n}$), and we rescale ("re-normalise") when needed. (Normalising is in section 12.)
+The last row matters a lot. **Quantum states are unit vectors, so the set of quantum states is not itself a vector space.** The states *live inside* a vector space ($\mathbb{C}^{2^n}$), and we rescale ("re-normalise") when needed. (Normalising is in section 13.)
 
 ---
 
@@ -291,7 +295,7 @@ The last row matters a lot. **Quantum states are unit vectors, so the set of qua
 ## 4.1 Two small questions first
 
 - **"What is the use of a zero vector?"** Zero lets us define **negation**. Without a zero vector there would be no "$\mathbf{v}$ plus its negative equals $\mathbf{0}$". It is just a special vector that makes the rules work.
-- **Row vs column representation.** The two forms hold the same numbers, *"but we will treat them differently, as you will see"* (this matters in section 11).
+- **Row vs column representation.** The two forms hold the same numbers, *"but we will treat them differently, as you will see"* (this matters in section 12).
 
 ## 4.2 Linear combination
 
@@ -659,7 +663,7 @@ In short: **a basis is a linearly independent set that spans the space.**
 
 This will matter *"all the time. The entire course, you will be dealing with basis"*, so make sure the idea is clear.
 
-> **Not the same as orthogonality.** One student asked whether a basis has to be perpendicular. In the lecture: *"It has nothing to do with orthogonality. Let us not confuse things. Orthogonality is a different concept"* (it comes in section 14).
+> **Not the same as orthogonality.** One student asked whether a basis has to be perpendicular. In the lecture: *"It has nothing to do with orthogonality. Let us not confuse things. Orthogonality is a different concept"* (it comes in section 15).
 
 ## 7.4 Can a span be a curved shape?
 
@@ -864,24 +868,24 @@ $$
 - They are **independent**: you can check that neither is a multiple of the other.
 - They **span** $\mathbb{C}^2$: from section 7.5, every vector can be written with $(1, 1)$ and $(1, -1)$. Putting a factor $\tfrac{1}{\sqrt2}$ in front only changes the weights, not the span.
 
-**Why the $\tfrac{1}{\sqrt 2}$?** *"It is a bit mysterious, so I will come back to that"* (section 12): it makes each vector have **length 1**.
+**Why the $\tfrac{1}{\sqrt 2}$?** *"It is a bit mysterious, so I will come back to that"* (section 13): it makes each vector have **length 1**.
 
-**Coordinates of $(\alpha, \beta)$ in this basis.** We want numbers $c_+$ and $c_-$ with
+**Coordinates of $(\alpha, \beta)$ in the Hadamard basis.** We want scalars $a_+$ and $a_-$ (not bold — these are coordinates, not vectors) with
 
 $$
-\begin{pmatrix}\alpha\\\beta\end{pmatrix} = c_+\,\frac{1}{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix} + c_-\,\frac{1}{\sqrt2}\begin{pmatrix}1\\-1\end{pmatrix}
+\begin{pmatrix}\alpha\\\beta\end{pmatrix} = a_+\,\frac{1}{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix} + a_-\,\frac{1}{\sqrt2}\begin{pmatrix}1\\-1\end{pmatrix}
 $$
 
 Compare the first and second entries:
 
 $$
-\frac{c_+ + c_-}{\sqrt2} = \alpha, \qquad \frac{c_+ - c_-}{\sqrt2} = \beta
+\frac{a_+ + a_-}{\sqrt2} = \alpha, \qquad \frac{a_+ - a_-}{\sqrt2} = \beta
 $$
 
-Add: $\dfrac{2c_+}{\sqrt2} = \alpha + \beta$, so $c_+ = \dfrac{\alpha + \beta}{\sqrt2}$ (because $\dfrac{2}{\sqrt2} = \sqrt2$). Subtract: $c_- = \dfrac{\alpha - \beta}{\sqrt2}$. So
+Add: $\dfrac{2a_+}{\sqrt2} = \alpha + \beta$, so $a_+ = \dfrac{\alpha + \beta}{\sqrt2}$ (because $\dfrac{2}{\sqrt2} = \sqrt2$). Subtract: $a_- = \dfrac{\alpha - \beta}{\sqrt2}$. So
 
 $$
-\boxed{\ \text{coordinates in } \{\mathbf{h}_+, \mathbf{h}_-\} = \left(\frac{\alpha + \beta}{\sqrt2},\ \frac{\alpha - \beta}{\sqrt2}\right)\ }
+\boxed{\ (a_+, a_-) = \left(\frac{\alpha + \beta}{\sqrt2},\ \frac{\alpha - \beta}{\sqrt2}\right)\ }
 $$
 
 ## 8.6 The picture: same point, different coordinates
@@ -1019,13 +1023,35 @@ $$
 - Why it matters for quantum: *a qubit will turn out to be a linear combination of the classical bits.* Span comes up right away in the next lecture.
 - **Independence:** none can be expressed using the others. **Why important?** (1) It lets us define a **basis**. (2) It guarantees that **there is only one way** of writing a vector in terms of a basis. Otherwise it would be very confusing: "if I say the coordinates of this vector are $(1, 0)$ and also $(2, 3)$, that would be very confusing." Linear independence stops that from happening.
 
+For a one-page **memory map** of vector space, span, basis, coordinates, and the rest, see **section 9**.
+
 ---
 
-# 9. Questions before the break
+
+# 9. Core ideas at a glance
+
+After sections 3–8, these eight ideas fit together. Use this table as a **memory map** before practice problems and the inner-product half of the lecture. Details and proofs are in the sections cited in the last column.
+
+| Concept | Easy way to remember | Small example | Where in these notes |
+|---|---|---|---|
+| **Vector space** | A world where adding and scaling work. | All real vectors $(x,y)$ form a vector space: adding or scaling them gives another vector in the plane. | §3 |
+| **Linear combination** | Multiply, then add. | $2(1,0)+3(0,1)=(2,3)$. | §4.2 |
+| **Span** | Everywhere your chosen vectors can take you. | The span of $(1,0)$ is the entire horizontal axis: all $(a,0)$, where $a$ is real. | §4.3 |
+| **Subspace** | A vector space inside a bigger vector space. | The horizontal axis is a subspace of the plane. Adding and scaling its vectors keeps you on that axis. | §5 |
+| **Linear independence** | No unnecessary vector. | $(1,0)$ and $(0,1)$ are independent: neither can be made by scaling the other. | §6 |
+| **Basis** | Enough to reach everywhere, with none redundant. | $\{(1,0),(0,1)\}$ is a basis for the plane: every $(x,y)=x(1,0)+y(0,1)$. | §7 |
+| **Dimension** | How many vectors are in a basis. | The plane has dimension **2**, because its basis contains **2 vectors**. | §7.6 |
+| **Coordinates** | How much of each basis vector to use. | If $\mathbf{u}=(1,1)$ and $\mathbf{v}=(1,-1)$, then $(5,3)=4\mathbf{u}+1\mathbf{v}$. Its coordinates in the ordered basis $(\mathbf{u},\mathbf{v})$ are **$(4,1)$**. | §8 |
+
+> **Same arrow, different recipes.** Coordinates are always relative to a **chosen basis**. The standard column $(5,3)$ is one recipe; $(4,1)$ in the basis $\{\mathbf{u},\mathbf{v}\}$ is another recipe for the same point in the plane (see §8.6).
+
+---
+
+# 10. Questions before the break
 
 There is nothing to submit right now. We should try the slide problems and come prepared. When a graded assignment is given, the deadline will be announced.
 
-## 9.1 Practice: basis problems (slide "Problems")
+## 10.1 Practice: basis problems (slide "Problems")
 
 Try these first, then check the solutions.
 
@@ -1039,11 +1065,11 @@ Try these first, then check the solutions.
 1. **Yes.** Suppose $a\,(1, 1)^T + b\,(1, -1)^T = \mathbf{0}$. The two entries give $a + b = 0$ and $a - b = 0$. Adding gives $a = 0$, and then $b = 0$. So they are independent. In a 2-dimensional space, two independent vectors form a basis.
 2. **No.** $(-i)\cdot(1, i)^T = (-i,\ -i\cdot i)^T = (-i,\ -i^2)^T = (-i,\ 1)^T$. The second vector is $-i$ times the first, so they are dependent.
 3. $2\,\mathbf{e}_1 + 4i\,\mathbf{e}_2$.
-4. Solve $\mathbf{e}_2 = a\,\mathbf{h}_+ + b\,\mathbf{h}_-$. The first entry gives $\tfrac{1}{\sqrt2}(a + b) = 0$ and the second gives $\tfrac{1}{\sqrt2}(a - b) = 1$. So $a = \tfrac{1}{\sqrt2}$ and $b = -\tfrac{1}{\sqrt2}$. Hence $\mathbf{e}_2 = \tfrac{1}{\sqrt2}(\mathbf{h}_+ - \mathbf{h}_-)$. *(Solving a linear system works, but it is slow. After inner products, in section 15, we will read the coordinates off in one step.)*
+4. Solve $\mathbf{e}_2 = a\,\mathbf{h}_+ + b\,\mathbf{h}_-$. The first entry gives $\tfrac{1}{\sqrt2}(a + b) = 0$ and the second gives $\tfrac{1}{\sqrt2}(a - b) = 1$. So $a = \tfrac{1}{\sqrt2}$ and $b = -\tfrac{1}{\sqrt2}$. Hence $\mathbf{e}_2 = \tfrac{1}{\sqrt2}(\mathbf{h}_+ - \mathbf{h}_-)$. *(Solving a linear system works, but it is slow. After inner products, in section 16, we will read the coordinates off in one step.)*
 
-## 9.2 Questions from the class
+## 10.2 Questions from the class
 
-**"Why did you multiply by $\tfrac{1}{\sqrt2}$?"** Wait for section 12: it makes the length 1.
+**"Why did you multiply by $\tfrac{1}{\sqrt2}$?"** Wait for section 13: it makes the length 1.
 
 **"Proving that something is a basis is much harder than proving it is not."** True. To show that $\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3$ are **not** a basis, you just need one dependence, for example $\mathbf{v}_1 = 2\mathbf{v}_2 + \mathbf{v}_3$. To show that they **are** a basis, you must show two things:
 
@@ -1064,11 +1090,11 @@ Try these first, then check the solutions.
 **"Why use real vectors for the basis with complex coordinates?"** The examples are drawn with real numbers. In the course itself we only deal with complex numbers.
 
 ---
-# 10. The dot product (real numbers)
+# 11. The dot product (real numbers)
 
 Back to **high-school maths**. The dot product takes **two vectors** and gives you **one number**.
 
-## 10.1 The formula
+## 11.1 The formula
 
 If $\mathbf{u} = (u_1, u_2)$ and $\mathbf{v} = (v_1, v_2)$, then
 
@@ -1084,18 +1110,20 @@ $$
 
 It is just a number. What does that number mean?
 
-## 10.2 The picture: length times length times cosine
+## 11.2 The picture: length times length times cosine
 
 ### What $\lVert\mathbf{u}\rVert$ and $\lVert\mathbf{v}\rVert$ mean
 
 The double bars $\lVert\cdot\rVert$ mean **length** (also called the **norm**) of a vector. Think of the arrow from the origin to the point: $\lVert\mathbf{u}\rVert$ is how long that arrow is — the straight-line distance from the tip back to the origin. The same for $\lVert\mathbf{v}\rVert$ and $\mathbf{v}$.
+
+> **Single bars** $\lvert z\rvert$ usually mean the **size of a number** (a scalar). **Double bars** $\lVert\mathbf{u}\rVert$ usually mean the **size of a vector**.
 
 | Symbol | Reads as | Meaning |
 |---|---|---|
 | $\lVert\mathbf{u}\rVert$ | "norm of $\mathbf{u}$" or "length of $\mathbf{u}$" | Size of the arrow $\mathbf{u}$ |
 | $\lVert\mathbf{v}\rVert$ | "norm of $\mathbf{v}$" or "length of $\mathbf{v}$" | Size of the arrow $\mathbf{v}$ |
 
-**Do not confuse** $\lVert\mathbf{u}\rVert$ (length of a **vector**) with $\lvert u_1\rvert$ (absolute value of a **single number**). The double bars are reserved for vectors.
+**Example of the single-bar rule:** $\lvert u_1\rvert$ is the absolute value of one **entry** of $\mathbf{u}$, not the length of the whole vector $\lVert\mathbf{u}\rVert$.
 
 **Real plane, from coordinates.** If $\mathbf{u} = (u_1, u_2)$ in $\mathbb{R}^2$, the length comes from the Pythagorean theorem on the horizontal and vertical steps:
 
@@ -1103,7 +1131,7 @@ $$
 \lVert\mathbf{u}\rVert = \sqrt{u_1^2 + u_2^2}.
 $$
 
-For the vectors in section 10.1, $\mathbf{u} = (5, 1)$ and $\mathbf{v} = (3, 7)$:
+For the vectors in section 11.1, $\mathbf{u} = (5, 1)$ and $\mathbf{v} = (3, 7)$:
 
 $$
 \lVert\mathbf{u}\rVert = \sqrt{5^2 + 1^2} = \sqrt{26}, \qquad
@@ -1130,7 +1158,7 @@ Another way to see it: **project $\mathbf{u}$ onto the line that $\mathbf{v}$ sp
 
 This is exactly **cosine similarity**, as used in vector retrieval (searching for similar items).
 
-## 10.3 What the dot product gives you
+## 11.3 What the dot product gives you
 
 | You want | Use | Why |
 |---|---|---|
@@ -1140,7 +1168,7 @@ This is exactly **cosine similarity**, as used in vector retrieval (searching fo
 
 The slide says: *"Goal: the same toolkit for $\mathbb{C}^n$. In QC it will also give probabilities."* (When a student asked "how does the dot product give probability?", the reply was: not yet, probability shows up "five slides down the line", after we meet qubits.)
 
-## 10.4 Perpendicular non-zero vectors are independent
+## 11.4 Perpendicular non-zero vectors are independent
 
 This is a nice use of the dot product. Let $\mathbf{u}$ and $\mathbf{v}$ be **non-zero** vectors with $\mathbf{u}\cdot\mathbf{v} = 0$. Claim: they are linearly independent.
 
@@ -1161,9 +1189,9 @@ Consequences:
 
 ---
 
-# 11. The complex inner product
+# 12. The complex inner product
 
-## 11.1 The question: does the same definition work?
+## 12.1 The question: does the same definition work?
 
 We want to keep the nice property that the dot product of a vector with itself gives **the length squared**, a real, non-negative number. In the real case $\mathbf{v}\cdot\mathbf{v} = v_1^2 + v_2^2 + \cdots$.
 
@@ -1184,7 +1212,7 @@ In the picture, $z^2 = 2i$ is on the imaginary axis, whereas $\lvert z\rvert^2 =
 
 ![The complex number 1 + i, its square 2i on the imaginary axis, and its modulus squared 2 on the real axis, showing that z squared is not the same as the modulus squared](images/vec-square-vs-modulus.svg)
 
-## 11.2 A disaster with the old formula (slide)
+## 12.2 A disaster with the old formula (slide)
 
 Try the naive formula $\sum_j v_j v_j$ on the vector $\mathbf{v} = \begin{pmatrix}1\\ i\end{pmatrix}$:
 
@@ -1194,7 +1222,7 @@ $$
 
 A **non-zero** vector with "length" zero. In the lecture: *"We would be in a very strange situation where $\mathbf{v}\cdot\mathbf{v}$ will be 0, but $\mathbf{v}$ is not a zero vector. I don't want this."*
 
-## 11.3 The fix: conjugate one of the vectors
+## 12.3 The fix: conjugate one of the vectors
 
 Recall from complex numbers: **a complex number times its conjugate is its modulus squared**, $z\,\overline{z} = \lvert z\rvert^2 \ge 0$. So instead of multiplying $v_j$ by $v_j$, multiply $v_j$ by its **conjugate** $\overline{v_j}$. Redo the example:
 
@@ -1204,7 +1232,7 @@ $$
 
 The key point (slide): *$\overline{z}z = \lvert z\rvert^2 \ge 0$ is what makes lengths real and positive. This is why the complex inner product carries conjugates.*
 
-## 11.4 The conjugate transpose $\mathbf{v}^\dagger$
+## 12.4 The conjugate transpose $\mathbf{v}^\dagger$
 
 Two ingredients:
 
@@ -1233,7 +1261,7 @@ $$
 
 In the lecture: *"conjugate of $\alpha\mathbf{v}$ is the conjugate of $\alpha$ times the conjugate of $\mathbf{v}$."*
 
-## 11.5 The definition of the inner product (slide)
+## 12.5 The definition of the inner product (slide)
 
 $$
 \boxed{\ \langle\mathbf{u}, \mathbf{v}\rangle = \mathbf{u}^\dagger\mathbf{v} = \sum_{j=1}^{n}\overline{u_j}\,v_j\ }
@@ -1302,7 +1330,7 @@ $$
 
 **Same calculation with $\mathbf{u}^\dagger$ (row) times $\mathbf{v}$ (column).**
 
-Turn $\mathbf{u}$ into a row of conjugated entries (section 11.4):
+Turn $\mathbf{u}$ into a row of conjugated entries (section 12.4):
 
 $$
 \mathbf{u}^\dagger = \begin{pmatrix}\overline{1} & \overline{i}\end{pmatrix} = \begin{pmatrix}1 & -i\end{pmatrix}.
@@ -1328,7 +1356,7 @@ $$
 
 (The last one: $\overline{\tfrac{1}{\sqrt2}}\cdot 1 + \overline{\tfrac{1}{\sqrt2}}\cdot 1\cdot 0 = \tfrac{1}{\sqrt2}$.)
 
-## 11.6 Order matters: conjugate symmetry
+## 12.6 Order matters: conjugate symmetry
 
 In the real world $\mathbf{u}\cdot\mathbf{v} = \mathbf{v}\cdot\mathbf{u}$. Now the order matters, but in a controlled way:
 
@@ -1345,12 +1373,12 @@ $$
 
 If one of them is $1 + i$ the other is $1 - i$. Swapping the order gives the complex conjugate.
 
-## 11.7 Pulling out a scalar
+## 12.7 Pulling out a scalar
 
 - **Second slot:** $\langle\mathbf{u}, \alpha\mathbf{v}\rangle = \alpha\,\langle\mathbf{u}, \mathbf{v}\rangle$. The scalar comes out **as it is**.
 - **First slot:** $\langle\alpha\mathbf{u}, \mathbf{v}\rangle = \overline{\alpha}\,\langle\mathbf{u}, \mathbf{v}\rangle$. The scalar comes out **conjugated**, because everything in the first slot is conjugated: $\overline{\alpha u_1}\,v_1 + \cdots = \overline{\alpha}\,\overline{u_1}v_1 + \cdots$.
 
-## 11.8 The three properties (slide "Properties of the Inner Product")
+## 12.8 The three properties (slide "Properties of the Inner Product")
 
 For all $\mathbf{u}, \mathbf{v}, \mathbf{w}$ and $\alpha, \beta \in \mathbb{C}$:
 
@@ -1362,19 +1390,19 @@ A consequence of 1 and 2: $\langle\alpha\mathbf{u}, \mathbf{v}\rangle = \overlin
 
 Property 3 is the one the whole definition was designed for: *"If $\langle\mathbf{v}, \mathbf{v}\rangle$ is 0, then $\mathbf{v}$ has to be 0, otherwise it will never be 0. That is how we have designed this thing."* The slide adds that any function satisfying 1 to 3 on a vector space is called an inner product. The one we use on $\mathbb{C}^n$ is $\sum\overline{u_j}v_j$. (When asked whether there can be other definitions, the answer was "technically you can, but let us not go there".)
 
-## 11.9 Recap of the idea (repeated in the lecture)
+## 12.9 Recap of the idea (repeated in the lecture)
 
 1. The real dot product $\sum u_jv_j$ would fail for complex vectors (it gives $0$ for $(1, i)$).
 2. So we **conjugate the first vector**: $\overline{u_1}v_1 + \overline{u_2}v_2 + \cdots$.
 3. Then $\langle\mathbf{v}, \mathbf{v}\rangle$ is the length squared, which is real and positive.
 
-*Two small answers:* a student asked about "the bra of the ket". That notation is **not used yet** (it comes in the next lecture, from Colin). Another asked how this gives probability. Not yet: see section 13.
+*Two small answers:* a student asked about "the bra of the ket". That notation is **not used yet** (it comes in the next lecture, from Colin). Another asked how this gives probability. Not yet: see section 14.
 
 ---
 
-# 12. Norm (length) and unit vectors
+# 13. Norm (length) and unit vectors
 
-## 12.1 The norm
+## 13.1 The norm
 
 The **norm** (length) of a vector is
 
@@ -1389,19 +1417,98 @@ So $\langle\mathbf{v}, \mathbf{v}\rangle = \lVert\mathbf{v}\rVert^2$, matching w
 
 **Why $\lVert\alpha\mathbf{v}\rVert = \lvert\alpha\rvert\lVert\mathbf{v}\rVert$?** Compute the square: $\langle\alpha\mathbf{v}, \alpha\mathbf{v}\rangle$. The $\alpha$ in the first slot comes out conjugated, the one in the second comes out as is. So we get $\overline{\alpha}\,\alpha\,\langle\mathbf{v}, \mathbf{v}\rangle = \lvert\alpha\rvert^2\lVert\mathbf{v}\rVert^2$. Take the square root.
 
-**Example (slide and lecture).**
+**Example (slide and lecture).** $\begin{pmatrix}1\\ 1 + i\end{pmatrix}$ has norm $\sqrt{1 + \lvert 1 + i\rvert^2} = \sqrt3$. *It is almost like the real case, but you must use $\lvert\cdot\rvert^2$ on each entry — not $v_j^2$ alone.* A full step-by-step calculation (and then $\hat{\mathbf{v}}$) is in **section 13.3**, just before the examples list.
+
+## 13.2 Distance between two vectors
+
+Subtracting two vectors tells us the **movement** from one endpoint to the other. The **length** of that movement is the **distance** between them.
+
+We work in the real plane $\mathbb{R}^2$ (the floor map). Fix two vectors $\mathbf{u}$ and $\mathbf{v}$ and think of their tips as two places on the map.
+
+Suppose
 
 $$
-\left\lVert\begin{pmatrix}1\\ 1 + i\end{pmatrix}\right\rVert = \sqrt{1 + \lvert 1 + i\rvert^2} = \sqrt{1 + 2} = \sqrt3
+\mathbf{u} = (1, 1), \qquad \mathbf{v} = (4, 5).
 $$
 
-*It is almost like the real case, but you have to be careful and use $\lvert\cdot\rvert^2$ for each entry.*
+### 1. What movement takes us from $\mathbf{u}$ to $\mathbf{v}$?
 
-## 12.2 Distance between two vectors
+Starting at $(1, 1)$, we need to reach $(4, 5)$:
 
-$\lVert\mathbf{u} - \mathbf{v}\rVert$ is the **distance between $\mathbf{u}$ and $\mathbf{v}$**. In the real plane, $\mathbf{v} - \mathbf{w}$ is the arrow from $\mathbf{w}$ to $\mathbf{v}$, with coordinates $(v_1 - w_1,\ v_2 - w_2)$. If the vectors are far apart, $\mathbf{u} - \mathbf{v}$ is a large vector. If they are close, it is small. (Large and small refer to the length.)
+- Horizontal movement: $4 - 1 = 3$ to the right.
+- Vertical movement: $5 - 1 = 4$ up.
 
-## 12.3 Unit vectors and normalising
+Therefore
+
+$$
+\boxed{\mathbf{v} - \mathbf{u} = (4 - 1,\; 5 - 1) = (3, 4).}
+$$
+
+The rule is
+
+$$
+\boxed{\text{movement} = \text{destination} - \text{starting position}.}
+$$
+
+You can check by adding that movement to the starting position:
+
+$$
+\mathbf{u} + (\mathbf{v} - \mathbf{u}) = (1, 1) + (3, 4) = (4, 5) = \mathbf{v}.
+$$
+
+In general, $\mathbf{v} - \mathbf{u}$ is the arrow from the tip of $\mathbf{u}$ to the tip of $\mathbf{v}$, with coordinates $(v_1 - u_1,\ v_2 - u_2)$.
+
+![Two points u equals (1, 1) and v equals (4, 5) on a map grid; orange arrow v minus u from u to v; green dashed legs 3 right and 4 up; distance norm v minus u equals 5](images/vec-distance-two-vectors.svg)
+
+### 2. How far apart are the endpoints?
+
+The movement $(3, 4)$ forms a right triangle: $3$ horizontally and $4$ vertically (see the green dashed legs in the figure). Using Pythagoras:
+
+$$
+\text{distance} = \lVert\mathbf{v} - \mathbf{u}\rVert
+= \sqrt{3^2 + 4^2}
+= \sqrt{25}
+= \boxed{5}.
+$$
+
+Notice the difference:
+
+| Expression | Meaning | Result |
+|---|---|---|
+| $\mathbf{v} - \mathbf{u}$ | Movement from $\mathbf{u}$ to $\mathbf{v}$ | The **vector** $(3, 4)$ |
+| $\lVert\mathbf{v} - \mathbf{u}\rVert$ | Length of that movement | The **number** $5$ |
+
+Single bars $\lvert\cdot\rvert$ on a **scalar** and double bars $\lVert\cdot\rVert$ on a **vector** are the same distinction as in section 11.2: the norm turns the difference **vector** into one **distance number**.
+
+The formal definition (for any dimension, real or complex entries) is
+
+$$
+\lVert\mathbf{u} - \mathbf{v}\rVert = \sqrt{\langle\mathbf{u} - \mathbf{v},\ \mathbf{u} - \mathbf{v}\rangle},
+$$
+
+which agrees with $\sqrt{(u_1 - v_1)^2 + (u_2 - v_2)^2}$ in the real plane.
+
+### 3. What if we subtract in the opposite order?
+
+$$
+\mathbf{u} - \mathbf{v} = (1 - 4,\; 1 - 5) = (-3, -4).
+$$
+
+This points from $\mathbf{v}$ **back** to $\mathbf{u}$: $3$ left and $4$ down. Its length is still
+
+$$
+\lVert\mathbf{u} - \mathbf{v}\rVert = \sqrt{(-3)^2 + (-4)^2} = 5.
+$$
+
+So reversing the journey changes the **direction**, but the **distance** stays the same:
+
+$$
+\boxed{\text{distance between }\mathbf{u}\text{ and }\mathbf{v} = \lVert\mathbf{u} - \mathbf{v}\rVert = \lVert\mathbf{v} - \mathbf{u}\rVert.}
+$$
+
+When we say the difference vector is **large** or **small**, we mean its **length**: a long connecting arrow means the endpoints are far apart; a short connecting arrow means they are close together.
+
+## 13.3 Unit vectors and normalising
 
 A vector of **length 1** is called a **unit vector**. *"This will become very important when we talk about qubits."*
 
@@ -1413,16 +1520,70 @@ $$
 \hat{\mathbf{v}} = \frac{\mathbf{v}}{\lVert\mathbf{v}\rVert}
 $$
 
-For example, if a vector has length 10, multiply all its coordinates by $\tfrac{1}{10}$ and the new vector has length 1.
+**What is $\hat{\mathbf{v}}$ called?** The symbol $\hat{\mathbf{v}}$ is read **“$\mathbf{v}$ hat”** (or **“unit $\mathbf{v}$”** in some books). It is the **unit vector** you get by **normalising** $\mathbf{v}$:
 
-![A vector (3, 4) of length 5 scaled to length 1 so that it lands on the unit circle at (3/5, 4/5), with the examples](images/vec-normalise-unit-circle.svg)
+| Symbol | Name | Length | Same direction as $\mathbf{v}$? |
+|---|---|---|---|
+| $\mathbf{v}$ | just “the vector $\mathbf{v}$” | $\lVert\mathbf{v}\rVert$ (any non-negative number) | — |
+| $\hat{\mathbf{v}}$ | the **normalised** $\mathbf{v}$, or **unit vector in the direction of** $\mathbf{v}$ | **always $1$** (by construction) | yes |
+
+So **$\hat{\mathbf{v}}$ is a unit vector** — not a different kind of object. The hat is a reminder: “this one has been scaled to length $1$.” If $\mathbf{v}$ already has length $1$, then $\hat{\mathbf{v}} = \mathbf{v}$ and you may omit the hat.
+
+For example, if a vector has length 10, multiply all its coordinates by $\tfrac{1}{10}$ and the new vector has length 1; that new vector is $\hat{\mathbf{v}}$.
+
+![Normalising a vector make its length 1: v equals (3, 4) with length 5 and v-hat equals (3/5, 4/5) on the unit circle; steps find norm then divide; examples for (1, 1+i) and (1, -1)](images/vec-normalise-make-length-one.jpg)
+
+The figure shows the **same direction, new length $1$**: blue $\mathbf{v}=(3,4)$ with $\lVert\mathbf{v}\rVert=5$, red $\hat{\mathbf{v}}=(3/5,4/5)$ on the unit circle. The **Steps (recipe)** box is $\hat{\mathbf{v}}=\mathbf{v}/\lVert\mathbf{v}\rVert$. The **Examples** box matches the lecture; for $v=(1,1+i)$ the second term under the radical is $\lvert 1+i\rvert^2=2$ (not $2^2$). Below we derive that length in full before writing $\hat{\mathbf{v}}$.
+
+### How long is $\mathbf{v} = \begin{pmatrix}1\\ 1 + i\end{pmatrix}$? (needed for normalising)
+
+Normalising starts with step 1 of the recipe: **find $\lVert\mathbf{v}\rVert$**. The vector is
+
+$$
+\mathbf{v} = \begin{pmatrix}1\\ 1 + i\end{pmatrix}.
+$$
+
+For complex entries, length uses the **modulus squared of each component** (section 13.1):
+
+$$
+\lVert\mathbf{v}\rVert = \sqrt{\lvert v_1\rvert^2 + \lvert v_2\rvert^2}.
+$$
+
+**Step 1 — first entry $1$.**
+
+$$
+\lvert 1\rvert^2 = 1.
+$$
+
+**Step 2 — second entry $1 + i$.**
+
+For $a + bi$, $\lvert a + bi\rvert^2 = a^2 + b^2$. Here $a = 1$, $b = 1$:
+
+$$
+\lvert 1 + i\rvert^2 = 1^2 + 1^2 = 2.
+$$
+
+**Step 3 — add and take the square root.**
+
+$$
+\lVert\mathbf{v}\rVert = \sqrt{\lvert 1\rvert^2 + \lvert 1 + i\rvert^2}
+= \sqrt{1 + 2}
+= \boxed{\sqrt3}.
+$$
+
+**Step 4 — normalise.** Multiply every entry by $1/\lVert\mathbf{v}\rVert = 1/\sqrt3$:
+
+$$
+\hat{\mathbf{v}} = \frac{1}{\sqrt3}\begin{pmatrix}1\\ 1 + i\end{pmatrix},
+\qquad\text{and now }\lVert\hat{\mathbf{v}}\rVert = 1.
+$$
 
 **Examples.**
 
-- $\mathbf{v} = \begin{pmatrix}1\\ 1 + i\end{pmatrix}$ has length $\sqrt3$, so $\hat{\mathbf{v}} = \dfrac{1}{\sqrt3}\begin{pmatrix}1\\ 1 + i\end{pmatrix}$.
+- $\mathbf{v} = \begin{pmatrix}1\\ 1 + i\end{pmatrix}$: length $\sqrt3$ and unit vector as above (steps just above).
 - $\mathbf{v} = (1, -1)$ has length $\sqrt{1^2 + 1^2} = \sqrt2$, so $\hat{\mathbf{v}} = \dfrac{1}{\sqrt2}(1, -1)$.
 
-## 12.4 Why the $\tfrac{1}{\sqrt2}$ in $\mathbf{h}_\pm$
+## 13.4 Why the $\tfrac{1}{\sqrt2}$ in $\mathbf{h}_\pm$
 
 Now the "mystery" of section 8.5 is solved: $(1, 1)$ and $(1, -1)$ each have length $\sqrt2$, and the factor $\tfrac{1}{\sqrt2}$ **normalises** them. So $\mathbf{h}_+$ and $\mathbf{h}_-$ have length 1. In the lecture: *"I like vectors which have length 1, because those are the vectors which will arise in quantum computing."*
 
@@ -1436,11 +1597,11 @@ $$
 
 ---
 
-# 13. Two inequalities
+# 14. Two inequalities
 
 *"Two facts that you always have to know."*
 
-## 13.1 Cauchy–Schwarz
+## 14.1 Cauchy–Schwarz
 
 $$
 \lvert\langle\mathbf{u}, \mathbf{v}\rangle\rvert \le \lVert\mathbf{u}\rVert\,\lVert\mathbf{v}\rVert
@@ -1458,7 +1619,7 @@ $$
 
 A number between $0$ and $1$ is exactly what a **probability** can be. This is where probabilities will appear later.
 
-## 13.2 Triangle inequality
+## 14.2 Triangle inequality
 
 $$
 \lVert\mathbf{u} + \mathbf{v}\rVert \le \lVert\mathbf{u}\rVert + \lVert\mathbf{v}\rVert
@@ -1466,202 +1627,802 @@ $$
 
 The picture: draw $\mathbf{u}$ and $\mathbf{v}$ head to tail. Then $\mathbf{u} + \mathbf{v}$ is the **third side of a triangle**. The length of one side of a triangle is **at most the sum of the lengths of the other two sides**. Slide caption: *"The direct path is never longer than the detour."*
 
-![Vectors u and v drawn head to tail with the direct path u + v shorter than the detour u then v; the numbers 8.06 is at most 5.10 plus 3.61](images/vec-triangle-inequality.svg)
+![Triangle inequality the direct path is never longer: u from O to (5, 1), v from A to B with step (2, 3), u plus v direct to (7, 4); inequality 8.06 at most 5.10 plus 3.61; Cauchy-Schwarz box](images/vec-triangle-inequality.jpg)
 
-(The picture is a real cartoon: $\mathbf{u} = (5, 1)$ and $\mathbf{v} = (2, 3)$.)
-
----
-
-# 14. Orthogonality
-
-## 14.1 The definition
-
-Two vectors are **orthogonal** (perpendicular), written $\mathbf{u}\perp\mathbf{v}$, if
-
-$$
-\langle\mathbf{u}, \mathbf{v}\rangle = 0
-$$
-
-Examples (slide):
-
-- $\langle\mathbf{e}_1, \mathbf{e}_2\rangle = 0$.
-- $\langle\mathbf{h}_+, \mathbf{h}_-\rangle = \dfrac12\,(1\cdot 1 + 1\cdot(-1)) = 0$.
-- $\begin{pmatrix}1\\ i\end{pmatrix}\perp\begin{pmatrix}i\\ 1\end{pmatrix}$ (computed in section 11.5).
-
-Note that $\mathbf{h}_+$ and $\mathbf{h}_-$ **do not "interfere"** through the $\tfrac{1}{\sqrt2}$ factors: you multiply $1\cdot 1$ and $1\cdot(-1)$, giving $0$. The $\tfrac{1}{\sqrt2}$ is kept because **their lengths are 1**. *"These are the two most important vectors you will see in quantum computing."*
-
-## 14.2 Pythagoras's theorem
-
-If $\mathbf{u}\perp\mathbf{v}$, then
-
-$$
-\lVert\mathbf{u} + \mathbf{v}\rVert^2 = \lVert\mathbf{u}\rVert^2 + \lVert\mathbf{v}\rVert^2
-$$
-
-*"It is like saying the hypotenuse squared is the sum of the squares of the two sides."*
-
-**Why it is true.** Expand $\langle\mathbf{u} + \mathbf{v}, \mathbf{u} + \mathbf{v}\rangle$ using the distributive law:
-
-$$
-\langle\mathbf{u}, \mathbf{u}\rangle + \langle\mathbf{u}, \mathbf{v}\rangle + \langle\mathbf{v}, \mathbf{u}\rangle + \langle\mathbf{v}, \mathbf{v}\rangle
-$$
-
-The two middle terms are $0$ because $\mathbf{u}\perp\mathbf{v}$. What is left is $\lVert\mathbf{u}\rVert^2 + \lVert\mathbf{v}\rVert^2$. $\blacksquare$
-
-In the picture below, $\mathbf{u} = (3, 1)$ and $\mathbf{v} = (-1, 3)$ are perpendicular ($3\cdot(-1) + 1\cdot 3 = 0$), each has squared length $10$, and $\mathbf{u} + \mathbf{v}$ has squared length $20 = 10 + 10$:
-
-![Orthogonal vectors u and v with u + v as the hypotenuse of a right-angled triangle; the squared lengths are 10, 10 and 20](images/vec-pythagoras-orthogonal.svg)
-
-*"There is only a picture because in the complex world it does not look like this, but in the real world this is how it looks."* Physically (slide): **orthogonal states are perfectly distinguishable.** More on that later.
-
-## 14.3 Questions from the class
-
-**"Perpendicular vectors always form a basis. Is the opposite true: is every basis perpendicular?"** **No.** In $\mathbb{R}^2$, two vectors that are *not* perpendicular can still form a basis. (For example $(1, 0)$ and $(1, 1)$.) However, there is a theorem: *every subspace has some basis made of perpendicular vectors.* But not every basis is orthogonal.
-
-**"Why was the word Hadamard used?"** Do not be scared of it. The word was never used in the explanation; $\mathbf{h}_+$ and $\mathbf{h}_-$ are just *a pair of vectors, a basis*. They are called Hadamard vectors because a mathematician named **Hadamard** studied them. (The Pauli basis is something for much later.)
+(Real cartoon: $\mathbf{u} = (5, 1)$ from $O$ to $A$, $\mathbf{v} = (2, 3)$ from $A$ to $B=(7,4)$, so $\mathbf{u}+\mathbf{v}$ is the direct segment $O\to B$. The figure also restates Cauchy–Schwarz from section 14.1.)
 
 ---
 
-# 15. Orthonormal bases
+# 15. Orthogonality
 
-*"Now comes the most important statement about bases. We will use this a lot."*
+*Lecture thread: perpendicular directions → Pythagoras → (later) why coordinates are easy in an orthonormal basis.*
 
-## 15.1 The problem: finding coordinates is hard in a general basis
+## 15.0 Prerequisite recap (vectors, bases, coordinates)
 
-In the standard basis $\{(1, 0), (0, 1)\}$ the point $(5, 6)$ has coordinates $5$ and $6$. Immediate.
+**Extra beginner explanation.** Before “orthogonal,” fix three words that are easy to mix up:
 
-Now change the basis to $\mathbf{b}_1 = (3, 2)$ and $\mathbf{b}_2 = (1, 7)$. What are the coordinates of $(5, 6)$ in this basis? We need numbers $\alpha_1, \alpha_2$ with
+| Word | What it is | Example |
+|---|---|---|
+| **Vector** | The single object (one arrow / one column) | $\mathbf{w}$ |
+| **Basis vectors** | Fixed building blocks you agree on | $\mathbf{e}_1$, $\mathbf{e}_2$ |
+| **Coordinates** | Scalars that say how much of each basis vector to add | $3$ and $4$ below |
 
-$$
-(5, 6) = \alpha_1\,(3, 2) + \alpha_2\,(1, 7)
-$$
-
-That is two equations in two unknowns:
-
-$$
-3\alpha_1 + \alpha_2 = 5, \qquad 2\alpha_1 + 7\alpha_2 = 6
-$$
-
-(Solving: from the first, $\alpha_2 = 5 - 3\alpha_1$. Substituting into the second gives $2\alpha_1 + 35 - 21\alpha_1 = 6$, so $\alpha_1 = \tfrac{29}{19}$ and $\alpha_2 = \tfrac{8}{19}$. Ugly.) And in a bigger space, 3D or 4D, you would have to solve a larger system.
-
-**Why is the standard basis so easy and this one so hard?** That is the question this section answers.
-
-## 15.2 Orthonormal basis (ONB)
-
-A basis $\{\mathbf{e}_1, \dots, \mathbf{e}_n\}$ is **orthonormal** if two things hold:
-
-1. **Orthogonal:** they are perpendicular to each other: $\langle\mathbf{e}_i, \mathbf{e}_j\rangle = 0$ for $i \ne j$.
-2. **Normalised:** each has length 1: $\langle\mathbf{e}_i, \mathbf{e}_i\rangle = 1$.
-
-The slide packs both into one line using the **Kronecker delta**:
+Take the **target vector** $\mathbf{w} = (3, 4)$ in $\mathbb{R}^2$ and the **standard basis** $\mathbf{e}_1 = (1, 0)$, $\mathbf{e}_2 = (0, 1)$:
 
 $$
-\langle\mathbf{e}_i, \mathbf{e}_j\rangle = \delta_{ij} = \begin{cases}1 & i = j\\ 0 & i \ne j\end{cases}
+\mathbf{w} = 3\mathbf{e}_1 + 4\mathbf{e}_2.
 $$
 
-## 15.3 Three standard orthonormal bases of $\mathbb{C}^2$ (slide)
+- **Vector:** $\mathbf{w}$ (the point / arrow).
+- **Basis vectors:** $\mathbf{e}_1$, $\mathbf{e}_2$.
+- **Coordinates (coefficients):** $3$ and $4$ — not the same thing as $\mathbf{w}$ itself.
 
-| Name | Vectors |
+The column $(3,4)^T$ is $\mathbf{w}$ written **in the standard basis**. In another basis the **same** $\mathbf{w}$ gets **different** coordinate numbers.
+
+**Notation (gentle).** $[\mathbf{w}]_{\mathcal{E}}$ means “the coordinate list of $\mathbf{w}$ in basis $\mathcal{E}$.” Example: $[\mathbf{w}]_{\mathcal{E}} = (3, 4)^T$ for the standard basis $\mathcal{E} = \{\mathbf{e}_1, \mathbf{e}_2\}$. In the Hadamard ONB $\mathcal{H} = \{\mathbf{h}_+, \mathbf{h}_-\}$, section 16.8 derives $[\mathbf{w}]_{\mathcal{H}} = (a_+, a_-)^T = \bigl(7/\sqrt2,\ -1/\sqrt2\bigr)^T$ for the **same** $\mathbf{w}$. Changing basis changes the list; $\mathbf{w}$ does not move.
+
+**Hadamard vectors in the standard basis.** The lecture’s $\mathbf{h}_+ = \tfrac{1}{\sqrt2}(1, 1)^T$ is a **vector**. The entries $1/\sqrt2$ and $1/\sqrt2$ in the column are its **coordinates in the standard basis** — not a separate kind of object.
+
+**Symbols you will see again**
+
+- $\lvert z\rvert$ for a **number** $z$: size / modulus. For $z = a + bi$, $\lvert z\rvert = \sqrt{a^2 + b^2}$.
+- $\lVert\mathbf{v}\rVert$ for a **vector**: length. $\lVert\mathbf{v}\rVert^2 = \langle\mathbf{v}, \mathbf{v}\rangle$ (length **squared**, not the same as $\lVert\mathbf{v}\rVert$).
+
+---
+
+## 15.1 What question are we answering?
+
+**Question:** When are two directions “at right angles,” in a way that works for complex vectors?
+
+**Everyday idea:** “Right” and “up” do not overlap — neither is a scaling of the other, and they meet at $90^\circ$.
+
+**Definition (after we can measure angles via inner products):** $\mathbf{u}$ and $\mathbf{v}$ are **orthogonal** (written $\mathbf{u} \perp \mathbf{v}$) when
+
+$$
+\langle\mathbf{u}, \mathbf{v}\rangle = 0.
+$$
+
+**Inner product reminder:** $\langle\mathbf{u}, \mathbf{v}\rangle = \sum_j \overline{u_j}\,v_j$ — **conjugate the first** vector’s entries (section 12).
+
+---
+
+## 15.2 Real example: “right” and “up”
+
+Let $\mathbf{u} = (1, 0)$ and $\mathbf{v} = (0, 1)$.
+
+**First slot conjugated:** $\overline{1} = 1$, $\overline{0} = 0$.
+
+$$
+\langle\mathbf{u}, \mathbf{v}\rangle = \overline{1}\cdot 0 + \overline{0}\cdot 1 = 0\cdot 0 + 0\cdot 1 = 0.
+$$
+
+So $\mathbf{u} \perp \mathbf{v}$.
+
+**Extra beginner explanation.** Orthogonal vectors need **not** have length $1$. Take $\mathbf{u} = (3, 0)$ and $\mathbf{v} = (0, 4)$:
+
+$$
+\langle\mathbf{u}, \mathbf{v}\rangle = \overline{3}\cdot 0 + \overline{0}\cdot 4 = 0 + 0 = 0.
+$$
+
+Still orthogonal; lengths are $\lVert\mathbf{u}\rVert = 3$ and $\lVert\mathbf{v}\rVert = 4$.
+
+![Three panels: perpendicular unit basis, perpendicular non-unit lengths, and a non-perpendicular basis pair](images/vec-orthogonal-basis-comparison.svg)
+
+---
+
+## 15.3 Lecture examples (real and complex)
+
+**Standard basis:** $\langle\mathbf{e}_1, \mathbf{e}_2\rangle = 0$ (same calculation as above).
+
+**Hadamard (before normalising):** $(1,1)$ and $(1,-1)$ are orthogonal because
+
+$$
+\langle(1,1), (1,-1)\rangle = \overline{1}\cdot 1 + \overline{1}\cdot(-1) = 1 - 1 = 0.
+$$
+
+After dividing by $\sqrt2$ to get $\mathbf{h}_\pm$, inner products stay $0$ (scaling both entries the same way does not change orthogonality).
+
+**Complex pair (section 12.5):** $\mathbf{u} = (1, i)^T$, $\mathbf{v} = (i, 1)^T$.
+
+$$
+\langle\mathbf{u}, \mathbf{v}\rangle = \overline{1}\cdot i + \overline{i}\cdot 1 = i + (-i) = 0.
+$$
+
+**Extra beginner explanation.** For $\mathbb{C}^2$ we **define** orthogonality by $\langle\cdot,\cdot\rangle = 0$. Pictures in the real plane are **motivation**; complex vectors are not honest single arrows in $\mathbb{R}^2$.
+
+---
+
+## 15.4 Misconception check: orthogonal vs “forms a basis”
+
+| Statement | Verdict |
 |---|---|
-| **Standard** | $\mathbf{e}_1 = (1, 0)^T,\ \mathbf{e}_2 = (0, 1)^T$ |
+| Nonzero vectors that are pairwise orthogonal are **linearly independent** | True |
+| Two orthogonal nonzero vectors in $\mathbb{R}^2$ **span the plane** → they are a **basis** | True (in $\mathbb{R}^2$) |
+| “Perpendicular ⇒ always a basis of the whole space” without checking dimension | **False** in general — you need enough independent directions |
+| Every **basis** is orthogonal | **False** — e.g. $\{(1,0), (1,1)\}$ is a basis but not orthogonal |
+
+In the lecture: every **subspace** has *some* orthogonal basis, but a random basis need not be orthogonal.
+
+---
+
+## 15.5 Pythagoras for orthogonal vectors
+
+**Question:** If $\mathbf{u} \perp \mathbf{v}$, how is $\lVert\mathbf{u}+\mathbf{v}\rVert$ related to $\lVert\mathbf{u}\rVert$ and $\lVert\mathbf{v}\rVert$?
+
+**Everyday idea:** Right triangle — hypotenuse squared = sum of squares of the legs.
+
+**General formula (after the algebra):**
+
+$$
+\lVert\mathbf{u} + \mathbf{v}\rVert^2 = \lVert\mathbf{u}\rVert^2 + \lVert\mathbf{v}\rVert^2 \quad\text{when }\mathbf{u}\perp\mathbf{v}.
+$$
+
+**Expand without skipping steps:**
+
+$$
+\langle\mathbf{u}+\mathbf{v}, \mathbf{u}+\mathbf{v}\rangle
+= \langle\mathbf{u},\mathbf{u}\rangle + \langle\mathbf{u},\mathbf{v}\rangle + \langle\mathbf{v},\mathbf{u}\rangle + \langle\mathbf{v},\mathbf{v}\rangle.
+$$
+
+If $\mathbf{u}\perp\mathbf{v}$, then $\langle\mathbf{u},\mathbf{v}\rangle = 0$ and $\langle\mathbf{v},\mathbf{u}\rangle = \overline{\langle\mathbf{u},\mathbf{v}\rangle} = 0$. So
+
+$$
+\lVert\mathbf{u}+\mathbf{v}\rVert^2 = \lVert\mathbf{u}\rVert^2 + \lVert\mathbf{v}\rVert^2.
+$$
+
+**Numerical check:** $\mathbf{u}=(3,1)$, $\mathbf{v}=(-1,3)$. Dot product $3(-1)+1\cdot 3 = 0$. $\lVert\mathbf{u}\rVert^2 = 10$, $\lVert\mathbf{v}\rVert^2 = 10$, $\lVert\mathbf{u}+\mathbf{v}\rVert^2 = \lVert(2,4)\rVert^2 = 20$.
+
+![Pythagoras for perpendicular vectors in the plane](images/vec-pythagoras-orthogonal.jpg)
+
+---
+
+## 15.6 Questions from the class
+
+**“Is every basis perpendicular?”** No — see table in §15.4.
+
+**“Why Hadamard?”** Name only; $\mathbf{h}_\pm$ are a useful orthonormal pair (Pauli basis comes much later).
+
+---
+
+# 16. Orthonormal bases and Parseval’s identity
+
+*Lecture thread: hard coordinates in a general basis → orthonormal bases → inner products read off coordinates → length² from coordinates (Parseval).*
+
+## 16.1 Why are coordinates hard in a general basis?
+
+**Question:** In basis $\{\mathbf{b}_1, \mathbf{b}_2\}$, what numbers $\alpha_1, \alpha_2$ make $\mathbf{w} = \alpha_1\mathbf{b}_1 + \alpha_2\mathbf{b}_2$?
+
+**Lecture example:** $\mathbf{w} = (5, 6)$, $\mathbf{b}_1 = (3, 2)$, $\mathbf{b}_2 = (1, 7)$.
+
+$$
+(5, 6) = \alpha_1(3, 2) + \alpha_2(1, 7)
+\Rightarrow
+\begin{cases}
+3\alpha_1 + \alpha_2 = 5 \\
+2\alpha_1 + 7\alpha_2 = 6
+\end{cases}
+$$
+
+From the first equation, $\alpha_2 = 5 - 3\alpha_1$. Substitute:
+
+$$
+2\alpha_1 + 7(5 - 3\alpha_1) = 6
+\Rightarrow 2\alpha_1 + 35 - 21\alpha_1 = 6
+\Rightarrow -19\alpha_1 = -29
+\Rightarrow \alpha_1 = \tfrac{29}{19},\quad \alpha_2 = \tfrac{8}{19}.
+$$
+
+**Meaning:** A general basis is fine, but finding coordinates means **solving linear equations**. In $\mathbb{C}^n$ with large $n$, that is work. The standard basis $(1,0), (0,1)$ felt easy because $\mathbf{w} = 5\mathbf{e}_1 + 6\mathbf{e}_2$ reads off immediately.
+
+---
+
+## 16.2 Orthogonal, normalised, basis — three separate ideas
+
+| Idea | Meaning |
+|---|---|
+| **Orthogonal** | $\langle\mathbf{b}_i, \mathbf{b}_j\rangle = 0$ for $i \ne j$ |
+| **Normalised (unit length)** | $\lVert\mathbf{b}_i\rVert = 1$ for each $i$ |
+| **Basis** | Independent set that **spans** the whole space |
+
+**Orthonormal basis (ONB):** all three at once.
+
+**Extra beginner explanation — compare in $\mathbb{R}^2$:**
+
+| Set | Orthogonal? | Each length $1$? | Basis of plane? |
+|---|---|---|---|
+| $\{\mathbf{e}_1, \mathbf{e}_2\}$ | Yes | Yes | Yes → **ONB** |
+| $\{(2,0), (0,3)\}$ | Yes | No (lengths $2$, $3$) | Yes |
+| $\{(1,0), (1,1)\}$ | No | No | Yes |
+
+![Comparison of orthonormal, orthogonal-only, and non-orthogonal bases](images/vec-orthogonal-basis-comparison.svg)
+
+**Packed form (optional, after the two-vector case):** $\langle\mathbf{e}_i, \mathbf{e}_j\rangle = \delta_{ij}$ where $\delta_{ij} = 1$ if $i=j$ and $0$ if $i\ne j$ (**Kronecker delta** — “pick out matching indices only”).
+
+---
+
+## 16.3 Deriving the factor $1/\sqrt2$ in $\mathbf{h}_\pm$
+
+**Unnormalised** $(1,1)^T$ has length
+
+$$
+\lVert(1,1)\rVert = \sqrt{\lvert 1\rvert^2 + \lvert 1\rvert^2} = \sqrt{2}.
+$$
+
+To make length $1$, divide **every entry** by $\sqrt2$:
+
+$$
+\mathbf{h}_+ = \frac{1}{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix}.
+$$
+
+Similarly $\mathbf{h}_- = \tfrac{1}{\sqrt2}(1, -1)^T$. That is why the lecture keeps $1/\sqrt2$ — **normalising** $(1,\pm 1)$ to unit vectors.
+
+---
+
+## 16.4 Three standard ONBs of $\mathbb{C}^2$
+
+| Name | Vectors (columns) |
+|---|---|
+| **Standard** | $\mathbf{e}_1 = (1, 0)^T$, $\mathbf{e}_2 = (0, 1)^T$ |
 | **Hadamard** | $\mathbf{h}_\pm = \tfrac{1}{\sqrt2}(1, \pm1)^T$ |
-| **Circular** | $\mathbf{c}_\pm = \tfrac{1}{\sqrt2}(1, \pm i)^T$ (needs complex numbers!) |
+| **Circular** | $\mathbf{c}_\pm = \tfrac{1}{\sqrt2}(1, \pm i)^T$ |
 
-**Check that each is orthonormal.**
+> **Coordinates vs basis vectors (three ONBs of $\mathbb{C}^2$)**
+>
+> | Role | Standard | Hadamard | Circular |
+> |---|---|---|---|
+> | **Basis vectors** (bold) | $\mathbf{e}_1$, $\mathbf{e}_2$ | $\mathbf{h}_+$, $\mathbf{h}_-$ | $\mathbf{c}_+$, $\mathbf{c}_-$ |
+> | **Coordinates** (scalars) | $\alpha$, $\beta$ | $a_+$, $a_-$ | $r_+$, $r_-$ |
+> | **Expansion** | $\mathbf{v} = \alpha\mathbf{e}_1 + \beta\mathbf{e}_2$ | $\mathbf{v} = a_+\mathbf{h}_+ + a_-\mathbf{h}_-$ | $\mathbf{v} = r_+\mathbf{c}_+ + r_-\mathbf{c}_-$ |
+> | **Read off via ONB** | $\alpha = \langle\mathbf{e}_1,\mathbf{v}\rangle$, … | $a_+ = \langle\mathbf{h}_+,\mathbf{v}\rangle$, $a_- = \langle\mathbf{h}_-,\mathbf{v}\rangle$ | $r_+ = \langle\mathbf{c}_+,\mathbf{v}\rangle$, $r_- = \langle\mathbf{c}_-,\mathbf{v}\rangle$ |
 
-- *Standard:* clearly perpendicular and of length 1.
-- *Hadamard:* $\lVert\mathbf{h}_+\rVert^2 = \tfrac12(1 + 1) = 1$, same for $\mathbf{h}_-$. And $\langle\mathbf{h}_+, \mathbf{h}_-\rangle = \tfrac12(1\cdot1 + 1\cdot(-1)) = 0$.
-- *Circular:* $\lVert\mathbf{c}_+\rVert^2 = \tfrac12\left(\lvert1\rvert^2 + \lvert i\rvert^2\right) = \tfrac12(1 + 1) = 1$, and likewise for $\mathbf{c}_-$. Now the inner product, **remembering the conjugate on the first vector**:
+**Circular orthogonality — expanded walkthrough**
 
-$$
-\langle\mathbf{c}_+, \mathbf{c}_-\rangle = \tfrac12\left(\overline{1}\cdot1 + \overline{i}\cdot(-i)\right) = \tfrac12\left(1 + (-i)(-i)\right) = \tfrac12\left(1 + i^2\right) = \tfrac12(1 - 1) = 0
-$$
-
-It is also stressed: **for the Hadamard basis you can see in the picture that the two vectors are perpendicular. For the circular basis you cannot**, because the vectors live in $\mathbb{C}^2$ and cannot be drawn. You have to do the calculation.
-
-## 15.4 The big payoff: coordinates are just inner products
-
-Let $\{\mathbf{e}_1, \dots, \mathbf{e}_n\}$ be **any** orthonormal basis. Suppose
+We want to check $\mathbf{c}_+ \perp \mathbf{c}_-$ using $\langle\mathbf{c}_+, \mathbf{c}_-\rangle = 0$. Write the two columns explicitly (each already includes the factor $1/\sqrt2$):
 
 $$
-\mathbf{v} = \alpha_1\mathbf{e}_1 + \alpha_2\mathbf{e}_2 + \cdots + \alpha_n\mathbf{e}_n
+\mathbf{c}_+ = \frac{1}{\sqrt2}\begin{pmatrix}1\\ i\end{pmatrix},
+\qquad
+\mathbf{c}_- = \frac{1}{\sqrt2}\begin{pmatrix}1\\ -i\end{pmatrix}.
 $$
 
-We want to find $\alpha_1, \dots, \alpha_n$. Take the inner product of **both sides with $\mathbf{e}_1$** (put $\mathbf{e}_1$ in the first slot):
+**Step 1 — recall the inner product rule (section 12).** For $\mathbf{u} = (u_1, u_2)^T$ and $\mathbf{v} = (v_1, v_2)^T$,
 
 $$
-\langle\mathbf{e}_1, \mathbf{v}\rangle = \alpha_1\langle\mathbf{e}_1, \mathbf{e}_1\rangle + \alpha_2\langle\mathbf{e}_1, \mathbf{e}_2\rangle + \cdots + \alpha_n\langle\mathbf{e}_1, \mathbf{e}_n\rangle
+\langle\mathbf{u}, \mathbf{v}\rangle = \overline{u_1}\,v_1 + \overline{u_2}\,v_2.
 $$
 
-(The $\alpha_i$ come out of the **second** slot as they are, so they are not conjugated.) Now use orthonormality: $\langle\mathbf{e}_1, \mathbf{e}_1\rangle = 1$, and all the others are $0$. Only one term survives:
+**Conjugate only the first vector’s entries.** Here the first vector is $\mathbf{c}_+$, so we conjugate its components $1$ and $i$ before multiplying.
+
+**Step 2 — pull out the common scalar $1/\sqrt2$.** Each basis vector is $(\text{something})/\sqrt2$. When you multiply two such vectors in the inner product, the $\sqrt2$ factors combine:
 
 $$
-\langle\mathbf{e}_1, \mathbf{v}\rangle = \alpha_1
+\langle\mathbf{c}_+, \mathbf{c}_-\rangle
+= \left\langle \frac{1}{\sqrt2}\begin{pmatrix}1\\ i\end{pmatrix},\ \frac{1}{\sqrt2}\begin{pmatrix}1\\ -i\end{pmatrix} \right\rangle
+= \frac{1}{\sqrt2}\cdot\frac{1}{\sqrt2}\ \left\langle \begin{pmatrix}1\\ i\end{pmatrix},\ \begin{pmatrix}1\\ -i\end{pmatrix} \right\rangle
+= \frac12\ \left\langle \begin{pmatrix}1\\ i\end{pmatrix},\ \begin{pmatrix}1\\ -i\end{pmatrix} \right\rangle.
 $$
 
-The same works for each $j$: $\langle\mathbf{e}_j, \mathbf{v}\rangle = \sum_i\alpha_i\,\delta_{ji} = \alpha_j$. So
+That is why a factor **$\tfrac12$** appears in front — it is $(1/\sqrt2)^2$, not a separate trick.
+
+**Step 3 — first slot.** Top entry of the first vector is $1$, so $\overline{1} = 1$. Top entry of the second is $1$. Product: $\overline{1}\cdot 1 = 1$.
+
+**Step 4 — second slot.** Bottom entry of the first vector is $i$, so $\overline{i} = -i$. Bottom entry of the second is $-i$. Product:
 
 $$
-\boxed{\ \mathbf{v} = \sum_i\langle\mathbf{e}_i, \mathbf{v}\rangle\,\mathbf{e}_i\ }
+\overline{i}\cdot(-i) = (-i)\cdot(-i) = (-i)^2 = i^2 = -1.
 $$
 
-> **Conjugate on the first slot only.** The coordinate along $\mathbf{e}_j$ is $\langle\mathbf{e}_j, \mathbf{v}\rangle$, with the **basis vector first**. If you put them the other way round, you get the conjugate of the right answer.
+(You can also multiply as $(-i)(-i) = i^2$ directly once you know $\overline{i} = -i$.)
 
-**In words.** *"If you want to find the coordinates of $\mathbf{v}$ with respect to this basis, all you have to do is to take the dot product."* The coordinate along $\mathbf{e}_1$ is $\langle\mathbf{e}_1, \mathbf{v}\rangle$ (the perpendicular projection of $\mathbf{v}$ along $\mathbf{e}_1$), along $\mathbf{e}_2$ it is $\langle\mathbf{e}_2, \mathbf{v}\rangle$, and so on. **No equations to solve:** each coordinate is one inner product. That is why we like orthonormal bases so much.
-
-## 15.5 Worked example: rewriting a vector in the Hadamard basis (slide)
-
-Let
+**Step 5 — add the slots and finish.**
 
 $$
-\mathbf{v} = \frac35\mathbf{e}_1 + \frac{4i}{5}\mathbf{e}_2 = \begin{pmatrix}3/5\\ 4i/5\end{pmatrix}
+\langle\mathbf{c}_+, \mathbf{c}_-\rangle
+= \frac12\bigl(\overline{1}\cdot 1 + \overline{i}\cdot(-i)\bigr)
+= \frac12\bigl(1 + (-1)\bigr)
+= \frac12\cdot 0
+= 0.
 $$
 
-We want $\mathbf{v} = c_+\mathbf{h}_+ + c_-\mathbf{h}_-$. Since $\{\mathbf{h}_+, \mathbf{h}_-\}$ is orthonormal, take inner products:
+So $\mathbf{c}_+$ and $\mathbf{c}_-$ are **orthogonal**, as required for an ONB.
+
+**What each symbol meant:** $\mathbf{c}_\pm$ are **vectors**; $1$, $i$, $-i$ are **entries** (complex numbers); $\overline{\cdot}$ is **conjugate on the first vector only**; the result $0$ is a **scalar** saying the two directions are perpendicular in the inner-product sense.
+
+Hadamard can be pictured as perpendicular lines in the real plane; circular basis vectors live in $\mathbb{C}^2$ — here we rely on the algebra above rather than a 2D arrow picture.
+
+---
+
+## 16.5 How inner products extract coordinates (two vectors first)
+
+**Question:** If $\mathbf{w} = c_1\mathbf{b}_1 + c_2\mathbf{b}_2$ and $\{\mathbf{b}_1, \mathbf{b}_2\}$ is **orthonormal**, how do we find $c_1$?
+
+**Take $\langle\mathbf{b}_1, \cdot\rangle$ of both sides:**
 
 $$
-c_+ = \langle\mathbf{h}_+, \mathbf{v}\rangle = \frac{1}{\sqrt2}\left(1\cdot\frac35 + 1\cdot\frac{4i}{5}\right) = \frac{1}{\sqrt2}\left(\frac{3}{5} + \frac{4i}{5}\right) = \frac{3 + 4i}{5\sqrt2}
+\langle\mathbf{b}_1, \mathbf{w}\rangle
+= \langle\mathbf{b}_1, c_1\mathbf{b}_1 + c_2\mathbf{b}_2\rangle
+= c_1\langle\mathbf{b}_1, \mathbf{b}_1\rangle + c_2\langle\mathbf{b}_1, \mathbf{b}_2\rangle.
+$$
+
+Orthonormal: $\langle\mathbf{b}_1, \mathbf{b}_1\rangle = 1$, $\langle\mathbf{b}_1, \mathbf{b}_2\rangle = 0$. So
+
+$$
+\langle\mathbf{b}_1, \mathbf{w}\rangle = c_1\cdot 1 + c_2\cdot 0 = c_1.
+$$
+
+Similarly $c_2 = \langle\mathbf{b}_2, \mathbf{w}\rangle$.
+
+**Extra beginner explanation — scalar vs vector piece**
+
+- $c_1$ is a **number** (coordinate / coefficient).
+- $c_1\mathbf{b}_1$ is a **vector** (one piece of $\mathbf{w}$ along $\mathbf{b}_1$).
+
+Perpendicularity **kills** the unwanted coefficient; unit length **leaves** the wanted one unchanged.
+
+**$n$ dimensions (general formula, after the two-vector case):**
+
+$$
+\mathbf{v} = \sum_{i=1}^{n} \langle\mathbf{e}_i, \mathbf{v}\rangle\,\mathbf{e}_i,
+\qquad \alpha_j = \langle\mathbf{e}_j, \mathbf{v}\rangle.
+$$
+
+> **Conjugate on the first slot only.** $\langle\mathbf{v}, \mathbf{e}_j\rangle$ is the conjugate of the coordinate — not the coordinate.
+
+---
+
+## 16.6 Worked example: $\mathbf{v} = (3/5, 4i/5)^T$ in the Hadamard basis
+
+### What are we trying to do?
+
+**One vector, two recipes.** $\mathbf{v}$ is a single object in $\mathbb{C}^2$. You can describe it with different **coordinates** depending on which **basis** you use:
+
+| Basis | Basis vectors | Question |
+|---|---|---|
+| **Standard** $\mathcal{E} = \{\mathbf{e}_1, \mathbf{e}_2\}$ | $(1,0)^T$, $(0,1)^T$ | “How much $\mathbf{e}_1$ and how much $\mathbf{e}_2$?” |
+| **Hadamard** $\mathcal{H} = \{\mathbf{h}_+, \mathbf{h}_-\}$ | $\mathbf{h}_\pm = \tfrac{1}{\sqrt2}(1,\pm1)^T$ | “How much $\mathbf{h}_+$ and how much $\mathbf{h}_-$?” |
+
+The **lecture already gives** the standard recipe:
+
+$$
+\mathbf{v} = \frac35\mathbf{e}_1 + \frac{4i}{5}\mathbf{e}_2
+\quad\Leftrightarrow\quad
+[\mathbf{v}]_{\mathcal{E}} = \begin{pmatrix}3/5 \\ 4i/5\end{pmatrix}.
+$$
+
+The column $(3/5,\,4i/5)^T$ is **not** “the vector” by itself — it is $\mathbf{v}$ written in the **standard** basis.
+
+**Goal of this section:** find the **Hadamard coordinates** $a_+$ and $a_-$ (scalars) such that
+
+$$
+\mathbf{v} = a_+\mathbf{h}_+ + a_-\mathbf{h}_-,
+\qquad
+[\mathbf{v}]_{\mathcal{H}} = \begin{pmatrix}a_+ \\ a_-\end{pmatrix}.
+$$
+
+We are **not** changing $\mathbf{v}$. We are **not** solving a $2\times 2$ linear system by hand (section 16.1 style). Because $\{\mathbf{h}_+, \mathbf{h}_-\}$ is an **orthonormal basis**, section 16.5 says:
+
+$$
+a_+ = \langle\mathbf{h}_+, \mathbf{v}\rangle,
+\qquad
+a_- = \langle\mathbf{h}_-, \mathbf{v}\rangle.
+$$
+
+Each inner product is **one number** — the “how much” of that Hadamard direction.
+
+**Why this vector?** $\lVert\mathbf{v}\rVert^2 = \lvert 3/5\rvert^2 + \lvert 4i/5\rvert^2 = 9/25 + 16/25 = 1$, so it is a **unit** vector (useful later for Parseval and quantum examples).
+
+![Same unit vector, coordinates in standard vs Hadamard ONB](images/vec-onb-coordinates.svg)
+
+*Figure (real cartoon):* the arrow is drawn as $\mathbf{v} = (3/5,\,4/5)$ in $\mathbb{R}^2$ so it can be plotted. **This section’s algebra** uses the lecture column $(3/5,\,4i/5)^T$ — same standard coordinate $3/5$ on $\mathbf{e}_1$, but a **complex** coefficient on $\mathbf{e}_2$. Inner products and $a_\pm$ are unchanged in form; only the second entry is $4i/5$ instead of $4/5$.
+
+---
+
+### Step A — compute $a_+ = \langle\mathbf{h}_+, \mathbf{v}\rangle$
+
+**What we are computing.** $a_+$ is the **Hadamard coordinate**: the scalar in
+
+$$
+\mathbf{v} = a_+\mathbf{h}_+ + (\text{other pieces}).
+$$
+
+Section 16.5 says: because $\mathbf{h}_+$ is part of an ONB, $a_+ = \langle\mathbf{h}_+, \mathbf{v}\rangle$ — one inner product, no solving equations.
+
+**Step A.1 — write both columns.**
+
+$$
+\mathbf{h}_+ = \frac{1}{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix}
+= \begin{pmatrix}1/\sqrt2\\ 1/\sqrt2\end{pmatrix},
+\qquad
+\mathbf{v} = \begin{pmatrix}3/5\\ 4i/5\end{pmatrix}.
+$$
+
+$\mathbf{h}_+$ is **first** in $\langle\mathbf{h}_+, \mathbf{v}\rangle$; $\mathbf{v}$ is **second**.
+
+**Step A.2 — inner product rule (two slots).** For $\mathbf{u} = (u_1, u_2)^T$ and $\mathbf{w} = (w_1, w_2)^T$,
+
+$$
+\langle\mathbf{u}, \mathbf{w}\rangle = \overline{u_1}\,w_1 + \overline{u_2}\,w_2.
+$$
+
+Here $\mathbf{u} = \mathbf{h}_+$ and $\mathbf{w} = \mathbf{v}$, so $u_1 = 1/\sqrt2$, $u_2 = 1/\sqrt2$, $w_1 = 3/5$, $w_2 = 4i/5$.
+
+| Slot | Entry of $\mathbf{h}_+$ (first) | Entry of $\mathbf{v}$ (second) | Conjugate of first | Product |
+|---|---|---|---|---|
+| 1 (top) | $1/\sqrt2$ | $3/5$ | $\overline{1/\sqrt2} = 1/\sqrt2$ | $(1/\sqrt2)(3/5)$ |
+| 2 (bottom) | $1/\sqrt2$ | $4i/5$ | $\overline{1/\sqrt2} = 1/\sqrt2$ | $(1/\sqrt2)(4i/5)$ |
+
+**Step A.3 — add the two products.**
+
+$$
+a_+ = \frac{1}{\sqrt2}\cdot\frac35 + \frac{1}{\sqrt2}\cdot\frac{4i}{5}.
+$$
+
+**Step A.4 — factor the common $1/\sqrt2$.** Step A.3 already has $1/\sqrt2$ in **both** terms, so factor it once:
+
+$$
+a_+ = \frac{1}{\sqrt2}\left(\frac35 + \frac{4i}{5}\right).
+$$
+
+For this course, **A.2–A.4 are enough** — use the actual entries of $\mathbf{h}_+$ ($1/\sqrt2$, $1/\sqrt2$) in the table. You do not need a second method that factors out $1/\sqrt2$ and uses $(1,1)^T$ separately.
+
+**Step A.5 — combine fractions inside the bracket.** Both terms have denominator $5$:
+
+$$
+\frac35 + \frac{4i}{5} = \frac{3 + 4i}{5}.
+$$
+
+**Step A.6 — final answer.**
+
+$$
+a_+ = \frac{1}{\sqrt2}\cdot\frac{3 + 4i}{5} = \frac{3 + 4i}{5\sqrt2}.
+$$
+
+**Read the result:** $a_+$ is one **complex number** (scalar), not a vector. It is “how much $\mathbf{h}_+$” you add when you rebuild $\mathbf{v}$ in the Hadamard basis.
+
+---
+
+### Step B — compute $a_- = \langle\mathbf{h}_-, \mathbf{v}\rangle$
+
+Now $\mathbf{h}_- = \tfrac{1}{\sqrt2}(1, -1)^T$. The inner product uses **$\mathbf{h}_-$ in the first slot**, so conjugate its entries: $\overline{1}=1$, $\overline{(-1)}=-1$.
+
+$$
+a_- = \frac{1}{\sqrt2}\left(\overline{1}\cdot\frac35 + \overline{(-1)}\cdot\frac{4i}{5}\right)
+= \frac{1}{\sqrt2}\left(\frac35 + (-1)\cdot\frac{4i}{5}\right)
+= \frac{1}{\sqrt2}\left(\frac35 - \frac{4i}{5}\right)
+= \frac{3 - 4i}{5\sqrt2}.
+$$
+
+(With $\mathbf{h}_+$, the second entry is $+1$, so you get $3/5 + 4i/5$ inside the bracket — that is why $a_+$ has a **plus** between $3$ and $4i$, and $a_-$ has a **minus**.)
+
+---
+
+### Step C — state the Hadamard recipe
+
+$$
+\mathbf{v} = a_+\mathbf{h}_+ + a_-\mathbf{h}_-
+= \frac{3 + 4i}{5\sqrt2}\,\mathbf{h}_+ + \frac{3 - 4i}{5\sqrt2}\,\mathbf{h}_-.
+$$
+
+**Misconception check:** $a_+\mathbf{h}_+$ is a **vector** (a piece of $\mathbf{v}$ along $\mathbf{h}_+$). $a_+$ alone is the **coordinate** (a number).
+
+---
+
+### Step D — why the “check” at the end?
+
+Adding $a_+\mathbf{h}_+ + a_-\mathbf{h}_-$ should **rebuild the same column** $(3/5,\,4i/5)^T$. The check expands each Hadamard vector into standard entries and adds:
+
+$$
+a_+\mathbf{h}_+ + a_-\mathbf{h}_-
+= \frac{a_+}{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix} + \frac{a_-}{\sqrt2}\begin{pmatrix}1\\-1\end{pmatrix}
+= \frac{1}{\sqrt2}\begin{pmatrix}a_+ + a_- \\ a_+ - a_- \end{pmatrix}.
+$$
+
+**First entry** (top component):
+
+$$
+\frac{1}{\sqrt2}(a_+ + a_-)
+= \frac{1}{\sqrt2}\left(\frac{3+4i}{5\sqrt2} + \frac{3-4i}{5\sqrt2}\right)
+= \frac{1}{\sqrt2}\cdot\frac{6}{5\sqrt2}
+= \frac{6}{10} = \frac35.
+$$
+
+The $4i$ and $-4i$ **cancel** in $a_+ + a_-$, leaving only $6/(5\sqrt2\cdot\sqrt2)$.
+
+**Second entry** (bottom component):
+
+$$
+\frac{1}{\sqrt2}(a_+ - a_-)
+= \frac{1}{\sqrt2}\left(\frac{3+4i}{5\sqrt2} - \frac{3-4i}{5\sqrt2}\right)
+= \frac{1}{\sqrt2}\cdot\frac{8i}{5\sqrt2}
+= \frac{8i}{10} = \frac{4i}{5}.
+$$
+
+Here the $3$’s cancel and the $4i$ terms **add**: $(4i - (-4i)) = 8i$.
+
+If both entries match the lecture column, the Hadamard coordinates are correct.
+
+---
+
+### One-line summary
+
+| Step | What you did |
+|---|---|
+| Given | $\mathbf{v}$ in standard form: $3/5$ on $\mathbf{e}_1$, $4i/5$ on $\mathbf{e}_2$ |
+| Wanted | Scalars $a_+$, $a_-$ so $\mathbf{v} = a_+\mathbf{h}_+ + a_-\mathbf{h}_-$ |
+| Method | $a_\pm = \langle\mathbf{h}_\pm, \mathbf{v}\rangle$ (ONB from §16.5) |
+| Check | Add $a_+\mathbf{h}_+ + a_-\mathbf{h}_-$ and recover $(3/5,\,4i/5)^T$ |
+
+---
+
+## 16.7 Length squared from ONB coordinates
+
+### What are we doing, and why?
+
+**Goal.** You already know $\lVert\mathbf{v}\rVert^2 = \langle\mathbf{v}, \mathbf{v}\rangle$ (section 13). In an **orthonormal basis** $\{\mathbf{e}_1, \mathbf{e}_2, \ldots\}$, section 16.5 writes
+
+$$
+\mathbf{v} = c_1\mathbf{e}_1 + c_2\mathbf{e}_2 + \cdots,
+\qquad c_j = \langle\mathbf{e}_j, \mathbf{v}\rangle.
+$$
+
+Here $c_1$, $c_2$ are **generic coordinate names** (scalars along $\mathbf{e}_1$, $\mathbf{e}_2$) — not the Hadamard $a_\pm$ or circular $r_\pm$ unless you have chosen that basis.
+
+**Question:** Can we express $\lVert\mathbf{v}\rVert^2$ using only the numbers $c_1, c_2, \ldots$?
+
+**Why bother:** If the answer is $\lvert c_1\rvert^2 + \lvert c_2\rvert^2 + \cdots$, then **length squared** is just “add squared sizes of the coordinates” — that is Parseval (section 16.8). The hard part is proving that formula; this section does the proof for **two** basis directions first.
+
+**Plan.** Substitute $\mathbf{v} = c_1\mathbf{e}_1 + c_2\mathbf{e}_2$ into $\langle\mathbf{v}, \mathbf{v}\rangle$ and expand carefully. Orthogonality ($\mathbf{e}_1 \perp \mathbf{e}_2$) will kill the “mixed” terms; unit length ($\lVert\mathbf{e}_j\rVert = 1$) turns the remaining terms into $\lvert c_j\rvert^2$.
+
+---
+
+### Step 1 — write length squared as an inner product
+
+$$
+\lVert\mathbf{v}\rVert^2 = \langle\mathbf{v}, \mathbf{v}\rangle.
+$$
+
+Set $\mathbf{A} = c_1\mathbf{e}_1$ and $\mathbf{B} = c_2\mathbf{e}_2$, so $\mathbf{v} = \mathbf{A} + \mathbf{B}$. Then
+
+$$
+\lVert\mathbf{v}\rVert^2 = \langle\mathbf{A} + \mathbf{B},\ \mathbf{A} + \mathbf{B}\rangle.
+$$
+
+Same idea as multiplying $(a + b)^2$ in algebra — but the inner product is **not** ordinary multiplication (order and conjugates matter).
+
+---
+
+### Step 2 — expand into four inner products (FOIL)
+
+The inner product is **linear in the second slot** and **conjugate-linear in the first** (section 12.8). So you can “multiply out” $(\mathbf{A}+\mathbf{B})$ against $(\mathbf{A}+\mathbf{B})$ and get **four** terms:
+
+| FOIL (algebra) | Inner product term |
+|---|---|
+| first × first | $\langle\mathbf{A}, \mathbf{A}\rangle$ |
+| first × second | $\langle\mathbf{A}, \mathbf{B}\rangle$ |
+| second × first | $\langle\mathbf{B}, \mathbf{A}\rangle$ |
+| second × second | $\langle\mathbf{B}, \mathbf{B}\rangle$ |
+
+Substitute $\mathbf{A} = c_1\mathbf{e}_1$, $\mathbf{B} = c_2\mathbf{e}_2$:
+
+$$
+\langle c_1\mathbf{e}_1 + c_2\mathbf{e}_2,\; c_1\mathbf{e}_1 + c_2\mathbf{e}_2\rangle
 $$
 
 $$
-c_- = \langle\mathbf{h}_-, \mathbf{v}\rangle = \frac{1}{\sqrt2}\left(1\cdot\frac35 - 1\cdot\frac{4i}{5}\right) = \frac{1}{\sqrt2}\left(\frac{3}{5} - \frac{4i}{5}\right) = \frac{3 - 4i}{5\sqrt2}
+= \langle c_1\mathbf{e}_1, c_1\mathbf{e}_1\rangle + \langle c_1\mathbf{e}_1, c_2\mathbf{e}_2\rangle + \langle c_2\mathbf{e}_2, c_1\mathbf{e}_1\rangle + \langle c_2\mathbf{e}_2, c_2\mathbf{e}_2\rangle.
 $$
 
-(The entries of $\mathbf{h}_\pm$ are real, so conjugating them changes nothing.) Therefore
+**Name the pieces:**
+
+| Term | Nickname | Typical fate (ONB) |
+|---|---|---|
+| $\langle c_1\mathbf{e}_1, c_1\mathbf{e}_1\rangle$ | **self** term for $\mathbf{e}_1$ | becomes $\lvert c_1\rvert^2$ |
+| $\langle c_2\mathbf{e}_2, c_2\mathbf{e}_2\rangle$ | **self** term for $\mathbf{e}_2$ | becomes $\lvert c_2\rvert^2$ |
+| $\langle c_1\mathbf{e}_1, c_2\mathbf{e}_2\rangle$ | **cross** term | $0$ (orthogonal basis) |
+| $\langle c_2\mathbf{e}_2, c_1\mathbf{e}_1\rangle$ | **cross** term | $0$ |
+
+---
+
+### Step 3 — simplify each self term (scalar in the **first** slot)
+
+**Top-left term:**
 
 $$
-\mathbf{v} = \frac{3 + 4i}{5\sqrt2}\,\mathbf{h}_+ + \frac{3 - 4i}{5\sqrt2}\,\mathbf{h}_-
+\langle c_1\mathbf{e}_1, c_1\mathbf{e}_1\rangle
+= \overline{c_1}\,\langle\mathbf{e}_1, c_1\mathbf{e}_1\rangle
+= \overline{c_1}\,c_1\,\langle\mathbf{e}_1, \mathbf{e}_1\rangle.
 $$
 
-**Check:** recombine and see if you get $\mathbf{v}$ back.
+- First step: pull $\overline{c_1}$ out of the **first** slot (section 12.7).
+- Second step: pull $c_1$ out of the **second** slot (no conjugate).
+
+**Orthonormal:** $\langle\mathbf{e}_1, \mathbf{e}_1\rangle = \lVert\mathbf{e}_1\rVert^2 = 1$. And $\overline{c_1}\,c_1 = \lvert c_1\rvert^2$. So this term is **$\lvert c_1\rvert^2$**.
+
+**Bottom-right term** (same pattern):
 
 $$
-\text{first entry:}\quad \frac{1}{\sqrt2}\left(\frac{3 + 4i}{5\sqrt2} + \frac{3 - 4i}{5\sqrt2}\right) = \frac{1}{\sqrt2}\cdot\frac{6}{5\sqrt2} = \frac{6}{10} = \frac35\ \checkmark
+\langle c_2\mathbf{e}_2, c_2\mathbf{e}_2\rangle = \lvert c_2\rvert^2.
+$$
+
+---
+
+### Step 4 — show cross terms are zero
+
+**Cross term 1:**
+
+$$
+\langle c_1\mathbf{e}_1, c_2\mathbf{e}_2\rangle
+= \overline{c_1}\,c_2\,\langle\mathbf{e}_1, \mathbf{e}_2\rangle.
+$$
+
+**Orthogonal basis:** $\langle\mathbf{e}_1, \mathbf{e}_2\rangle = 0$, so the whole term is **$0$** (even if $c_1, c_2$ are nonzero).
+
+**Cross term 2:**
+
+$$
+\langle c_2\mathbf{e}_2, c_1\mathbf{e}_1\rangle
+= \overline{c_2}\,c_1\,\langle\mathbf{e}_2, \mathbf{e}_1\rangle = 0.
+$$
+
+That is why orthogonality matters: mixed directions do not contribute to $\lVert\mathbf{v}\rVert^2$.
+
+---
+
+### Step 5 — add what is left
+
+$$
+\lVert\mathbf{v}\rVert^2
+= \lvert c_1\rvert^2 + 0 + 0 + \lvert c_2\rvert^2
+= \lvert c_1\rvert^2 + \lvert c_2\rvert^2.
+$$
+
+In $n$ dimensions the same expansion gives a sum of $n$ squares and $(n^2 - n)$ cross terms; every cross term contains $\langle\mathbf{e}_i, \mathbf{e}_j\rangle = 0$ for $i \ne j$.
+
+**Link to coordinates:** when $\{\mathbf{e}_j\}$ is the ONB you are using, $c_j = \langle\mathbf{e}_j, \mathbf{v}\rangle$, so
+
+$$
+\lVert\mathbf{v}\rVert^2 = \sum_j \lvert c_j\rvert^2 = \sum_j \lvert\langle\mathbf{e}_j, \mathbf{v}\rangle\rvert^2.
+$$
+
+**Misconception check:** $\lvert c_1\rvert^2$ uses the **modulus** of a possibly complex coordinate. For real $c_1 = 3$, $\lvert c_1\rvert^2 = 9$ — same as $3^2$ in the $(3,4)$ Pythagoras example in section 16.8.
+
+---
+
+## 16.8 Parseval’s identity
+
+**Start real:** $\mathbf{w} = (3,4) = 3\mathbf{e}_1 + 4\mathbf{e}_2$.
+
+- $\lVert\mathbf{w}\rVert = \sqrt{3^2 + 4^2} = 5$.
+- $\lVert\mathbf{w}\rVert^2 = 25 = 3^2 + 4^2$.
+
+**Meaning (geometry):** The **vector** $\mathbf{w}$ is the hypotenuse; **coordinates** $3$ and $4$ are leg lengths along perpendicular axes; **squared lengths of coordinates** add to **squared length of $\mathbf{w}$** — not “projections add to length.”
+
+**Plain language — what Parseval is saying**
+
+Imagine walking on a city grid. From the origin you go **$3$ blocks east** and **$4$ blocks north** (perpendicular directions). The straight-line distance to your corner is **$5$** blocks — not $3+4=7$. Pythagoras is about **squares**: $3^2 + 4^2 = 5^2$.
+
+![Parseval city grid: 3 east and 4 north, walking 7 vs straight line 5, standard and Hadamard coordinates same length squared](images/vec-parseval-city-grid.jpg)
+
+- **$\mathbf{w}$** is the trip as one arrow (the diagonal).
+- **$3$ and $4$** are how far you went along each **axis** (coordinates in the standard basis).
+- **Wrong picture:** “add the legs to get the diagonal” ($3+4=7$).
+- **Right picture:** “add the **squares** of the legs to get the square of the diagonal” ($9+16=25$).
+
+**General formula in everyday terms.** Pick a “measuring frame” made of **perpendicular unit directions** $\mathbf{e}_1, \mathbf{e}_2, \ldots$ (an ONB). For any arrow $\mathbf{v}$:
+
+1. For each direction $\mathbf{e}_j$, ask: **how much of $\mathbf{v}$ points that way?** That number is the coordinate $\langle\mathbf{e}_j, \mathbf{v}\rangle$ (one inner product).
+2. **Square** that amount (use $\lvert\cdot\rvert^2$ if it is complex).
+3. **Add** all those squares.
+
+Parseval says: that sum **always equals** the squared length of $\mathbf{v}$ itself, $\lVert\mathbf{v}\rVert^2$.
+
+You can change the frame (standard vs Hadamard vs circular): the **list of coordinates changes**, but the **sum of their squares** stays the same — like describing the same diagonal with different “east/north” vs “northeast/northwest” numbers; $3^2+4^2$ and $a_+^2+a_-^2$ both give $25$ for $(3,4)$.
+
+**Second form in everyday terms** (two arrows $\mathbf{u}$ and $\mathbf{v}$). The inner product $\langle\mathbf{u}, \mathbf{v}\rangle$ measures how much two arrows **align** (including phase for complex vectors). Parseval’s second line says: you can compute that alignment by **the same coordinate list**:
+
+- Split $\mathbf{u}$ into pieces along each $\mathbf{e}_j$; split $\mathbf{v}$ the same way.
+- For each axis $j$, take **$\mathbf{u}$’s piece** (conjugated) times **$\mathbf{v}$’s piece** on that axis.
+- Add over all axes.
+
+When $\mathbf{u}$ and $\mathbf{v}$ are the **same** arrow, “alignment with yourself” is just your squared length, and this second formula reduces to the first (sum of squared coordinates).
+
+**General (ONB $\{\mathbf{e}_j\}$):**
+
+$$
+\lVert\mathbf{v}\rVert^2 = \sum_{j} \lvert\langle\mathbf{e}_j, \mathbf{v}\rangle\rvert^2.
+$$
+
+**Second form** (two different vectors):
+
+$$
+\langle\mathbf{u}, \mathbf{v}\rangle = \sum_{j} \overline{\langle\mathbf{e}_j, \mathbf{u}\rangle}\,\langle\mathbf{e}_j, \mathbf{v}\rangle.
+$$
+
+**Misconception check:** If $\mathbf{u} = \mathbf{v}$, the second formula becomes $\lVert\mathbf{v}\rVert^2 = \sum_j \lvert\langle\mathbf{e}_j, \mathbf{v}\rangle\rvert^2$ directly — the same as Parseval. You do **not** need a separate step of “taking $\lvert\cdot\rvert^2$ on both sides” of the two-vector formula.
+
+![Parseval identity for v equals (3,4): coordinates c1 and c2, length 5, norm squared equals sum of squared coordinates](images/vec-parseval-projections.jpg)
+
+*Figure:* $\mathbf{v} = (3,4)$ in the standard ONB; $c_1 = \langle\mathbf{e}_1,\mathbf{v}\rangle = 3$, $c_2 = 4$; $\lVert\mathbf{v}\rVert^2 = 3^2 + 4^2 = 25$. Cross terms in the expansion vanish because $\mathbf{e}_1 \perp \mathbf{e}_2$ (section 16.7).
+
+**Hadamard coordinates of $\mathbf{w}=(3,4)$ (derived, not quoted):**
+
+$$
+a_+ = \langle\mathbf{h}_+, \mathbf{w}\rangle = \frac{1}{\sqrt2}(3 + 4) = \frac{7}{\sqrt2}, \qquad
+a_- = \frac{1}{\sqrt2}(3 - 4) = -\frac{1}{\sqrt2}.
 $$
 
 $$
-\text{second entry:}\quad \frac{1}{\sqrt2}\left(\frac{3 + 4i}{5\sqrt2} - \frac{3 - 4i}{5\sqrt2}\right) = \frac{1}{\sqrt2}\cdot\frac{8i}{5\sqrt2} = \frac{8i}{10} = \frac{4i}{5}\ \checkmark
+\lvert a_+\rvert^2 + \lvert a_-\rvert^2 = \frac{49}{2} + \frac{1}{2} = 25 = \lVert\mathbf{w}\rVert^2.
 $$
 
-The picture below is a **real cartoon** of the same idea with $\mathbf{v} = (3/5, 4/5)$. Left: coordinates in the standard basis are the projections $0.6$ and $0.8$. Right: coordinates in the Hadamard basis are the projections $\approx 0.99$ and $\approx -0.14$:
-
-![The same unit vector v shown with its coordinates in the standard basis (0.6, 0.8) and in the Hadamard basis (0.99, minus 0.14); the sum of squared coordinates is 1 in both](images/vec-onb-coordinates.svg)
-
-## 15.6 The length of a vector from its coordinates
-
-The last result. Suppose $\mathbf{v} = v_1\mathbf{e}_1 + \cdots + v_n\mathbf{e}_n$ in an orthonormal basis. What is $\lVert\mathbf{v}\rVert^2 = \langle\mathbf{v}, \mathbf{v}\rangle$?
-
-Expand $\langle v_1\mathbf{e}_1 + \cdots,\ v_1\mathbf{e}_1 + \cdots\rangle$. All the cross terms $\langle\mathbf{e}_i, \mathbf{e}_j\rangle$ with $i \ne j$ are $0$ (perpendicular), and each $\langle\mathbf{e}_i, \mathbf{e}_i\rangle = 1$. What survives is
+**Lecture complex example:** $\mathbf{v} = (3/5, 4i/5)^T$ — standard: $\lvert 3/5\rvert^2 + \lvert 4i/5\rvert^2 = 9/25 + 16/25 = 1$. Hadamard coordinates from section 16.6: $a_+ = (3+4i)/(5\sqrt2)$, $a_- = (3-4i)/(5\sqrt2)$. Then
 
 $$
-\lVert\mathbf{v}\rVert^2 = \overline{v_1}v_1 + \cdots + \overline{v_n}v_n = \lvert v_1\rvert^2 + \cdots + \lvert v_n\rvert^2
+\lvert a_+\rvert^2 = \frac{\lvert 3+4i\rvert^2}{50} = \frac{25}{50} = \frac12,\qquad
+\lvert a_-\rvert^2 = \frac{\lvert 3-4i\rvert^2}{50} = \frac12,\qquad
+\lvert a_+\rvert^2 + \lvert a_-\rvert^2 = 1 = \lVert\mathbf{v}\rVert^2.
 $$
 
-and each $v_i = \langle\mathbf{e}_i, \mathbf{v}\rangle$. In words: **the squared length is the sum of the squared sizes of the coordinates in any orthonormal basis.** The geometric statement: if we are given two different orthonormal bases and the coordinates of $\mathbf{v}$ along each, the length is $\lvert v_1\rvert^2 + \lvert v_2\rvert^2$ in both. It does not depend on which orthonormal basis you use.
+**Why orthonormality matters — counterexample:** Basis $\mathbf{b}_1=(2,0)$, $\mathbf{b}_2=(0,2)$ (orthogonal, not unit). Vector $(2,2) = 1\cdot\mathbf{b}_1 + 1\cdot\mathbf{b}_2$ has coordinates $(1,1)$, but
 
-**Check with the example.** In the standard basis: $\left\lvert\tfrac35\right\rvert^2 + \left\lvert\tfrac{4i}{5}\right\rvert^2 = \tfrac{9}{25} + \tfrac{16}{25} = 1$. In the Hadamard basis: $\lvert c_+\rvert^2 + \lvert c_-\rvert^2 = \tfrac{\lvert3 + 4i\rvert^2}{50} + \tfrac{\lvert3 - 4i\rvert^2}{50} = \tfrac{25}{50} + \tfrac{25}{50} = 1$. Same answer. (As said in the lecture: *"this did go a bit fast; when you do the exercises, you will understand."*)
+$$
+1^2 + 1^2 = 2 \ne 8 = \lVert(2,2)\rVert^2.
+$$
 
-## 15.7 Practice: inner product problems (slide "Problems")
+Parseval’s sum of squares **fails** without unit-length basis vectors.
+
+![Why cross terms disappear: ONB for w equals (3,4), expansion, Parseval, three bases same length squared 25](images/vec-parseval-cross-terms.jpg)
+
+---
+
+## 16.9 Optional preview — quantum states (added context)
+
+**Extra beginner explanation.** Not part of the orthogonality lecture proof chain; motivation only.
+
+Take $\boldsymbol\psi = \tfrac35\mathbf{e}_1 + \tfrac45\mathbf{e}_2$ (real coefficients first).
+
+$$
+\lVert\boldsymbol\psi\rVert^2 = \left(\frac35\right)^2 + \left(\frac45\right)^2 = \frac{9+16}{25} = 1.
+$$
+
+So $\lVert\boldsymbol\psi\rVert = 1$. **Rename** coefficients $\alpha = 3/5$, $\beta = 4/5$ when you move to $\mathbb{C}$.
+
+- A **normalised pure state** is represented by a **unit vector** in the state space ($\lVert\boldsymbol\psi\rVert = 1$) — not every vector has length $1$.
+- **Parseval** links $\lVert\boldsymbol\psi\rVert^2$ to $\sum_j \lvert\langle\mathbf{e}_j, \boldsymbol\psi\rangle\rvert^2$.
+- The **Born rule** (later) **interprets** $\lvert\langle\mathbf{e}_j, \boldsymbol\psi\rangle\rvert^2$ as probability for outcome $j$ in that ONB — Parseval alone does not prove that interpretation.
+- Individual probabilities can change when you change measurement basis; their **total** stays $1$ for a unit state.
+
+---
+
+## 16.10 Comparison table
+
+| Topic | Orthogonal | ONB | Parseval |
+|---|---|---|---|
+| Vectors satisfy | $\langle\mathbf{b}_i,\mathbf{b}_j\rangle=0$ for $i\ne j$ | Also $\lVert\mathbf{b}_i\rVert=1$ | Uses ONB |
+| Coordinates | Hard in general | $c_j = \langle\mathbf{e}_j,\mathbf{v}\rangle$ | — |
+| Length² | — | — | $\sum_j \lvert\text{(coord)}_j\rvert^2$ e.g. $\lvert a_+\rvert^2+\lvert a_-\rvert^2$ |
+
+---
+
+## 16.11 Practice (orthogonality, ONB, Parseval)
+
+1. **Real:** Show $(2,-1) \perp (1,2)$ by computing $\langle\cdot,\cdot\rangle$.
+2. **Real:** $\mathbf{w}=(3,4)$. Find $[\mathbf{w}]_{\mathcal{H}} = (a_+, a_-)^T$ in the Hadamard ONB; verify $\lvert a_+\rvert^2 + \lvert a_-\rvert^2 = 25$.
+3. **Real:** Why is $\{(1,0),(1,1)\}$ a basis but not an ONB?
+4. **Norm:** $\lVert(1, i)^T\rVert$ — show $\lVert\mathbf{v}\rVert^2 = 2$.
+5. **Complex:** $\langle(1,i)^T, (i,1)^T\rangle$ with conjugate on the first vector.
+
+**Solutions**
+
+1. $\overline{2}\cdot 1 + \overline{(-1)}\cdot 2 = 2 - 2 = 0$.
+2. $a_+ = 7/\sqrt2$, $a_- = -1/\sqrt2$; $\frac{49+1}{2}=25$.
+3. $\langle(1,0),(1,1)\rangle = 1 \ne 0$; not orthogonal. (It still spans $\mathbb{R}^2$.)
+4. $\lvert 1\rvert^2 + \lvert i\rvert^2 = 1+1=2$, so $\lVert\mathbf{v}\rVert=\sqrt2$.
+5. $\overline{1}\cdot i + \overline{i}\cdot 1 = i - i = 0$.
+
+---
+
+## 16.12 Inner product drill (lecture slide)
 
 Let $\mathbf{u} = \begin{pmatrix}1\\ i\end{pmatrix}$ and $\mathbf{v} = \begin{pmatrix}2\\ 1 - i\end{pmatrix}$.
 
@@ -1670,38 +2431,37 @@ Let $\mathbf{u} = \begin{pmatrix}1\\ i\end{pmatrix}$ and $\mathbf{v} = \begin{pm
 3. Normalise $\mathbf{u}$ and $\mathbf{v}$.
 4. Check Cauchy–Schwarz.
 
-*Remember: conjugate the first vector.*
+**Solutions**
 
-**Solutions (from the slides, with extra steps).**
-
-1. $\langle\mathbf{u}, \mathbf{v}\rangle = \overline{1}\cdot2 + \overline{i}\,(1 - i) = 2 + (-i)(1 - i) = 2 - i + i^2 = 2 - i - 1 = \mathbf{1 - i}$. Then $\langle\mathbf{v}, \mathbf{u}\rangle = \overline{\langle\mathbf{u}, \mathbf{v}\rangle} = \mathbf{1 + i}$ (conjugate symmetry). *Direct check:* $\overline{2}\cdot1 + \overline{(1 - i)}\cdot i = 2 + (1 + i)i = 2 + i + i^2 = 1 + i$. ✓
-2. $\lVert\mathbf{u}\rVert = \sqrt{1 + \lvert i\rvert^2} = \sqrt2$ and $\lVert\mathbf{v}\rVert = \sqrt{4 + \lvert1 - i\rvert^2} = \sqrt{4 + 2} = \sqrt6$.
-3. $\hat{\mathbf{u}} = \dfrac{1}{\sqrt2}\begin{pmatrix}1\\ i\end{pmatrix}$ and $\hat{\mathbf{v}} = \dfrac{1}{\sqrt6}\begin{pmatrix}2\\ 1 - i\end{pmatrix}$.
-4. $\lvert\langle\mathbf{u}, \mathbf{v}\rangle\rvert = \lvert1 - i\rvert = \sqrt2$, and $\lVert\mathbf{u}\rVert\lVert\mathbf{v}\rVert = \sqrt2\cdot\sqrt6 = \sqrt{12}$. Since $\sqrt2 \le \sqrt{12}$, Cauchy–Schwarz holds. ✓
+1. $\langle\mathbf{u}, \mathbf{v}\rangle = 1 - i$; $\langle\mathbf{v}, \mathbf{u}\rangle = 1 + i$.
+2. $\lVert\mathbf{u}\rVert = \sqrt2$, $\lVert\mathbf{v}\rVert = \sqrt6$.
+3. $\hat{\mathbf{u}} = \mathbf{u}/\sqrt2$, $\hat{\mathbf{v}} = \mathbf{v}/\sqrt6$.
+4. $\lvert\langle\mathbf{u},\mathbf{v}\rangle\rvert = \sqrt2 \le \sqrt{12}$.
 
 ---
 
-# 16. Review and what comes next
+# 17. Review and what comes next
 
-## 16.1 What did we really do? (recap)
+## 17.1 What did we really do? (recap)
 
 1. We introduced the **conjugate** and used it to define the **dot (inner) product**. We defined it that way because we want $\mathbf{v}\cdot\mathbf{v}$ to be a real number equal to the length squared. That is why the conjugate was needed.
 2. We used the inner product to define **perpendicular** (orthogonal): two vectors are perpendicular if their inner product is $0$. *(Up to here, everything is easy.)*
 3. When you **change the basis, the coordinates of a vector change.** You are writing the same vector as a combination of different vectors.
-4. If the basis is **orthonormal** (perpendicular and of length 1), finding the coordinates is **very easy**: each coordinate is one inner product.
+4. If the basis is **orthonormal** (perpendicular and of length 1), finding the coordinates is **very easy**: each coordinate is one inner product (section 16.5).
+5. **Parseval's identity** (section 16.8): in an ONB, $\lVert\mathbf{v}\rVert^2 = \sum_j \lvert\langle\mathbf{e}_j, \mathbf{v}\rangle\rvert^2$ — squared length equals the sum of squared coordinate magnitudes (not “vector pieces add to length”); for a **unit** qubit state in the standard basis, $\lvert\alpha\rvert^2 + \lvert\beta\rvert^2 = 1$.
 
 *If you got lost somewhere:* it probably means you are not yet comfortable with **linear independence or basis**. Go back and try the slide problems.
 
-## 16.2 Slide summary: vector spaces over $\mathbb{C}$
+## 17.2 Slide summary: vector spaces over $\mathbb{C}$
 
 - $\mathbb{C}^n$: columns of complex numbers; add entrywise, scale by a complex $\alpha$.
 - **Span** = all linear combinations = all superpositions.
 - **Independence and dimension depend on the scalars** ($\mathbb{C}$ versus $\mathbb{R}$).
 - **Basis $\Rightarrow$ unique coordinates.** Different bases give different coordinates, but the vector is the same.
 - **Qubits:** $\mathbf{e}_1, \mathbf{e}_2$ are the standard basis of $\mathbb{C}^2$; $n$ qubits live in $\mathbb{C}^{2^n}$.
-- **Missing so far:** *we can add and scale, but we cannot yet measure lengths or angles.* The inner product (sections 10 to 15) filled that gap.
+- **Missing so far:** *we can add and scale, but we cannot yet measure lengths or angles.* The inner product (sections 11 to 16) filled that gap.
 
-## 16.3 What we should do next
+## 17.3 What we should do next
 
 - Do the slide problems. *"You will feel like you understand the concepts but are not able to connect them. That is fine. The moment you do more examples, it will click."* (Not being able to connect them means not yet seeing why they matter in quantum computing. That comes with the applications.)
 - At the very least, know **how to define the inner product of two vectors**, and **what it means to define the length of a vector**.
@@ -1711,7 +2471,7 @@ Let $\mathbf{u} = \begin{pmatrix}1\\ i\end{pmatrix}$ and $\mathbf{v} = \begin{pm
 
 ---
 
-# 17. One-page cheat sheet
+# 18. One-page cheat sheet
 
 **Vectors**
 
@@ -1749,8 +2509,8 @@ Let $\mathbf{u} = \begin{pmatrix}1\\ i\end{pmatrix}$ and $\mathbf{v} = \begin{pm
 - ONB: $\langle\mathbf{e}_i, \mathbf{e}_j\rangle = \delta_{ij}$.
 - Three ONBs of $\mathbb{C}^2$: standard $\mathbf{e}_{1,2}$; Hadamard $\mathbf{h}_\pm = \tfrac{1}{\sqrt2}(1, \pm1)^T$; circular $\mathbf{c}_\pm = \tfrac{1}{\sqrt2}(1, \pm i)^T$.
 - Coordinates: $\mathbf{v} = \sum_i\langle\mathbf{e}_i, \mathbf{v}\rangle\,\mathbf{e}_i$ (no equations to solve).
-- Length: $\lVert\mathbf{v}\rVert^2 = \sum_i\lvert\langle\mathbf{e}_i, \mathbf{v}\rangle\rvert^2$.
-- For $\mathbf{v} = (\alpha, \beta)^T$ in the Hadamard basis: $\left(\dfrac{\alpha + \beta}{\sqrt2},\ \dfrac{\alpha - \beta}{\sqrt2}\right)$.
+- **Parseval:** $\lVert\mathbf{v}\rVert^2 = \sum_i\lvert\langle\mathbf{e}_i, \mathbf{v}\rangle\rvert^2$; also $\langle\mathbf{u}, \mathbf{v}\rangle = \sum_i \overline{\langle\mathbf{e}_i, \mathbf{u}\rangle}\langle\mathbf{e}_i, \mathbf{v}\rangle$ (section 16.8). With $\mathbf{u}=\mathbf{v}$, the second line is the first.
+- Hadamard coordinates: $(a_+, a_-) = \left(\dfrac{\alpha + \beta}{\sqrt2},\ \dfrac{\alpha - \beta}{\sqrt2}\right)$ when $\mathbf{v} = (\alpha, \beta)^T$ in the standard basis.
 
 **Quantum links**
 
@@ -1761,7 +2521,7 @@ Let $\mathbf{u} = \begin{pmatrix}1\\ i\end{pmatrix}$ and $\mathbf{v} = \begin{pm
 
 ---
 
-# 18. Glossary
+# 19. Glossary
 
 | Term | Meaning |
 |---|---|
@@ -1785,12 +2545,16 @@ Let $\mathbf{u} = \begin{pmatrix}1\\ i\end{pmatrix}$ and $\mathbf{v} = \begin{pm
 | **Inner product** | $\langle\mathbf{u}, \mathbf{v}\rangle = \sum\overline{u_j}v_j$ |
 | **Norm** | length, $\sqrt{\langle\mathbf{v}, \mathbf{v}\rangle}$ |
 | **Unit vector** | a vector of length 1 |
-| **Normalising** | dividing a vector by its length |
+| **$\hat{\mathbf{v}}$ (v hat)** | the unit vector $\mathbf{v}/\lVert\mathbf{v}\rVert$; same direction as $\mathbf{v}$, length 1 |
+| **Normalising** | dividing a vector by its length to obtain $\hat{\mathbf{v}}$ |
 | **Orthogonal** | inner product is 0 |
 | **Orthonormal basis (ONB)** | a basis of unit vectors that are pairwise orthogonal |
+| **Parseval's identity** | in an ONB, $\lVert\mathbf{v}\rVert^2 = \sum_j \lvert\langle\mathbf{e}_j, \mathbf{v}\rangle\rvert^2$; ties squared length to squared coordinate magnitudes (section 16.8) |
 | **Cauchy–Schwarz inequality** | $\lvert\langle\mathbf{u}, \mathbf{v}\rangle\rvert \le \lVert\mathbf{u}\rVert\lVert\mathbf{v}\rVert$ |
 | **Triangle inequality** | $\lVert\mathbf{u} + \mathbf{v}\rVert \le \lVert\mathbf{u}\rVert + \lVert\mathbf{v}\rVert$ |
 | **Hadamard basis** | $\mathbf{h}_\pm = \tfrac{1}{\sqrt2}(1, \pm1)^T$ |
+| **Hadamard coordinates** | scalars $a_+$, $a_-$ with $\mathbf{v} = a_+\mathbf{h}_+ + a_-\mathbf{h}_-$ |
+| **Circular coordinates** | scalars $r_+$, $r_-$ with $\mathbf{v} = r_+\mathbf{c}_+ + r_-\mathbf{c}_-$ |
 | **Kronecker delta** | $\delta_{ij} = 1$ if $i = j$ and $0$ otherwise |
 
 ---
@@ -1810,9 +2574,9 @@ These are **not** from the lecture. Try them, then check.
 
 1. **No, dependent.** $(3, 6) = 3\,(1, 2)$.
 2. $\langle\mathbf{u}, \mathbf{v}\rangle = \overline{(1 + i)}\cdot i + \overline{1}\cdot2 = (1 - i)\,i + 2 = i - i^2 + 2 = i + 1 + 2 = \mathbf{3 + i}$.
-3. $\lVert\mathbf{v}\rVert = \sqrt{3^2 + \lvert4i\rvert^2} = \sqrt{9 + 16} = 5$, so $\hat{\mathbf{v}} = \left(\tfrac35,\ \tfrac{4i}{5}\right)^T$. (This is the vector from the worked example in section 15.5.)
+3. $\lVert\mathbf{v}\rVert = \sqrt{3^2 + \lvert4i\rvert^2} = \sqrt{9 + 16} = 5$, so $\hat{\mathbf{v}} = \left(\tfrac35,\ \tfrac{4i}{5}\right)^T$. (Same numbers as the lecture example in section 16.6.)
 4. **Yes.** $\overline{1}\cdot1 + \overline{1}\cdot(-1) = 1 - 1 = 0$.
-5. $\langle\mathbf{c}_+, \mathbf{e}_1\rangle = \tfrac{1}{\sqrt2}\left(\overline{1}\cdot1 + \overline{i}\cdot0\right) = \tfrac{1}{\sqrt2}$ and $\langle\mathbf{c}_-, \mathbf{e}_1\rangle = \tfrac{1}{\sqrt2}$. So $\mathbf{e}_1 = \tfrac{1}{\sqrt2}\mathbf{c}_+ + \tfrac{1}{\sqrt2}\mathbf{c}_-$. *Check:* $\tfrac{1}{\sqrt2}\cdot\tfrac{1}{\sqrt2}\left[(1, i) + (1, -i)\right] = \tfrac12(2, 0) = (1, 0)$. ✓
+5. Circular coordinates of $\mathbf{e}_1$: $r_+ = \langle\mathbf{c}_+, \mathbf{e}_1\rangle = \tfrac{1}{\sqrt2}\left(\overline{1}\cdot1 + \overline{i}\cdot0\right) = \tfrac{1}{\sqrt2}$ and $r_- = \langle\mathbf{c}_-, \mathbf{e}_1\rangle = \tfrac{1}{\sqrt2}$. So $\mathbf{e}_1 = r_+\mathbf{c}_+ + r_-\mathbf{c}_- = \tfrac{1}{\sqrt2}\mathbf{c}_+ + \tfrac{1}{\sqrt2}\mathbf{c}_-$. *Check:* $\tfrac{1}{\sqrt2}\cdot\tfrac{1}{\sqrt2}\left[(1, i) + (1, -i)\right] = \tfrac12(2, 0) = (1, 0)$. ✓
 6. **A basis but not orthogonal.** They are independent (neither is a multiple of the other), so in 2D they form a basis. But $(1, 0)\cdot(1, 1) = 1 \ne 0$, so they are not perpendicular. This is the point that not every basis need be orthogonal.
 
 ---
@@ -1837,7 +2601,7 @@ This is exactly the shape of $\mathbf{u}^\dagger\mathbf{v}$: the row is $\mathbf
 
 ## B.3 Cosine in a right-angled triangle
 
-For an angle $\theta$ in a right-angled triangle, $\cos\theta = \dfrac{\text{side next to the angle}}{\text{hypotenuse}}$. So the side next to the angle is (hypotenuse) $\times\cos\theta$. This is how the length $\lVert\mathbf{u}\rVert\cos\theta$ of the projection arises in section 10.2.
+For an angle $\theta$ in a right-angled triangle, $\cos\theta = \dfrac{\text{side next to the angle}}{\text{hypotenuse}}$. So the side next to the angle is (hypotenuse) $\times\cos\theta$. This is how the length $\lVert\mathbf{u}\rVert\cos\theta$ of the projection arises in section 11.2.
 
 ## B.4 Solving two equations in two unknowns
 
