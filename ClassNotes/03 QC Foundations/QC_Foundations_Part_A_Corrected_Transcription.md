@@ -1,0 +1,384 @@
+# QC Foundations [1/4] — Corrected Lecture Transcription
+
+**Lecturer:** Prof. Kolin Paul, Department of Computer Science and Engineering, IIT Delhi  
+**Date:** 24 October 2026  
+**Sources:** `01 QC Foundations Part A.txt` (lecture transcription) and `01 QC Foundations Part A.pdf` (corresponding slides).
+
+> **Editorial approach:** This is a lightly edited **transcription**, not rewritten study notes. Clear speech-to-text errors, spelling, punctuation, and slide-verifiable terminology have been corrected. Spoken repetitions, informal analogies, and classroom discussion are retained. Mathematical claims that may be imprecise in the spoken lecture have not been silently rewritten into new explanations. The slide deck includes content after the supplied recording ends; that content is not presented as spoken dialogue here. Where audio wording is unclear and cannot be established from the slides, verify against the original recording.
+
+## Opening and connection to the previous lecture
+
+:
+The previous week you did some maths and as we all know quantum computing has a lot of maths, but the maths is actually simple. It's just that you have to be accustomed to thinking, but there's no fancy integration,  no hard differential equations, etc. So we only do linear algebra, a little bit of complex and the linear algebra is in the complex field and that's what Professor Amit had discussed last week. Today what I intend to do is actually bring in the physical meaning to the maths that you did because that's what gives us the intuition for why quantum computing works. And remember quantum computing,  the way we teach it, we approach it is more computer science, correct? But computer science requires both maths.
+
+Traditionally it has required only maths. Today with QC you actually have to understand a little bit about physics because that's what it tries and exploits. It is not esoteric as or completely abstract. There is some physical reality and that's what I want to actually try and discuss today. The promise today is that I will try and not introduce maths,  any new maths or any In fact, just I have just one or two very, simple derivations. I'll try to keep it as much as physics and intuition as possible.
+
+And tomorrow again, Amit will do a little bit of maths because I need that maths to be able to do the entire of the two lectures today in a more formal setting next week. You will have time to absorb what I've told you today and we'll also have done the required amount of maths so that we can actually do things more formally. The key thing that you must keep in mind is that the maths involved is not difficult. The maths is only linear algebra but only thing is that the  things that we work with are complex numbers and today we will see an example of why the even though that we use complex numbers we do not actually go into complex analysis it is just simply a method of using a better notation. I was there in the class on twenty four on seventeenth. When one of us had asked the question that if if we are doing things in the real world at the end of the day, computation is real.
+
+Why are we working with complex things? Remember, complex numbers is just a way of representing something. So complex numbers are not complex. It is as real as a real number and it is as real as an integer is just a way of. Whenever we couldn't solve some equation, we brought in some other symbols to help us. And remember, complex numbers are something because most of you are engineering graduates and mostly from electrical and mechanical.
+
+Most of you are engineering or maths graduates and actually science graduates. You have encountered this complex numbers for a real quantity earlier,  particularly, for example, when you did impedance, capacitance was always ij omega c, correct?  inductance was j omega l correct.  complex numbers are always used in the context as a tool for helping us solve equations where we ran out of numbers correct. That's the reason why we went from integers to real numbers. Okay, so today so that's the plan for today. Okay, so just a notation, correct? Just to simplify writing complex numbers and matrices and things like that.
+
+What we try and do always is come up with symbols. The symbols help us actually write things compactly. So with Amit, what we learned was that you did something called vectors, correct? So vectors are essentially  some numbers or this thing arranged in a row or in a column. So if I have a two dimensional vector alpha which essentially has components alpha and beta, so I can put them as a row or as a column. So if I put them as a row or in a column, I can put this in this form.
+
+Okay. And if I also go back to the two dimensional space, if I want to say this is the vector that I want to represent. So, it has a component alpha on the computational on the x axis and a component y on the y axis sorry beta on the y axis then this point is represented by alpha comma beta.  but what is the so we denote this  this quantity by this shorthand called a ket. And this ket essentially uses two or so these are my orthonormal basis. So these are my basis along which I express my vector. And alpha and beta are the projections on the computational basis lines.
+
+Okay, so this is the shorthand that you will see in the slides that I have today. So, at some point on the 31st, I will actually do whatever Amit does in the shorthand notation again, so that it reinforces the learning that we require. Okay. So ket is a name for a column vector. The column vector actually is with respect to a basis. The label inside this is just a tag, so it can be any symbol.
+
+So can be phi, can be alpha, can be oranges. It can be anything. And this was invented by Dirac to make multi-qubit expressions readable. Again, Dirac from the 1920s. At that time, there was no quantum computing. but it was mostly for quantum mechanics. It was used for doing this.
+
+So, we will use this ket notation throughout the course. The row vector is determined by this thing called bra and together we can actually define your dot products, etc. So, we will do that later. But for the time being, we do need any of that. We just need to know that there is something called ket which is a column vector and we will.  see that as a shorthand notation for writing vectors. So I hope this is clear.
+
+This is not maths. This is just representation. So for example, this is the plus ket, which is essentially, if you want to write it in this particular form, this is 1 by root 2,  say,  ket zero plus 1 by root 2 ket one. exactly like that, where 0 and 1 are my computational basis. So this is with respect to this notation.  
+
+## Three polarising filters
+
+So now I will actually show you a short video to show you what quantum mechanics is. Can you hear something? Can you hear anything from the video? No, you can't hear from the video. There's no problem. I will explain what is happening.
+
+What do you see out here is so you know about polarizing lenses, correct? So let me see if I can show this video. Why didn't this one come by the way? OK, so this is a polarizing filter. OK, so polarizing filters are things that you use in your for cameras or for sunglasses. Correct.
+
+So it allows a certain light of it reduces the intensity of light. So if you see out here,  so these light can be polarized in many directions.  so if it's a, talk of two directions for the time being, which is horizontal and vertical. So if you see, if I put a single,  one of these polarizers out here, you see that it transmits less light. If I put the second one.  filter only looks through the light that's vertically polarized. Something is wrong. You can't see my video, correct?
+
+You could hear, but you can't see my video for some reason. Something's gone wrong.  polarized light, sunlight is unpolarized. It doesn't matter what angle. I use a polarizing filter. We have two filters and they're polarized in the same direction. Then essentially nothing.
+
+I don't think the screen is moving, correct for you? Okay. Someone has typed the... Okay. So you can see the link is there in the chat. So maybe you can use that since my sound is not working.
+
+So you can use that to see what is happening. OK, so I'm assuming that at some point. Essentially,  I make me through one filter horizontally polarized. Then the next filter only looks through the light that's vertically polarized. So cumulatively, nothing makes it through. This is used to have adjustable filters in photography fairly often.
+
+Now, something really interesting starts to happen, and in fact a quantum effect begins to kick in if I ask three questions. So surprisingly,  the answer I get depends on the order that I ask the questions.  if I have a horizontally,  diagonally, and then vertically polarized,  I get a different answer than if I ask horizontal vertical.  or horizontal, vertical, vertical. So in between,  I actually get a lot more light transmission than you would expect. And this is an angular dependent. OK, so we are back to my slides, correct? Can you see them?
+
+Can you see my slides? OK,  delayed on my screen. OK, so now what did we see out here? What we saw was that if you had two of these polarizers,  the the horizontal one and the vertical one, this one and this one, no light goes because it cancels out. But if you have a 45 degree thing, it actually works. So, this is something that again is the first quantum effect that we want to, this cannot be explained using classical mechanics.
+
+So, you need quantum mechanics. So 25 % of the light passes through, we'll look at why 25 % shortly. So if you see this,  is an animation that illustrates what exactly is happening. So you have a light coming out, the first polarizer, half of it goes through and then all of them are vertically polarized. And then the second half completely makes it zero. Whereas if you put a 45 degree polarizer out there,  you actually are able to. get 1 by 8 the intensity.
+
+So, this is something that we start off today's class about. We want to be able to show why this works by the end of the two classes today and we would like to exploit this quantum effect in building our first classical or first quantum algorithm which shows you the quantum advantage. Okay, so later today we will calculate the 25%. Okay, so the polarization is like a qubit. Okay, so we'll try and understand that later in the next couple of slides. So just to be clear about the notation, as I told you, we are going to be using this ket notation.
+
+So let's assume we call the vertical ket, the vet ket v by zero. and the horizontal ket pi h by 1 and the 45 degree diagonal will obviously be a superposition of as the plus 1 which is for the time being let us assume it is 0 plus 1 by root 2. This is we are just going by remember these are definitions. These are definitions. Definitions are done for a certain reason. We will come to that reason a little later, but for now let's go by these definitions and these is basically mapping them to that state.  
+
+## Polarisation as a physical qubit
+
+So photon polarization is one of the physical realizations of a qubit. In fact, one of the ways in which you can make a quantum computer is by using light and it's just not a metaphor. Okay. So there are others like electron spin, superconducting energy levels,  trapped ion internal states etc. or NV centers in in diamond. Okay, so these are all different methods by which you making quantum computers today. Okay,  this is by a company called IonQ.
+
+This is actually IBM and Google etc. This is Intel and IITD etc. Okay, so but this is also done by in India by IISc, RRI, I think so. So there are plenty of people who trying to do in the academia,  but polarization is the way to get to it. So the key thing that we want to be able to do define when we talk of this word term qubit is that it is essentially a bit which essentially means at least two stable states and because there is quantum involved, from these two states I will go into something which allows me to have this quantum nature.  
+
+## The classical bit
+
+So, the classical bit correct, so it starts from there. So, the classical bit is exactly two isolated points. So, for example,  conventionally we treat that as a 0 volts and say 1.8 volt or say if you are doing physics, let us say light polarized in the horizontal direction or in the vertical direction, electron spin vertically up or vertically down.  this is light. Okay, now the thing is when you do, you do computation, correct? So once you do computation, we are more bothered about not how the computation is done. We are more bothered about results.
+
+Okay, the results is actually tells me whether my computation is correct or wrong. That's something philosophical correct, I need to measure to be able to tell whether something has been done correctly. So this word measurement is actually very important. And in classical,  every time you are actually doing computation from 0, 1 to 0, 1. So for example, you're doing a NOT gate, you're taking a 0, converting into 1. If you have a 1, you're converting into 0.
+
+So that's the function. And every time you do that measurement in an ordinate, you will always get a not of the input. So this is very important. It's one measurement always returns exactly one bit and the same bit and the same answer. So the stage space is finite and this. So everything in classical computer, if you define it for one bit,  you can do the same for the other bits. and the computer is a classical computer does sequences of bits and works on sequences of bits and does bit operations.  
+
+## Superposition
+
+So this then brings us to superposition. This is something that we would like to dwell with a little bit informally first and then maybe go a little bit formal. Okay, so superposition,  you must have seen waves, correct? That's how you were introduced to superposition in physics. Okay, if there are two waves,  they might actually add up and give you a larger wave, or they might actually destroy themselves. What was the question?
+
+There is a question on polarizer. What is a polarizer? Polarizer basically is something which actually allows light to pass in one direction. But like what is it made of to force? The calcite is the one. So if you look at where it came from, calcite is the material which Malus made it out of.
+
+If you look at Malus' law, later on we'll see that. That's where it came about in 1860 something. But today you can actually make it out of polymers, I think. The Boeing,  the Dreamliner Windows, correct? They use polarizers to actually,  you don't have Windows which you need to shut down, correct? Or bring down to actually shut out the light from outside.
+
+And they're also using polarizers. LCD screens, you can actually use polarizers to generate your,  the polarization can be changed using voltages. So many different materials are there. So in physics, what are all basics? Nothing more than what we do. NV centers on volatile center that is in the same.
+
+So if you look at the spinning coin,  so you have a very simple coin. So it is supposed to have two sides, heads and tails. So that is the definition of our, so if you actually spin it, if you throw it up, before you throw it up, the the coin is exactly in one of the two states. It's either head or tail. When you throw it up,  you don't really know in which state it is because it is spinning. And then when it lands, it again lands in either of these two phases, heads or tail.
+
+So that's the important thing that you have to remember up here. You start off in a classical state. You go up here, you don't know whether it is head or tail. And then when you come down again, you're back again to classic. OK, so what we say is that this coin is when it is spinning, it is you don't know whether it is heads or tails. So therefore you say it is in a superposition state.
+
+OK, but it is really not at two places because the coin has two faces. So now if you had a very, very small,  very, very fast camera recording what is happening, you would see it every instant of time. one of the faces would actually be up, correct? So this is very important.  you,  because you don't know where it is, so we say it is in a superposition state. Okay. So this is like a compass. Okay.
+
+It can point in any direction,  but its space is infinite along that circle. But we are probably concerned more with the North Pole, where the North is or in the South. So we actually That's the two faces of the coin. So we need only two states for quantum computing. Polarization is the simplest one to explain. So that's the motion of this, not the motion of the cell, the description.
+
+How is it when it is spinning? We say it is in superposition. Because you don't know whether it is in the head or in the So you will know whether it is head or tail only when you do a measurement, when you observe it. While it is spinning, can't observe. If you don't have a very fast camera, you cannot observe it. So hence you say it is in a superposition state.  
+
+## The qubit state space
+
+So where does this qubit live? So we had this two-state system, head and tail. When it went up, it could be in any of those states. That means it could be either head or tail or it could be somewhere in between. Remember the coin is flipping also while it is spinning and you don't know where it is. Okay.
+
+So how do you describe such a system? So you describe the system by saying that it lives in the C² area, let for the time being as Amit had mentioned, difficult to visualize complex numbers. So let's do it in real numbers, the XY plane. Correct? So it has some component in the H space, some component in the tail space. So when it is at an angle of say 30 degrees.
+
+Okay. So, what do we say? This qubit, it works with bits, it also has a quantum property, which is the superposition. The constraint it has to satisfy is that |α|² + |β|² must be equal to 1. That's because of probability reasons. The probabilities of all outcomes must sum to 1.
+
+And the computational basis, the orthonormal basis that we talked about,  is that the x-axis is 0, 1, 0, and the ket 1, which is the other axis, is 0, 1. So these are two orthogonal vectors. So every qubit state would be a linear combination of these two basis vectors.  so it can be represented by s ket of phi or ket of psi is equal to alpha 0 plus.  beta ket 1. So classically you live in these two discrete points and the qubit lives in this entire space. So this is my qubit. It's living on the surface.
+
+It is denoted by some alpha out here and some beta out here. So just if you look at it as a vector. So if you look at the dice question is this thing because  Give me a physical system which actually has six states, six stable states. So hence we wouldn't consider that. So we can also consider any orthonormal basis. In fact, that's what quantum computer is.
+
+With light, you will measure the polarization. So the qubit till you are measuring it is in a superposition state,  The moment you measure it, it becomes classical.  
+
+## Phase and interference
+
+So just one more term that I want to use.  again a classical term. is from physics, which is or maths,  which is phase. So phase is something that, so waves with respect to waves,  it's easier to explain, but I'll try and give you a different example. This is the more formal example of phases and the difference between global phase and relative phase. Suppose you have, we've just gone through a festival season,  This Durga Puja or Ramnami, et cetera, in the north and in the west, in the east, correct? So a lot of these functions actually use two speakers, correct? So you need to at least use two speakers to get some music out.
+
+So now the music is being played by a sound device, correct? By an electronic amplifier. The output of the amplifier is connected to your uh speakers now there are two things that you can do one is that you can actually put another say box say what am i trying what am i trying to say i'm trying to say something like this so this is my amplifier so this is the person singing this is the person singing this is my amplifier and then i have two uh wires going to my two speakers speaker one and speaker two okay now What can I do? can actually, one of the situations can be, I might put in another amplifier out here. Okay. So the signal, this person is singing this signal. This will appear out here after a certain delay and then will appear here after another delay.
+
+So this, if you, if this person was singing at time equal to T0, this, at this point, it will be at T0 plus Delta one. And at this point, it will be at T0 plus delta 2 but these two waveforms would exactly be the same. You wouldn't be able to distinguish these two waveforms although they are separated in time which essentially is phase. So there is some global shift that has happened to the signal. If you superimpose both of them they look something like this. On the same time base if you superimpose one of them will look like this the other one will start at this point, but they look exactly the same.
+
+So this is what I will term as my global phase. On the other hand, if I now change this and put in, say, I put in another,  inadvertently, I put in another box out here or another device out here, which will make this waveform and this waveform to be at different phases. Then you would have introduced a relative phase between these two. And therefore, when this is giving out some note, this one will give out some other note. So therefore,  you have introduced a relative phase between the two. So this is basically an important thing.
+
+So phase essentially tells me where do I start counting from. So if both the speakers I delay by the same amount, there is no change in the output per se, they look identical to me. If I actually change one of them, I introduce a difference. And this is very crucial because once I introduce a difference between the two waves, then my peaks appear at different times. Can you see the screen now? Screen is visible, Professor.
+
+The other, think I'd also go into the note pad, correct? So that when I type something, when I draw something, you will not be able to see the slide.  so therefore now, so there is this relative shift and global shift.  the global shift is invisible. The relative shift is visible and observable. This is a key thing because one of the ways  one of the powers of quantum computing comes from is because of this interference. So the superposition happens and then I will also use interference to get my testing. So my definition phase is the angle on a circle, the phaser is this.
+
+So essentially this is the component correct. E to the power i phi is out here, composed of some cos component and some sine component. This is how all your noise cancelling headphones, etc work. So key thing you want to remember, a global shift moves both together, both these waveforms together,  our relative phase, actually they move at different speeds. And if they move at different speeds, you get interference. Okay. 
+
+## Bloch sphere and two angles
+
+So given this, now I want to be able to describe my qubit. Okay. So one of the questions was why, why sphere? We'll now see why sphere, because I want to be able to describe my qubit, which if you see out here, I had said is going to be like this. So if it's going to be like this, α and β are elements of ℂ. If α and β are elements of ℂ, then alpha and beta are of this form.
+
+A1 plus ib1 and a2 plus ib2. So this is 1 and this is 2. So therefore, for every qubit, I need four real numbers.  ai's are. and bi is our element of real. So I need four numbers, correct? Now, if there are four numbers, then I have a, how do I, it's a four dimensional space. So it's difficult to describe that.
+
+Okay. So what can we do? We can actually do something smart. And what is the smart thing that we'll do? Let's see.  so, so we'll try and describe everything on this sphere. Okay.
+
+How do I do this description on the sphere is I try and use some of the properties that. So, the first property that I want to exploit is this fact that this one correct that |α|² + |β|² = 1. So, this is normalization correct. So, this that all my probabilities must sum to 1. So therefore, this is one constraint. So which essentially means if I am working with these guys, I can actually write.
+
+So if I say alpha squared plus beta squared is equal to one, then I can say, say is a one squared plus b one squared plus c one squared squared plus b two squared is equal to one, which essentially means that if this number is not changing, I have gone down from 4 to 3 variables. Alpha and beta do not give you probabilities, the square of the amplitudes gives you probabilities. So, alpha and beta are just complex coefficients. Remember quantum mechanics works in the complex plane, that is why. So, when you solving differential equations, differential equations have an i. So, that is the meaning.
+
+So, the only thing measurable is probability.  the you run the experiment many times or you so you evaluate probabilities so the probabilities are given by alpha square and beta square that makes it a real number that is 3. So now if you have 4 quantities and 1 constant which is equal to 1 constant you can actually then work with 3 variables that is the first thing. So you have gone down from 4 to 3 by using this normalization constant. So now, so once you have that, then the next one is four variables I thought. So alpha and beta belong to C, correct? So alpha can be written as say x0 plus iy0 and beta can be written as x1 plus iy1.
+
+And if you do alpha square, this is equal to x0 square plus y0 square. Similarly, beta square is equal to x1 square plus y1 square. So therefore, if you add the two of them, you get x1 square plus y1 square. And the two of them must be equal to one. The moment they're equal to one, therefore, one of these you can write as one. So one variable goes away because you have bound the.
+
+OK, so now the next one is Remember,  if I can,  what is the other way of expressing this? This other way of expressing alpha is using polar coordinates. So, if you are using polar coordinates, then you can write alpha is equal to some radial array e to the power i theta a. And beta again you can write as rb e to the power i.  phi b. Now, because so this is basically on the unit circle, one was alpha here and this is alpha, this is beta. These are the two complex numbers.
+
+So, these two complex numbers, so because it is in the unit sphere, these two can be equated to one. So, now you have alpha as e to the power alpha is equal to e to the power i theta a and beta equal to e to the power i beta b. So now if you remember we talked about this global phase thing so therefore what we can do is we can multiply both of these quantities by e to the power say minus phi a. So I multiply this quantity and this quantity by e to the power minus phi a then what will happen is this number Let's keep the ra out here. This number will become equal to ra and this number will be equal to ra e to the power i phi b minus phi a. So now you see you've got one real number.
+
+Alpha becomes real. It no longer remains complex and you have a relative phase out here which is measurable. So this quantity is a global phase. So I multiply it by that. What it simply means, it means it moves both the vectors by the same amount, or both the waves by the same amount. This is not visible.
+
+That's the key thing. Since it's not visible, so I can multiply by a global phase, and then I can forget about it. But that introduces a relative phase. The relative phase is important to me. So now I have this relative phase. So therefore, I can write beta is equal to e to the power I say theta prime b.
+
+So now what I have done is I have now gone from four parameters to three parameters and now I have made one more parameter a real parameter correct. So therefore I can now work with only two parameters. So normalization this constraint gives me four to three and then so I multiply by some global phase. Okay, no measurable change. So therefore alpha becomes real. So it's so I become I go from three to two and then so once you are the alpha is real and then I say it is between zero and one correct it's in the unisphere I can set alpha as this and the normalization will force beta to become sine this thing and therefore your ket will become ket of psi will become a real part along a cosine part along with a sine part and now you can represent this in a sphere using just two quantities.
+
+Remember a sphere is described by two quantities,  the azimuth and the two angles out there. And so one of these angles we call the latitude, the other angle we call the longitude just like as in a globe.   and the radius of that sphere is 1 because of the normalization constraint. So,  to come back to the slide, so what are we saying? We are saying that we represent a qubit now to be a point on the sphere. So, all qubits and all the states of the qubit are on the sphere which essentially means it is a continuous function. So, it can be anywhere Just like when you spin a coin, it can be in anywhere in the 360 degrees that you are rotating it by.
+
+So, how do you describe,  but remember the qubit was described by two complex numbers. So, how do you describe it? So, you bring in the two normalize the constraints. One is a normalization constraint and the other is that global phase business. If you multiply some, if you move both the wave  by or both the complex numbers by the same amount that is not observable and hence you get introduce a relative phase between the two numbers you use that to make one of the complex numbers as real number so therefore you're now left with three left with two parameters.  the to describe the sphere from your high school geometry is that the theta varies from 0 to pi and the psi varies from 0 to 2 pi ok. Not necessary global phase is any number ok and why theta by 2 that is where is theta by 2 this is just so that you can remember theta is going from 0 to pi and it good enough actually to.
+
+So, the North Pole is ket 0 and the South Pole is ket 1 equator has equal. So, there are 6 points out here. This is one point, this is one point, this is one point, this is one point and there is one point that is facing here,  And one point facing out of the slides and one going into the slide. So, that will be plus i n minus i. So,  p of 0 if you measure it will be cos square and p of 1 if you measure it will be sine square correct. So if you are in 0 theta will be 0 the probability of 0 will always be so if your state if your quantum the qubit state is this which is in blue you will always get a 1 you will with probability 1 you will get you will measure 0.
+
+So n with probability 0 you will measure a 1 because you measuring a classical state. Similarly, if you're measuring a one and in the direction of one, okay, so you are going to always get a probability of one. So come back again to that coin example. When the coin is at rest, that means it is in your hand or on the table,  every time you measure it, you will always get a head, correct? If it's facing it, that does not change. So that is why the probability is one.
+
+Okay. And If you are looking for a tail, you will never get a tail because it is heads and hence the probability is zero. So this is one thing. Second thing is that when it is spinning,  if you actually were observing at different instances of time, sometimes you would get head, sometimes you, if you could observe, if you could observe, sometimes you would get head, sometimes you would get tail, it would be a probabilistic number. Okay. So therefore if you are measuring somewhere in between so probability might be half of the time you might get head if it's an unbiased coin some of the time you might get a tail.
+
+Okay so keep this in mind. Again the other thing that we are concerned about is where are we measuring. Okay so are we measuring the x-axis or are we measuring the y-axis. We cannot do both measurements at the same time. Just think of it. Okay you either do a projection on the x-axis or you do a projection on the y-axis.
+
+So, what basis do we consider this should be? You have this equation, correct? X1, you have this equation, correct? This is the equation of a sphere in a four dimensional space. That comes from maths. And then how do you describe the sphere?
+
+You describe the sphere using two angles, two angles are theta and phi. How do I get to theta two angles from my four? I actually use a normalization condition and the global phase two relative.  base. Okay, so okay, so if you have a vector if you have a state here as I said out here if it's closer to the equator you'll probably measure it you get a higher value along the ket 0 and this thing and lower value of problem along the ket 1 dash okay on the equator it is exactly 50. So the longitude contains the phase of that okay. Remember we had said beta to be something like this.
+
+So, and e to the power phi is this. longitude is essentially a rotation in the complex plane. So, the same latitude will give same measurement was different longitude give different interference behaviors. So, keep this statement in mind that when we do a little bit of maths, we will see that when we do a little bit of this and formally, these equations will show you where things cancel out. The first canceling out that we saw was that if you use this global phase, then you can introduce a relative phase in one of the components. A coin flip can be represented in only one complex number head plus. So your question is, this is H plus I T.
+
+That's what you're saying, correct? But you have made an assumption out here that these numbers are, these are one. or these are elements. this is you have to have an alpha and have a beta correct. So you're making an assumption alpha and beta are element of real. Correct. So that's why you need two real. Why would I make an assumption that they are real?
+
+Because I said that quantum exists in C. So therefore this coefficients must be C. Just like in electrical engineering, you cannot say that impedance has to be real number. you say that impedance has to be a complex number. Why? Because the capacitance will always lead the current in with respect to a resistance and the inductance will always be behind. So that's a physical problem.
+
+That's the physics of it. So similarly, quantum mechanics is also the same. Quantum mechanics, you solve the Schrödinger equation has an i in the differential equation. When you do a time evolution, so therefore the solution is always complex. Alpha, beta are already now a part of C, correct? And the |α|² + |β|² must be equal to 1.
+
+So let's get back to this.  
+
+## Six key qubit states
+
+So then, as I said, there are the six key states that I am concerned with and I should be aware of where they are in the Bloch sphere. So 0 and 1 are my classical 0 and 1 states. So these are states that form my computational basis states. And these are the states on which I can do measurements, because that's a classical state. So these two are also my classical state. These are states that I have defined.
+
+These are states that I defined because they are points on this globe, the plus state and the minus state. Similarly, there is a plus i state and there is a minus i state. Minus i state should have gone somewhere here. So,  keep this in this diagram in mind. So, there are these plus states on the two sides of the equator. There is the two poles, the 0 and 1 and you have on these two sides the plus i and minus i states.
+
+And they are defined by these angles of theta and phi on a sphere. So let's just take a five minutes break so that I can see if there are any other questions that I can answer. I can't improvise. We set them parameters to see orthogonal. I didn't still, Tarun, didn't still get your question. What exactly?
+
+Yes, plus and minus are Hadamard basis. What is minus four? And what exactly? Condensation orthogonal. So zero and one. So what do you mean by orthogonal?
+
+You have to define why are they not orthogonal in the Bloch sphere,  correct? So it's not very clear what do you mean by saying that they are they are antipodal. So they are antipodal because we would like them to be as far apart as possible on the sphere, correct? Essentially what does orthogonal mean? How close are they to each other? 90 degrees is the most that they can be apart if you go by the orthogonal definition on the sphere. The farthest apart is when they are at the two poles.
+
+The i state,  so these are the i states or the plus states, these are places on the equator. As I said, ket i is just another vector on the, another point on this sphere. Take it. 
+
+## Quantum gates as rotations
+
+So now we want to define a little, let me just get some water. Okay, so now one of the things that we would like to do with this Bloch sphere is to be able to see how can we do operations on this. What happens when you do operations on this, on this Bloch sphere? So, one of the simplest operations that all of us understand is this not operation, correct? Let me see, let me see if I have told you everything that I am supposed to tell you. So, this not operation, this not operation essentially means that if I have a 0, it should become 1.
+
+If I have a 1, it should become a 0. All of us agree with that? So therefore, classically, I also told you this is a classical state. This is also classical, correct? So because this is essentially ket 0 plus 0 into ket 1. The other one is 0 plus 0 into ket 0 plus 1 into ket 1.
+
+So what does, so if I give a 0, I should, so if I am in this state and I do a not, I should come here. And similarly, I do a not, if I am in this state and I do a not, I should go to that state. So therefore,  this not operation is a rotation in the Bloch sphere. Is this clear? It's intuitive, correct? That if you're in the north, you must come down to the south.
+
+And how do you come from north? You come by a rotation. So this is,  so now. So this is a very simple gate, correct? This is a gate that all of us are aware of. Now, if we have defined rotation to be performing a function,  the not is being implemented by a rotation.
+
+What? And what does it not mean? That a 0 should go to 1 and a 1 should go to 0. Yeah, there are five out there because I missed out minus i. So just like you have 1 minus 1, you have 1 minus i. OK, sorry.
+
+Now going back to so rotation is a not correct. So if rotation is a not then Therefore if I know what my output is then I can also perform a rotation to get to that point Say for example, I can come from here to here or I can come from here to here Similarly, I can come from here to here or I can come from here to here. Okay Agreed? So therefore I can take any state and I can apply some sort of a rotation and it will give me an output state. OK, so that's what quantum computing is about. I'm only going to do rotations around the place.
+
+OK, and with the Bloch sphere, it becomes easy to visualize instead of doing it the algebra way. OK, so and this only works for one single qubit. But if I can understand what is happening with a single qubit. I think we will be once we internalize what is happening with a single qubit, we will be able to do it for multi qubits without the Bloch sphere, we can do it then with the linear algebra and poly and the Dirac notation.  
+
+## The X gate
+
+So, the x gate which is my not gate, so if you see that it can flips your quantum state. So, the 0 becomes a 1 and a 1 becomes a 2. The H gate. takes either 0 or 1 into one of the equators,  points on the equators. So 0 will go to plus, 1 will go to minus. And the z gate brings in a global phase. Nothing happens.
+
+It just moves things around the longitude. The latitude does not change. This is something that I had told you a couple of slides back. So if you want to just change the phase, global phase of that state you actually apply a z gate. Does H and the z gate do not actually have a classical analog. There is no classical analog gate which actually takes a zero and puts it into a superposition of 0 and 1.
+
+The plus state if you recall is actually on the equator. This is on the equator and this is given by a superposition of 0 and 1. So it contains both 0 and 1. And why do I have the 1 by root 2? That is to actually give me my probability, sum of the probabilities to be 1. So if I measure, if I do a measurement on the, so where will I measure?
+
+I will measure whether I'm getting a 0 or a 1, correct? That's my measurement, okay? Because I cannot measure on plus and minus. I don't know what plus and minus are physically. Physically I know what 0 and 1, so that's my computational basis. So I will actually measure along 0 and 1.
+
+So if I measure along 0 and 1, so if I'm measuring on the 0th axis, will see a probability, I will get a 0 or a 1 with equal probability. Because if you see alpha is equal to 1 by root 2. So these two do not have a classical equivalent. So with rotation you arrive at any state. Okay, and because all the sphere contains billion,  an infinite number of states, you can actually go to any infinite number of any one of those infinite number of states. Okay, so similarly with the Z gate, you're not changing in the theta, you're changing just the phi.
+
+Okay, so what is a gate? So gate is essentially a linear map, correct? You are actually doing a rotation. Okay, and this again comes from even if you think in terms of your high school geometry, you are actually applying a gate to move,  you apply a matrix to actually perform a rotation. So, so just that, what we are saying is that you, so what I'm trying to do now is link up the geometry with the algebra. Okay.
+
+So the geometry gives me this visual representation that things are, can be described by a rotation and any rotation now can be described by a matrix. Okay, so the only thing is that this matrix must be a unitary matrix because remember the output must be again mapped to the the coefficients of the output get must actually map to must satisfy the bond condition. Okay, so if you look at the inverter for example, if you look at the inverter, okay, so what so if I have a stage zero, correct, this is my classical stage zero. So 0 and 1, I represent by two basis vectors. These are my two basis vectors. So if I'm doing a not on 0, I'm actually doing a not on this basis vector.
+
+This should give me a 1, which essentially means I'm going to get a 0, 1. Agreed? So therefore,  not on ket 0 is equal to ket 1. And similarly,  not on ket 1. is equal to 0. So, how this is not of 0 1 should give me 1 0. So, how do I get this sort of thing?
+
+I actually say 1 of 0 is equal to some matrix multiplied by this correct and if you do a little bit of solving you will see that this is the matrix. So, this matrix therefore then represents my inversion matrix. There is no quantum out here. There is just a simple classical inverter. It also can be represented by this thing,  by a 2 by 2 matrix. So this 2 by 2 matrix becomes my description of the gate.
+
+And so this is the first reason why, or this is the first actual reason why you are doing,  why we need to do linear algebra first. We have to internalize linear algebra. and their properties to be able to, because we don't go beyond two by two and four by four matrices, you'll see that later on. We actually work with two qubit, single qubit gates and two qubit gates. The single qubit gate will be a two by two operation, a four qubit, two qubit gate will be a four cross four matrix. So one of the important things that we need to be able to, yeah, all quantum gates are not necessarily in SU2, that's something that can be in SUD. It depends on how quantum mechanics is developed.
+
+We do it in two, but people can do it in D also. So we're not considering only six states. These are the six states for which we have names. It can be any state. At what point of time is in a superposition,  that question, the qubit is in a superposition of state. You don't need to know what the initial state is.
+
+Why would you need to know that? You start off from a known initial state, you let evolve and then at some point you do a measurement. So we'll see the algorithms when we look at that algorithms will become a little more clearer. But second half of today we will show why. You'll probably get a little more clarity on that question. As I said,  so these linear transformations, I will formalize them in the third session.
+
+Today we are going to just look at it visually. So the other thing quantum mechanics is reversal. So the computation is reversible. So if you do a NOT,  from the NOT you can come back. So for example, AND is not reversible. What does reversible mean?
+
+Reversible essentially means given the output,  given reversible essentially means given output, I should be able to get the input. So with NOT, I know that if I get a 1, I know the input must be 0. If the output is 0, I know that the input must have been 1. But if I take an AND gate, for example, I can have a 00, 01,  10, and the output will always be 0. I wouldn't know which one is the output, what was the input. Only with 11, I know that both the inputs were 1.
+
+But for the other three cases, I don't know what the inputs were. So hence, this is not a reversible circuit, whereas this is a reversible circuit. Quantum mechanics, every gate is reversible. And that also comes from this one of the properties of these gates that we will talk about. Okay and it is a linear gate so it's linear because means that if I apply it on this state it essentially means I can do them in a linear manner. I apply the unitary on ket zero and I apply the unitary on 1.
+
+Okay so this is so the quantum not the X gate is the quantum not gate flips it by 180 degrees. So you get a zero, flips, one, two, zero, it flips. The one actually remains at one. Why? Anyone? Because remember the plus state is essentially one and one, correct?
+
+So you're applying a zero, one, one, zero on this, you still will end up with one, one. Okay, so doesn't have an impact on. And if you have a minus state, you introduce a face. Okay, so. 0 and 1 are basically say the, so what do you measure? That's the reality. So if you are measuring say electrons, then you are measuring the spin.
+
+Okay. If you are measured, so you essentially measure spin up or spin down. Okay. And if you're measuring photons, you're measuring the polarization. So that's why it meant by the computational basis. So if it's a superposition, you measure the probability.
+
+So that means you run the experiment thousand times and see what the answer is, what the probability is. Okay. 
+
+## The H gate
+
+So the H gate is the superposition gate. Okay, so you start with a classical state, which is zero, you apply the H gate, it puts into a superposition of equal superposition of zero and one. Okay, so that's the first quantum gate that we talk about. So we are moving the zero from the poles to the equator. So we need the plus minus and they are just names. No one said that you want to you have you don't have to.
+
+So it's just like  different points on the equator. So the first reason why we need the plus state is to show that how do I get a superposition state. So I get a superposition state by applying the h gate. So the plus and minus states are defined this way. So if you apply h twice, you'll see that it cancels out. So just think of.
+
+This is a property of quantum gates by if you want to prove it, just go back to the statement where I said that this is a operator. So this operator we said was this, correct? So if you apply this, correct? Twice. Obviously, if you have a zero out here, you will end up with zero out here. OK, so that means these cancel each other out.
+
+OK, the same thing happens with your H. So you apply H, you start,  you apply H, you get superposition. And then from the superposition state, you apply again H, you land up in your original state. All quantum gates must be unitary. So we will define how classical gates are done later on. But clearly,  these properties are important.
+
+If you apply the H gate twice, you get back your original state. Okay and if you do the math see h of plus is remember we are going to now use the unitary or linear property. Linear property is u of alpha ket 0 plus beta ket 1 is equal to alpha unitary 0 plus beta u 1. Okay and that's exactly what is happening h of 0 plus h of 1, h of 0 is plus and then plus 1 by 2. Now you expand what is plus 0 plus 1, 0 minus 1 and then you see you get 0. So this is an example of interference.
+
+So this plus 1 and this plus 1 they are different by a face. They are different because you have a minus 1 in front of one of them. So if you have a minus 1 in front of them these two are one wave is like this the other wave is like this. So they are cancelling out. If they are in phase, this and this are in phase and hence they add up and you get ket zero. So this is superposition and interference.
+
+Two of the three most important things or the two of the three things which actually drive your quantum computing. You must be able to play something in superposition that is H gate and you must be able to exploit superposition to give you the result. So you want to actually drive your algorithm, algorithm, all your quantum algorithm such that you actually drive the result towards getting back, getting the answer that you're looking for. And you do a measurement on only one of the qubits. So this is the interference. 
+
+## The Z gate
+
+The Z gate, as I said, has this phase business coming in. So you are moving things along the longitude. So z is defined by this matrix. So you are making changes in the second computational basis. If you are working with 0, nothing happens. With 1, there is a phase flip.
+
+With plus, you get a minus. And with a minus, you get a plus. So it's a rotation across the z-axis. The poles remain fixed. Equator becomes swaps to plus and minus.  
+
+## The H–Z–H example
+
+Let's see, let's do a quick poll. So suppose I have H followed by Z followed by H. What is the final state? Let's see something on chat. So zero with H will go to plus and plus with Z will go to minus and minus with H will go to one. Do we agree with this?
+
+See the Z was out there. So therefore it should not have been zero. But if you do by algebra, this is how you would do. So an interesting fact has arrived here, correct? This is equivalent if you do quickly do for one,  HZH1, that we are able to conclude this. Do we agree that HZH of ket 1 is 0?
+
+Yeah. OK. So some of you have gone. OK. So therefore, you now see that you can get an inverter. by putting two Hs sandwiched as Z sandwiched by two Hs. So this is an important thing.
+
+So that when we go for implementation,  sometimes some platforms it is easier to implement H and Z. In some platforms it is easier to implement X. So then you can do this trade off. But the key thing is that now you can see that I can.  a conjugate. Let me take together many different operators to get a to implement a different gate.  
+
+## Quantum measurement
+
+Okay, so I have been talking a lot about and I have been mentioning this many times about what do you mean by measurement. Okay, I've been saying that you have to measure. So what exactly do I mean by measurement? Okay, so measurement is like  So quick,  this thing, let me give you a quick analogy. Measurement is basically you have to say if you're measuring,  have to use some instrument to measure.  so if you're trying to measure, say, a line, correct, you use a tape. If you want to measure a velocity,  you observe the body moving from one point to the other.
+
+The other things that if you want to measure distance, correct. So obviously, you want to measure the distance from here to moon,  you really cannot put a tape. So what do do? You shine a piece light and then you get back the time,  get back the reflection and measure the time and you're able to get. Now, suppose you take this light business a little more.  if there is a  if there is a pole,  there is sunlight out here,  So the sunlight, then what actually happens? What can you measure?
+
+This is a very tall tree, is a eucalyptus. So this is bent like this. When you want to measure it or it is like this, you want to measure it. Now, what will you be able to measure simply by using this light analogy? you will be able to measure the shadow that it forms on the ground. So this can be one measurement. This can be another measurement.
+
+Correct? So two things that you get out here. You measure a projection and you are measuring it along a direction. Clearly you cannot measure along this direction. Correct? cannot. It's not possible.
+
+And you cannot make both measurements simultaneously. you will be able to measure only one. And measuring only one in some cases might be able to tell you about what is the other one. But in general, it may not because if this is n dimensional space in two dimensions, it is possible that from this and you might be able to know, you still will not be able to tell what this is. And so that you will never know the exact height. So you will not know exactly what this length is. You will only know about the projection of this.
+
+This was your psi. You measure it in the computational basis. You get a certain probability which corresponds to alpha, which is proportional to alpha. If you had measured it along this axis,  you would measure this, which would correspond to, which would be proportional to, meter square. Okay. So this is the important thing that we wanted to.
+
+So it is like measuring the shadow. Okay. The shadow you can measure on only one direction. You can't measure it on both directions. So,  the 3D state you force it into a one dimensional measurement. So, it like a 3D object casting a 2D shadow, the outcome is random and the measurement essentially destroys your quantum state.
+
+And that is basically if you just take something like this, suppose you are actually playing, if you play billiards, correct?  you try to measure the time it takes to actually for the cue ball to hit a target ball and come back. Suppose you were measuring that time. OK, now and so clearly the distance would be the speed of the ball divided by multiplied by the time. But during that time, the ball that you had hit would also move away. So if it moves away, that means you have destroyed its original state. So that's the basic idea if you would like to take that any measurement will destroy the quantumness because you're doing a projection.
+
+And even if you're not doing a projection, you would have destroyed the, the actual place where it was supposed to be. So after measurement, you don't, you cannot get back to the original state. So it destroys your superposition. Okay. Again, this particular statement is very important. If you look back at the coin example that I gave you, the coin was in a superposition state, but it was not in either both states together or it was not a secret.
+
+It is just that we hadn't observed it. We did not see it. The moment we see it, that superposition goes away, that theory goes away, correct, that they are together. They are in some sense in either state. It collapses. So this is the important thing.
+
+Any measurement that you do, we will collapse the quantumness. Quantumness is defined by superposition interference. And there's a third one that we will come very soon. And this randomness that you're going to be able to get both 0 and 1 with probabilities alpha square and beta square is what quantum is all about. In fact, most of nature is whatever we are able to analyze in nature. Our cell phones also work because of this randomness.
+
+The probability distributions of our architecture are built around that. Many of our analysis is built on randomness. For example, we assume certain things about the system being equally probable, and hence we can define certain algorithms, et cetera. The measurement also has to satisfy this constraint. So, the constraint is |α|² + |β|² = 1. So, on the Bloch sphere, remember the radius is 1, therefore the probabilities are cos square and sin square theta, p of 0 and this thing.
+
+And this is a line that we will come to again on the next day. This is the ket way of writing things. So, So let's leave this for the time being also.  
+
+## Measuring the plus state
+
+So let's look at this measurement business. Suppose you are in the plus state. So this measurement is not a little measurement. No, it is the little measurement. So this example will tell you. So suppose you are in the plus state.
+
+How do you know you are in the plus state? So you will know that you are in a plus state because by definition the plus state is that if you do the measurement 100 times, roughly 50 times you should measure 1, so 50 times you should get a 0. And that's basically what, so step 1 alpha and beta are 1 by root 2 and 1 by root 2. So probability of 0 is half, that means half of the time you get a 0, half of the time you get a 1. So 50 % chance of the outcome being 0. So you see the measurement is still literal measurement. it is exact measurement is just that the probabilities tell you in this particular case doesn't tell you very much correct.
+
+It just tells you that you are in a state where it is they were equally which probably means that you are in a superposition state. So key thing is once you do the measurement remember you your quantumness is gone because now so suppose so what have you done you have your state was here this was the plus state correct on the equator. equator this was the plus state you did a measurement this is the measurement gate so this state has collapsed to zero now if you do a measurement again you will get a zero with probability one this quantum state has collapsed and that's the math so far correct so the measurement essentially means that you will collapse the quantum state okay so the plus state is not the coin flip okay coin flip also gives you a 50 50 percent probability Okay, so if you apply h to the plus state, you will get back to zero and that's what we had seen and that's why it is not. 
+
+## The polariser experiment revisited
+
+Okay, so let's look at the filter again because quantum is actually now photons and we will actually send photons one by one. Okay, so you have a single photon comes here at random it might go through or it might not depending on which site which polarization heat it's that. So this is a simulation which actually shows that 1000 term and the probability is got. And if you want to do it in the algebra mode, this. So the dot product thing will just leave for the timing just as a simpler way of writing complicated expressions. The key idea out here is that you can there is this measurement, there is this qubit state, that means it is in a superposition state, then there is constructive interference or destructive interference and there is measurement.
+
+So, these are the three things that you take away from here. So, these are these four steps that the 0, 1 passes vertical polarization, 45 is basically a superposition of 0 and 1. So, you do a measurement in plus or minus that means you have the polarizing filter which is essentially doing a measurement in one of those directions. So, it passes 0 with half probability, 1 with half probability and the 90 degree passes 1 with complete probability. if you have 1, you have, so half and half together gives you one quarter. So, 25 percent of the light that passed the first filter will be detected. So, each filter is a measurement in its own basis.
+
+So, it has destroyed the quantumness. So you started with a combination of horizontal and vertical. And then once you had the horizontal polarizer, it has done a measurement and only let out the horizontal parts. So that's basically what the electrons which were, or the photons which were horizontally polarized, those only managed to go through.  
+
+## Relative phase is observable
+
+So we also said that relative phase is observable. The global phase is not observable. So you consider plus. and minus the two of them have the same measurement probabilities. But if you apply h on both of them,  one of them gives you a 0 and one of them gives you a 1. So therefore they are perfectly distinguishable. So probabilities are different,  probabilities are same, but if you apply a gate, you can distinguish between plus and minus states.
+
+So this is again important. The difference between plus and minus state is a relative phase. is physically real,  observable through interference. The global phase is not interference and for any of our algorithms, we will see that we will ignore global phase and concentrate on relative phase. So this is our polarizer missing.  the cos squared theta comes from your So if you go back and one of the references as this how is polarization described, it comes from originally Malus's paper. He actually shone light on a calcite crystal and measured this thing and figured out it should be cosine squared theta.  
+
+## Two-qubit systems
+
+Okay, so let's quickly do this part.  the two qubits now, we have more or less done things about a single qubit. So what did we say? A single qubit lives in C²d, can do superposition and has interference. You can bring in interference by relative phase and gate operations,  gate operations would be your unitary matrices, which are two by two. Okay. So that's with a single qubit.
+
+Okay. Now,  I want to go into two qubits. If I want to go into two qubits, remember now I will say this is a qubit Q0 and this is a qubit Q1. So, for the time being, let us assume just like we have two gates, they do not talk to each other. So, ran gate will not talk to another ran gate. Whatever happens in the input of one ran gate is not influencing the input on the other.
+
+So, this can work independently. I can have hz on this. Similarly, I can have x, h, and z on this. So they work independently. But because we are working with quantum, and I said there's a third property. So here you have interference and superposition on each of these.
+
+But the third thing that happens in quantum is the most spooky. as Einstein called it and actually gives us the power of quantum. That is these two guys,  they are close enough, will interact with each other, can talk. Let's put it this way. So you do something on this, this guy can be affected. So to be able to do, describe this type of behavior,  you'll have, we'll need some math sometime and Amit will do that tomorrow. But I'll give you the intuition.
+
+One will be that these two systems work independently. So that means they work more like if you go back to your computer science or your electrical engineering backgrounds, you know that you have two state machines. They work independently. They can work independently. So one of them is your say counting days and the other one is counting apples. So these are two state machines and they can be So,  if you go to any of these grocery shops, he might have a clock running out there, which is a state machine.
+
+And there is a weighing part of it, which is counting, which is actually counting the number of apples, weighing the number of apples and giving you. They're independent machines, they're working, but you buy the machine together. It is composed of a clock and a weighing part. So, these are two independent things. They can be defined as a product state. So we will do that at some point, they'll be defined as a product state or a product state machine.
+
+On the other hand, if I can make these two talk to each other in such a way that if I do something on one of those machines, the other guy doesn't like it or likes it. Then we say, and if I do a measurement on one, I will know what is the state of the other. I'm not going to do a measurement of the other. this property is known as these two guys are entangled. So the third property which your systems,  quantum systems work on is entanglement. So to describe that,  I need to, I have given you the setting, there are two qubits. So if there are two qubits, they work in a four dimensional space.
+
+If they work in a four-dimensional space,  so clearly this one will have these states ket 0 and ket 1. This guy also has ket 0 and ket 1. So therefore, the product state will be a combination of all four, correct? So these are the four basis vectors. So it's a four-dimensional space. Each of them have these four. what are the four dimensions?
+
+It's basically those four kets and for each of them you would have a complex coefficient. So,  if you have n qubits, now it will be a product state of these n's or the state composed of these n qubits. There would be 8 kets for each dimension and they can be independent. So, these are then my basis states and these corresponding to the two qubits q0n.  q1. And this is a specific operator which is tensors which I think will be covered.  instead of will be covered tomorrow. So the key thing is that this is a very simple expression whereas this is a very complicated,  very not complicated, very unwieldy expression.
+
+So we will work with these symbols to make things look elegant. Okay, and so if you look at the number of qubits, this is the number of amplitudes that you have to work with is two if you have a single qubit. If you're working with two, you're working with four, if you have 10, that many, correct? So, okay,  so I'll just bring in this tensor thing. Basically, it essentially tells you how you're combining your, thing. So how do you distinguish between these two states?
+
+You distinguish between these two states by saying that one is a product state, one is an entangled state. Products gave you the example of a weighing machine with a clock. Clock and weighing machine,  the two of them together, the weighing part work independently. There's no this thing, but you look at it as a system. At four o'clock in the evening, I bought this. At five o'clock, I bought something else.
+
+Four o'clock does not influence what I tend to buy at 5 o'clock or 4 o'clock does not influence what I am buying. Whereas if there is this entangled state, we will, they're saying the whatever I do at 4 o'clock is very well correlated with the fact that. I'm sleeping,  and four o'clock in the night, okay, and five o'clock in the morning I'm jogging. So if I see five o'clock in my clock, I know that I am jogging. So this is the example of being correlated. It happens more entangled.
+
+So let him formalize the products and the testing. Today we are just going to look at this operator. Could I just think of this operator as describing this? system of two qubits.  
+
+## The CNOT gate
+
+So now we come to this first entangled gate, which is the first two qubit gate. So this first two qubit gate is the controlled-NOT gate. Now this controlled-NOT is something that has an equivalent in classical also. This basically tells that I know what an inverter is. The zero will become a one, one will become a zero. Now I'm going to say I will actually do an inversion on the second line. if the first line has a 1.
+
+So if the first line has a 0, I don't do anything. I don't do anything.  0 remains a 0, 1 remains as 1. But if my first bit is, or q1 is 1, I go and invert it. So you see 0 becomes a 1, 1 becomes a 0. So then this becomes my control and q0 becomes my target. So what is actually happening?
+
+I'm actually doing something in one qubit based on what was the condition in another. So I am able to influence something from a different qubit. So this is an example of an entangled state. So CNOT acts on all basis states. So CNOT of CNOT. So the thing is that CNOT cannot be written as a tensor product, cannot be written as a product of this thing.
+
+It is an entangled state.  
+
+## Building a Bell pair
+
+So how do you build an entangled state? So how do you build this sort of thing? So suppose you have one of the interesting rectangles is this bell pair. So you start with two classical states, zero and zero, you apply a H and then you apply a controlled-NOT. We define the controlled-NOT as something like this. This truth table tells me what the controlled-NOT is.
+
+Anytime the control bit is one, I will invert. If the control bit is zero, I will not do anything with the other qubit. So you see zero, zero, I apply H. I apply h on this qubit. So this essentially means this is the operation I'm going to apply on the first qubit. This is the operation I'm going to apply on the second qubit.
+
+The, how do I do it in terms of algebra? We will do it after Amit does tomorrow. But for now, just think of it that h is being applied in the first qubit and i is being applied in the second qubit. So h on the first qubit takes it to this. Okay. i on the second qubit,  let's it remain at zero. H on first 0 turns to 0 and 1.
+
+And then you do a CNOT on each one of them. If you do a CNOT on this, CNOT, 0, you see it remains at 0, 0 because the control bit is 0. On this one, the control bit is 1. Correct? If the control bit is 1, therefore you are going to flip the other one. So your state becomes like this.
+
+So now this cannot be expressed. So you do a CNOT, that's basically what I said, and then you essentially get to this phi plus state. So just as I told you, this is another state on the Bloch sphere, which actually you really cannot pinpoint really very easily, but this is the first example of one, and this is a bell pair. So what it essentially means that if you measure one qubit, you will be able to tell what is the state of the other qubit. So,  this is the Bell state, the EPR paradox made famous by known as Einstein,  the EPR paradox,  Podolsky and the same.  
+
+## Measuring an entangled Bell pair
+
+So, if you take the state as that you measure q0, that means your measurement axis is q0, you measuring on the first qubit, you get 0 and 1 with probability half. If the outcome is 0, the q1 instantly becomes 0 and if your outcome is 1, Q1 instantly becomes 1. So, that is the key thing. So, they are perfectly correlated no matter how far apart they are, they cannot be separated. This is known as your entanglement. You cannot express it as a product state.
+
+Once you understand the product state tomorrow, we can do. So,  these correlations are real. They cannot transmit information faster than light,  but it works. Entanglement has been, it's the reason why quantum computing works. Okay. So what we can do is that we can have a break now, come back in half an hour, and then I will try and finish up this part and then go to an algorithm.
+
+So what I will do next is I will try and introduce you to a little bit of programming sometime today so that you're able to plug and play. on a browser and see things. Whatever we have done,  how the probabilities change with respect to gates. Yes, EPR is done with our scale rules. What exactly do you mean by anti-state? OK, let us join at 12.30. Thank you. you, Prof.
+
+Learners, let's be back at 12.30 sharp.
