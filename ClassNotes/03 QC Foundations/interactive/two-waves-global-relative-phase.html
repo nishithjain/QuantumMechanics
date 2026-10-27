@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two waves: global vs relative phase</title>
+</head>
+<body style="margin:0;background:#f4f6f8;">
+<div id="wave-demo">
+  <style>
+    #wave-demo {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      color: #17202a;
+      font: 16px/1.5 Arial, sans-serif;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+
+    #wave-demo label {
+      display: block;
+      margin-top: 20px;
+    }
+
+    #wave-demo input {
+      display: block;
+      width: 100%;
+      margin: 12px 0;
+      accent-color: #3267d6;
+    }
+
+    #wave-demo .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin: 24px 0 12px;
+    }
+
+    #wave-demo .swatch {
+      display: inline-block;
+      width: 25px;
+      margin-right: 6px;
+      vertical-align: middle;
+      border-top: 3px solid #3267d6;
+    }
+
+    #wave-demo .wave-b {
+      border-top: 3px dashed #d99b00;
+    }
+
+    #wave-demo svg {
+      display: block;
+      width: 100%;
+      height: 330px;
+      min-height: 330px;
+    }
+
+    #wave-demo svg text {
+      fill: #17202a;
+      font: 12px Arial, sans-serif;
+    }
+
+    #wave-demo .explanation {
+      margin-top: 18px;
+      padding: 12px;
+      background: #f1f5fb;
+      border-radius: 6px;
+    }
+  </style>
+
+  <h3>Two waves arriving at one listener</h3>
+
+  <label for="wave-common">
+    Shift BOTH waves:
+    <strong id="wave-common-value">0°</strong>
+  </label>
+  <input
+    id="wave-common"
+    type="range"
+    min="0"
+    max="360"
+    step="15"
+    value="0"
+  >
+
+  <label for="wave-relative">
+    Extra shift of wave B only:
+    <strong id="wave-relative-value">0°</strong>
+  </label>
+  <input
+    id="wave-relative"
+    type="range"
+    min="0"
+    max="180"
+    step="15"
+    value="0"
+  >
+
+  <div class="legend">
+    <span><span class="swatch"></span>A: solid</span>
+    <span><span class="swatch wave-b"></span>B: dashed</span>
+  </div>
+
+  <svg
+    id="wave-chart"
+    width="760"
+    height="330"
+    role="img"
+    aria-label="Two separate waves and their combined wave"
+  ></svg>
+
+  <p id="wave-result" aria-live="polite"></p>
+
+  <div class="explanation">
+    <strong>Try this:</strong>
+    First shift both waves together: they remain aligned.
+    Then set the extra shift of B to 180°:
+    a peak meets a trough, so the waves cancel.
+  </div>
+
+  <script>
+    (() => {
+      const root = document.getElementById("wave-demo");
+      const svg = root.querySelector("#wave-chart");
+      const common = root.querySelector("#wave-common");
+      const relative = root.querySelector("#wave-relative");
+      const ns = "http://www.w3.org/2000/svg";
+
+      function add(tag, attributes, text) {
+        const element = document.createElementNS(ns, tag);
+
+        for (const [key, value] of Object.entries(attributes)) {
+          element.setAttribute(key, value);
+        }
+
+        if (text !== undefined) element.textContent = text;
+        svg.appendChild(element);
+      }
+
+      function clearSvg() {
+        while (svg.lastChild) svg.removeChild(svg.lastChild);
+      }
+
+      function draw() {
+        const width = Math.max(svg.getBoundingClientRect().width, 320) || 760;
+        const left = 42;
+        const right = width - 12;
+        const commonPhase = Number(common.value) * Math.PI / 180;
+        const relativePhase = Number(relative.value) * Math.PI / 180;
+
+        svg.setAttribute("viewBox", `0 0 ${width} 330`);
+        clearSvg();
+
+        add("title", {}, "Wave phase and interference");
+
+        root.querySelector("#wave-common-value").textContent =
+          common.value + "°";
+
+        root.querySelector("#wave-relative-value").textContent =
+          relative.value + "°";
+
+        function axis(y, title) {
+          add("text", { x: left, y: y - 62 }, title);
+
+          add("line", {
+            x1: left, y1: y,
+            x2: right, y2: y,
+            stroke: "#ddd"
+          });
+
+          add("line", {
+            x1: left, y1: y - 50,
+            x2: left, y2: y + 50,
+            stroke: "#ddd"
+          });
+
+          add("text", {
+            x: left - 10,
+            y: y + 4,
+            "text-anchor": "end"
+          }, "0");
+        }
+
+        axis(85, "Separate waves");
+        axis(235, "Combined wave: A + B");
+
+        function plot(fn, baseline, color, dashed) {
+          let path = "";
+
+          for (let i = 0; i <= 400; i++) {
+            const t = i / 400 * 4 * Math.PI;
+            const x = left + (right - left) * i / 400;
+            const y = baseline - 25 * fn(t);
+
+            path += `${i === 0 ? "M" : "L"}${x},${y} `;
+          }
+
+          const attrs = {
+            d: path,
+            fill: "none",
+            stroke: color,
+            "stroke-width": 3
+          };
+          if (dashed) attrs["stroke-dasharray"] = "7 5";
+          add("path", attrs);
+        }
+
+        const waveA = t => Math.sin(t + commonPhase);
+        const waveB = t =>
+          Math.sin(t + commonPhase + relativePhase);
+
+        plot(waveA, 85, "#3267d6", false);
+        plot(waveB, 85, "#d99b00", true);
+        plot(t => waveA(t) + waveB(t), 235, "#3267d6", false);
+
+        add("text", {
+          x: left - 10, y: 189, "text-anchor": "end"
+        }, "+2");
+
+        add("text", {
+          x: left - 10, y: 289, "text-anchor": "end"
+        }, "−2");
+
+        add("text", {
+          x: (left + right) / 2,
+          y: 320,
+          "text-anchor": "middle"
+        }, "Time → (two cycles)");
+
+        const angle = Number(relative.value);
+        const amplitude = 2 * Math.cos(relativePhase / 2);
+
+        root.querySelector("#wave-result").textContent =
+          angle === 0
+            ? "Peaks align → reinforced wave (peak height 2)."
+            : angle === 180
+            ? "Peak meets trough → complete cancellation (height 0)."
+            : "Partial cancellation → combined peak height " +
+              amplitude.toFixed(2) + ".";
+      }
+
+      common.addEventListener("input", draw);
+      relative.addEventListener("input", draw);
+      if (typeof ResizeObserver !== "undefined") {
+        new ResizeObserver(draw).observe(svg);
+      }
+      window.addEventListener("resize", draw);
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => requestAnimationFrame(draw));
+      } else {
+        requestAnimationFrame(draw);
+      }
+    })();
+  </script>
+</div>
+</body>
+</html>

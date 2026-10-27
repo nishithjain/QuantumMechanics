@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phase and Phasors — Beginner Explorer</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f7fc;color:#17243b;font:17px/1.6 system-ui,sans-serif}main{max-width:1080px;margin:auto;padding:32px 22px}h1{font-size:clamp(26px,4vw,38px);line-height:1.2;margin:0 0 12px}h2{font-size:21px;margin:0 0 12px}p{margin:8px 0 16px}.intro{max-width:850px}.panel{background:white;border:1px solid #dce3ef;border-radius:16px;padding:22px;margin:22px 0}.controls{display:flex;gap:18px;align-items:center;flex-wrap:wrap}label{flex:1;min-width:200px}input{width:100%;accent-color:#395cd8}button{border:1px solid #c3cde0;border-radius:8px;padding:10px 16px;background:#fff;color:#17243b;font:inherit;cursor:pointer}button.active{background:#395cd8;color:white}button:focus-visible,input:focus-visible{outline:3px solid #ed9d28;outline-offset:3px}.presets{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.plots{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:24px;margin-top:26px}svg{display:block;width:100%;min-height:280px;height:auto;overflow:visible}svg text{font-family:system-ui,sans-serif;font-size:14px;fill:#243550}.values{display:flex;gap:18px;flex-wrap:wrap;margin-top:20px;font-variant-numeric:tabular-nums}.values span{background:#f0f4fd;padding:8px 12px;border-radius:6px}.formula{font-size:20px;overflow-wrap:anywhere}.note{border-left:4px solid #395cd8;padding:10px 16px;background:#edf2ff}.muted{color:#52617a}.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}table{border-collapse:collapse;width:100%}td,th{padding:10px;text-align:left;border-bottom:1px solid #dce3ef}output{font-weight:650} @media(max-width:700px){.plots,.grid{grid-template-columns:1fr}main{padding:24px 14px}.panel{padding:16px}}
+</style>
+</head>
+<body>
+<main>
+<h1>Phase: an angle. Phasor: an arrow.</h1>
+<p class="intro">Imagine an arrow turning around a circle like a clock hand. Its <strong>angle</strong> tells you the phase. Its <strong>length</strong> tells you the amplitude (size). This arrow is called a <strong>phasor</strong>.</p>
+<section class="panel">
+<h2>Move the arrow and watch the wave</h2>
+<div class="controls">
+<label for="phase">Starting phase φ: <output id="angle">0° = 0 radians</output><input id="phase" type="range" min="0" max="360" step="1" value="0"></label>
+<button id="play" type="button" aria-pressed="false">▶ Play one cycle</button>
+</div>
+<div class="presets" aria-label="Phase presets">
+<button type="button" data-angle="0">0° · right</button><button type="button" data-angle="90">90° · up</button><button type="button" data-angle="180">180° · left</button><button type="button" data-angle="270">270° · down</button>
+</div>
+<div class="plots">
+<div><h2>1. Arrow on a circle</h2><svg id="circle" role="img" aria-label="Unit phasor in the complex plane"></svg></div>
+<div><h2>2. Matching sine wave</h2><svg id="wave" role="img" aria-label="Sine wave with phase offset and marked starting value"></svg></div>
+</div>
+<div class="values" aria-live="polite"><span id="real"></span><span id="imag"></span><span>Arrow length = 1</span></div>
+<p id="explain" class="note"></p>
+<p class="muted">The orange dot marks the wave at time 0. It always has the same height as the arrow tip. Positive phase turns the arrow counterclockwise; on the wave, it shifts the pattern to the left.</p>
+</section>
+<section class="panel">
+<h2>What does e<sup>iφ</sup> mean?</h2>
+<p class="formula">e<sup>iφ</sup> = cos φ + i sin φ</p>
+<p>This is a compact way to describe the tip of a length-1 arrow. You do not need to calculate the exponential to use the picture.</p>
+<div class="grid"><div><strong>Horizontal part: cos φ</strong><p>How far right or left the tip is. This is called the <strong>real part</strong>.</p></div><div><strong>Vertical part: sin φ</strong><p>How far up or down the tip is. This is called the <strong>imaginary part</strong>. Here “imaginary” is the mathematical name for the vertical coordinate.</p></div></div>
+<p>For example, at 90° the arrow points straight up. Its tip is (0, 1), so e<sup>iπ/2</sup> = 0 + i × 1 = <strong>i</strong>.</p>
+<p>A general phasor is <strong>Ae<sup>iφ</sup></strong>: A controls its length and φ controls its angle. This explorer keeps A = 1 to focus on phase.</p>
+</section>
+<section class="panel">
+<h2>Why does an arrow describe a wave?</h2>
+<p>As the arrow turns at a steady speed, its tip goes up and down smoothly. Plot that <strong>vertical height against time</strong>, and you get a sine wave.</p>
+<p class="formula">Arrow: e<sup>i(ωt + φ)</sup> &nbsp; → &nbsp; vertical height: sin(ωt + φ)</p>
+<p><strong>t</strong> means time. <strong>ω</strong> (omega) tells you how fast the arrow turns. <strong>φ</strong> (phi) is its angle at time 0. A full turn is 360° or 2π radians.</p>
+<p class="note">“Play one cycle” sweeps the starting phase through one full turn. It shows a new starting arrow and shifted wave at each angle. For one fixed wave, following its height forward in time gives the same circular motion.</p>
+<p class="muted">This uses the vertical projection (sine). Choosing the horizontal projection gives a cosine wave. Both are valid conventions; they differ by a quarter cycle.</p>
+</section>
+<section class="panel">
+<h2>Global phase and relative phase</h2>
+<p>For two arrows, the <strong>relative phase</strong> is the angle between them. Turn both by the same amount and that angle stays unchanged. Turn only one and the angle changes.</p>
+<table><thead><tr><th>Phase difference</th><th>Two equal waves at the same location</th></tr></thead><tbody><tr><td>0°</td><td>Peaks line up: they reinforce.</td></tr><tr><td>180°</td><td>Peak meets trough: they cancel.</td></tr></tbody></table>
+<p>In quantum mechanics, multiplying the <strong>entire state</strong> by e<sup>iφ</sup> changes its global phase and does not change measurement predictions. Changing the phase of one component relative to another can change interference.</p>
+<p class="muted">For ordinary waves, phase can be measured relative to an external clock or reference wave. The statement “global phase is unobservable” applies exactly to the overall phase of a quantum state.</p>
+</section>
+</main>
+<script>
+(() => {
+const phase=document.getElementById('phase'),circle=document.getElementById('circle'),wave=document.getElementById('wave'),play=document.getElementById('play');
+const ns='http://www.w3.org/2000/svg';let animation=0,start=null,startAngle=0;
+const tidy=n=>Math.abs(n)<0.0005?'0.000':n.toFixed(3);
+function el(parent,name,attrs={},text){const e=document.createElementNS(ns,name);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);if(text!==undefined)e.textContent=text;parent.appendChild(e);return e;}
+function line(svg,x1,y1,x2,y2,color='#d8e0ed',dash=false){return el(svg,'line',{x1,y1,x2,y2,stroke:color,'stroke-width':dash?1.5:2,...(dash?{'stroke-dasharray':'5 5'}:{})});}
+function text(svg,x,y,s,anchor='middle'){return el(svg,'text',{x,y,'text-anchor':anchor},s);}
+function render(){
+const deg=Number(phase.value),p=deg*Math.PI/180,c=Math.cos(p),s=Math.sin(p);
+document.getElementById('angle').textContent=deg+'° = '+(p/Math.PI).toFixed(2)+'π radians';
+document.getElementById('real').textContent='Horizontal: cos φ = '+tidy(c);
+document.getElementById('imag').textContent='Vertical: sin φ = '+tidy(s);
+document.querySelectorAll('[data-angle]').forEach(b=>{b.classList.toggle('active',Number(b.dataset.angle)===deg);b.setAttribute('aria-pressed',String(Number(b.dataset.angle)===deg));});
+const W=Math.max(270,circle.getBoundingClientRect().width||760),H=340,cx=W/2,cy=172,r=Math.min(105,(W-70)/2);
+circle.setAttribute('viewBox',`0 0 ${W} ${H}`);while(circle.lastChild)circle.removeChild(circle.lastChild);el(circle,'title',{},'Phasor at '+deg+' degrees');
+el(circle,'circle',{cx,cy,r,fill:'none',stroke:'#bdc9dd','stroke-width':2});line(circle,cx-r-16,cy,cx+r+16,cy);line(circle,cx,cy-r-16,cx,cy+r+16);
+text(circle,cx+r+18,cy+25,'Real','end');text(circle,cx,cy-r-25,'Imaginary');text(circle,cx-10,cy+20,'0');
+const x=cx+r*c,y=cy-r*s;line(circle,x,y,x,cy,'#dd8c12',true);line(circle,x,y,cx,y,'#dd8c12',true);
+line(circle,cx,cy,x,y,'#395cd8');const tip=Math.atan2(y-cy,x-cx);el(circle,'polygon',{points:`${x},${y} ${x-13*Math.cos(tip-.4)},${y-13*Math.sin(tip-.4)} ${x-13*Math.cos(tip+.4)},${y-13*Math.sin(tip+.4)}`,fill:'#395cd8'});
+el(circle,'circle',{cx:x,cy:y,r:5,fill:'#dd8c12'});
+if(deg>0){const angle=Math.min(deg,359.99)*Math.PI/180;el(circle,'path',{d:`M ${cx+28} ${cy} A 28 28 0 ${angle>Math.PI?1:0} 0 ${cx+28*Math.cos(angle)} ${cy-28*Math.sin(angle)}`,fill:'none',stroke:'#395cd8','stroke-width':2});}
+text(circle,cx,320,'Angle φ = '+deg+'°; length = 1');
+const ww=Math.max(270,wave.getBoundingClientRect().width||760),left=40,right=ww-18,mid=172,scale=88;
+wave.setAttribute('viewBox',`0 0 ${ww} 340`);while(wave.lastChild)wave.removeChild(wave.lastChild);el(wave,'title',{},'Sine wave with starting phase '+deg+' degrees');
+for(const v of [-1,0,1]){line(wave,left,mid-scale*v,right,mid-scale*v);text(wave,left-10,mid-scale*v+5,v>0?'+1':String(v),'end');}
+line(wave,left,62,left,280);let d='';for(let k=0;k<=360;k++){const t=k/360*4*Math.PI;d+=(k?'L':'M')+(left+(right-left)*k/360)+','+(mid-scale*Math.sin(t+p));}el(wave,'path',{d,fill:'none',stroke:'#395cd8','stroke-width':3});
+el(wave,'circle',{cx:left,cy:mid-scale*s,r:6,fill:'#dd8c12'});
+for(let k=0;k<=2;k++)text(wave,left+(right-left)*k/2,303,k===0?'0':k===1?'1 cycle':'2 cycles',k===0?'start':k===2?'end':'middle');text(wave,(left+right)/2,330,'Time →');
+const examples={0:'The arrow points right. Its vertical height is 0, so the wave starts at 0 and rises.',90:'The arrow points up. Its vertical height is +1, so the wave starts at its highest point.',180:'The arrow points left. Its vertical height is 0, so the wave starts at 0 and falls.',270:'The arrow points down. Its vertical height is −1, so the wave starts at its lowest point.',360:'One full turn brings the arrow back to the right: the same phase as 0°.'};
+document.getElementById('explain').textContent=examples[deg]||'At '+deg+'°, the arrow tip has vertical height '+tidy(s)+'. The orange dot shows that same starting height on the wave.';
+}
+function stop(){cancelAnimationFrame(animation);animation=0;play.textContent='▶ Play one cycle';play.setAttribute('aria-pressed','false');}
+phase.addEventListener('input',()=>{stop();render();});document.querySelectorAll('[data-angle]').forEach(b=>b.addEventListener('click',()=>{stop();phase.value=b.dataset.angle;render();}));
+play.addEventListener('click',()=>{if(animation){stop();return;}start=null;startAngle=Number(phase.value)%360;play.textContent='Pause';play.setAttribute('aria-pressed','true');function step(time){if(start===null)start=time;const sweep=Math.min(360,(time-start)/10000*360);phase.value=Math.round((startAngle+sweep)%360);render();if(sweep<360)animation=requestAnimationFrame(step);else{phase.value=startAngle;stop();render();}}animation=requestAnimationFrame(step);});
+if(typeof ResizeObserver!=='undefined'){new ResizeObserver(render).observe(circle.parentElement);new ResizeObserver(render).observe(wave.parentElement);}
+window.addEventListener('resize',render);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>requestAnimationFrame(render));else requestAnimationFrame(render);
+})();
+</script>
+</body>
+</html>
