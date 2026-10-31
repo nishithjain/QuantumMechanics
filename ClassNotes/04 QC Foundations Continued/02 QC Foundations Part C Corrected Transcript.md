@@ -1,0 +1,397 @@
+# QC Foundations [3/4] — Formalising the Pictures
+
+> **Corrected lecture transcript** — Kolin Paul, IIT Delhi · 31 October 2026
+>
+> **Reference:** *02 QC Foundations Part C.pdf* (39 numbered slide frames, including presentation builds). Slide numbers below refer to the numbers printed in the PDF, not its 19 physical pages.
+>
+> **Editorial method:** This is the spoken lecture, not a rewritten version of the slides. Technical terms, mathematical notation, punctuation, and clearly recoverable transcription errors have been corrected using the slides. The sequence, spoken explanations, classroom questions, and digressions have been retained. Where the transcript appears inaccurate or internally contradictory and the intended spoken words cannot be established, the original meaning is not silently replaced.
+
+---
+
+## Opening and recap — the coin puzzle [Slide 1–2]
+
+Today, what we will do is as I had promised that we will actually do things formally the stuff that we had done more intuitively on last week. And the key thing is that we will use the maths that Amit has introduced for you. Okay, so that's how we would like to go about. So the two things that we did on that day are we looked at the first quantum algorithm which gave you a speedup. This was the coin, whether it was biased or not, or more formally, whether the function was constant or balanced. So this was the first thing that we did.
+
+We ended up doing that and to do this these things about the Bloch sphere, we also gave you an idea about qubits and we also told you something in terms of operations on these qubits okay and these operations were either single qubit or they could have been two qubit operations. To get this thing done, we needed a 2 qubit gate. And this we said comes from the classical CNOT. The classical CNOT is defined as if I have two inputs, say C and D, the first input goes as it is, and is copied into the output.
+
+And the second input—the target—is toggled when the control is one: if C, then NOT T. So, if you draw the truth table for control C and target T, when the control is zero the target remains unchanged. The control is copied unchanged to the output, and if the control is one, the target is flipped. And if you see this function, this is exactly what this function that I have written, this column that I have written corresponds to the logic out here. But if you see this is also the logic for your XOR gate.
+
+Therefore this actually also implements the XOR of C and D. So in some sense this gate actually it is a classical gate but also has this implications in quantum where we use this gate to actually implement this and the The quantum part of it is this that, which we will do more formally today, is that this logic that we have written out here applies only to the basis vectors. Clearly classical is also zero and one. So on zero and one, it performs this way.
+
+Else what actually happens, something happens to this guy instead of something happening here, which is essentially the phase comes here. Okay, and we will see this in detail today. We will prove it and the idea is that you have to understand this because most of our algorithms are essentially based on this logic. Okay, so this is the recap more formally. So we had this trick coin, which I think it was always heads. The fair coin is heads or tails, so therefore it's a balanced coin.
+
+The other one is a constant coin and you want to be able to figure out this. And classically you would need two looks, but with quantum you can do it in one. So we watched or we intuitively saw that. And today what we will see is, so if you see, this was the intuition that I did the other day. Okay. So you have this strict coin which is constant, if it's balanced it's different, classically you need two, quantum you need one. Now the question is why do you need one in quantum?
+
+And the reason is that we would like to look at both the inputs at the same time. So that's the reason why we will be able to get this in one query, otherwise we'll not be able. So how do we get to look in this at the same time? We actually go into a superposition state and that's what a qubit is. So we go into a superposition state. Okay. And so if you see, we have gone into a superposition state because you're looking at it at the same time. So this is a superposition state. So you.
+
+Are looking at 0 and 1 at the same time because you're looking you have an H operation. It's defined that way. Let us put the symbols down. We will do the symbols today. And then this CNOT business brings in this phase information. Or it exploits the phase information. We will do the maths today. And so if it flips, if it's balanced, it flips. Okay. The phase flips. And then you add the two. If it's constant, they get added. If it is balanced, they don't.
+
+So this is the animation which actually shows that and we will actually do more of the normal stuff today. So we'll probably come back to this animation later. So this is the movie. So you have watched it. Now we will prove every move.
+
+## From pictures to symbols [Slide 3]
+
+So the idea of today's class is that we want to make a move from the pictures to the symbols. Okay. So if you look at from the two lectures that we did on last week, there were arrows in my Bloch sphere. That is the symbol that we would like to work on. And we'll try and prove something about them. So a gate is a rotation. So you have a unitary operator. We want to see what does it mean. If you have operations on two qubits, they will be denoted by this symbol at some point. So what is it that we will do?
+
+So by around two o'clock, I expect that all these symbols will become clear to you. So I will not replace it by the frame number. You can go back and relate to which frame is this. Every single question mark that you have out here will be replaced by [UNCLEAR IN AUDIO/TRANSCRIPT].
+
+## Kets are column vectors [Slide 4]
+
+Let's start with the first thing, kets. As I told you in the class last week, that kets are essentially column vectors. So |0⟩ is one of the axes and |1⟩ is the other axis; these are the computational basis vectors of C². So a general qubit is given by |ψ⟩ = α|0⟩ + β|1⟩, where α and β are complex numbers. We need four numbers, four real numbers to represent a qubit because alpha and beta themselves require two numbers to represent. So key thing is that ket is a column vector.
+
+This particular symbol is the ket. Anything inside is the name. So this could be the CEP ket. This could be the dog ket. So the six states from the Bloch diagram, the first lecture, the plus state, minus state, plus i and minus i, they're represented by these vectors. So if you look at the plus state, if you remember it is |0⟩ was out here, |1⟩ was on the other pole, and plus was here, minus was. Here on the x axis. So if plus is out here, that means it is an equal superposition of |0⟩ and |1⟩.
+
+So that's exactly what it means, zero ket and one ket. And this factor out here is a normalization factor, which actually ensures that |α|² + |β|² = 1. Similarly, |−⟩ has |0⟩ minus |1⟩. The |+i⟩ state has |0⟩ plus i|1⟩, because the i states are on the y-axis; and |−i⟩ has the minus i term. So the corresponding vectors are given by these terms. So keep this in mind. So ket is simply a column vector. The label inside is whatever helps you remember it. So this is the important one. This is where we bring in the maths.
+
+So if you look at it, a ket is a shorthand for something. So ket is a shorthand for a column vector. Remember in this particular case, the column vector is just has two components, correct? But it could in general have n components, correct? So if there are n components, a very compact way of writing this is just by using one symbol. So this is important. Therefore, if you have something for the ket which for the column vector, there must be something for the row vector.
+
+## Bras and the conjugate transpose [Slide 5]
+
+So, how do you convert a column vector into a row vector? You take the conjugate transpose. So, the conjugate transpose of a ket is known as a bra.
+
+So, the conjugate transpose, the conjugate transpose of a ket is known as a bra and that together that they form the bracket pair okay so and they look like a okay we'll come to that in the next slide so if you see plus was given by one upon root two one zero plus one so that's my definition so the conjugate so this is one upon root two one one now both are real numbers the conjugate transpose is exactly the same so hence your vector does not change and ket bra of the plus sign is exactly the same.
+
+Plus i, if you look at it plus i had plus i had this, the conjugate transpose of plus i is minus i. So, hence 1 plus i, 1 and i becomes the conjugate transpose of this would become 1 minus i. That's exactly what has happened out here. So, |+i⟩ has become. The bra of ket i and bra of, the ket i has a, the bra representation of ket i is given by bra of i which is the conjugate transpose of the ket. So, is important because we know that we define our matrix operations, some of the operations in terms of both the row as well as the column vectors.
+
+So keep in mind that the conjugate is very important. Okay, you're not just taking it. The transpose is generally columns becomes rows. So that's one part of the story. But we are interested in the conjugate transpose. Hence, columns will become this and row will become the conjugate of the elements in the corresponding bra or ket. For real amplitudes, they don't have a problem. But it is only when you have i, that means a complex number, that this shows up. So just keep this thing in your mind.
+
+And we will see that as we go along in the lecture today, that the ket goes in. And whenever you're doing a measurement, as I told you, do a measurement on a particular axis, a corresponding bra will be involved. And hence, you are measuring against that bra. So therefore a ket is what you want to measure and bra would be the axis on which you are going to measure. So we keep this in mind and as we go along we will see how this plays out.
+
+## The bracket: inner products and orthonormality [Slide 6]
+
+So the first thing that you want to do is calculate the inner product. That means you want to figure out how much of the vector is along the measurement axis. So that's basically what we mean. So if you have a vector like this, simple vector, you want to measure how much of this vector is along this axis. So this is a projection along this axis. So this is |0⟩. You want to figure out how much of psi, your arbitrary vector, is along that axis.
+
+So to do that, you essentially calculate the dot product between these two numbers, okay, or to these two vectors. Okay. So to do the vector, so, so what did we say? We said that we want to figure out how much of this ket lies along this. Okay. So in general, we can say this is my measurement and this is the thing that I want to measure. So this is my, this vector, and I want to see how much of it is along this. So I calculate the dot product between these two. So that's a very, very compact way of stating things.
+
+So if you do this, if you expand this, this is the get, this is the bra and you want to evaluate here. So each of these can be represented by So that's my phi get phi. The bra would be the conjugate of this conjugate transpose, which essentially means this is equal to this, this. Okay. And you know that if you take two matrices, A, B, C and D, and you do the multiply them out, the value is a dot C plus B dot D. And that's basically what is written out here. So, you have these two numbers multiplying these two numbers and these two.
+
+So, one row vector multiplying the column and you get this value. So, given that this is a dot product, so the norm of this will be greater than or equal to 0 and you can easily see that this must be equal to this. So, whenever you do conjugate, this is something that You must have seen from the maths lectures, whenever you do conjugates, actually reverse the order also. So AB becomes BA, that sort of thing. So this is important. Okay, so this is the first result that we will be using very often now.
+
+Okay, so whenever you see a symbol like this, it essentially means a dot product or the inner product. It is a. Scalar okay essentially measures the angle between the two okay. So if two vectors are perpendicular to each other along if you are doing the same vectors then obviously the dot product will be one because the angle between the two is zero and cos of zero is one. If they are perpendicular the angle between the two is 90 so you actually get a if you do the cos of zero cos of 90 is zero.
+
+Okay and if you do for the same thing for plus and plus you'll get a one whereas you do plus and minus you will get zero, because the dot product between those two vectors is zero. So this is the first thing that we do. Okay so if you want to work it out if you do plus and plus i one is on the x-axis one is on the y-axis so this is one one and this is one and i So you get (1 + i)/2. And if you do the mod, the modulus squared or the norm, you will find that actually half. So essentially what are we saying? How much of this is along this?
+
+That's exactly what I wrote a, do a diagram. So here plus and plus-i are 90 degrees apart on the sphere. So the overlap is half, just like when we said zero and one giving me plus with the overlap between these two is half. So dot product and the condition for them to be perpendicular to be orthonormal.
+
+## The Born rule and measurement [Slide 7]
+
+So the next thing is measurement. Have been stating this also that I want to be able to figure out how much of the vector lies on my axis that I am measuring against. So you want to measure this, so you have psi out here, |ψ⟩, and you want to measure in an orthonormal basis, So this is my orthonormal basis, okay? So it will give me an outcome, X, okay, which is a scalar, okay?
+
+And the probability of that outcome, that means probability of getting zero in this, suppose this was the |0⟩ axis, the probability of getting a zero which is x is given by I measuring this vector on against the bra of x. And because it's a probability I need to use this so that I can get rid of the ice and the state of the system collapses from |ψ⟩ to |x⟩ because now the only information that I have is that what is the projection of the vector on that. Axis.
+
+So this projection operation, this P, so this measurement, so let's not call this P for the time being, let's call this measure. So I measure, so I'm sorry, this is the probability of X, but this is also measurement. So measurement is not unitary. You cannot go back from here to the state. So if we look at an arbitrary state, (√3/2)|0⟩ + (1/2)|1⟩. The probability of measuring it on 0 is basically how much of it is. So as we said, psi essentially is a vector out here.
+
+So psi, you go back to your vector algebra, is basically something along the x direction and something along the y direction. So this part, from the x direction and this part from the y direction and together the vector sum of it brings it up here. So now you're doing the opposite. You're saying that I want to find out this part. So x, I want to find out which is aligned along |0⟩ and I want to also find out y which is aligned along the ket of y or |1⟩.
+
+So the probability of zero, because that's what you can measure is given by the amplitude of this squared. And the probability of this is the amplitude of this square and remember the two squared amplitudes must add up to 1 and in this case if you see 3/4 + 1/4 = 1. But the so that means what this means is that it has more of |0⟩ and less of |1⟩. If you do for plus i you want so plus i is my state and I want to measure it along the two computational axes. So P(0) that I have, these are my two axes, correct?
+
+And I'm going to measure x, which is 0, and y, is |1⟩, which is the probability of getting a 1. So probability of getting a 0 is, if you do this, it gives half probability of getting 0 for 1. It is ket of this plus i, which is half. Okay. So therefore, this If you do for plus i and minus i you will see that they are indistinguishable. Both of them will give you half probability of 0 half in both cases probability of 1 both cases half and therefore you cannot tell them apart. Okay, because remember 0 and 1 are on your z-axis.
+
+X and Y that's the measurement that you're doing on the z-axis in the Bloch sphere on that measurement axis. They both give the same probability. So you cannot distinguish plus and minus states.
+
+## Measurement in any orthonormal basis [Slide 8]
+
+So 0 and 1 are orthogonal basis, correct? And we need orthogonal basis, so my dot product between the basis vectors must be 0. That's what you learn from your linear algebra. So therefore, any orthogonal basis I should be able to measure against. Till now we have done on computational basis, which is 0 and 1 because that I can see. But from a theory perspective, I can also measure against plus and minus states. So I can actually plus and minus are my orthogonal states, orthonormal basis. They are ONB.
+
+So now if they are ONB, I can measure against them. Remember, this is what I measuring against. This is my input vector. This is what goes in. The ket goes in the bra is for measuring against. So therefore I calculate the dot product between these two. I calculate the dot product between these two and they give me the probability of obtaining plus and the probability of obtaining minus. So take the same vector (√3/2)|0⟩ + (1/2)|1⟩ the one that we had out here the one that we had this we measured against 0 and 1.
+
+Now we want to Measure again plus okay, so you take the dot product of these two you do the computation you'll get this if you do for the probability of plus is this this is the dot product okay, and this probability of getting a plus is This probability of minus is this okay, so do you understand how we get this just take some time and do it calculate the dot product of plus and sign. Just see that it works out. If I see one thumbs up then I can say that we are progressing. Okay you can't see the screen? Some can see the screen. Okay visible.
+
+C and T is control and target. Someone wrote that. Yeah animations are there. Animations are there on these slides. Now ket is for anything because you are in C correct. Angle is only for two dimensions. In general it's a dot product. This is still maths, spin hasn't come into the picture. Spin is basically choosing the basis. Not only is the right basis, it's actually against which you can do measurement. Plus and minus you cannot do measurement really. So I think I have answered all questions.
+
+And someone did send a thumbs up to say that this expression is correct. Agreed? We did. Someone has evaluated that this expression is correct. Any thumbs up? Okay, good. So if one of you has done it, so others will be able to do it later on. Okay, so if you see the three states, if you are measuring in the computational basis, all these three states are indistinguishable. All of them give you probability half. But if you're measuring it in the plus state, then these two are distinguishable.
+
+These two are distinguishable and this is also distinguishable. So they are identical in the Z basis, but they can be distinguished in the X basis. Remember, X on the X axis is the plus state. So therefore, this is an interesting thing that as we come towards gates, so in a circuit, we will apply H to bring it and then measure in Z. Is what we'll actually do, we did for Deutsch circuit. Okay. So we'll do the maths later, but this is how we are building up the storyline. Okay. So therefore, uh, what was it?
+
+So any orthonormal basis works as the thing. So keeping out here is, uh, that relative phase is observable that you want to use. Okay. So and there is a relative phase between this, there is a relative phase between this. So, if they are equal in this computational basis, you can't do anything. In this measurement basis, the phases are different and you can exploit them. So, that's the takeaway from here. So, let's, okay, before I go to the relative phase. So, the key thing that we're trying to say is that just as a point to recap.
+
+There is something called a ket which is equivalent to a column vector. Once we get that column vector we can define the row vector as the conjugate transpose of that column vector. The conjugate transpose of that column vector is known as my bra. The ket vector if you want to figure out how much of that ket vector is along another vector what you do is you take a dot product between these two.
+
+To take a dot product you define the dot product now as a product between the column vector and the row vector against which you are doing the measurement. The column vector is the ket, the conjugate transpose of the measurement ket is your bra ket, that is the bra of the measurement vector and you are going to do a dot product between these two. Measurement can be done on any pair of orthonormal basis, on any orthonormal basis on any set. And once you do the measurement, the quantum state or that vector collapses to that state.
+
+The quantumness goes away. So that's the summary of what I have done till now. So basically this means that you are measuring on 0 and 1. So this particular measurement means that you doing, so you have this x-axis, you had a vector like this, you are trying to do a measurement on this. So this gives you the probability of, this distance gives you the probability of how much of 0, how many times will you observe 0. That's the meaning of probability. So this is P(0). Now, you need not measure it on only plus, correct? You can also measure it.
+
+You could also do this axis could be plus. That is also computational basis. So, now you have your side. Now, you want to figure out how much of this. So, this vector can be expressed in terms of plus and minus. That is the meaning of orthonormal basis, correct? combinations correct of so any vector can be a linear combination of these two. So how much of this is present in this? That's basically what this term indicates. So P(0) and P(+) are not till now global and relative phase. Are still probabilities. Is this capital P is a probability.
+
+This is the measurement outcome. So you're doing a measurement. On that axis, when you're using 0 and 1, what is the value? And if you're doing plus and minus as your measurement axis, what are the values?
+
+## Global phase versus relative phase [Slide 9]
+
+So global and relative phase, correct? So that's something that we discussed. So how do we go from four parameters to the same? So one of the first things that we do is that we figure out that we realize that there is something called global phase. And global phase is not measurable. And that's what we want to see. So, no measurement in any basis can detect it. So, what is a global phase? Global phase is if I multiply a particular state by e the power i gamma. So, e to the power i gamma essentially rotates it by a certain angle.
+
+So, when will I get this condition? So, this is the condition when gamma is equal to pi. Because this term is essentially cos gamma plus i sine, gamma correct, so cos theta plus i sine theta. So this cos minus cos pi will be minus 1. So this is the global phase. This is the vector has flipped, correct, in some sense. But if you do the maths out here, so you see you're taking, so your vector is this. So, psi multiplied by a by a phase. So, this is a constant. So, it can be brought outside the inner product.
+
+So, you have brought it outside along with the square and you are left with the inner product out here. Now, this quantity is equal to 1 because this we say is minus 1 for and hence you will.
+
+So, this you will get if you do the so this e to the power i gamma is actually equal to cos γ + i sin γ and the square of this is the not the square the amplitude of this is cos² γ + sin² γ so this is equal to one for all cases so all values of gamma okay hence you cannot detect that there is a difference between So, you can, what are you trying to distinguish? You are trying to distinguish this with this.
+
+So, these two states are completely the same and they are only different with respect to a global phase. So, if you put gamma equal to 1, this is a special case, which is very easy to understand that even this minus sign cannot be, you cannot distinguish between the plus psi and the minus psi states. Whereas relative phase is real, because you want to calculate the dot product between or the, the sign difference between the two states. Okay.
+
+So probability of plus will, if you're measuring it on the plus and minus computational basis, clearly plus is probability. So it means that if you remember this is zero, this is one. This is plus and this is minus correct. So you are measuring along this x axis, you're measuring along x, then if the state that you are measuring is plus, then obviously you will get probability of plus as one, whereas probability of getting a minus while you're measuring against x is going to be zero. So, okay.
+
+So, I thought the answers were given away to you because I had created a PDF and shared it for you. Anyway, so I hope Scalar is taking care of that thing. I had shared the PDF yesterday. So next time on was whenever you all put up, I don't know if you're putting up the questions. If you put up questions, every single question should come on a single cell. Then it is easier for me to write an answer on that cell. Otherwise, it becomes difficult. It's easier if you give questions per cell. I will take up those questions since it's under N.
+
+So this is with respect to the balanced and this thing. So you had plus 1 coming on one side and minus 1 coming on the other side. And we were actually looking at the relative phase between the two states.
+
+## Bloch parametrisation and questions from the class [Slide 10]
+
+Some of the questions that you had asked will get answered out here, which is the Bloch parametrisation. So you had this psi vector, you have plus and minus 1. So the global phase makes alpha real. So normalization leaves two angles. The idea was, so the first question was in Bloch sphere, why do you have θ/2? θ/2 happens because you have to have 0 and 1 as on the antipodal states correct and they must set an opposite size of the sphere. So, you can only go up till 180 degrees correct instead of 360 degrees.
+
+So, that is the intuitive reason why it should be θ/2 rather than complete theta. So, theta in the state which turns 90 degrees into 180 degrees. That is the, so they must be. So there is a link that I have provided which provides the answer in a lot more detail. So why is probability of zero considered on y-axis not on x-axis? So what you mean is basically the y and x axis, it's not the y and x axis, the vertical axis is the z-axis in a Bloch sphere. So not y and x, y and x are the horizontal axis. Remember this is a 3D diagram.
+
+What is the meaning of the four real parts? So this is basically the thing. Alpha and beta are from c. If alpha and beta are from c, then each of these alpha can be written as a complex number. This complex number can be represented in polar coordinates by this r0 and y0, beta as r1 and y1. So, r0, r1 and γ₀ and γ₁ are the four numbers which are real numbers. So, that is four.
+
+And then you asked basically how do you perceive i and their polarization and the six states are all polarization states, all six of them, zero, one plus minus i minus i. They are the four, the six points on your sphere. So, and so you have, since you said you're from microwave this thing, I also happened to have a microwave degree sometime in my earlier years. So was something called a Jones vector between two orthogonal field components, E and H out there.
+
+So elevation sets the amplitude ratio between the two fields and azimuth sends the phase difference between the two things. So these four states can be represented with H and V, horizontal vertical phase. The phase difference between them is this. The polarization is this. The plus i and minus i represent circular polarization. Other four states are essentially linear polarization. One is at 90 and plus and minus 90. The other one is at plus and minus 45. Okay. So these were the four answers that you probably get this thing.
+
+Yeah, I will come to that. The phase kickback we will do. We'll do that in the class today. Okay. So global phase makes alpha real. So what do you mean by that? Once you have this out here, what you can do is that make alpha real by saying multiply this by multiply this term by e to the power minus i omega 0 so then this term becomes r1 e to the power i y1 minus y0 so this becomes r0 which is a real number this brings in the relative phase so you have taken care of one parameter.
+
+The normalization is basically |α|² + |β|² = 1, so the two magnitudes are not independent. So therefore r0 also goes away. And hence you're just now left with the two angles. Okay. So why θ/2? The opposite points are orthogonal. And hence if you look at the dot product between psi and psi. So if you have psi out here, the psi are exactly opposite 180 degrees apart.
+
+Do the maths it's cos θ/2 sine θ/2 minus sine so this is essentially cos squared so this is equal to 0 which is 180 degrees on the sphere and 90 degrees in C²d this is something that I wrote.
+
+## Poll: are the ±i states orthogonal? [Slide 11]
+
+Okay so let's take a quick poll on this question so you have plus i and minus i are the orthogonal so let's see a b c or the a b and c answers let's see on the screen. So intuitively you know where plus i and minus i are correct. So therefore you should be able to tell whether they are orthogonal or not. So if you do it with the conjugate, you will say that it is orthogonal. But if you don't do with the conjugate, you will say they are the same state.
+
+So the reason why I had this example was to show that you have to take care of the conjugate when you are doing the dot product or doing the inner product.
+
+## Outer products are operators [Slide 12]
+
+So the next thing is outer products. This is again something which I'm has done so this time previously it was ket okay this time you're doing an outer product okay so if you're doing a ket times bra okay so this is ket times bra this is the ket this is the bra this is therefore is the ket and the corresponding bra of the ket v is this which essentially gives you a matrix okay so this essentially measures how much the input looks like V. So that's an important thing. So previously you were getting an angle.
+
+The inner product is essentially an angle between the two. So it's used for measuring the probability, cetera. Here you're trying to say how much of the vector that you have given resembles the other vector. So the outer product is Therefore, now an operator, because now you have a matrix coming in. And we had. So take the outer product of zero and one. So this is |1⟩ and bra of zero. Ket of one is this. This is real. Therefore, I just take a transpose. But this was zero one. The transpose of this will become. 1 0.
+
+So, the transpose of this will become 1 0. So, 1 0 you have this is |1⟩ and if you multiply these two you get this vector. So, now this matrix, so now you want to see how much of this is along the basis vector 0.
+
+So, if you apply this outer product on this state what happens if you apply this outer product on this state what actually happens okay so two things that we want to see so let's clean this up no that's tensor product comes later okay outer product we are starting so we want to slowly define our say an inversion operation the X operator or the H operator So, we coming towards that. We are building up the case for that.
+
+So, if you look at this particular expression and this expression, remember this expression will have only a single 1 in its representation. If it's two dimensions, there will just be a single 1 and one 0. If it is three dimensions, it will have a single 1 and two 0s. So, this is a key thing that you need to remember. So, if you work on just 2 × 2, this thing on 2 dimensional this thing, so therefore every 2 × 2 matrix in that 0 1 space can be represented by an addition of the 4 vectors of the form or the, sorry, let put it this way.
+
+So, this will have the bra of the outer product of i and j is a matrix that we say the outer product of a bra and of a ket and a bra is a matrix. Now what is the property of that matrix that matrix will have a single one in row i of column j. So row i of column j. So if you see this has a one in row, so this is row 1 of column j. So, column j is 0, i is 1. So, this is something that you remember. That is just a way of constructing this matrix just without going through this multiplication.
+
+So, now look at this, so this is the outer product which is operating on this state. So now if you see this two states or this together is a ket and a bra, bra and a ket, sorry. So therefore you can write it like this. So you can separate it out. So that's the algebra that we are slowly getting into the algebra of using Dirac notation. Similarly here this and these two can be combined. Remember we started with this. We are applying a operator which is a ket times bra on a state in this particular state. Oh, how do you know what is this state?
+
+That's what Dirac did it. It's just you can do it. So that's it's linear algebra, correct? Linear algebra, all these matrices are of the same sizes. Correct. So you should be they work out the unitary, et cetera. So that's the reason why we do linear algebra first. So these two. So if you look at any book, you'll find that that the properties are proven. That's math part of it. I don't want to get into it. It's very easy to prove them also, but we're not getting into that.
+
+So the properties are, the reading material has the sections where the properties are given. So now you can do this. Therefore now you evaluate this product, this gives you a one, this gives you a zero. Therefore on a one, this will measure as zero. And this looks like it's correct. So this, we'll come to that later.
+
+## Completeness and projectors [Slide 13]
+
+So this is the most important theorem in this first part of the story. So there is a, so it comes from this statement. So every two by two matrix is a sum of the four of them. So what are those four? This is one. The second one is one, zero. The third one is zero, one, sorry. So these are the four for ij element of 0 and 1 correct. So, these are the 4 matrices, this is one matrix, this is one matrix, this is one matrix and this is another matrix. So, these are the 4 matrices correct. So, every 2 × 2 matrix is a sum of these 4 of them.
+
+So, now you can write this as a completeness equation. So, if you take 0 and 0 and the outer product was 0 and 0 and the outer product of 1 and 1, you get the entire space. So, that's equal to i. So, what it essentially means is that you take any orthonormal basis, it spans the whole vector space. So, whether you do it with 0 and 1 or you do it with plus and minus, you can cover the entire space. So, this is known as the completeness equation, relation. So, you take any vector, if you apply, You see that will end up that way.
+
+So this brings us to the fact that I want to look at what does this guy do. This guy in some sense wants to tell me how much of the input resembles V. How much of the input resembles V. So this is what is the state I'm trying to measure. I want to see how much of it resembles V. So this In this particular case, am trying to see how much of 0, I am given a vector or a state |0⟩. I want to understand how much of it resembles this. Clearly it is 1, the entire thing. And then I want to, for this state, I want to see how much does it resemble this.
+
+So, there is probably a mistake here. So, if this is my operator, So, this keeps the part of state along this and that's basically what I have been talking about. That this is my state, I want to see how much of it is along the get x. So, this operator gives me that information and it's called a projector because it also satisfies this equation. We can check it out, there will be a proof somewhere in a book. So, the projector applied on any state is essentially this. How much of it is in this?
+
+So, if you apply the Born rule again, which is from the measurement part, so P(x), probability of X now. This is projector Pₓ, projection onto |x⟩. The probability of the state giving the outcome x is the modulus squared of this inner product. Which is essentially this expression. So completeness and projection are important for this is for simplification. This is very important for measurement.
+
+## Gates as outer products [Slide 14]
+
+So now, as I said, we are slowly moving towards how do you describe gates, correct? So the most important gate is basically these three gates, correct? And we have some idea what these gates do. So X is just an inverter. So What does do? It swaps a 0 to 1 and a 1 to 0. You can actually, so this is my matrix form. If I had a vector 0, |0⟩ is 1 0, |1⟩ is 0 1. So, if I want 1 0 to become 0 1, therefore my matrix must look something like this, 0 1 1 0. And that's basically what this matrix is. So, therefore, How do get this matrix?
+
+So I come from here. So this part says that zero has to become one. Okay. And this part says one has to become zero. So once I have this, this gives me a matrix. Okay. Remember this will give me zero, one, zero, zero. This will give me, this will give me zero, one, zero, zero. If I add these two matrices, I get this. Okay. So there is basically, I just change the whenever there is a 1 I make it a minus 1.
+
+So similarly for this you will get a matrix for this you will get a matrix where the two matrices you will get this matrix for H you going from 0 to plus 1 to minus. So therefore the matrices will become 0 to this is your input this is your this is 1 you are getting a minus and if you write the corresponding matrices you will get this. Okay, so I come from here. So, outer products help me define operators. Okay. Outer products helps me define operators. Okay. So, how it acts is basically tells me how much of an input looks to another input.
+
+Okay. So, then we define the completeness thing, which is essentially saying that if I have two orthonormal basis, it covers the entire vector space. So these are the two orthonormal basis 0 and 1. I actually can cover the entire orthonormal basis. And they can be any two orthonormal basis vectors. I use this identity to go to a change of basis. This is in one basis. This is in another basis. So suppose my vector is like that. Initially, I describe it in terms of 0 and 1.
+
+Then at some point I would like to describe the same thing in terms of say x plus and minus. Let's do it this way. So I have 0 and 1. So I have a vector here which is described in terms of 0 and 1. I might want to describe it in terms of plus and minus. So this plus and minus I can do it. So if this was given as α|0⟩ + β|1⟩, I should be able to come up with α′|+⟩ + β′|−⟩. This how do I get to this? I get to this by using this identity operation. So, the next thing is projectors. Projectors helps me actually do the measurement.
+
+So, the measurement operator therefore the projection operator is this and keeps the part of the state along p of x and the Born rule tells me what is the how do I get my probability. Okay, so this so the gates are described as outer products. So this is a x gate, this is a z gate and this is a h gate. Okay, so these are the three gates that you will encounter. So How do you define the gate? So how do I get this gate to end the thing? So the gate sends the j to u of j. So j to u of j. So you see you're sending this to this. So this is j.
+
+You're sending j to u of j. You're sending this. So therefore, if you see you're sending 0 to 1 and 1 to 0. You read the direct form as a list of instructions. Okay, so just to work out h, okay, so 0 is going to plus and 1 is going to minus that's the definition of the h gate.
+
+Okay, so therefore you are this you can express this as this matrix this you can express this as this matrix by using this rule by using this rule you can come up with this line, you can come up with this matrices and then you add the two you will get this as the matrix for H. So this is important to remember and then internalize. This is something that you have to internalize. Internalize means that from now on all your algorithms etc will be written in these terms. So you have to be very comfortable with inner product and outer product.
+
+These two you have to be very comfortable with. That's why we started the course with a recap of linear algebra. And whatever you did in linear algebra there, all those properties hold for Dirac notation. The Dirac notation is simply a way to simplify this. Writing of large matrices. So keep this in mind. So for example, these are two by two matrix, instead of that I write it in a single line. So it shows the power. And as we go further along, we'll see why it is so important, but please internalize it. So that's important.
+
+## Checking X, Z and H with Dirac algebra [Slide 15]
+
+So we are doing X operation. Remember X is an inversion operation, then the X gate is given by this. So would like to apply this on state 0, because I want to see whether the definition that I gave is correct. So once you do this, then you can use the linearity property and the associative properties and bring 0 out here. So you bring in 0 out here, and you bring in 0 out here. The two of them give you 0 out here and a 1 out here. And you are left with just this. So that means x of 0 takes you to 1.
+
+Ok so the definition is this the result application of that with the inner product gives you the final state ok we doing z1 plus ok z1 plus is this gives you the plus is this state which is so if you work it out you will I didn't work it out so worked it out so h is also its own conjugate transpose so if you do H as written here, then H|+⟩ = |0⟩. So what this essentially means that each of each of zero is equal to zero. So we expand. Okay, this is the expansion we collect. This is the expansion we collect and watch once cancel out.
+
+So this is the cancellation is the most important state or the most important. All your algorithms, I've been stressing this many times, depend on the fact that amplitudes will cancel out to give me my result.
+
+## Unitarity — why quantum gates can be undone [Slide 16]
+
+So the other thing that you have done in the linear algebra recap is that what kets that the operators can be unitary. In quantum, all your operators are unitary, simply because of the, so the all, which essentially means that all gates can be reversed. That means the operation can be reversed except one. Okay. So, you start, you conjugate this thing, U is given by U U this thing, equal and that's equal to both of them commute and the product is equal to I. So therefore the inverse is equal to the conjugate transpose of the operator.
+
+And it preserves every inner product so therefore it essentially means that if there are two vectors and you apply a u on one of them, you apply a u on the system then the vectors move out here this angle theta still remains as that's basically what it means lens also stays and the lens stays one. So if you do h and h, that's what I did earlier. H and H. So zero this on this. Okay. And you keep on doing this algebra. You will get I. Yeah. So three steps that you do, you write out the expressions for each of the Kets and bras.
+
+Do the collect operation. That means you use the associative and linearity properties, and then you cancel out by using the value of the inner product that means if they are orthogonal. Key thing that you need to see is that A no matrices involved in calculation. So we are doing this using just the Dirac notation and every gate is a rotation. So the zero is rotated by 90 degrees θ/2 or 180 degrees to come to the other side. If you are at 1, you can rotate back to 0. So gates are rotations, except measurement gates.
+
+## Eigenvectors and eigenvalues of gates [Slide 17]
+
+So the other term that you must have got exposed to is in your recap or either he has not done or maybe how you should know about this is that there's something called an eigenvector. So very simply an eigenvector essentially is a, are those eigenvalues are So, eigenvectors are vectors which don't actually in a basis, they don't change under any transformation. That's the basic definition. And eigenvalues scale them. You have applied an operator, eigenvalues come from a matrix.
+
+That matrix is essentially an operator, that operator is essentially a, which does something to a vector, correct? It scales it in different directions. So, the eigenvalue essentially tells you, or the eigenvalues tells you basically, in each of the basis states how much of stretching has been done. So now for the two gates that we can think of z and x they are operators so they have a Matrix that matrix has eigenvalues. Okay, corresponding to those eigenvalues. There are eigenvectors Okay. Now these are two by two matrices.
+
+They are full rank matrices and hence for z and x for z the eigenvalues are what what do not for z what will not change the So these eigenvalues don't change okay, so what is not changing in the you think of in the Bloch sphere the 0 and 1 are not changing hence those must be the eigenvalues on the z-axis nothing no rotation changes the value on z on the z-axis correct and similarly for the x-axis nothing changes on the if you're rotating by along the round the x-axis nothing changes because if you and hence plus and minus are the eigenvalues in the for the x operator.
+
+And for the, so the eigenvectors are those and the eigenvalues are either plus or minus one. So this is something that you again internalize that every matrix of every gate is an operator. An operator is a matrix. A matrix will have a, will have eigenvalues. And corresponding to every eigenvalue there would be an eigenvector. So that's the line of thought. Now, given that we have eigenvalues and eigenvectors, given that we have eigenvalues and eigenvectors, so when we are performing a Z operation, we are doing something around the Z axis.
+
+So nothing changes along the Z axis. If we are doing an X operation, doing something along the X axis, the x axis nothing changes on that. So that's the way you want. So again this from from Amit's lectures you should probably know that the gate is the given that you know what the eigenvectors are you can write the gate in terms of the eigenvectors. So z we know that the eigenvectors are 0 and 1 so therefore I can write the eigenvectors like that from the completeness equation correct. And for the x also we can do the same.
+
+So this is something that is a very important takeaway from today's class that rotations which are the cornerstone of quantum algorithms, are moving things only in the Bloch sphere, I need to know how to do the rotation. The rotation is defined by a matrix. The matrix has eigenvalues and eigenvectors. Eigenvalues and eigenvectors will define the gate. So we have figured out how to define the gate from the way the input and output change. This is the other way to define it using the spectral form.
+
+## Proving HZH = X [Slide 18]
+
+So if you look at HZ, so that will be equal to X. So how do you prove it? So you have two gates, sandwiching a third gate. So, if you look at h and then you look at the definition of z that is given out there and then you have h correct. So, now you apply h to each of these of this thing correct. So, you go from this side. So, you go from here you go and then you have here correct. So, this is plus and this is minus correct and this together will give you x. Okay, so these are questions from Amit.
+
+I don't think I have given any questions, correct? So this is the general rule. You can look at it. It's essentially saying how do you move things. So essentially you move u out here, take lambda. That's basically what it's. So conjugating by u moves the eigenvectors and keeps the eigenvalues. H swaps the Z and X axes turns out z into x. Okay, so the next class we will actually do more of these gates.
+
+## Poll, break, and the identity HXH = Z [Slide 19–20]
+
+So this of course we have already answered. We didn't answer this. So what would be HXH? It would be z. Z sandwiched between h becomes an x and x sandwiched between z becomes a. So just take a five minute break and then we'll do the second, not the second, maybe the last 20 percent of take a five minute break. Everything is a rotation. What do you mean by reflection? Reflection is also rotation. It's not 10 minutes. Okay. We'll just come back in three minutes. Okay. So let's get back.
+
+So this is basically, how do we know if I give you a combination of gates, what is the output going to be for a particular state? Correct? So this you can evaluate as well as you can actually also tell me what is this gate equivalent. Okay. So this is actually equivalent to Z. So both of these things are necessary.
+
+## Tensor products — describing two qubits [Slide 21]
+
+So now I want to actually look at two qubit gates actually. So why is two qubit gates? So reflection and rotation, think in terms of the vector in a Bloch sphere, correct? What exactly would you mean by reflection? So zero to zero flips to one, correct? So therefore that's a rotation. So anyway, let's not get into that. So let me finish this. So now I want to talk about two qubits, correct? So both of them are in their own Bloch spheres. So I want to describe a system.
+
+If I want to describe a system which with these two qubits are saying, how do I go about it? So what do I mean by? two qubits in a system. So if I'm going to apply an operation, I might actually apply an operation U1 on this guy and U2 on this guy, or I might apply an operation U on the balls on a combination of these two systems. So I need to be able to have a, yeah, they're both different Bloch spheres here because every qubit, the blocks here represents only one qubit, correct?
+
+So you can't have more than one qubit in one Bloch sphere, because you have only one two angles to describe it. So, now, this is what I would like to be able to describe. So, therefore, both the qubits can be if I look at this scenario, both these qubits should evolve on their own. And in this particular case, they might actually have some interaction between them while they evolve. Remember a quantum system is something which evolves in time. So you want to give it the rotation is also something evolving in time.
+
+So, but I want to be able to describe them. So I describe them using tensor products. So how does a tensor products define? So if you have two qubits, they reside in two C²s. So this is equivalent to saying this is Bloch sphere one. This is Bloch sphere two. So and you write it in this format. So these are two kets and there's a tensor product between them. Okay. So you can write it this way. You can write it this way or you can write it this way. So essentially it means there are two different qubits in operation. Okay.
+
+So this ket is given by this. This ket is given by this. And the way it works is that you take this multiply take this as the as a scalar multiply this vector take this as a scalar multiply this vector and have a larger matrix okay that's how so what it essentially does is it allows you to describe a two to the so if you have two qubits you will need four dimensions to describe it, correct? You need two numbers to describe a single qubit from the Bloch sphere. You need two more to describe the other qubit.
+
+Therefore, you need a combination of these four numbers to describe two qubits. So that means it is a four dimensional space. So now if you have N qubits, you will need two ^n numbers to describe them. So therefore you get a two ^n dimensional space. Which can be described by an f. So, if you look at what are the possible things if |0⟩ and |1⟩ you will get one basis vector |1⟩ |0⟩ tensored with |0⟩ you will get say this as 0. So, what is the convention that you follow? This is a convention that you set up.
+
+All it means is that each of those basis vectors must have in that 2^n space must have a single, all of the, all the 2^n vectors must be, must have a single one in their representation. Okay. So the convention would be that for today is that the left label is the top wire and Qiskit of course does it the, does this way. What we are doing today is this way. Okay. So, The reason I did this was because many books do it this way, Qiskit does it.
+
+So if you are familiar with architecture, there's a term called one is little-endian and one is big-endian.
+
+## Gates on wires: the Kronecker rule [Slide 22]
+
+So gates work on wires, correct? As I said, have gates work on single qubits. That's how we have defined as of now, the H, Z, and X. CNOT we have not really formally defined in terms of these Dirac operators. That's what I. Intend to finish today with but the H, X and Z they are operating on individual wires. So if I have two qubits I say that the first guy is getting a H, the second guy is getting a no gate.
+
+So I tensor what is the operator that I am going to apply on the combined system, the operator is H ⊗ I, H is happening on the first qubit, I is happening on the lower qubit. So in this particular case, it is H ⊗ I. If you do this, if I have an X, it is X ⊗ I. If X is on the lower gate, on the lower wire, it is I ⊗ X. So this convention matters. So I'm doing it that the top one is, so there's a correspondence between this and this and this and the wires and this, correct? And this is corresponding to this. Qiskit does it the other way around.
+
+This is what you will write in code. This is the line you will write in code. So that's why I an order method. X at i is this. I. x is this vector. This is again a 2 × 2 vector. This is again a 2 × 2 vector. This is also 2 × 2 vector. This is also 2 × 2 vector. This is all 0 of 2 × 2 vectors. So this is the thing that I'm doing. And then once you have this so this is the 4 × 4 thing that you must remember and that this is a 2 × 2 matrix, is a 2 × 2 matrix, this is 1 by 2 × 2 and 2 × 2.
+
+So again the thing that you see is that we will only work with this, we will not work with this, that is the advantage of Dirac notation, it helps you simplify your algebra or at least do the algebra succinctly. So then you can apply linearity. So, if you are applying u on this, then you can apply Cx on this. All the x's will, the u will apply on both the lanes. So, that is for gates which don't talk to each other. So, if I am applying a u on this, so then u will go on this also, you will go on this also. So, therefore, it will be u.
+
+On something which has already applied this. So then this will actually become U of h tensored U of i. That's basically U is happening here and U is also happening here. So this is the linearity property. So that's basically what has been written out here.
+
+## CNOT built from tensor products [Slide 23]
+
+So now I want to do CNOT. CNOT, we have defined what CNOT is. The control defines what the target is going to be. So and I showed you that it is. Exclusive OR function. So if the control is 1, if the control is 1, this is the control is 1, you apply a x, if the control is 0, you apply a, you don't do anything. So that's the definition of CNOT using Dirac notation. And what is your P0 and P1? P0 is basically the outer product, that means you're looking for zeros, P1 you are looking for what? Where are you looking for that?
+
+In this, with respect to this terminal or with respect to this input. Okay. So this is something which shows you how you can express a if then else in Dirac notation. Okay. So therefore, if you look at this, this thing, this is so you'll have a matrix for this. You'll have a matrix for this.
+
+Multiply and do a tensor with i you'll get this remember these are all block matrices these are two by two matrices these again these are two by two matrices so there you're left with i and x correct which essentially means that this part is for the c and this is for t okay so nothing changes in the c part you're not changing anything that's why you have identity out here on the other hand you have you have a flip, correct? This is the X.
+
+So if you have a 1 0 out here with, so then this part in the original, this thing as an input, you will flip depending on what the value of C is. Okay. So remember, please go and expand this. See that it gives you an identity matrix. This gives you an X matrix. Okay. This also gives you an Initially you will have a 1 out here and then once you do a tensor you will get this. So work out these two. In fact I have given that also probably as the programming or the homework problem so that you land up with this. So these are just hints or checks.
+
+So if you... This was controlled on this. On the other hand you can have something like this. You can have this. This is still a valid circuit. What will be the output? The output here will be the same. This becomes language or control and this becomes your target. So this will be X exclusive OR Y. So how do you describe that? To describe that, know that. So now the control is on the bottom wire. So this is the control. This is the bottom wire. This is the control. Here this was the control.
+
+So the control goes to the bottom wire and the top wire remains the same as if the control is 0. If the control is 1, it flips. So x comes here. So therefore your matrix is. You have 0, 1, it goes to 1, 1. If it is 0, 0. Okay. So this is with respect to two qubits.
+
+## The tensor-product recipe for n qubits [Slide 24]
+
+And these two qubits are. Close to each other. Okay. They are adjacent to each other, but suppose they are not adjacent to each other. Okay. Suppose they are of this form. You have four qubits. Okay. There are four qubits and I want to do a CNOT between Q0 and Q3. That means this is my target. This is my, so this is my control and this is my target. Okay. So this is a four qubit system. So therefore I must describe it using four tensors and say a tensor product. Of 4 qubits. So therefore I have to have 4 terms. So these are my 4 terms.
+
+And as I said Q0 is out here and Q3. So Q0 and Q3 are the ones which are going to change. Q1 and Q2 are going to remain the same. So therefore I have identities for those. So this and this will always remain the same. Now Q0 is the control. So therefore Q0 is the control. Q3 is the guy which either remains the same or flips. So, and if you want to write it as an equation, you are saying that this is my starting state that becomes this state. That's the definition of a CNOT.
+
+And this is the way to, so there is still no quantum business happening out here. It's just the way I am actually defining a function using Dirac notation. So just to see that all of us are awake, what is the size of this? So at some point, this will be described by a matrix, correct? As of here, we describe this as a 2 × 2, 4 × 4 matrix. What is the size of this matrix? So it's a 16 × 16 matrix. So and what is the property of these matrices? Okay. So how many amplitudes? So this matrix is mostly zeros, correct? It's a very sparse matrix, okay?
+
+And it has ones along its diagonal that we can clearly see, correct? We can see most of the ones, but it also has ones in some other place, okay? So it'll look, the matrix will look probably something like this. It's a band, there'll be two, for this particular example, you would have. Two additional rows, two additional quote unquote diagonals where you'll probably have some more ones. So this is a black ones, Q0 equal to, therefore it does not flip, correct, for anything. Nothing happens. Red, it flips whenever there is a swap.
+
+So there are 16 non-zero entries out of 256. So if you have 20 qubits, you have about 10¹² entries and nobody writes this out. You don't want to, okay. You the simulator store the recipe. What is the recipe? Recipe. So there was this recipe somewhere out here. So this is essentially the recipe. So from this, I will be able to do symbolic manipulation and or maybe generate the vector or generate a matrix and do my computation. So n qubits you have to do the power and amplitudes and to the power n into 2.
+
+But the recipe is always n factors long, which is essentially this. This is what is stored.
+
+## Deriving the Bell state [Slide 25]
+
+So let's do the Bell state. The Bell state is an entangled state. So you start with, as you see now, we will actually only do with these bras and kets. So you have two, no, not exactly. So zeros and zeros, correct. You initialize with two classical states. You have a H out here and then you do a CNOT. Okay. So let's see what is the state out here. Okay. And we don't want to do, we want to do it algebraically. So your initial state out here is |0⟩ tensored with |0⟩. At this point you have applied H on the first one. So H into I. So, okay.
+
+So (H ⊗ I) is applied to the state |00⟩, and you get this. So if you do this operation, you'll get this. And then at this point, you go and do a CNOT of this guy. So CNOT of this and a CNOT of this. Now a CNOT of this by definition, nothing happens, correct? CNOT of this means that this one is going to get flipped. So now your final state is zero, zero plus one, one, which is the first bell state. So all the four states, this is one of the problems I think.
+
+We have given that if you start with different instead of 00 if you start with 01 you will get something if you start with 10 you'll get something and 11 you will get something so those are all the four Bell states.
+
+## Product states and entanglement [Slide 26]
+
+What is the property of this Bell state? So it means that you cannot factor them they are entangled. So a two qubit state is a product state if I can express it as a tensor product of my two states. On the other hand, if I cannot express it, then it becomes an entangled state. Okay. And this has no classical analog. Okay. So a product state will always look something like this. Okay. That means you're tensoring these two states and for each of these basis, you would have some value. It might be zero, but you would have values for all of them.
+
+In, you not have zero value, sorry, for a bell state to show that it is encas, so what do you do? You actually, so you have come across this state, correct? Zero, zero, maybe you have some component and one, one also you have some component. So you match it to this equation or you equate the coefficients. So ac = 1/√2, bd = 1/√2, and ad = bc = 0. Okay, now if you see this then you cannot get a satisfying assignment for A, B, C and D which essentially means that it cannot be expressed in this form.
+
+Okay, so this is the key thing that your entanglement means. It cannot be expressed as a product state. A product state means that I should be able to satisfy the coefficients given in this expression. If it is not possible, it is an entangled state. If it is possible, it a product state. A quick test is also this, that this C00, this and this, if you multiply should be equal to this. So, in this case, you will see that these two is equal to half and this two is equal to zero. So, they are not in this case.
+
+## Measuring one qubit of a Bell pair [Slide 27]
+
+So if you measure a pair, so the measurement is along that axis and the state becomes normalized to, so you have to do a renormalization of the state. So if you take a plus state and you measure it along, so you measure the first qubit, so you're measuring the first qubit, becomes this. So P(0) is half, the state remaining is again 0. Similarly, if you measure 1, you will see the state is 1, 1. So whatever is the first qubit, whatever the second is certain to show the same, that is the meaning of entangled.
+
+So every qubit is its own 50, 50 coins. We'll do the teleportation.
+
+## Quantum oracles U_f [Slide 28]
+
+So the last thing that I want to do is basically to do the Deutsch thing formally. So, what did we say? We said that the control depending on the control, this is my control, I get the exclusive OR of in my target. So, keep x and flip the helper if f of x. So, the helper is my target. This is my definition of that. Of CNOT, correct? That whatever is there on the control, you let it go. Whatever is in the target, you flip if, that means you change if the control is 1. Okay? So, if it is 0, nothing happens. Both are 0.
+
+If both are 1, again nothing happens. So, you actually flip the target. You, so copy CNOT and Flip is this thing. So these are my four gates, correct? So this I can actually write it as unit as those functions as this, correct? So, so how do I show that this is a unitary operation? I want to get a do same operation on it again and I will end up with X and Y. Okay, so this uf is unitary.
+
+So these are the four boxes for my as the four matrices and then I can come as the flip unitary as a sum of these four matrices and I get this, this we have already seen that CNOT is the this thing.
+
+## The phase-kickback lemma [Slide 29]
+
+So the thing that we said is the most important thing in Deutsch and I started the lecture also with this is this thing called phase and the phase information kets comes into the control. Because still now here X remains as X. See not nothing happens to the X. That's classical. Okay.
+
+Now we want to see why did we get this phase information into the control because remember now we are not working with zero and one, the classical zero and classical one states, we will give a plus and a minus state as the, so you will initialize the inputs to this gate as plus and minus where is that gate. So this I will initialize as plus and say my helper will be initialized at minus. So the helper will be initialized either at plus or minus actually minus.
+
+So if I initialize my helper on minus then if I do the algebra I say x remains as this the The function is either 0 or 1 and I am exclusive. So this is my control. This is my control 0 and 1 are the minus state 0 minus 1 by root 2 is the minus state. Control is 0 control is minus 1. So if you see now if f of x is 0 that means it is always 0. So then this is 0 0 and 1 will give me a 1 0 and 1 0 will give me a 0. Okay, one and zero will give me a one.
+
+So therefore I will be left with this If f of x is equal to one then you one and one will give me a zero zero and one will give me a one So I'm left with this one of them is a So I'm getting one minus zero. So therefore I can write it as minus zero minus one. So that is how this Phase information the state this this remember was my target nothing, no changes in the target. Only X changes if, and if f of X is equal to one and a minus sign comes in front. Where does it come? It therefore comes in the control.
+
+So therefore when I apply this operation, the target remains exactly like what I started with, which was a minus sign. The control also remains as X, but now I will actually have this, whether it's a plus or a minus X.
+
+Depends on the value of f of x if f of x is equal to zero it becomes it remains as minus of it remains exactly the same state if f of x is equal to one I |−⟩ one to the power one which is equal to minus one which essentially means that I have introduced a global phase to this so that means the phase information has come into the control okay the so therefore the takeaway from today's class is that if you do the algebra, then you see that the helper remains at the minus state. It does not move. Okay. The target does not change.
+
+The control becomes a sign on the answer. F of X becomes a sign on the input branch. That means on the control. Okay. So the, and minus, and if you go back to your wagon spaces, you'll see minus minus one is an eigenvector of x. And
+
+## Deutsch’s algorithm, line by line [Slide 30]
+
+so the Deutsch algorithm, this is what we had left you on that last week. So you initialize, you have to start any quantum algorithm or any algorithm with classical states. You cannot do without. That's the only thing that we understand. So from classical, I want to go to quantum. So I want to initialize this.
+
+This must become my and this thing minus state correct this is my minus state so with a and this thing and so so with a combination of these two i get a minus state because i need a one so as a if i could initialize with a one that is also okay then i don't need this so zero i do a spreading using both these hadamard gates so now if you see zero and one i start with phi zero is zero and one phi one is plus and minus state So plus out here minus state out here. Phi 2 is at this point I've applied this oracle and I get this expression.
+
+And then phi 3 I do a measurement. I do apply h on only the first line. There is i on this one. There is i on this one. And then I do a measurement. So if I do a measurement, I get a plus. If I do a measurement on one, if I against 1 I should |−⟩ 1. So together they help me and tell me the answer whether it is balanced or constant.
+
+## Constant versus balanced — constructive and destructive interference [Slide 31]
+
+So constant you get this and if it is balanced you get 0. So the measurement output reads 0 with probability 1, the measurement output reads 1 with probability 1. This is the key and or result that we showed with an animation in the beginning and then so animation showed that this is the spreading function this is applying the oracle and then h and h together will collapse it back to the original state.
+
+The coefficient of zero is the sum of two root amplitudes one through zero and one same signs they add opposite signs they cancel this is there in the animation and the plus minus is gives you the always one.
+
+## Deutsch–Jozsa generalisation (brief mention) [Slide 32–33]
+
+So this is something that will be generalized by Amit when he starts the algorithms where you now can answer if you have n bits, then can you answer the same query that whether it is a constant function or a balanced function. Okay, so that's the Deutsch–Jozsa. I will not do this. He will start from here.
+
+## The picture-to-symbol dictionary, completed [Slide 34–35]
+
+So therefore, if you complete the picture to symbol this thing. We looked at what does the arrow mean? This is basically the shadow. The measurement is this, the PX. Gate is a rotation. It's unitary. This sits on the X-axis. If there are two wires, you have entanglement. If you have, this is the entanglement state. You cannot factor. And the kickback thing comes to the control. And arrows add or cancel. Okay. So the pictures are for intuition. The algebra is for proof. So we will go with algebra from now on. Okay.
+
+So this is basically summarizes all the maths that we did today. And this will be the problem set for the thing.
+
+## Next lecture, class questions, and closing remarks [Slide 36–39]
+
+So tomorrow I will not, it will not be a TA session. It will actually be, I'll start with the gates because we are running one lecture behind. So tomorrow we will start gates and circuit design. Okay. Thank you. So let me see what are the questions. Hello, P0 plus what does a four qubit state have? I didn't do anything. So it depends on how I have written Q0, Q1, Q2, Q3. You can check that up. So the previous one Q0 was out here and Q3 was out here. That. Not really. Determinant of the matrix is probably not good enough.
+
+What will the determinant always be? Why should determinant be not there? So, okay. Now, ad minus bc, okay. In that sense, okay. Entanglement, I told you the three things, correct? Superposition, entanglement and interference. These are the three things which make a quantum algorithm. Okay. And the idea of the algorithm is that how can you actually Take the superposition and apply operators so that you can get interference and get the result on one of the measurement axes. That's basically what in short what a quantum algorithm is.
+
+The superposition comes from H. [UNCLEAR IN AUDIO/TRANSCRIPT] So I think I have explained this today. This I have explained. Global phase—global phase where? Where did I... Oh, so here. So normally what should have happened? Changes should have happened here, correct? This is my target qubit. This is my control. So therefore target qubit should have changed, but target qubit still remains as minus. |−⟩, correct? What has happened? |−⟩, |−⟩ remains as |−⟩ and a minus sign appears.
+
+So it becomes minus |−⟩, but you can also treat it as minus is a, you don't know where it is applying it. So therefore we can say that it is with X not with. Minus because that's exactly what we're doing, we're pulling out the minus from here and putting it in front of x. So this minus is essentially a global phase, it's not relative between x and minus, correct? So remember this global phase cannot be measured, so that is why we're not saying it is associated with either the target or the thing.
+
+So yeah, there is a way to measure how tangled two states are because here we are completely assuming that They're completely entangled. Might be partial entanglement also. Physics guys do that. We don't need to. We say that they are completely entangled. Okay. So I think we can. Yeah. Perfect correlation. Yes. If you measure zero, if you measure one qubit, you know the answer to the other. Okay. Thank you. Let's stop here. I will give you the edited slides later along with the problems. Thank you. [UNCLEAR IN AUDIO/TRANSCRIPT] Thank you. Thank you.
+
+Thank you so much, Professor. Thank you.
+
+---
+
+*End of lecture transcript.*
