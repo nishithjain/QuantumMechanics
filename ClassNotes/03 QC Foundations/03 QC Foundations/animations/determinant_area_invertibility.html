@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Determinant: Area and Invertibility</title>
+<style>
+  :root { color-scheme: light; --ink:#172b4d; --blue:#2878b5; --teal:#159b8a; --orange:#e87936; --red:#d94b55; --grid:#e7edf3; }
+  * { box-sizing:border-box }
+  body { margin:0; padding:24px; background:#f5f7fa; color:var(--ink); font:16px/1.45 system-ui,-apple-system,Segoe UI,Arial,sans-serif }
+  main { max-width:1100px; margin:auto }
+  h1 { margin:0 0 8px; font-size:clamp(23px,4vw,34px); text-align:center }
+  .intro { text-align:center; color:#52647a; margin:0 auto 20px; max-width:760px }
+  .panel { background:white; border:1px solid #dce4ec; border-radius:16px; padding:18px; box-shadow:0 5px 18px #20344a0c }
+  .controls { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:14px }
+  button { border:1px solid #cbd6e2; background:#fff; color:var(--ink); padding:10px 15px; border-radius:9px; font-weight:650; cursor:pointer }
+  button.active { background:#e8f2fb; border-color:var(--blue); color:#145b91 }
+  button:hover { border-color:var(--blue) }
+  .stage { display:grid; grid-template-columns:minmax(0,1fr) 280px; gap:18px; align-items:stretch }
+  canvas { width:100%; height:auto; display:block; background:#fff; border:1px solid #edf1f5; border-radius:12px }
+  .readout { display:flex; flex-direction:column; gap:12px }
+  .metric { padding:13px; border-radius:11px; background:#f5f8fb }
+  .metric small { display:block; color:#607187; margin-bottom:4px }
+  .metric strong { font-size:22px; font-variant-numeric:tabular-nums }
+  .matrix { font-family:ui-monospace,Consolas,monospace; white-space:pre; line-height:1.55; font-size:17px }
+  .explain { padding:13px; border-radius:11px; background:#fff7e9; color:#76501f; font-size:14px }
+  .status { padding:12px; border-radius:11px; font-weight:700 }
+  .good { background:#e8f7ef; color:#167344 }
+  .bad { background:#fff0f0; color:#b42f3b }
+  .bottom { margin-top:16px; color:#53657a; font-size:14px }
+  .legend { display:flex; gap:16px; flex-wrap:wrap; margin-top:10px; color:#53657a; font-size:13px }
+  .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px }
+  @media(max-width:760px) { body{padding:12px} .stage{grid-template-columns:1fr} .readout{display:grid;grid-template-columns:1fr 1fr} .explain{grid-column:1/-1} }
+</style>
+</head>
+<body>
+<main>
+  <h1>What does the determinant tell us?</h1>
+  <p class="intro">Watch the unit square transform into a parallelogram. Its area is multiplied by <b>|det(A)|</b>.</p>
+  <section class="panel">
+    <div class="controls" aria-label="Choose transformation">
+      <button id="invertible" class="active">Invertible: det(A) ≠ 0</button>
+      <button id="singular">Non-invertible: det(A) = 0</button>
+      <button id="animate">Animate transformation</button>
+      <button id="reset">Reset (identity)</button>
+    </div>
+    <div class="stage">
+      <div>
+        <canvas id="plot" width="720" height="520" aria-label="Animated coordinate plane showing a transformed unit square"></canvas>
+        <div class="legend">
+          <span><i class="dot" style="background:#2878b5"></i>First column: A e₁</span>
+          <span><i class="dot" style="background:#159b8a"></i>Second column: A e₂</span>
+          <span><i class="dot" style="background:#e87936"></i>Transformed unit square</span>
+        </div>
+      </div>
+      <aside class="readout">
+        <div class="metric"><small>Transformation matrix A</small><div class="matrix" id="matrix">[ 2.0   0.5 ]<br>[ 0.5   1.5 ]</div></div>
+        <div class="metric"><small>Determinant</small><strong id="det">2.75</strong></div>
+        <div class="metric"><small>Area of transformed square</small><strong id="area">2.75</strong></div>
+        <div class="status good" id="status">INVERTIBLE</div>
+        <div class="explain" id="explain">The column vectors are not on the same line. The parallelogram has nonzero area, so the transformation can be reversed.</div>
+      </aside>
+    </div>
+    <p class="bottom"><b>How to read the picture:</b> the two columns of A are the two arrows from the origin. The four corners of the unit square map to 0, the first column, the second column, and their sum. <b>Mode buttons</b> jump to that matrix; <b>Reset</b> returns to the identity (dashed unit square); <b>Animate</b> morphs from identity to the chosen matrix.</p>
+  </section>
+</main>
+<script>
+(() => {
+  const canvas = document.getElementById('plot'), ctx = canvas.getContext('2d');
+  const $ = id => document.getElementById(id);
+  const goodA = [[2,0.5],[0.5,1.5]];
+  const badA  = [[2,4],[1,2]];
+  let mode = 'good', progress = 1, animating = false, raf = 0, start = 0;
+  const mix = (a,b,t) => a+(b-a)*t;
+  function current() {
+    const target = mode === 'good' ? goodA : badA;
+    return [[mix(1,target[0][0],progress),mix(0,target[0][1],progress)],
+            [mix(0,target[1][0],progress),mix(1,target[1][1],progress)]];
+  }
+  function drawArrow(x1,y1,x2,y2,color,width=4) {
+    const dx=x2-x1, dy=y2-y1, ang=Math.atan2(dy,dx), head=12;
+    ctx.strokeStyle=color; ctx.fillStyle=color; ctx.lineWidth=width;
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x2,y2);
+    ctx.lineTo(x2-head*Math.cos(ang-0.45),y2-head*Math.sin(ang-0.45));
+    ctx.lineTo(x2-head*Math.cos(ang+0.45),y2-head*Math.sin(ang+0.45));
+    ctx.closePath(); ctx.fill();
+  }
+  function render() {
+    const A=current(), a=[A[0][0],A[1][0]], b=[A[0][1],A[1][1]], c=[a[0]+b[0],a[1]+b[1]];
+    const det=A[0][0]*A[1][1]-A[0][1]*A[1][0];
+    const W=canvas.width,H=canvas.height, ox=115, oy=420, scale=76;
+    const X=x=>ox+x*scale, Y=y=>oy-y*scale;
+    ctx.clearRect(0,0,W,H);
+    ctx.lineWidth=1; ctx.strokeStyle='#e8edf2';
+    for(let x=-1;x<=7;x++){ctx.beginPath();ctx.moveTo(X(x),30);ctx.lineTo(X(x),H-35);ctx.stroke();}
+    for(let y=-1;y<=6;y++){ctx.beginPath();ctx.moveTo(45,Y(y));ctx.lineTo(W-25,Y(y));ctx.stroke();}
+    ctx.strokeStyle='#263b57';ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(45,oy);ctx.lineTo(W-25,oy);ctx.moveTo(ox,H-35);ctx.lineTo(ox,25);ctx.stroke();
+    ctx.fillStyle='#263b57';ctx.font='15px system-ui';
+    for(let x=0;x<=7;x++) if(x){ctx.fillText(x,X(x)-4,oy+22);}
+    for(let y=1;y<=6;y++)ctx.fillText(y,ox-23,Y(y)+5);
+    ctx.fillText('x',W-20,oy+5);ctx.fillText('y',ox-8,18);ctx.fillText('0',ox-19,oy+19);
+    ctx.save();ctx.setLineDash([5,5]);ctx.strokeStyle='#9aa8b7';ctx.lineWidth=2;
+    ctx.strokeRect(X(0),Y(1),scale,scale);ctx.restore();
+    ctx.beginPath();ctx.moveTo(X(0),Y(0));ctx.lineTo(X(a[0]),Y(a[1]));ctx.lineTo(X(c[0]),Y(c[1]));ctx.lineTo(X(b[0]),Y(b[1]));ctx.closePath();
+    ctx.fillStyle='rgba(232,121,54,0.20)';ctx.fill();ctx.strokeStyle='#e87936';ctx.lineWidth=3;ctx.stroke();
+    drawArrow(X(0),Y(0),X(a[0]),Y(a[1]),'#2878b5',4);
+    drawArrow(X(0),Y(0),X(b[0]),Y(b[1]),'#159b8a',4);
+    ctx.fillStyle='#1b2d45';ctx.font='bold 15px system-ui';
+    ctx.fillText('A e₁',X(a[0])+8,Y(a[1])-9);ctx.fillText('A e₂',X(b[0])+8,Y(b[1])-9);
+    ctx.fillText('A(e₁ + e₂)',X(c[0])+8,Y(c[1])-8);
+    ctx.fillStyle='#e87936';ctx.font='bold 14px system-ui';ctx.fillText('transformed unit square',X((a[0]+b[0])/2)+5,Y((a[1]+b[1])/2)-8);
+    $('matrix').innerHTML=`[ ${A[0][0].toFixed(2)}   ${A[0][1].toFixed(2)} ]<br>[ ${A[1][0].toFixed(2)}   ${A[1][1].toFixed(2)} ]`;
+    $('det').textContent=det.toFixed(2);$('area').textContent=Math.abs(det).toFixed(2);
+    const singular=Math.abs(det)<0.015;
+    $('status').textContent=singular?'NON-INVERTIBLE':'INVERTIBLE';
+    $('status').className='status '+(singular?'bad':'good');
+    $('explain').textContent=singular
+      ? 'The two column vectors lie on the same line. The parallelogram has collapsed to a line: its area is zero, so different inputs can produce the same output.'
+      : 'The column vectors are not on the same line. The parallelogram has nonzero area, so the transformation can be reversed.';
+  }
+  function stop(){animating=false;cancelAnimationFrame(raf);start=0;$('animate').textContent='Animate transformation';}
+  /** Show the selected example matrix immediately (progress = 1). */
+  function choose(m){
+    stop();
+    mode=m;
+    progress=1;
+    $('invertible').classList.toggle('active',m==='good');
+    $('singular').classList.toggle('active',m==='bad');
+    render();
+  }
+  /** Back to identity (unit square unchanged) — ready to press Animate again. */
+  function resetView(){
+    stop();
+    progress=0;
+    render();
+  }
+  function tick(ts){
+    if(!start)start=ts;
+    progress=Math.min(1,(ts-start)/1400);
+    render();
+    if(progress<1){raf=requestAnimationFrame(tick);}
+    else stop();
+  }
+  $('invertible').onclick=()=>choose('good');
+  $('singular').onclick=()=>choose('bad');
+  $('animate').onclick=()=>{
+    if(animating){stop();return;}
+    if(progress>=0.999)progress=0;
+    animating=true;
+    start=0;
+    $('animate').textContent='Pause animation';
+    raf=requestAnimationFrame(tick);
+  };
+  $('reset').onclick=()=>resetView();
+  choose('good');
+})();
+</script>
+</body>
+</html>
