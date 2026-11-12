@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Four computational basis kets</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#edf2fa;margin:0;padding:20px;color:#152744}
+main{max-width:640px;margin:auto;background:#fff;border-radius:14px;border:1px solid #c9d6e7;padding:18px}
+h1{font-size:18px;margin:0 0 10px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid #dce3ef;padding:10px;text-align:center}
+th{background:#eaf0ff}
+.mono{font-family:Georgia,serif;font-size:16px}
+</style>
+</head>
+<body>
+<main>
+<h1>|00⟩, |01⟩, |10⟩, |11⟩ as column vectors</h1>
+<p style="font-size:13px;color:#465a75">Order is always <strong>top wire first</strong>, then bottom: |xy⟩ has digit x for qubit 1 and y for qubit 2.</p>
+<table>
+<tr><th>Ket</th><th>Meaning</th><th>Column (4 entries)</th></tr>
+<tr><td class="mono">|00⟩</td><td>both 0</td><td class="mono">(1, 0, 0, 0)ᵀ</td></tr>
+<tr><td class="mono">|01⟩</td><td>0 then 1</td><td class="mono">(0, 1, 0, 0)ᵀ</td></tr>
+<tr><td class="mono">|10⟩</td><td>1 then 0</td><td class="mono">(0, 0, 1, 0)ᵀ</td></tr>
+<tr><td class="mono">|11⟩</td><td>both 1</td><td class="mono">(0, 0, 0, 1)ᵀ</td></tr>
+</table>
+<p style="font-size:12px;margin-top:12px;color:#465a75">Each column is |0⟩⊗|0⟩, |0⟩⊗|1⟩, |1⟩⊗|0⟩, |1⟩⊗|1⟩ from the tensor product rule in §19.</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eigenvectors — reflection demo</title>
+<style>
+:root{--ink:#172b4d;--muted:#526581;--blue:#2455c8;--green:#167548;--red:#b42318;--line:#d7e0ef;--bg:#eef3fb}
+*{box-sizing:border-box}
+body{margin:0;padding:18px 12px;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+main{max-width:720px;margin:auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+h1{font-size:18px;margin:0 0 6px}
+.sub{font-size:13px;color:var(--muted);margin:0 0 12px;line-height:1.5}
+canvas{display:block;width:100%;height:auto;border-radius:10px;background:#fafcff;border:1px solid var(--line);touch-action:none;cursor:crosshair}
+.panel{margin-top:12px;font-size:14px;line-height:1.55}
+.eq{font-family:Georgia,serif}
+.tag{display:inline-block;font-weight:800;padding:4px 10px;border-radius:8px;margin-top:6px}
+.tag.yes{background:#eaf8f1;color:var(--green)}
+.tag.no{background:#fff3f2;color:var(--red)}
+.hint{font-size:12px;color:var(--muted);margin-top:10px}
+</style>
+</head>
+<body>
+<main>
+  <h1>Drag the input vector</h1>
+  <p class="sub">Matrix <span class="eq">A = diag(1, −1)</span> (reflection across the x-axis). Drag the blue tip. Orange is <span class="eq">Av</span>. Green/red dashed lines: eigendirections with λ = +1 and λ = −1.</p>
+  <canvas id="c" width="640" height="400"></canvas>
+  <div class="panel" id="out"></div>
+  <p class="hint">An eigenvector stays on the same line through the origin after the transformation (possibly reversed).</p>
+</main>
+<script>
+const c=document.getElementById("c"),ctx=c.getContext("2d");
+const W=c.width,H=c.height,cx=W/2,cy=H/2,scale=70;
+let vx=1.2,vy=1;
+
+function reflect(x,y){return [x,-y]}
+
+function toScreen(x,y){return [cx+x*scale,cy-y*scale]}
+
+function drawAxes(){
+  ctx.strokeStyle="#cbd5e1";ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(0,cy);ctx.lineTo(W,cy);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx,0);ctx.lineTo(cx,H);ctx.stroke();
+  ctx.strokeStyle="#94a3b8";ctx.setLineDash([6,6]);
+  ctx.beginPath();const [x0,y0]=toScreen(2,0);ctx.moveTo(cx,cy);ctx.lineTo(x0,y0);ctx.stroke();
+  ctx.strokeStyle="#e11d48";ctx.beginPath();const [x1,y1]=toScreen(0,2);ctx.moveTo(cx,cy);ctx.lineTo(x1,y1);ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function arrow(sx,sy,ex,ey,color,lw){
+  ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=lw;
+  ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.stroke();
+  const ang=Math.atan2(ey-sy,ex-sx),L=10;
+  ctx.beginPath();
+  ctx.moveTo(ex,ey);
+  ctx.lineTo(ex-L*Math.cos(ang-.35),ey-L*Math.sin(ang-.35));
+  ctx.lineTo(ex-L*Math.cos(ang+.35),ey-L*Math.sin(ang+.35));
+  ctx.fill();
+}
+
+function collinear(a,b,eps=1e-3){
+  const cross=a[0]*b[1]-a[1]*b[0];
+  return Math.abs(cross)<eps*(Math.hypot(...a)+Math.hypot(...b)+1);
+}
+
+function lambdaIfEigen(v,w){
+  if(Math.abs(v[0])>1e-6) return w[0]/v[0];
+  if(Math.abs(v[1])>1e-6) return w[1]/v[1];
+  return 1;
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  drawAxes();
+  const [wx,wy]=reflect(vx,vy);
+  const [is,js]=toScreen(vx,vy);
+  const [ws,wt]=toScreen(wx,wy);
+  arrow(cx,cy,is,js,"#2455c8",3);
+  arrow(cx,cy,ws,wt,"#ea580c",3);
+  const eigen=collinear([vx,vy],[wx,wy]);
+  const lam=lambdaIfEigen([vx,vy],[wx,wy]);
+  let html=`Input <strong>v</strong> = (${vx.toFixed(2)}, ${vy.toFixed(2)})<br>`;
+  html+=`Output <strong>Av</strong> = (${wx.toFixed(2)}, ${wy.toFixed(2)})<br>`;
+  if(eigen){
+    const s=Math.abs(lam-1)<.05?"≈ +1":Math.abs(lam+1)<.05?"≈ −1":`≈ ${lam.toFixed(2)}`;
+    html+=`<span class="tag yes">Same line — eigenvector with λ ${s}</span>`;
+  }else{
+    html+=`<span class="tag no">Not on the same line — not an eigenvector</span>`;
+  }
+  document.getElementById("out").innerHTML=html;
+}
+
+function ptr(ev){
+  const r=c.getBoundingClientRect();
+  const x=(ev.clientX-r.left)*(W/r.width);
+  const y=(ev.clientY-r.top)*(H/r.height);
+  vx=(x-cx)/scale;vy=-(y-cy)/scale;
+  if(Math.hypot(vx,vy)<.15){vx=.2;vy=.2}
+  draw();
+}
+
+let drag=false;
+c.addEventListener("pointerdown",e=>{drag=true;c.setPointerCapture(e.pointerId);ptr(e)});
+c.addEventListener("pointermove",e=>{if(drag)ptr(e)});
+c.addEventListener("pointerup",()=>drag=false);
+draw();
+</script>
+</body>
+</html>

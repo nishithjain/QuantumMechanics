@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partial measurement — try it</title>
+<style>
+:root{--ink:#172b4d;--muted:#526581;--blue:#2455c8;--line:#d7e0ef;--bg:#eef3fb;--green:#167548;--panel:#fff}
+*{box-sizing:border-box}
+body{margin:0;padding:24px 14px;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif}
+main{max-width:720px;margin:auto}
+.card{background:var(--panel);border-radius:16px;padding:24px 22px;box-shadow:0 8px 26px rgba(30,55,90,.08);border:1px solid var(--line)}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+h1{font-size:clamp(22px,4.5vw,28px);margin:8px 0 6px;line-height:1.25}
+.intro{color:var(--muted);font-size:14px;line-height:1.55;margin:0 0 18px}
+.choices{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+button.choice{border:1.5px solid var(--line);border-radius:11px;padding:12px 16px;font:inherit;font-weight:700;cursor:pointer;background:#f7f9ff;color:var(--ink);flex:1;min-width:140px}
+button.choice:hover{border-color:#9bb2e8;background:#eef3ff}
+button.choice.active{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 4px 14px #2455c840}
+.panel{display:none;border:1px solid var(--line);border-radius:14px;padding:18px 16px;background:#fafcff}
+.panel.show{display:block}
+.stat{font-size:14px;margin:0 0 8px;line-height:1.5}
+.stat strong{color:var(--blue)}
+.states{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.badge{font-weight:800;padding:8px 14px;border-radius:9px;background:#e8eef9;border:1px solid #c5d4ee;font-size:15px}
+.formula{margin:14px 0;padding:14px;background:#fff;border-radius:10px;border:1px dashed #c5d4ee;text-align:center;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:1.5}
+.note{margin:12px 0 0;font-size:14px;color:var(--muted);line-height:1.55}
+.note strong{color:var(--green)}
+.hint{margin-top:16px;font-size:13px;color:var(--muted);line-height:1.5}
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="eyebrow">Lecture example · §19</div>
+  <h1>Try the measurement yourself</h1>
+  <p class="intro">State <span class="math">(|00⟩+|01⟩+|10⟩)/√3</span> — choose the outcome of measuring <strong>only the first qubit</strong>.</p>
+  <div class="choices" role="group" aria-label="First qubit measurement result">
+    <button type="button" class="choice active" data-branch="0">First qubit = 0</button>
+    <button type="button" class="choice" data-branch="1">First qubit = 1</button>
+  </div>
+  <section id="panel0" class="panel show" aria-live="polite">
+    <p class="stat"><strong>Probability:</strong> 2/3</p>
+    <p class="stat"><strong>Remaining basis states:</strong></p>
+    <div class="states"><span class="badge">|00⟩</span><span class="badge">|01⟩</span></div>
+    <p class="stat"><strong>Normalized final state:</strong></p>
+    <div class="formula">(|00⟩ + |01⟩) / √2</div>
+    <p class="note"><strong>In words:</strong> The first qubit is definitely 0; the second qubit is still in an equal superposition of 0 and 1.</p>
+  </section>
+  <section id="panel1" class="panel" aria-live="polite">
+    <p class="stat"><strong>Probability:</strong> 1/3</p>
+    <p class="stat"><strong>Remaining basis states:</strong></p>
+    <div class="states"><span class="badge">|10⟩</span></div>
+    <p class="stat"><strong>Normalized final state:</strong></p>
+    <div class="formula">|10⟩</div>
+    <p class="note"><strong>In words:</strong> The first qubit is definitely 1; the second qubit is definitely 0.</p>
+  </section>
+  <p class="hint">Tip: Compare with measuring <em>both</em> qubits — then each of |00⟩, |01⟩, and |10⟩ has probability 1/3 individually.</p>
+</main>
+<script>
+const buttons=[...document.querySelectorAll(".choice")];
+const panels={0:document.getElementById("panel0"),1:document.getElementById("panel1")};
+buttons.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const b=btn.dataset.branch;
+    buttons.forEach(x=>x.classList.toggle("active",x===btn));
+    Object.values(panels).forEach(p=>p.classList.remove("show"));
+    panels[b].classList.add("show");
+  });
+});
+</script>
+</body>
+</html>

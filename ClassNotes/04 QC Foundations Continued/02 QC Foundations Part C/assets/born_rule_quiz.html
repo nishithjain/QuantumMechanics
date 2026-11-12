@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Born rule — quick check</title>
+<style>
+:root{--ink:#152744;--muted:#465a75;--blue:#214fc2;--ok:#167548;--bad:#b42318;--line:#dce3ef;--bg:#edf2fa}
+*{box-sizing:border-box}
+body{margin:0;padding:18px 12px;background:var(--bg);font-family:system-ui,sans-serif;color:var(--ink)}
+main{max-width:560px;margin:auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}
+h1{font-size:18px;margin:0 0 8px}
+p{font-size:13px;color:var(--muted);line-height:1.45;margin:0 0 12px}
+.state{font-size:14px;color:var(--ink);line-height:1.55;margin:0 0 14px;padding:10px 12px;background:#f6f8fc;border:1px solid var(--line);border-radius:8px}
+.ket{font-family:Georgia,"Times New Roman",serif;font-style:normal;letter-spacing:.02em}
+.q{margin:14px 0;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:14px}
+label{display:block;margin:6px 0;cursor:pointer}
+button{margin-top:10px;border:0;border-radius:8px;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer;background:var(--blue);color:#fff}
+#msg{margin-top:12px;font-size:14px;font-weight:600;min-height:1.2em}
+</style>
+</head>
+<body>
+<main>
+<h1>Born rule check</h1>
+<p class="state">
+  State<br>
+  <span class="ket">|ψ⟩</span> = (√3/2)<span class="ket">|0⟩</span> + (1/2)<span class="ket">|1⟩</span>
+</p>
+<p>Pick the measurement probabilities <strong>P(0)</strong> and <strong>P(1)</strong> in the <span class="ket">|0⟩</span>, <span class="ket">|1⟩</span> (Z) basis. Amplitudes are √3/2 and 1/2 — not the probabilities.</p>
+<div class="q">
+  <strong>1. P(0) in the Z basis?</strong>
+  <label><input type="radio" name="p0" value="a"> 3/4</label>
+  <label><input type="radio" name="p0" value="b"> 1/4</label>
+  <label><input type="radio" name="p0" value="c"> √3/2</label>
+</div>
+<div class="q">
+  <strong>2. P(1)?</strong>
+  <label><input type="radio" name="p1" value="a"> 1/4</label>
+  <label><input type="radio" name="p1" value="b"> 3/4</label>
+  <label><input type="radio" name="p1" value="c"> 1/2</label>
+</div>
+<button type="button" id="check">Check answers</button>
+<div id="msg"></div>
+</main>
+<script>
+(function () {
+  var btn = document.getElementById("check");
+  var msg = document.getElementById("msg");
+  btn.addEventListener("click", function () {
+    var p0 = document.querySelector('input[name="p0"]:checked');
+    var p1 = document.querySelector('input[name="p1"]:checked');
+    if (!p0 || !p1) {
+      msg.style.color = "var(--bad)";
+      msg.textContent = "Answer both questions.";
+      return;
+    }
+    var ok = p0.value === "a" && p1.value === "a";
+    msg.style.color = ok ? "var(--ok)" : "var(--bad)";
+    msg.textContent = ok
+      ? "Correct: (sqrt3/2)^2 = 3/4 and (1/2)^2 = 1/4. They sum to 1."
+      : "Try again: square each amplitude's magnitude. sqrt3/2 and 1/2 are amplitudes, not P(0) or P(1).";
+  });
+})();
+</script>
+</body>
+</html>
