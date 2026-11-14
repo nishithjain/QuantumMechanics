@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bloch Sphere Gate Explorer</title>
+<style>
+  :root { color-scheme: light; font-family: system-ui, sans-serif; color: #172337; background: #f5f8fc; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: clamp(12px, 4vw, 32px); }
+  main { max-width: 640px; margin: auto; padding: clamp(16px, 4vw, 32px); background: white; border: 1px solid #dbe4ef; border-radius: 18px; }
+  h1 { margin: 0 0 20px; font-size: clamp(1.35rem, 4vw, 1.9rem); }
+  fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  legend, label { font-weight: 600; margin-bottom: 7px; padding: 0; }
+  .controls, .buttons, .legend { display: flex; flex-wrap: wrap; gap: 8px; }
+  .controls { gap: 16px 24px; align-items: end; }
+  .state-picker { flex: 1 1 135px; }
+  label { display: block; }
+  button, select { font: inherit; min-height: 44px; border-radius: 9px; border: 1px solid #a5b4c8; background: white; color: inherit; }
+  button { min-width: 44px; cursor: pointer; }
+  button[aria-pressed="true"] { background: #174eb0; border-color: #174eb0; color: white; }
+  select { width: 100%; padding: 0 10px; }
+  :focus-visible { outline: 3px solid #174eb0; outline-offset: 3px; }
+  figure { margin: 12px 0 0; }
+  svg { display: block; width: 100%; max-width: 440px; height: auto; margin: auto; }
+  .sphere, .equator { fill: none; stroke: #a6b5c8; }
+  .axis { stroke-width: 1.5; }
+  .ket { fill: #172337; font-size: 17px; text-anchor: middle; }
+  .axis-label { font-size: 16px; font-weight: 700; text-anchor: middle; }
+  .legend { justify-content: center; font-size: .875rem; color: #384a62; gap: 8px 20px; }
+  .symbol { display: inline-block; width: .75rem; height: .75rem; border: 2px solid #174eb0; border-radius: 50%; margin-right: .35rem; }
+  .solid { background: #174eb0; }
+  .result { text-align: center; background: #edf4ff; padding: 12px; border-radius: 10px; margin-top: 16px; }
+  output { display: block; font-size: 1.15rem; font-weight: 650; }
+  .result p { margin: 5px 0 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Bloch Sphere Gate Explorer</h1>
+  <div class="controls">
+    <fieldset>
+      <legend>Gate</legend>
+      <div class="buttons">
+        <button type="button" data-gate="X" aria-pressed="false">X</button>
+        <button type="button" data-gate="Y" aria-pressed="false">Y</button>
+        <button type="button" data-gate="Z" aria-pressed="true">Z</button>
+      </div>
+    </fieldset>
+    <div class="state-picker">
+      <label for="state">Input state</label>
+      <select id="state">
+        <option value="0">|0⟩</option>
+        <option value="1" selected>|1⟩</option>
+        <option value="2">|+⟩</option>
+        <option value="3">|−⟩</option>
+        <option value="4">|+i⟩</option>
+        <option value="5">|−i⟩</option>
+      </select>
+    </div>
+  </div>
+  <figure>
+    <svg viewBox="0 0 340 344" role="img" aria-labelledby="sphere-title sphere-desc">
+      <title id="sphere-title">Bloch sphere with labeled x, y and z axes</title>
+      <desc id="sphere-desc">The positive axes point to |+⟩ on x, |+i⟩ on y, and |0⟩ on z. The curved arrow connects the input and output points.</desc>
+      <defs>
+        <marker id="output-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#174eb0"/></marker>
+      </defs>
+      <circle class="sphere" cx="170" cy="166" r="109"/>
+      <ellipse class="equator" cx="170" cy="166" rx="109" ry="43"/>
+      <path class="axis" d="M44 166H296" stroke="#9b4319"/>
+      <path class="axis" d="M262 134L78 198" stroke="#167051"/>
+      <path class="axis" d="M170 42V290" stroke="#6646a6"/>
+      <g class="axis-label">
+        <text x="308" y="172" fill="#9b4319">+x</text>
+        <text x="61" y="206" fill="#167051">+y</text>
+        <text x="170" y="27" fill="#6646a6">+z</text>
+      </g>
+      <g fill="#526682">
+        <circle cx="170" cy="57" r="3"/><circle cx="170" cy="275" r="3"/>
+        <circle cx="279" cy="166" r="3"/><circle cx="61" cy="166" r="3"/>
+        <circle cx="92" cy="193" r="3"/><circle cx="248" cy="139" r="3"/>
+      </g>
+      <path id="transition" fill="none" stroke="#174eb0" stroke-width="2" marker-end="url(#output-arrow)"/>
+      <circle id="input-point" cx="170" cy="275" r="7" fill="white" stroke="#174eb0" stroke-width="2"/>
+      <circle id="output-point" cx="170" cy="275" r="4" fill="#174eb0"/>
+      <g class="ket">
+        <text x="192" y="54">|0⟩</text><text x="170" y="313">|1⟩</text>
+        <text x="279" y="152">|+⟩</text><text x="61" y="152">|−⟩</text>
+        <text x="95" y="220">|+i⟩</text><text x="253" y="123">|−i⟩</text>
+      </g>
+    </svg>
+    <figcaption class="legend"><span><span class="symbol"></span>Input</span><span><span class="symbol solid"></span>Output</span></figcaption>
+  </figure>
+  <div class="result" aria-live="polite" aria-atomic="true">
+    <output id="equation">Z|1⟩ = −|1⟩</output>
+    <p id="position">Same point on the sphere.</p>
+  </div>
+</main>
+<script>
+  const states = ['|0⟩', '|1⟩', '|+⟩', '|−⟩', '|+i⟩', '|−i⟩'];
+  const points = [[170, 57], [170, 275], [279, 166], [61, 166], [92, 193], [248, 139]];
+
+  // Each entry gives the output point index and its global phase.
+  const gates = {
+    X: [[1], [0], [2], [3, '−'], [5, 'i'], [4, '−i']],
+    Y: [[1, 'i'], [0, '−i'], [3, '−i'], [2, 'i'], [4], [5, '−']],
+    Z: [[0], [1, '−'], [3], [2], [5], [4]],
+  };
+
+  const buttons = document.querySelectorAll('[data-gate]');
+  const selector = document.getElementById('state');
+  const inputPoint = document.getElementById('input-point');
+  const outputPoint = document.getElementById('output-point');
+  const arrow = document.getElementById('transition');
+  const equation = document.getElementById('equation');
+  const position = document.getElementById('position');
+  let gate = 'Z';
+
+  function place(marker, [x, y]) {
+    marker.setAttribute('cx', x);
+    marker.setAttribute('cy', y);
+  }
+
+  function update() {
+    const input = Number(selector.value);
+    const [output, phase = ''] = gates[gate][input];
+    place(inputPoint, points[input]);
+    place(outputPoint, points[output]);
+
+    if (input === output) {
+      arrow.removeAttribute('d');
+    } else {
+      const [x, y] = points[input];
+      const [endX, endY] = points[output];
+      const distance = Math.hypot(endX - x, endY - y);
+      const dx = (endX - x) / distance;
+      const dy = (endY - y) / distance;
+      const bend = Math.min(30, distance / 4);
+      arrow.setAttribute('d', `M ${x + 9 * dx} ${y + 9 * dy} Q ${(x + endX) / 2 + bend * dy} ${(y + endY) / 2 - bend * dx} ${endX - 6 * dx} ${endY - 6 * dy}`);
+    }
+
+    equation.textContent = `${gate}${states[input]} = `;
+    equation.append(phase + states[output]);
+    position.textContent = input === output
+      ? 'Same point on the sphere.'
+      : `Bloch sphere: ${states[input]} → ${states[output]}`;
+  }
+
+  for (const button of buttons) {
+    button.addEventListener('click', () => {
+      gate = button.dataset.gate;
+      for (const option of buttons) {
+        option.setAttribute('aria-pressed', String(option === button));
+      }
+      update();
+    });
+  }
+  selector.addEventListener('change', update);
+  update();
+</script>
+</body>
+</html>

@@ -1,0 +1,1917 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gates &amp; Circuit Design · Study notes</title>
+<style>
+  :root {
+    color-scheme: light;
+    --ink: #152744;
+    --muted: #465a75;
+    --accent: #214fc2;
+    --line: #c9d6e7;
+    --page: #edf2fa;
+    --surface: #fff;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: 1.5rem; }
+  body {
+    background: var(--page); color: var(--ink); margin: 0;
+    font: 1rem/1.66 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  a { color: var(--accent); text-underline-offset: .18em; }
+  .masthead { background: #162b52; color: #fff; padding: 1rem clamp(1rem, 4vw, 3rem); }
+  .masthead span { font-size: .8rem; letter-spacing: .14em; font-weight: 700; }
+  .layout {
+    display: grid; grid-template-columns: minmax(230px, 275px) minmax(0, 880px);
+    align-items: start; gap: clamp(1rem, 2.4vw, 2rem);
+    max-width: 1240px; margin: auto; padding: clamp(1rem, 3vw, 2.5rem);
+  }
+  nav {
+    position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow-y: auto;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 1rem;
+    padding: .7rem 1rem; font-size: .86rem; line-height: 1.42;
+  }
+  nav summary { cursor: pointer; font-size: .95rem; font-weight: 700; }
+  nav ul { list-style: none; margin: .6rem 0 .1rem; padding: 0; }
+  nav ul ul { margin: .25rem 0 0; padding: 0; }
+  nav a { display: block; color: var(--ink); text-decoration: none; padding: .23rem 0; }
+  nav a:hover, nav a:focus { color: var(--accent); text-decoration: underline; }
+  main {
+    min-width: 0; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 1.15rem; padding: clamp(1rem, 4vw, 3.4rem);
+  }
+  h1, h2, h3 { line-height: 1.18; letter-spacing: -.035em; }
+  h1 { font-size: clamp(2.05rem, 5vw, 3.55rem); margin: 0 0 .65em; }
+  h2 {
+    font-size: clamp(1.42rem, 3vw, 2rem); border-top: 1px solid var(--line);
+    padding-top: 1.3rem; margin: 2.35rem 0 .85rem;
+  }
+  p { margin: 1rem 0; }
+  p em:only-child { color: var(--muted); font-size: .92rem; }
+  figure { margin: 1.4rem 0 1.65rem; }
+  figure img { width: 100%; height: auto; display: block; border-radius: .75rem; }
+  figcaption { color: var(--muted); font-size: .88rem; margin-top: .45rem; }
+  .table-scroll { overflow-x: auto; margin: 1.1rem 0 1.4rem; }
+  table { border-collapse: collapse; width: 100%; font-size: .94rem; }
+  th, td { border-bottom: 1px solid var(--line); padding: .55rem .75rem; text-align: left; }
+  th { background: #eaf0ff; color: #1b3873; }
+  tbody tr:nth-child(even) { background: #f7f9fd; }
+  .math-scroll {
+    display: block; overflow-x: auto; max-width: 100%; padding: .7rem 0;
+    background: #f7f9fd; border-radius: .55rem;
+  }
+  math[display="block"] { min-width: max-content; padding-inline: .5rem; }
+  li + li { margin-top: .35rem; }
+  nav li + li { margin-top: 0; }
+  footer { max-width: 1240px; margin: auto; padding: 0 2rem 2rem; font-size: .88rem; }
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: minmax(0, 1fr); }
+    nav { position: static; max-height: none; }
+    nav[aria-label] li + li { margin: 0; }
+  }
+  @media print {
+    body, main { background: #fff; }
+    nav, footer, .masthead { display: none; }
+    .layout { display: block; padding: 0; }
+    main { border: 0; padding: 0; }
+    figure, table { break-inside: avoid; }
+    h2 { break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+<header class="masthead"><span>QUANTUM COMPUTING / LECTURE NOTES</span></header>
+<div class="layout">
+<nav aria-label="Contents"><details open><summary>In this lecture</summary>
+<ul>
+<li><a href="#gates-circuit-design" id="toc-gates-circuit-design">Gates
+&amp; Circuit Design</a>
+<ul>
+<li><a href="#from-yesterday-to-today"
+id="toc-from-yesterday-to-today">1. From yesterday to today</a></li>
+<li><a href="#three-ways-to-program-a-quantum-computer"
+id="toc-three-ways-to-program-a-quantum-computer">2. Three ways to
+program a quantum computer</a></li>
+<li><a href="#the-circuit-model-and-time-ordered-gates"
+id="toc-the-circuit-model-and-time-ordered-gates">3. The circuit model
+and time-ordered gates</a></li>
+<li><a href="#qiskit-notebook-demonstration"
+id="toc-qiskit-notebook-demonstration">4. Qiskit notebook
+demonstration</a></li>
+<li><a href="#the-pauli-gates" id="toc-the-pauli-gates">5. The Pauli
+gates</a></li>
+<li><a href="#the-hadamard-gate" id="toc-the-hadamard-gate">6. The
+Hadamard gate</a></li>
+<li><a href="#the-phase-ladder-from-t-to-s-to-z"
+id="toc-the-phase-ladder-from-t-to-s-to-z">7. The phase ladder from
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math>
+to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math></a></li>
+<li><a href="#rotation-gates-and-the-half-angle"
+id="toc-rotation-gates-and-the-half-angle">8. Rotation gates and the
+half-angle</a></li>
+<li><a href="#poll-on-equivalent-gates-up-to-global-phase"
+id="toc-poll-on-equivalent-gates-up-to-global-phase">9. Poll on
+equivalent gates up to global phase</a></li>
+<li><a href="#every-single-qubit-unitary-is-a-rotation-up-to-phase"
+id="toc-every-single-qubit-unitary-is-a-rotation-up-to-phase">10. Every
+single-qubit unitary is a rotation up to phase</a></li>
+<li><a href="#cnot-and-cz" id="toc-cnot-and-cz">11. CNOT and CZ</a></li>
+<li><a href="#controlled-u-and-phase-kickback"
+id="toc-controlled-u-and-phase-kickback">12.
+Controlled-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>U</mi><annotation encoding="application/x-tex">U</annotation></semantics></math>
+and phase kickback</a></li>
+<li><a href="#toffoli-and-multi-controlled-gates"
+id="toc-toffoli-and-multi-controlled-gates">13. Toffoli and
+multi-controlled gates</a></li>
+<li><a href="#measuring-in-another-basis"
+id="toc-measuring-in-another-basis">14. Measuring in another
+basis</a></li>
+<li><a href="#classically-controlled-gates"
+id="toc-classically-controlled-gates">15. Classically controlled
+gates</a></li>
+<li><a href="#deferred-measurement-and-one-wire-identities"
+id="toc-deferred-measurement-and-one-wire-identities">16. Deferred
+measurement and one-wire identities</a></li>
+<li><a href="#circuit-identities-on-two-wires"
+id="toc-circuit-identities-on-two-wires">17. Circuit identities on two
+wires</a></li>
+<li><a href="#reversible-logic-and-why-bare-and-loses-information"
+id="toc-reversible-logic-and-why-bare-and-loses-information">18.
+Reversible logic and why bare AND loses information</a></li>
+<li><a href="#making-classical-logic-reversible"
+id="toc-making-classical-logic-reversible">19. Making classical logic
+reversible</a></li>
+<li><a href="#the-reversible-gate-zoo-and-ancillas"
+id="toc-the-reversible-gate-zoo-and-ancillas">20. The reversible gate
+zoo and ancillas</a></li>
+<li><a href="#reversible-synthesis-of-a-majority-function"
+id="toc-reversible-synthesis-of-a-majority-function">21. Reversible
+synthesis of a majority function</a></li>
+<li><a href="#the-garbage-problem" id="toc-the-garbage-problem">22. The
+garbage problem</a></li>
+<li><a href="#compute-copy-and-uncompute"
+id="toc-compute-copy-and-uncompute">23. Compute, copy and
+uncompute</a></li>
+<li><a href="#worked-and-and-phase-oracle-examples"
+id="toc-worked-and-and-phase-oracle-examples">24. Worked AND and
+phase-oracle examples</a></li>
+<li><a href="#can-a-quantum-computer-add-34"
+id="toc-can-a-quantum-computer-add-34">25. Can a quantum computer add
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>+</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">3+4</annotation></semantics></math>?</a></li>
+<li><a href="#qiskit-laboratories-and-practical-instructions"
+id="toc-qiskit-laboratories-and-practical-instructions">26. Qiskit
+laboratories and practical instructions</a></li>
+<li><a href="#closing-advice-and-final-questions"
+id="toc-closing-advice-and-final-questions">27. Closing advice and final
+questions</a></li>
+<li><a href="#practice-with-worked-answers"
+id="toc-practice-with-worked-answers">Practice with worked
+answers</a></li>
+</ul></li>
+</ul>
+</details></nav>
+<main id="notes">
+<h1 id="gates-circuit-design">Gates &amp; Circuit Design</h1>
+<p><strong>Beginner study notes · Gates, Circuits and Reversible
+Logic</strong><br />
+Kolin Paul · IIT Delhi · Quantum Computing CEP · 1 November 2026</p>
+<p>These notes follow all 27 sections of the corrected transcript in
+order. Slide references use the numbers printed on the slides. The PDF
+groups several slide frames onto each page. Where a topic was skipped or
+covered briefly in class, the extra explanation is identified as a slide
+walkthrough.</p>
+<p><strong>Open the notes.</strong> Extract the entire ZIP. Open <a
+href="Study_Notes.html">Study_Notes.html</a> for the offline browser
+copy or preview this Markdown in a math-enabled viewer. Keep the
+<code>assets</code> folder next to both files so the diagrams and
+looping GIFs render.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>If you’re revising…</th>
+<th>Read…</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Circuit order and the difference between amplitudes and counts</td>
+<td>§§3–4</td>
+</tr>
+<tr class="even">
+<td>Pauli gates, Hadamard, phase and rotation</td>
+<td>§§5–10</td>
+</tr>
+<tr class="odd">
+<td>Controlled gates, measurement and circuit rewrites</td>
+<td>§§11–17</td>
+</tr>
+<tr class="even">
+<td>Reversible logic, ancillas and uncomputation</td>
+<td>§§18–24</td>
+</tr>
+<tr class="odd">
+<td>The adder, lab work and practice problems</td>
+<td>§§25–27 and the practice section</td>
+</tr>
+</tbody>
+</table>
+<h2 id="from-yesterday-to-today">1. From yesterday to today</h2>
+<p><em>Slides 1–2.</em></p>
+<p>The previous lecture gave you a way to write states and gates. A
+<strong>ket</strong> such as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math>
+is a column vector. A <strong>gate</strong> acts on that vector. In a
+closed quantum circuit, gates are unitary and can be undone. For a
+two-qubit state,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>⊗</mo><annotation encoding="application/x-tex">\otimes</annotation></semantics></math>
+joins the two slots and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>I</mi><annotation encoding="application/x-tex">I</annotation></semantics></math>
+is the identity on an idle wire. These notes use the left bit for the
+top wire in mathematical diagrams unless another order is stated.</p>
+<p>This lecture turns that algebra into circuits. First you learn to
+read and rewrite gates. Then you use the same gate toolbox to compute a
+classical Boolean function reversibly. The final example builds an adder
+for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>+</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">3+4</annotation></semantics></math>.</p>
+<h2 id="three-ways-to-program-a-quantum-computer">2. Three ways to
+program a quantum computer</h2>
+<p><em>Slides 3–5.</em></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>What you specify</th>
+<th>What the lecture counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Query</td>
+<td>Access to a hidden function through an oracle
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>U</mi><mi>f</mi></msub><annotation encoding="application/x-tex">U_f</annotation></semantics></math></td>
+<td>How often you call the oracle</td>
+</tr>
+<tr class="even">
+<td>Circuit</td>
+<td>An ordered sequence of gates on qubit wires</td>
+<td>Gates, qubits and depth, meaning the number of sequential
+layers</td>
+</tr>
+<tr class="odd">
+<td>Annealing</td>
+<td>An energy function whose low-energy configurations represent
+candidate answers</td>
+<td>Annealing time and the quality of the solutions found</td>
+</tr>
+</tbody>
+</table>
+<p>Deutsch’s algorithm answers a question about a one-bit function with
+one oracle call. The query model treats that call as one step. If you
+build the oracle as a circuit, the call can contain several gates. This
+is why <strong>query count and gate count measure different
+things</strong>.</p>
+<p>An annealing problem asks for a low-energy configuration. The lecture
+distinguishes the ideal adiabatic computation model, which can simulate
+and be simulated by circuits with polynomial overhead, from the more
+restricted annealing hardware discussed in class. A qubit count from one
+model cannot by itself tell you how many gates, qubits or time the other
+model would need.</p>
+<h2 id="the-circuit-model-and-time-ordered-gates">3. The circuit model
+and time-ordered gates</h2>
+<p><em>Slide 6.</em></p>
+<p>Read the diagram <strong>left to right</strong>. A wire carries a
+qubit. A box applies a gate. A meter produces a classical measurement
+bit. Gates drawn in sequence on the same wire act one after the
+other.</p>
+<p>If the boxes are
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>,
+then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>,
+then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>,
+the output is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mi>B</mi><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mi>ψ</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">CBA\lvert\psi\rangle</annotation></semantics></math>.
+The rightmost matrix is closest to the ket, so it acts first. This
+reconciles the diagram convention with the matrix multiplication
+order.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Circuit order</th>
+<th>Matrix product</th>
+<th>Output on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math>
+then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>S</mi><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">HS\lvert0\rangle</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+\rangle</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>H</mi><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">SH\lvert0\rangle</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mi>i</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+i\rangle</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<p>Why? The
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math>
+gate leaves
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math>
+alone, but it adds a factor of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
+to the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert1\rangle</annotation></semantics></math>
+amplitude in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo><mo>+</mo><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><msqrt><mn>2</mn></msqrt></mrow><annotation encoding="application/x-tex">\lvert+\rangle=(\lvert0\rangle+\lvert1\rangle)/\sqrt2</annotation></semantics></math>.</p>
+<figure>
+<img src="assets/01_circuit_order.gif"
+alt="Animation comparing S then H with H then S. The first prepares plus, while the second prepares plus-i." />
+<figcaption aria-hidden="true">Animation comparing S then H with H then
+S. The first prepares plus, while the second prepares
+plus-i.</figcaption>
+</figure>
+<h2 id="qiskit-notebook-demonstration">4. Qiskit notebook
+demonstration</h2>
+<p><em>Slide 6 and the spoken notebook walkthrough.</em></p>
+<p>The demo separates <strong>what the state is</strong> from
+<strong>what a measurement reports</strong>. A state vector lists
+complex amplitudes. A histogram counts classical outcomes across
+repeated preparations. One repeat of a circuit followed by measurement
+is called a <strong>shot</strong>.</p>
+<p>A compact version of the gate-order experiment is below. Inspect the
+state before adding measurement.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit <span class="im">import</span> QuantumCircuit</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit.quantum_info <span class="im">import</span> Statevector</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>s_then_h <span class="op">=</span> QuantumCircuit(<span class="dv">1</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>s_then_h.s(<span class="dv">0</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>s_then_h.h(<span class="dv">0</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>h_then_s <span class="op">=</span> QuantumCircuit(<span class="dv">1</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>h_then_s.h(<span class="dv">0</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>h_then_s.s(<span class="dv">0</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(Statevector.from_instruction(s_then_h).data)  <span class="co"># [1, 1] / sqrt(2)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(Statevector.from_instruction(h_then_s).data)  <span class="co"># [1, 1j] / sqrt(2)</span></span></code></pre></div>
+<p>The lecture uses <code>AerSimulator</code> and runs an example with
+2,000 shots. If you add a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>-basis
+measurement to either circuit above, both ideal distributions are 50/50
+because the amplitudes have the same magnitudes. Sampled counts
+fluctuate. A different basis can reveal the phase difference, as §14
+shows. The code illustrates the lecture’s workflow. The course notebook
+supplies its environment setup.</p>
+<h2 id="the-pauli-gates">5. The Pauli gates</h2>
+<p><em>Slide 7.</em></p>
+<p>The Pauli matrices are three basic one-qubit gates.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="2.0em"></mspace><mi>Y</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mi>i</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>i</mi></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="2.0em"></mspace><mi>Z</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+X=\begin{pmatrix}0&amp;1\\1&amp;0\end{pmatrix},\qquad
+Y=\begin{pmatrix}0&amp;-i\\i&amp;0\end{pmatrix},\qquad
+Z=\begin{pmatrix}1&amp;0\\0&amp;-1\end{pmatrix}.
+</annotation></semantics></math></p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Gate</th>
+<th>On
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math></th>
+<th>On
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert1\rangle</annotation></semantics></math></th>
+<th>Bloch sphere action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert1\rangle</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math></td>
+<td>Half-turn about
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">i\lvert1\rangle</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mi>i</mi><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">-i\lvert0\rangle</annotation></semantics></math></td>
+<td>Half-turn about
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">-\lvert1\rangle</annotation></semantics></math></td>
+<td>Half-turn about
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+swaps the two amplitudes.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>
+swaps them with factors of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mi>i</mi></mrow><annotation encoding="application/x-tex">-i</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>
+changes the sign of the second amplitude, so a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>-basis
+measurement has the same probabilities immediately before and after it.
+On
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+\rangle</annotation></semantics></math>,
+the sign changes the state to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>−</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert-\rangle</annotation></semantics></math>
+and an
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>-basis
+measurement can distinguish them.</p>
+<figure>
+<img src="assets/02_pauli_gates.png"
+alt="Pauli gate comparison showing what each gate does to the two amplitudes." />
+<figcaption aria-hidden="true">Pauli gate comparison showing what each
+gate does to the two amplitudes.</figcaption>
+</figure>
+<p>All three square to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>I</mi><annotation encoding="application/x-tex">I</annotation></semantics></math>.
+In the indicated matrix order,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mi>Y</mi><mo>=</mo><mi>i</mi><mi>Z</mi></mrow><annotation encoding="application/x-tex">XY=iZ</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mi>Z</mi><mo>=</mo><mi>i</mi><mi>X</mi></mrow><annotation encoding="application/x-tex">YZ=iX</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mi>X</mi><mo>=</mo><mi>i</mi><mi>Y</mi></mrow><annotation encoding="application/x-tex">ZX=iY</annotation></semantics></math>.
+Reversing the order of two different Paulis gives a minus sign. For
+instance,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mi>X</mi><mo>=</mo><mi>i</mi><mi>Y</mi></mrow><annotation encoding="application/x-tex">ZX=iY</annotation></semantics></math>
+whereas
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mi>Z</mi><mo>=</mo><mo>−</mo><mi>i</mi><mi>Y</mi></mrow><annotation encoding="application/x-tex">XZ=-iY</annotation></semantics></math>.
+Read
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mi>X</mi></mrow><annotation encoding="application/x-tex">ZX</annotation></semantics></math>
+as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+first, then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>.</p>
+<h2 id="the-hadamard-gate">6. The Hadamard gate</h2>
+<p><em>Slide 8.</em></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>=</mo><mfrac><mn>1</mn><msqrt><mn>2</mn></msqrt></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>X</mi><mo>+</mo><mi>Z</mi></mrow><msqrt><mn>2</mn></msqrt></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+H=\frac1{\sqrt2}\begin{pmatrix}1&amp;1\\1&amp;-1\end{pmatrix}
+=\frac{X+Z}{\sqrt2}.
+</annotation></semantics></math></p>
+<p>The first column shows
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo><mo>=</mo><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">H\lvert0\rangle=\lvert+\rangle</annotation></semantics></math>.
+The second shows
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo><mo>=</mo><mo stretchy="false" form="prefix">|</mo><mo>−</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">H\lvert1\rangle=\lvert-\rangle</annotation></semantics></math>.
+Applying
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+again returns the original basis ket because
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>H</mi><mn>2</mn></msup><mo>=</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">H^2=I</annotation></semantics></math>.
+For example,</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo><mo>=</mo><mfrac><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo><mo>+</mo><mo stretchy="false" form="prefix">|</mo><mo>−</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><msqrt><mn>2</mn></msqrt></mfrac><mo>=</mo><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+H\lvert+\rangle=\frac{\lvert+\rangle+\lvert-\rangle}{\sqrt2}
+=\lvert0\rangle.
+</annotation></semantics></math></p>
+<p>The
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert1\rangle</annotation></semantics></math>
+terms cancel. This is why
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+can turn an
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>-basis
+question into an ordinary
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>-basis
+readout. On the Bloch sphere,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+exchanges the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>
+axes and reverses
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>.
+That is a half-turn about the diagonal direction halfway between
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>.</p>
+<h2 id="the-phase-ladder-from-t-to-s-to-z">7. The phase ladder from
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math>
+to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math></h2>
+<p><em>Slide 9.</em></p>
+<p>A phase gate
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>ϕ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>diag</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><msup><mi>e</mi><mrow><mi>i</mi><mi>ϕ</mi></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">P(\phi)=\operatorname{diag}(1,e^{i\phi})</annotation></semantics></math>
+multiplies the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert1\rangle</annotation></semantics></math>
+amplitude by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>i</mi><mi>ϕ</mi></mrow></msup><annotation encoding="application/x-tex">e^{i\phi}</annotation></semantics></math>.
+The two magnitudes stay the same, so the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>-basis
+probabilities stay the same. On the Bloch sphere, the arrow turns about
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>
+by angle
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ϕ</mi><annotation encoding="application/x-tex">\phi</annotation></semantics></math>.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Gate</th>
+<th>Phase added to the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert1\rangle</annotation></semantics></math>
+component</th>
+<th>Effect on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+\rangle</annotation></semantics></math></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mi>/</mi><mn>4</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">T=P(\pi/4)</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>45</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">45^\circ</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo><mo>+</mo><msup><mi>e</mi><mrow><mi>i</mi><mi>π</mi><mi>/</mi><mn>4</mn></mrow></msup><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><msqrt><mn>2</mn></msqrt></mrow><annotation encoding="application/x-tex">(\lvert0\rangle+e^{i\pi/4}\lvert1\rangle)/\sqrt2</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>=</mo><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mi>/</mi><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">S=P(\pi/2)</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>90</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">90^\circ</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mi>i</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+i\rangle</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>=</mo><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Z=P(\pi)</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>180</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">180^\circ</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>−</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert-\rangle</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<p>Angles add when these gates are applied in sequence. Thus
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mn>2</mn></msup><mo>=</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">T^2=S</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>S</mi><mn>2</mn></msup><mo>=</mo><mi>Z</mi></mrow><annotation encoding="application/x-tex">S^2=Z</annotation></semantics></math>,
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>Z</mi><mn>2</mn></msup><mo>=</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">Z^2=I</annotation></semantics></math>.
+Eight
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>45</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">45^\circ</annotation></semantics></math>
+turns give
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mn>8</mn></msup><mo>=</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">T^8=I</annotation></semantics></math>.
+For the notebook’s
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">T\lvert+\rangle</annotation></semantics></math>
+example, the second amplitude is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>e</mi><mrow><mi>i</mi><mi>π</mi><mi>/</mi><mn>4</mn></mrow></msup><mi>/</mi><msqrt><mn>2</mn></msqrt><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">e^{i\pi/4}/\sqrt2=(1+i)/2</annotation></semantics></math>.
+The first is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><msqrt><mn>2</mn></msqrt></mrow><annotation encoding="application/x-tex">1/\sqrt2</annotation></semantics></math>.</p>
+<figure>
+<img src="assets/03_phase_ladder.gif"
+alt="Animation tracing T, T squared, and T to the fourth as successive phase angles on the Bloch equator." />
+<figcaption aria-hidden="true">Animation tracing T, T squared, and T to
+the fourth as successive phase angles on the Bloch equator.</figcaption>
+</figure>
+<h2 id="rotation-gates-and-the-half-angle">8. Rotation gates and the
+half-angle</h2>
+<p><em>Slide 10.</em></p>
+<p>A rotation about a Pauli axis uses an angle
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
+in the sphere picture and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">\theta/2</annotation></semantics></math>
+inside the formula. Here
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>x</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">R_x(\theta)</annotation></semantics></math>
+means a turn by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
+about
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>x</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>cos</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mi>/</mi><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>I</mi><mo>−</mo><mi>i</mi><mo>sin</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mi>/</mi><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>X</mi><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>R</mi><mi>y</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mo>cos</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mi>/</mi><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mo>sin</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mi>/</mi><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>sin</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mi>/</mi><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="center" style="text-align: center"><mo>cos</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mi>/</mi><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>R</mi><mi>z</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msup><mi>e</mi><mrow><mo>−</mo><mi>i</mi><mi>θ</mi><mi>/</mi><mn>2</mn></mrow></msup></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><msup><mi>e</mi><mrow><mi>i</mi><mi>θ</mi><mi>/</mi><mn>2</mn></mrow></msup></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+R_x(\theta)=\cos(\theta/2)I-i\sin(\theta/2)X,\quad
+R_y(\theta)=\begin{pmatrix}
+\cos(\theta/2)&amp;-\sin(\theta/2)\\
+\sin(\theta/2)&amp;\cos(\theta/2)
+\end{pmatrix},\quad
+R_z(\theta)=\begin{pmatrix}e^{-i\theta/2}&amp;0\\0&amp;e^{i\theta/2}\end{pmatrix}.
+</annotation></semantics></math></p>
+<p>Follow the first column of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>y</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">R_y(\theta)</annotation></semantics></math>.
+Starting from the north pole
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math>,
+a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>90</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">90^\circ</annotation></semantics></math>
+turn gives
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo><mo>+</mo><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><msqrt><mn>2</mn></msqrt></mrow><annotation encoding="application/x-tex">(\lvert0\rangle+\lvert1\rangle)/\sqrt2</annotation></semantics></math>
+because the sine and cosine are evaluated at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>45</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">45^\circ</annotation></semantics></math>.
+A
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>180</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">180^\circ</annotation></semantics></math>
+turn gives
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert1\rangle</annotation></semantics></math>.
+The Bloch height is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mo>cos</mo><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mi>/</mi><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><msup><mo>sin</mo><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mi>/</mi><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>cos</mo><mi>θ</mi></mrow><annotation encoding="application/x-tex">\cos^2(\theta/2)-\sin^2(\theta/2)=\cos\theta</annotation></semantics></math>.</p>
+<figure>
+<img src="assets/04_rotation_half_angle.gif"
+alt="Animation tracking Ry from the north pole to plus on the equator to the south pole, with both angles labelled." />
+<figcaption aria-hidden="true">Animation tracking Ry from the north pole
+to plus on the equator to the south pole, with both angles
+labelled.</figcaption>
+</figure>
+<p>Factoring
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mo>−</mo><mi>i</mi><mi>θ</mi><mi>/</mi><mn>2</mn></mrow></msup><annotation encoding="application/x-tex">e^{-i\theta/2}</annotation></semantics></math>
+out of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>z</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">R_z(\theta)</annotation></semantics></math>
+leaves
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">P(\theta)</annotation></semantics></math>.
+For a single gate on its own, this common factor is a global phase.
+Section 12 explains what changes if that rotation is controlled.</p>
+<h2 id="poll-on-equivalent-gates-up-to-global-phase">9. Poll on
+equivalent gates up to global phase</h2>
+<p><em>Slide 11.</em></p>
+<p>Two gates are equivalent up to global phase when the
+<strong>same</strong> unit-magnitude factor relates their whole
+matrices. Comparing only what they do to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math>
+can hide a sign difference in the second column.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pair from the poll</th>
+<th>Equivalent?</th>
+<th>Check</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>z</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mi>/</mi><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">R_z(\pi/2)</annotation></semantics></math></td>
+<td>Yes</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>z</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mi>/</mi><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>i</mi><mi>π</mi><mi>/</mi><mn>4</mn></mrow></msup><mi>S</mi></mrow><annotation encoding="application/x-tex">R_z(\pi/2)=e^{-i\pi/4}S</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>z</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">R_z(\pi)</annotation></semantics></math></td>
+<td>Yes</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>z</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>−</mo><mi>i</mi><mi>Z</mi></mrow><annotation encoding="application/x-tex">R_z(\pi)=-iZ</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>x</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">R_x(\pi)</annotation></semantics></math></td>
+<td>Yes</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>x</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>−</mo><mi>i</mi><mi>X</mi></mrow><annotation encoding="application/x-tex">R_x(\pi)=-iX</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>y</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mi>/</mi><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">R_y(\pi/2)</annotation></semantics></math></td>
+<td>No</td>
+<td>Both send
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math>
+to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+\rangle</annotation></semantics></math>,
+but the outputs on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert1\rangle</annotation></semantics></math>
+have opposite signs</td>
+</tr>
+</tbody>
+</table>
+<p>In fact
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>=</mo><mi>X</mi><msub><mi>R</mi><mi>y</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mi>/</mi><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">H=XR_y(\pi/2)</annotation></semantics></math>,
+meaning
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>y</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mi>/</mi><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">R_y(\pi/2)</annotation></semantics></math>
+followed by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>.
+Checking that two gates give the same measurement probabilities on one
+state is weaker than checking their matrices. The slide’s
+<code>Operator.equiv</code> examples check the whole operators up to
+global phase.</p>
+<h2 id="every-single-qubit-unitary-is-a-rotation-up-to-phase">10. Every
+single-qubit unitary is a rotation up to phase</h2>
+<p><em>Slide 12.</em></p>
+<p>A one-qubit unitary can be written as a common phase times a rotation
+about some axis
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>n</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat n</annotation></semantics></math>.
+On the Bloch sphere, the common phase is invisible. Some axes are easy
+to recognize.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>,</mo><mi>Y</mi><mo>,</mo><mi>Z</mi></mrow><annotation encoding="application/x-tex">X,Y,Z</annotation></semantics></math>
+turn
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>180</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">180^\circ</annotation></semantics></math>
+about their namesake axes.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+turns
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>180</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">180^\circ</annotation></semantics></math>
+about the axis halfway between
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+turn about
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>
+by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>90</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">90^\circ</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>45</mn><mo>∘</mo></msup><annotation encoding="application/x-tex">45^\circ</annotation></semantics></math>.</p>
+<p>The lecture previews a way to build an arbitrary single-qubit turn
+using rotations about
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>.
+A circuit compiler can use such decompositions to express a desired
+operation in the gates it has available.</p>
+<h2 id="cnot-and-cz">11. CNOT and CZ</h2>
+<p><em>Slide 13.</em></p>
+<p>With a top control and bottom target, CNOT sends
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert a,b\rangle</annotation></semantics></math>
+to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>a</mi><mo>,</mo><mi>a</mi><mo>⊕</mo><mi>b</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert a,a\oplus b\rangle</annotation></semantics></math>,
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>⊕</mo><annotation encoding="application/x-tex">\oplus</annotation></semantics></math>
+means XOR. It swaps the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>10</mn><annotation encoding="application/x-tex">10</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>11</mn><annotation encoding="application/x-tex">11</annotation></semantics></math>
+basis states. CZ keeps all four basis labels and multiplies the
+amplitude of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>11</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert11\rangle</annotation></semantics></math>
+by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math>.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>CZ</mo><mo>=</mo><mo>diag</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mi>P</mi><mn>0</mn></msub><mo>⊗</mo><mi>I</mi><mo>+</mo><msub><mi>P</mi><mn>1</mn></msub><mo>⊗</mo><mi>Z</mi><mo>,</mo><mspace width="2.0em"></mspace><msub><mi>P</mi><mi>j</mi></msub><mo>=</mo><mo stretchy="false" form="prefix">|</mo><mi>j</mi><mo stretchy="false" form="postfix">⟩</mo><mo stretchy="false" form="prefix">⟨</mo><mi>j</mi><mo stretchy="false" form="postfix">|</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\operatorname{CZ}=\operatorname{diag}(1,1,1,-1)
+=P_0\otimes I+P_1\otimes Z,\qquad
+P_j=\lvert j\rangle\langle j\rvert.
+</annotation></semantics></math></p>
+<p>CZ is symmetric under swapping its wires because “both bits are
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>”
+is a symmetric condition. To obtain CNOT, put
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+on the target before and after CZ. If the control is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>,
+the target sees
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>I</mi><mi>H</mi><mo>=</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">HIH=I</annotation></semantics></math>.
+If it is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>,
+the target sees
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>Z</mi><mi>H</mi><mo>=</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">HZH=X</annotation></semantics></math>.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>CNOT</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>I</mi><mo>⊗</mo><mi>H</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>CZ</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>I</mi><mo>⊗</mo><mi>H</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\operatorname{CNOT}=(I\otimes H)\operatorname{CZ}(I\otimes H).
+</annotation></semantics></math></p>
+<figure>
+<img src="assets/05_cnot_from_cz.png"
+alt="Two equivalent circuits, CNOT and CZ sandwiched between Hadamards on the target." />
+<figcaption aria-hidden="true">Two equivalent circuits, CNOT and CZ
+sandwiched between Hadamards on the target.</figcaption>
+</figure>
+<h2 id="controlled-u-and-phase-kickback">12.
+Controlled-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>U</mi><annotation encoding="application/x-tex">U</annotation></semantics></math>
+and phase kickback</h2>
+<p><em>Slide 14.</em></p>
+<p>A
+controlled-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>U</mi><annotation encoding="application/x-tex">U</annotation></semantics></math>
+applies
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>I</mi><annotation encoding="application/x-tex">I</annotation></semantics></math>
+to the target in the
+control-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+branch and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>U</mi><annotation encoding="application/x-tex">U</annotation></semantics></math>
+in the
+control-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+branch. The control value is preserved. Both branches evolve coherently
+if the control is in a superposition.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>U</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mi>P</mi><mn>0</mn></msub><mo>⊗</mo><mi>I</mi><mo>+</mo><msub><mi>P</mi><mn>1</mn></msub><mo>⊗</mo><mi>U</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
+C(U)=P_0\otimes I+P_1\otimes U.
+</annotation></semantics></math></p>
+<p>Suppose the target is an eigenstate
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>u</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert u\rangle</annotation></semantics></math>
+with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi><mo stretchy="false" form="prefix">|</mo><mi>u</mi><mo stretchy="false" form="postfix">⟩</mo><mo>=</mo><msup><mi>e</mi><mrow><mi>i</mi><mi>ϕ</mi></mrow></msup><mo stretchy="false" form="prefix">|</mo><mi>u</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">U\lvert u\rangle=e^{i\phi}\lvert u\rangle</annotation></semantics></math>.
+Only the
+control-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+branch picks up that phase.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>U</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo><mo>+</mo><mi>β</mi><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="prefix">|</mo><mi>u</mi><mo stretchy="false" form="postfix">⟩</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo><mo>+</mo><mi>β</mi><msup><mi>e</mi><mrow><mi>i</mi><mi>ϕ</mi></mrow></msup><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="prefix">|</mo><mi>u</mi><mo stretchy="false" form="postfix">⟩</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+C(U)(\alpha\lvert0\rangle+\beta\lvert1\rangle)\lvert u\rangle
+=(\alpha\lvert0\rangle+\beta e^{i\phi}\lvert1\rangle)\lvert u\rangle.
+</annotation></semantics></math></p>
+<p>The shared target ket factors out. The phase now appears on the
+control’s second amplitude. In the earlier Deutsch example,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi><mo>=</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">U=X</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>u</mi><mo stretchy="false" form="postfix">⟩</mo><mo>=</mo><mo stretchy="false" form="prefix">|</mo><mo>−</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert u\rangle=\lvert-\rangle</annotation></semantics></math>,
+so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo stretchy="false" form="prefix">|</mo><mo>−</mo><mo stretchy="false" form="postfix">⟩</mo><mo>=</mo><mo>−</mo><mo stretchy="false" form="prefix">|</mo><mo>−</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">X\lvert-\rangle=-\lvert-\rangle</annotation></semantics></math>
+and the phase is a minus sign.</p>
+<figure>
+<img src="assets/06_controlled_kickback.gif"
+alt="Phase kickback animation. On branch zero the target sees identity, on branch one it sees U, and the resulting phase attaches to branch one." />
+<figcaption aria-hidden="true">Phase kickback animation. On branch zero
+the target sees identity, on branch one it sees U, and the resulting
+phase attaches to branch one.</figcaption>
+</figure>
+<p>A useful distinction from the poll is that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>U</mi><annotation encoding="application/x-tex">U</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>e</mi><mrow><mi>i</mi><mi>γ</mi></mrow></msup><mi>U</mi></mrow><annotation encoding="application/x-tex">e^{i\gamma}U</annotation></semantics></math>
+are globally equivalent <strong>as standalone gates</strong>. Once
+controlled, the phase applies to one branch only. For example,
+controlled-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>I</mi><annotation encoding="application/x-tex">I</annotation></semantics></math>
+is the identity, while
+controlled-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(-I)</annotation></semantics></math>
+is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>
+on the control.</p>
+<h2 id="toffoli-and-multi-controlled-gates">13. Toffoli and
+multi-controlled gates</h2>
+<p><em>Slide 15.</em></p>
+<p>Toffoli, also written CCX or CCNOT, has two controls and one target.
+It flips the target if both controls are
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo>,</mo><mi>c</mi><mo stretchy="false" form="postfix">⟩</mo><mo>↦</mo><mo stretchy="false" form="prefix">|</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo>,</mo><mi>c</mi><mo>⊕</mo><mi>a</mi><mi>b</mi><mo stretchy="false" form="postfix">⟩</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\lvert a,b,c\rangle\longmapsto\lvert a,b,c\oplus ab\rangle.
+</annotation></semantics></math></p>
+<p>Among the eight basis strings, only
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>110</mn><annotation encoding="application/x-tex">110</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>111</mn><annotation encoding="application/x-tex">111</annotation></semantics></math>
+are swapped. A solid control dot means “fires on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>”.
+An open dot means “fires on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>”.
+An open control can be implemented by placing
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+on its wire before and after the usual solid control. With more
+controls, the target flips only when all specified conditions hold.</p>
+<h2 id="measuring-in-another-basis">14. Measuring in another basis</h2>
+<p><em>Slides 16–17.</em></p>
+<p>The circuit examples end with a computational-basis readout. To
+measure in the basis
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">{</mo><mi>U</mi><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo><mo>,</mo><mi>U</mi><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\{U\lvert0\rangle,U\lvert1\rangle\}</annotation></semantics></math>,
+first apply
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>U</mi><mo>†</mo></msup><annotation encoding="application/x-tex">U^\dagger</annotation></semantics></math>.
+This sends each basis vector to its corresponding computational ket. The
+resulting bit tells you which outcome of the desired basis you
+measured.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Desired basis</th>
+<th>States reported as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></th>
+<th>Gates before readout, in time order</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo><mo>,</mo><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle,\lvert1\rangle</annotation></semantics></math></td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo><mo>,</mo><mo stretchy="false" form="prefix">|</mo><mo>−</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+\rangle,\lvert-\rangle</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mi>i</mi><mo stretchy="false" form="postfix">⟩</mo><mo>,</mo><mo stretchy="false" form="prefix">|</mo><mo>−</mo><mi>i</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+i\rangle,\lvert-i\rangle</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>S</mi><mo>†</mo></msup><annotation encoding="application/x-tex">S^\dagger</annotation></semantics></math>,
+then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<p>For the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>
+basis,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math>
+prepares the basis vectors from
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert1\rangle</annotation></semantics></math>.
+Undo those gates in reverse order. On the slide’s
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mi>i</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+i\rangle</annotation></semantics></math>
+example,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>S</mi><mo>†</mo></msup><annotation encoding="application/x-tex">S^\dagger</annotation></semantics></math>
+first gives
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+\rangle</annotation></semantics></math>,
+then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+gives
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math>.
+Thus the readout is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+with certainty on an ideal circuit.</p>
+<figure>
+<img src="assets/07_y_basis_measurement.png"
+alt="A plus-i state passes through S dagger and H, then a computational-basis measurement reports zero." />
+<figcaption aria-hidden="true">A plus-i state passes through S dagger
+and H, then a computational-basis measurement reports zero.</figcaption>
+</figure>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Prepared state</th>
+<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>-basis
+readout</th>
+<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>-basis
+readout</th>
+<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>-basis
+readout</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+\rangle</annotation></semantics></math></td>
+<td>50/50</td>
+<td>Always
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></td>
+<td>50/50</td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mi>i</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+i\rangle</annotation></semantics></math></td>
+<td>50/50</td>
+<td>50/50</td>
+<td>Always
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<h2 id="classically-controlled-gates">15. Classically controlled
+gates</h2>
+<p><em>Slide 18.</em></p>
+<p>A <strong>classical control</strong> uses a bit already obtained from
+a measurement. In the example, prepare the top wire in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+\rangle</annotation></semantics></math>
+and the bottom wire in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math>.
+Measure the top wire in the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>
+basis. If that bit is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>,
+apply
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+to the bottom wire. If it is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>,
+leave the bottom wire alone.</p>
+<p>The two recorded bits are
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>00</mn><annotation encoding="application/x-tex">00</annotation></semantics></math>
+or
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>11</mn><annotation encoding="application/x-tex">11</annotation></semantics></math>,
+each with probability
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">1/2</annotation></semantics></math>.
+The decision is made during the circuit run. In the lecture this is
+called <strong>feedforward</strong>. The same pattern appears in
+teleportation corrections and in reset by measurement followed by a
+conditional flip.</p>
+<h2 id="deferred-measurement-and-one-wire-identities">16. Deferred
+measurement and one-wire identities</h2>
+<p><em>Slides 19–20.</em></p>
+<p>For the feedforward example, replace the early measurement and
+conditional
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+with a coherent CNOT. Measure the control at the end instead. The final
+computational-basis statistics are the same. Before that final
+measurement, the coherent version is still in the Bell superposition
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mo stretchy="false" form="prefix">|</mo><mn>00</mn><mo stretchy="false" form="postfix">⟩</mo><mo>+</mo><mo stretchy="false" form="prefix">|</mo><mn>11</mn><mo stretchy="false" form="postfix">⟩</mo><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><msqrt><mn>2</mn></msqrt></mrow><annotation encoding="application/x-tex">(\lvert00\rangle+\lvert11\rangle)/\sqrt2</annotation></semantics></math>.
+This equivalence concerns the final outcomes and conditional branches in
+the stated circuit. A different joint measurement that probes coherence
+can distinguish a Bell state from the mixture created by an early
+measurement.</p>
+<figure>
+<img src="assets/08_deferred_measurement.png"
+alt="Early measurement with conditional X compared with CNOT followed by measurement. Both give the recorded pairs 00 and 11 with equal probabilities." />
+<figcaption aria-hidden="true">Early measurement with conditional X
+compared with CNOT followed by measurement. Both give the recorded pairs
+00 and 11 with equal probabilities.</figcaption>
+</figure>
+<p>The lecture then collects identities a compiler can use to rewrite
+gates.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Identity</th>
+<th>How to read it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>X</mi><mn>2</mn></msup><mo>=</mo><msup><mi>Y</mi><mn>2</mn></msup><mo>=</mo><msup><mi>Z</mi><mn>2</mn></msup><mo>=</mo><msup><mi>H</mi><mn>2</mn></msup><mo>=</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">X^2=Y^2=Z^2=H^2=I</annotation></semantics></math></td>
+<td>Two consecutive copies cancel.</td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>X</mi><mi>H</mi><mo>=</mo><mi>Z</mi></mrow><annotation encoding="application/x-tex">HXH=Z</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>Z</mi><mi>H</mi><mo>=</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">HZH=X</annotation></semantics></math></td>
+<td>Hadamard exchanges
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>.</td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>Y</mi><mi>H</mi><mo>=</mo><mo>−</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">HYH=-Y</annotation></semantics></math></td>
+<td>Equal to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>
+up to global phase.</td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mn>2</mn></msup><mo>=</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">T^2=S</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>S</mi><mn>2</mn></msup><mo>=</mo><mi>Z</mi></mrow><annotation encoding="application/x-tex">S^2=Z</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><msup><mi>S</mi><mo>†</mo></msup><mo>=</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">SS^\dagger=I</annotation></semantics></math></td>
+<td>Combine or cancel the phase rotations.</td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>X</mi><msup><mi>S</mi><mo>†</mo></msup><mo>=</mo><mi>Y</mi></mrow><annotation encoding="application/x-tex">SXS^\dagger=Y</annotation></semantics></math></td>
+<td>Apply
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>S</mi><mo>†</mo></msup><annotation encoding="application/x-tex">S^\dagger</annotation></semantics></math>,
+then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>,
+then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="circuit-identities-on-two-wires">17. Circuit identities on two
+wires</h2>
+<p><em>Slides 21–22, followed by the break on slide 23.</em></p>
+<p><strong>Reverse a CNOT.</strong> Put
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+on both wires before and after CNOT. This switches which wire is the
+control. To see it, first write CNOT as CZ with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+on its target on both sides. The added target Hadamards cancel in pairs,
+and the added Hadamards on the other wire make that wire the new target.
+This works because CZ is symmetric.</p>
+<p><strong>Make a SWAP.</strong> Apply CNOT top to bottom, then bottom
+to top, then top to bottom. Track the two bits.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>→</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>,</mo><mi>a</mi><mo>⊕</mo><mi>b</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>→</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mo>,</mo><mi>a</mi><mo>⊕</mo><mi>b</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>→</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mo>,</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+(a,b)\to(a,a\oplus b)\to(b,a\oplus b)\to(b,a).
+</annotation></semantics></math></p>
+<p>For example,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>01</mn><mo>→</mo><mn>01</mn><mo>→</mo><mn>11</mn><mo>→</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">01\to01\to11\to10</annotation></semantics></math>.
+Because the identity holds on each basis string, linearity makes it hold
+for superpositions too.</p>
+<figure>
+<img src="assets/09_swap_three_cnots.gif"
+alt="Animation tracing the three CNOT gates that swap input 01 to output 10." />
+<figcaption aria-hidden="true">Animation tracing the three CNOT gates
+that swap input 01 to output 10.</figcaption>
+</figure>
+<p><strong>Move a Pauli past CNOT.</strong> Let
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+denote top-control CNOT. Since
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>C</mi><mn>2</mn></msup><mo>=</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">C^2=I</annotation></semantics></math>,
+the following identities tell you which Pauli goes on the output side
+when you move it through
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Pauli on the input side</th>
+<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mrow><mo stretchy="true" form="prefix">(</mo><mtext mathvariant="normal">Pauli</mtext><mo stretchy="true" form="postfix">)</mo></mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C(\text{Pauli})C</annotation></semantics></math>
+on the output side</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>⊗</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">X\otimes I</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>⊗</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">X\otimes X</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo>⊗</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">I\otimes X</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo>⊗</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">I\otimes X</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>⊗</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">Z\otimes I</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>⊗</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">Z\otimes I</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo>⊗</mo><mi>Z</mi></mrow><annotation encoding="application/x-tex">I\otimes Z</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>⊗</mo><mi>Z</mi></mrow><annotation encoding="application/x-tex">Z\otimes Z</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<p>The control bit determines the target flip, so an input
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+on the control spreads to the target. An input
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>
+on the target picks up a phase depending on both bits because CNOT
+changes the target bit to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>⊕</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a\oplus b</annotation></semantics></math>.
+The worked practice shows how to check each identity on a basis ket. The
+lecture uses <code>Operator.equiv</code> to check the two-wire rewrites
+numerically.</p>
+<h2 id="reversible-logic-and-why-bare-and-loses-information">18.
+Reversible logic and why bare AND loses information</h2>
+<p><em>Slide 24.</em></p>
+<p>The classical AND function outputs
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+only for input
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>11</mn><annotation encoding="application/x-tex">11</annotation></semantics></math>.
+The inputs
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>00</mn><mo>,</mo><mn>01</mn><mo>,</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">00,01,10</annotation></semantics></math>
+all produce
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>.
+If all you have is that one output bit, you cannot recover which of
+those three inputs produced it.</p>
+<p>A unitary has an inverse. It also preserves inner products, so it
+must send distinct, orthogonal computational inputs to distinct,
+orthogonal outputs. The bare two-input, one-output AND function cannot
+be used as a unitary gate in that form.</p>
+<figure>
+<img src="assets/10_and_reversible.png"
+alt="Three different input strings give zero under AND, while a reversible embedding preserves the input labels." />
+<figcaption aria-hidden="true">Three different input strings give zero
+under AND, while a reversible embedding preserves the input
+labels.</figcaption>
+</figure>
+<h2 id="making-classical-logic-reversible">19. Making classical logic
+reversible</h2>
+<p><em>Slide 24.</em></p>
+<p>Keep both inputs and use a third bit
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>
+as a target. XOR the answer into that target.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo>,</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>↦</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo>,</mo><mi>c</mi><mo>⊕</mo><mi>a</mi><mi>b</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+(a,b,c)\longmapsto(a,b,c\oplus ab).
+</annotation></semantics></math></p>
+<p>With
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">c=0</annotation></semantics></math>,
+the last bit becomes the AND result
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">ab</annotation></semantics></math>.
+With
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">c=1</annotation></semantics></math>,
+it becomes
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>⊕</mo><mi>a</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">1\oplus ab</annotation></semantics></math>,
+which is NAND. Running the same operation again gives
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>⊕</mo><mi>a</mi><mi>b</mi><mo>⊕</mo><mi>a</mi><mi>b</mi><mo>=</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">c\oplus ab\oplus ab=c</annotation></semantics></math>.
+The embedding preserves enough information to go backwards. This is
+exactly Toffoli.</p>
+<p>The slide connects reversible logic to Landauer’s principle. Ideally
+erasing an unknown, equally likely bit at temperature
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+releases at least
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>k</mi><mi>B</mi></msub><mi>T</mi><mo>ln</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">k_BT\ln2</annotation></semantics></math>
+of heat. Logical reversibility avoids the erasure step in this model. An
+actual device still has costs for controlling, operating and reading its
+gates.</p>
+<h2 id="the-reversible-gate-zoo-and-ancillas">20. The reversible gate
+zoo and ancillas</h2>
+<p><em>Slides 25–26.</em></p>
+<p>An <strong>ancilla</strong> is an extra qubit used as a helper. A
+clean one is prepared in a known state such as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math>.
+It can be used for output or for temporary storage, depending on its
+role.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Want</th>
+<th>Reversible construction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>NOT</td>
+<td>Apply
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+to the bit.</td>
+</tr>
+<tr class="even">
+<td>XOR</td>
+<td>Apply CNOT. The target gets
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>⊕</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a\oplus b</annotation></semantics></math>.</td>
+</tr>
+<tr class="odd">
+<td>AND or NAND</td>
+<td>Use Toffoli with inputs
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>,</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a,b</annotation></semantics></math>
+and a target initially
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+or
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>,
+respectively.</td>
+</tr>
+<tr class="even">
+<td>OR</td>
+<td>Flip both inputs, apply Toffoli to a target initially
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>,
+then restore the inputs. The target is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>⊕</mo><mrow><mo stretchy="true" form="prefix">(</mo><mover><mi>a</mi><mo accent="true">‾</mo></mover><mover><mi>b</mi><mo accent="true">‾</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>a</mi><mo>∨</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">1\oplus(\bar a\bar b)=a\lor b</annotation></semantics></math>.</td>
+</tr>
+<tr class="odd">
+<td>Controlled swap</td>
+<td>Use Fredkin. Swap the two targets only when the control is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>.</td>
+</tr>
+<tr class="even">
+<td>Copy a computational-basis bit</td>
+<td>Use CNOT onto a target initially
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>.</td>
+</tr>
+</tbody>
+</table>
+<p>NOT, CNOT, Toffoli and Fredkin are their own inverses. Toffoli with
+fixed input bits can build general reversible Boolean computations. For
+example, fixing both controls to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+yields a NOT on the target, and fixing one control to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+yields a CNOT on the other control and the target.</p>
+<p><strong>Copying a basis label versus cloning a state.</strong> CNOT
+sends
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>a</mi><mo>,</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert a,0\rangle</annotation></semantics></math>
+to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>a</mi><mo>,</mo><mi>a</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert a,a\rangle</annotation></semantics></math>
+for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">a=0</annotation></semantics></math>
+or
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>.
+On
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+\rangle\lvert0\rangle</annotation></semantics></math>
+it yields
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mo stretchy="false" form="prefix">|</mo><mn>00</mn><mo stretchy="false" form="postfix">⟩</mo><mo>+</mo><mo stretchy="false" form="prefix">|</mo><mn>11</mn><mo stretchy="false" form="postfix">⟩</mo><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><msqrt><mn>2</mn></msqrt></mrow><annotation encoding="application/x-tex">(\lvert00\rangle+\lvert11\rangle)/\sqrt2</annotation></semantics></math>.
+Two independent copies
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+\rangle\lvert+\rangle</annotation></semantics></math>
+would also contain
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>01</mn><annotation encoding="application/x-tex">01</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>10</mn><annotation encoding="application/x-tex">10</annotation></semantics></math>.
+This difference matters when you copy a function output coherently in
+§23.</p>
+<h2 id="reversible-synthesis-of-a-majority-function">21. Reversible
+synthesis of a majority function</h2>
+<p><em>Slide 27.</em></p>
+<p>The synthesis recipe starts by writing the function as an XOR of AND
+terms. Apply one multi-controlled
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+to the <strong>same</strong> target for each term. Each gate toggles the
+target when its term evaluates to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>.
+Together they XOR the function value into the target.</p>
+<p>For three bits, majority returns
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+if at least two inputs are
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>MAJ</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><msub><mi>x</mi><mn>2</mn></msub><mo>⊕</mo><msub><mi>x</mi><mn>1</mn></msub><msub><mi>x</mi><mn>3</mn></msub><mo>⊕</mo><msub><mi>x</mi><mn>2</mn></msub><msub><mi>x</mi><mn>3</mn></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\operatorname{MAJ}(x_1,x_2,x_3)=x_1x_2\oplus x_1x_3\oplus x_2x_3.
+</annotation></semantics></math></p>
+<table>
+<thead>
+<tr class="header">
+<th>Input type</th>
+<th>Number of AND terms that are
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></th>
+<th>Majority bit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>No ones or just one one</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Exactly two ones</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Three ones</td>
+<td>3</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>For
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>111</mn><annotation encoding="application/x-tex">111</annotation></semantics></math>,
+all three gates toggle, so the final effect is one net flip. For
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>110</mn><annotation encoding="application/x-tex">110</annotation></semantics></math>,
+only the first pair controls a flip. Three Toffolis implement this
+formula with no scratch qubit beyond the output target. The input wires
+are preserved.</p>
+<figure>
+<img src="assets/11_majority_three_toffolis.png"
+alt="Three Toffoli gates target the same output, one for each pair of majority inputs." />
+<figcaption aria-hidden="true">Three Toffoli gates target the same
+output, one for each pair of majority inputs.</figcaption>
+</figure>
+<h2 id="the-garbage-problem">22. The garbage problem</h2>
+<p><em>Slide 28. The professor postponed the full explanation. This
+walkthrough follows the slide.</em></p>
+<p>A circuit may leave intermediate data in its work register. This
+leftover information is called <strong>garbage</strong>. When the input
+is a superposition, garbage can record which branch the computation came
+from. This can weaken or remove interference on the input register.</p>
+<p>For a two-branch example, a clean sign-marked input could look like
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo><mo>−</mo><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="prefix">|</mo><mi>g</mi><mo stretchy="false" form="postfix">⟩</mo><mi>/</mi><msqrt><mn>2</mn></msqrt></mrow><annotation encoding="application/x-tex">(\lvert0\rangle-\lvert1\rangle)\lvert g\rangle/\sqrt2</annotation></semantics></math>.
+The same
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>g</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert g\rangle</annotation></semantics></math>
+accompanies both branches, so the top wire is simply
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>−</mo><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert-\rangle</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+sends it to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert1\rangle</annotation></semantics></math>.
+If the work labels are instead
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert1\rangle</annotation></semantics></math>,
+the joint state is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mo stretchy="false" form="prefix">|</mo><mn>00</mn><mo stretchy="false" form="postfix">⟩</mo><mo>−</mo><mo stretchy="false" form="prefix">|</mo><mn>11</mn><mo stretchy="false" form="postfix">⟩</mo><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><msqrt><mn>2</mn></msqrt></mrow><annotation encoding="application/x-tex">(\lvert00\rangle-\lvert11\rangle)/\sqrt2</annotation></semantics></math>.
+Applying
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+to the top wire gives each top outcome with probability
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">1/2</annotation></semantics></math>.
+The work labels are orthogonal, so their contributions to the same top
+outcome cannot cancel.</p>
+<figure>
+<img src="assets/12_garbage_interference.png"
+alt="Comparison of identical scratch labels, which allow interference, and distinguishable scratch labels, which leave the first bit random in the example." />
+<figcaption aria-hidden="true">Comparison of identical scratch labels,
+which allow interference, and distinguishable scratch labels, which
+leave the first bit random in the example.</figcaption>
+</figure>
+<h2 id="compute-copy-and-uncompute">23. Compute, copy and uncompute</h2>
+<p><em>Slide 29.</em></p>
+<p>Think of the circuit as having three registers: input, work, and
+output. First compute
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(x)</annotation></semantics></math>
+into the work register, along with any temporary values. Next use CNOT
+to XOR the answer into an output initialized to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>.
+Finally apply the inverse of the compute block to the input and work
+registers. The output wire stays outside that inverse block.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Input</th>
+<th>Work</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Start</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td>Compute</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math></td>
+<td>Contains
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(x)</annotation></semantics></math>
+and scratch values</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td>Copy</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math></td>
+<td>Same contents</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(x)</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td>Uncompute</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(x)</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img src="assets/13_uncompute.gif"
+alt="Animation showing input retained, work computed and reset by the inverse, and the answer left in the output." />
+<figcaption aria-hidden="true">Animation showing input retained, work
+computed and reset by the inverse, and the answer left in the
+output.</figcaption>
+</figure>
+<p>To invert a block, reverse the gate order and replace each gate with
+its inverse. For Toffoli and CNOT, the inverse is the same gate. For
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math>,
+the inverse is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>S</mi><mo>†</mo></msup><annotation encoding="application/x-tex">S^\dagger</annotation></semantics></math>.
+The cost is one compute block, its inverse, and the copy operation. This
+returns the work register to its starting state even on a superposition,
+by linearity. The output can still be entangled with the input if
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(x)</annotation></semantics></math>
+varies across the superposition. A bit oracle deliberately keeps that
+answer. A phase oracle keeps a sign on each input branch while leaving
+work clean.</p>
+<h2 id="worked-and-and-phase-oracle-examples">24. Worked AND and
+phase-oracle examples</h2>
+<p><em>Slides 30–32. The transcript introduces these examples briefly.
+The gate-by-gate details come from the slides.</em></p>
+<p><strong>Three-input AND with one scratch qubit.</strong> Use a clean
+work bit
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">w=0</annotation></semantics></math>
+and a separate target
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>.</p>
+<ol type="1">
+<li>Toffoli with controls
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_1,x_2</annotation></semantics></math>
+puts
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_1x_2</annotation></semantics></math>
+into
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>w</mi><annotation encoding="application/x-tex">w</annotation></semantics></math>.</li>
+<li>Toffoli with controls
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">w,x_3</annotation></semantics></math>
+toggles
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>
+by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><msub><mi>x</mi><mn>3</mn></msub><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><msub><mi>x</mi><mn>2</mn></msub><msub><mi>x</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">wx_3=x_1x_2x_3</annotation></semantics></math>.</li>
+<li>Repeat the first Toffoli to restore
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">w=0</annotation></semantics></math>.
+The change to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>
+is preserved.</li>
+</ol>
+<p>For
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><msub><mi>x</mi><mn>2</mn></msub><msub><mi>x</mi><mn>3</mn></msub><mo>=</mo><mn>111</mn></mrow><annotation encoding="application/x-tex">x_1x_2x_3=111</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">y=0</annotation></semantics></math>,
+the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mi>w</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(w,y)</annotation></semantics></math>
+pair goes
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>→</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>→</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>→</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">(0,0)\to(1,0)\to(1,1)\to(0,1)</annotation></semantics></math>.
+With
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>110</mn><annotation encoding="application/x-tex">110</annotation></semantics></math>,
+the second gate sees
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>3</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x_3=0</annotation></semantics></math>,
+so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>
+stays
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+throughout. This is a three-controlled
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+built from three Toffolis with one clean ancilla.</p>
+<p><strong>Mark just the string
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>101</mn><annotation encoding="application/x-tex">101</annotation></semantics></math>.</strong>
+Apply
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+on the middle wire, apply CCZ, then undo the middle-wire
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>.
+CCZ changes the sign of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>111</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert111\rangle</annotation></semantics></math>
+only. The first
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+converts
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>101</mn><annotation encoding="application/x-tex">101</annotation></semantics></math>
+into
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>111</mn><annotation encoding="application/x-tex">111</annotation></semantics></math>
+and the final
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+restores the original label. The net effect is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>101</mn><mo stretchy="false" form="postfix">⟩</mo><mo>↦</mo><mo>−</mo><mo stretchy="false" form="prefix">|</mo><mn>101</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert101\rangle\mapsto-\lvert101\rangle</annotation></semantics></math>
+with all other basis kets fixed. In an equal superposition only that one
+amplitude changes sign, leaving all immediate computational-basis
+probabilities unchanged. The sign can affect later interference, as in
+Grover search.</p>
+<figure>
+<img src="assets/14_mark_101.gif"
+alt="Animation tracing the label 101 through X, CCZ and X. The label returns to 101 and the amplitude has a minus sign." />
+<figcaption aria-hidden="true">Animation tracing the label 101 through
+X, CCZ and X. The label returns to 101 and the amplitude has a minus
+sign.</figcaption>
+</figure>
+<p><strong>Clean, dirty and garbage.</strong> A clean ancilla in slide
+32 starts in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math>
+and must return to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math>.
+A dirty or borrowed ancilla starts in an unknown state and must be
+restored to that state. Garbage is information left behind when
+temporary registers are left correlated with the input. In the slide’s
+clean-ancilla chain, an
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>-controlled
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+uses
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n-2</annotation></semantics></math>
+clean helpers and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>n</mi><mo>−</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">2n-3</annotation></semantics></math>
+Toffolis for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>≥</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n\ge2</annotation></semantics></math>.
+For four controls that means two helpers and five Toffolis. This is one
+particular trade-off between qubits and gates.</p>
+<h2 id="can-a-quantum-computer-add-34">25. Can a quantum computer add
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>+</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">3+4</annotation></semantics></math>?</h2>
+<p><em>Slides 33–34.</em></p>
+<p>Yes. The example uses reversible versions of familiar binary adder
+blocks. Keep register
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>,
+overwrite register
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>b</mi><annotation encoding="application/x-tex">b</annotation></semantics></math>
+with the three low sum bits, and write the final carry into a separate
+wire. The circuit also keeps two intermediate carry bits.</p>
+<p>Start with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><msub><mn>011</mn><mn>2</mn></msub><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">a=011_2=3</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>=</mo><msub><mn>100</mn><mn>2</mn></msub><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">b=100_2=4</annotation></semantics></math>.
+Begin at bit
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>,
+the rightmost column.</p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Bit
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></th>
+<th
+style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>i</mi></msub><annotation encoding="application/x-tex">a_i</annotation></semantics></math></th>
+<th
+style="text-align: right;"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>b</mi><mi>i</mi></msub><annotation encoding="application/x-tex">b_i</annotation></semantics></math></th>
+<th style="text-align: right;">Carry in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mi>i</mi></msub><annotation encoding="application/x-tex">c_i</annotation></semantics></math></th>
+<th style="text-align: right;">Sum
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mi>i</mi></msub><annotation encoding="application/x-tex">s_i</annotation></semantics></math></th>
+<th style="text-align: right;">Carry out
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">c_{i+1}</annotation></semantics></math></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p>The result is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>3</mn></msub><msub><mi>s</mi><mn>2</mn></msub><msub><mi>s</mi><mn>1</mn></msub><msub><mi>s</mi><mn>0</mn></msub><mo>=</mo><msub><mn>0111</mn><mn>2</mn></msub><mo>=</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">c_3s_2s_1s_0=0111_2=7</annotation></semantics></math>.
+The first column is a <strong>half adder</strong> with sum
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mn>0</mn></msub><mo>⊕</mo><msub><mi>b</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">a_0\oplus b_0</annotation></semantics></math>
+and carry
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mn>0</mn></msub><msub><mi>b</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">a_0b_0</annotation></semantics></math>.
+The other columns are <strong>full adders</strong> because they also
+accept a carry in. One way to see the two Toffolis and two CNOTs in each
+full adder is to form the carry contributions
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub><msub><mi>b</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_ib_i</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mi>i</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>a</mi><mi>i</mi></msub><mo>⊕</mo><msub><mi>b</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c_i(a_i\oplus b_i)</annotation></semantics></math>,
+with a CNOT turning
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>b</mi><mi>i</mi></msub><annotation encoding="application/x-tex">b_i</annotation></semantics></math>
+into
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub><mo>⊕</mo><msub><mi>b</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i\oplus b_i</annotation></semantics></math>
+between those steps. A second CNOT adds
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mi>i</mi></msub><annotation encoding="application/x-tex">c_i</annotation></semantics></math>
+into that same sum wire.</p>
+<figure>
+<img src="assets/15_add_3_and_4.gif"
+alt="Animation adding 011 and 100 from right to left, with each sum bit and carry shown." />
+<figcaption aria-hidden="true">Animation adding 011 and 100 from right
+to left, with each sum bit and carry shown.</figcaption>
+</figure>
+<p><strong>Counting the circuit.</strong> The example uses nine qubits,
+including six input bits and three carry wires. The half adder takes one
+Toffoli and one CNOT. The two full adders take two Toffolis and two
+CNOTs each. That is <strong>five Toffolis and five CNOTs</strong> before
+decomposition. The slide’s example decomposes one Toffoli into six
+CNOTs, four
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>
+gates, three
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>T</mi><mo>†</mo></msup><annotation encoding="application/x-tex">T^\dagger</annotation></semantics></math>
+gates and two
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+gates. Using that decomposition for all five gives <strong>35 CNOTs in
+total</strong>
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mo>×</mo><mn>6</mn><mo>+</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">5\times6+5</annotation></semantics></math>),
+<strong>35
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>-type
+gates</strong> and <strong>10 Hadamards</strong> before routing or
+optimization. The two intermediate carries are left as garbage in this
+circuit. This count is for the slide’s construction.</p>
+<h2 id="qiskit-laboratories-and-practical-instructions">26. Qiskit
+laboratories and practical instructions</h2>
+<p><em>Spoken lab walkthrough, alongside slides 35–37.</em></p>
+<p>The lecture describes downloading the course notebook from the
+professor’s labs page, opening it in Colab or a local Jupyter
+environment, then running the setup and example cells in order. For a
+local run, use the course’s supplied <code>requirements.txt</code> to
+reproduce the notebook’s environment. The demo mentions Qiskit, Qiskit
+Aer, NumPy and Matplotlib.</p>
+<p>The gate card on slide 35 is the lookup table for the notebook. These
+are the method names shown in the lecture.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Idea</th>
+<th>Lecture’s notebook names</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>One-wire gates</td>
+<td><code>x</code>, <code>y</code>, <code>z</code>, <code>h</code>,
+<code>s</code>, <code>sdg</code>, <code>t</code>, <code>tdg</code></td>
+</tr>
+<tr class="even">
+<td>Phase and rotations</td>
+<td><code>p</code>, <code>rx</code>, <code>ry</code>,
+<code>rz</code></td>
+</tr>
+<tr class="odd">
+<td>Two-wire gates</td>
+<td><code>cx</code>, <code>cz</code>, <code>swap</code></td>
+</tr>
+<tr class="even">
+<td>Multi-controlled gates</td>
+<td><code>ccx</code>, <code>mcx</code></td>
+</tr>
+<tr class="odd">
+<td>Measurement and feedforward</td>
+<td><code>measure</code>, then <code>if_test</code> for a classical
+condition</td>
+</tr>
+</tbody>
+</table>
+<p>One example from the lab is the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>-basis
+measurement. Prepare
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mi>i</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+i\rangle</annotation></semantics></math>
+with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math>,
+then undo with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>S</mi><mo>†</mo></msup><annotation encoding="application/x-tex">S^\dagger</annotation></semantics></math>
+then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>.
+The expected ideal readout is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>.
+Another example uses <code>Operator.equiv</code> to compare
+reversed-CNOT circuits up to global phase. When reading a displayed
+two-bit string in the notebook, check which qubit is assigned to each
+character. The algebra here uses the top-wire-first convention from the
+diagrams.</p>
+<h2 id="closing-advice-and-final-questions">27. Closing advice and final
+questions</h2>
+<p><em>Slide 37 and the spoken closing remarks.</em></p>
+<p>The professor suggests changing one gate, predicting the result with
+algebra or a Bloch-sphere sketch, then checking it in the notebook. For
+example, in §4 swap
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math>.
+Predict both the state vector and the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>-basis
+histogram. The state vector changes, while the ideal histogram is still
+50/50. Try an
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>-
+or
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>-basis
+readout to reveal the difference.</p>
+<p>Slide 37 points to Nielsen and Chuang for single-qubit operations,
+controlled operations, deferred measurement and energy in reversible
+computation.</p>
+<h2 id="practice-with-worked-answers">Practice with worked answers</h2>
+<p>These are the eight exercises from slide 36, in the slide’s
+order.</p>
+<ol type="1">
+<li><strong>Why do
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mn>2</mn></msup><mo>=</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">T^2=S</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>S</mi><mn>2</mn></msup><mo>=</mo><mi>Z</mi></mrow><annotation encoding="application/x-tex">S^2=Z</annotation></semantics></math>?
+When does
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mi>k</mi></msup><mo>=</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">T^k=I</annotation></semantics></math>?</strong>
+The second diagonal entry of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>T</mi><mi>k</mi></msup><annotation encoding="application/x-tex">T^k</annotation></semantics></math>
+is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>i</mi><mi>k</mi><mi>π</mi><mi>/</mi><mn>4</mn></mrow></msup><annotation encoding="application/x-tex">e^{ik\pi/4}</annotation></semantics></math>.
+The powers
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>2</mn><mo>,</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">k=2,4</annotation></semantics></math>
+give
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>,</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i,-1</annotation></semantics></math>,
+respectively, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>T</mi><mn>2</mn></msup><mo>=</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">T^2=S</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>S</mi><mn>2</mn></msup><mo>=</mo><mi>Z</mi></mrow><annotation encoding="application/x-tex">S^2=Z</annotation></semantics></math>.
+The first positive
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+that gives
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>8</mn><annotation encoding="application/x-tex">8</annotation></semantics></math>.</li>
+<li><strong>What does
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>,
+then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math>,
+then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math>
+do to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert0\rangle</annotation></semantics></math>?</strong>
+The first two gates give
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>+</mo><mi>i</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert+i\rangle</annotation></semantics></math>.
+The last gives
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">[</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="prefix">|</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">]</mo><mi>/</mi><mn>2</mn><mo>=</mo><msup><mi>e</mi><mrow><mi>i</mi><mi>π</mi><mi>/</mi><mn>4</mn></mrow></msup><mo stretchy="false" form="prefix">|</mo><mo>−</mo><mi>i</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\big[(1+i)\lvert0\rangle+(1-i)\lvert1\rangle\big]/2=e^{i\pi/4}\lvert-i\rangle</annotation></semantics></math>.
+The named state is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>−</mo><mi>i</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert-i\rangle</annotation></semantics></math>
+up to global phase.</li>
+<li><strong>Why is CZ symmetric, and how does it give CNOT?</strong> Its
+only change is a sign on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>11</mn><annotation encoding="application/x-tex">11</annotation></semantics></math>,
+which is unchanged by swapping the two labels. In the
+control-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+branch, the target sees
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>I</mi><mi>H</mi><mo>=</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">HIH=I</annotation></semantics></math>.
+In the
+control-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+branch, it sees
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>Z</mi><mi>H</mi><mo>=</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">HZH=X</annotation></semantics></math>.
+That is CNOT.</li>
+<li><strong>Measure in the rotated basis on the slide.</strong> Its two
+vectors are the columns of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>y</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>π</mi><mi>/</mi><mn>4</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">R_y(\pi/4)</annotation></semantics></math>
+because their coefficients use
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mi>/</mi><mn>8</mn></mrow><annotation encoding="application/x-tex">\pi/8</annotation></semantics></math>.
+Apply the inverse
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>y</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mi>π</mi><mi>/</mi><mn>4</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">R_y(-\pi/4)</annotation></semantics></math>
+and then measure in the computational basis.</li>
+<li><strong>Prove the two-wire identities.</strong> For reversing CNOT,
+expand it as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>I</mi><mo>⊗</mo><mi>H</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>CZ</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>I</mi><mo>⊗</mo><mi>H</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">(I\otimes H)\operatorname{CZ}(I\otimes H)</annotation></semantics></math>.
+The extra
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>⊗</mo><mi>H</mi></mrow><annotation encoding="application/x-tex">H\otimes H</annotation></semantics></math>
+on each side reduces the target Hadamards and leaves
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>⊗</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">H\otimes I</annotation></semantics></math>
+on both sides. For SWAP, the three CNOTs map
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert a,b\rangle</annotation></semantics></math>
+through
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>a</mi><mo>,</mo><mi>a</mi><mo>⊕</mo><mi>b</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert a,a\oplus b\rangle</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>b</mi><mo>,</mo><mi>a</mi><mo>⊕</mo><mi>b</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert b,a\oplus b\rangle</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>b</mi><mo>,</mo><mi>a</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert b,a\rangle</annotation></semantics></math>.
+For the four Pauli identities, apply
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert a,b\rangle</annotation></semantics></math>,
+then the Pauli, then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+again. A control
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+returns
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>a</mi><mo>⊕</mo><mn>1</mn><mo>,</mo><mi>b</mi><mo>⊕</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert a\oplus1,b\oplus1\rangle</annotation></semantics></math>,
+while a target
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math>
+returns
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo>⊕</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\lvert a,b\oplus1\rangle</annotation></semantics></math>.
+Control
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>
+returns the original ket with phase
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>a</mi></msup><annotation encoding="application/x-tex">(-1)^a</annotation></semantics></math>,
+while target
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>
+returns it with phase
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>a</mi><mo>⊕</mo><mi>b</mi></mrow></msup><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>a</mi></msup><msup><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>b</mi></msup></mrow><annotation encoding="application/x-tex">(-1)^{a\oplus b}=(-1)^a(-1)^b</annotation></semantics></math>.
+Linearity extends each result to any input.</li>
+<li><strong>Build bit and phase oracles for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><msub><mi>x</mi><mn>3</mn></msub><mo>⊕</mo><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">f(x_1,x_2,x_3)=x_1x_3\oplus x_2</annotation></semantics></math>.</strong>
+For the bit oracle, apply Toffoli with controls
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">x_1,x_3</annotation></semantics></math>
+and CNOT with control
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>2</mn></msub><annotation encoding="application/x-tex">x_2</annotation></semantics></math>,
+both onto
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>.
+For the phase oracle, use CZ on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">x_1,x_3</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>
+on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>2</mn></msub><annotation encoding="application/x-tex">x_2</annotation></semantics></math>.
+The signs multiply to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><msub><mi>x</mi><mn>1</mn></msub><msub><mi>x</mi><mn>3</mn></msub><mo>+</mo><msub><mi>x</mi><mn>2</mn></msub></mrow></msup><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup></mrow><annotation encoding="application/x-tex">(-1)^{x_1x_3+x_2}=(-1)^{f(x)}</annotation></semantics></math>.</li>
+<li><strong>Compute OR into a clean target using one Toffoli.</strong>
+Flip the target from
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>.
+Flip
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>,</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a,b</annotation></semantics></math>,
+apply Toffoli, then flip
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>,</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a,b</annotation></semantics></math>
+back. The target contains
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>⊕</mo><mrow><mo stretchy="true" form="prefix">(</mo><mover><mi>a</mi><mo accent="true">‾</mo></mover><mover><mi>b</mi><mo accent="true">‾</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>a</mi><mo>∨</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">1\oplus(\bar a\bar b)=a\lor b</annotation></semantics></math>
+and the two inputs are restored.</li>
+<li><strong>Trace
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>+</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">3+5</annotation></semantics></math>.</strong>
+Add
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mn>011</mn><mn>2</mn></msub><annotation encoding="application/x-tex">011_2</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mn>101</mn><mn>2</mn></msub><annotation encoding="application/x-tex">101_2</annotation></semantics></math>
+from the right. The sums per column are
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>+</mo><mn>1</mn><mo>+</mo><mn>0</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1+1+0=2</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">1+0+1=2</annotation></semantics></math>,
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>+</mo><mn>1</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">0+1+1=2</annotation></semantics></math>.
+Each column writes sum bit
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>
+and passes carry
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>.
+Thus
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>1</mn></msub><mo>=</mo><msub><mi>c</mi><mn>2</mn></msub><mo>=</mo><msub><mi>c</mi><mn>3</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">c_1=c_2=c_3=1</annotation></semantics></math>
+and the result is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mn>1000</mn><mn>2</mn></msub><mo>=</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">1000_2=8</annotation></semantics></math>.
+The low three bits are
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>000</mn><annotation encoding="application/x-tex">000</annotation></semantics></math>
+and the high bit
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mn>3</mn></msub><annotation encoding="application/x-tex">c_3</annotation></semantics></math>
+carries the overflow.</li>
+</ol>
+<p><em>Sources. The supplied corrected transcript determines the order
+and scope. The original TXT was used to cross-check spoken passages. The
+supplied PDF provides the numbered frames, worked examples and problem
+set. All diagrams and animations were drawn for these notes.</em></p>
+</main>
+</div>
+<footer><a href="#notes">Back to top</a> · <a href="Study_Notes.md">Markdown source</a></footer>
+<script>
+  if (matchMedia('(max-width: 860px)').matches) {
+    document.querySelector('nav details')?.removeAttribute('open');
+  }
+  function wrapForScrolling(selector, className) {
+    document.querySelectorAll(selector).forEach((element) => {
+      const wrapper = document.createElement(className === 'math-scroll' ? 'span' : 'div');
+      wrapper.className = className;
+      element.before(wrapper);
+      wrapper.append(element);
+    });
+  }
+  wrapForScrolling('table', 'table-scroll');
+  wrapForScrolling('math[display="block"]', 'math-scroll');
+</script>
+</body>
+</html>

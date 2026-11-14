@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pauli Z and X eigenvectors</title>
+<style>
+:root{--ink:#172b4d;--muted:#526581;--blue:#2455c8;--purple:#5b3fb9;--line:#d7e0ef;--bg:#eef3fb}
+*{box-sizing:border-box}
+body{margin:0;padding:20px 12px;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+main{max-width:780px;margin:auto}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.col h2{font-size:14px;margin:0 0 10px;color:var(--blue);text-transform:uppercase;letter-spacing:.05em}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:8px}
+.ket{font-family:Georgia,serif;font-size:20px;font-weight:700}
+.lam{font-size:13px;font-weight:800;margin-top:6px;color:var(--purple)}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+  <div class="grid">
+    <section class="col">
+      <h2>Pauli Z</h2>
+      <section class="card"><div class="ket">|0⟩</div><div class="lam">Eigenvalue +1</div></section>
+      <section class="card"><div class="ket">|1⟩</div><div class="lam">Eigenvalue −1</div></section>
+      <p style="font-size:13px;color:var(--muted);margin:0">Computational (Z) basis</p>
+    </section>
+    <section class="col">
+      <h2>Pauli X</h2>
+      <section class="card"><div class="ket">|+⟩</div><div class="lam">Eigenvalue +1</div></section>
+      <section class="card"><div class="ket">|−⟩</div><div class="lam">Eigenvalue −1</div></section>
+      <p style="font-size:13px;color:var(--muted);margin:0">Hadamard (X) basis</p>
+    </section>
+  </div>
+</main>
+</body>
+</html>

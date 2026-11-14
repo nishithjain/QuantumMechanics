@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4-Qubit Knowledge Check</title>
+<style>
+  :root {
+    --navy:#202b45; --muted:#667085; --purple:#3730a3; --purple-light:#eef2ff;
+    --green:#16845b; --green-bg:#eaf8f1; --red:#c2413b; --red-bg:#fff0ef;
+    --line:#e1e6ef; --surface:#fff; --bg:#f4f6fb;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; padding:28px 16px; background:linear-gradient(140deg,#eef2ff,#f8fafc 55%,#e9fbf7);
+    color:var(--navy); font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  }
+  .quiz { max-width:760px; margin:0 auto; }
+  header {
+    background:linear-gradient(120deg,#3730a3,#4f46e5); color:white; padding:25px 26px;
+    border-radius:18px; box-shadow:0 12px 28px #3730a329;
+  }
+  header .eyebrow { font-size:12px; letter-spacing:1.3px; text-transform:uppercase; opacity:.8; font-weight:750; }
+  h1 { margin:7px 0 8px; font-size:clamp(25px,5vw,34px); letter-spacing:-.8px; }
+  header p { margin:0; color:#e4e7ff; line-height:1.5; }
+  .intro { margin:18px 0; padding:17px 20px; border:1px solid var(--line); border-radius:14px; background:#ffffffd9; line-height:1.6; }
+  .intro strong { color:var(--purple); }
+  .progress-row { display:flex; justify-content:space-between; align-items:center; margin:18px 2px 8px; color:var(--muted); font-size:13px; font-weight:700; }
+  .progress { height:8px; background:#e5e9f2; border-radius:99px; overflow:hidden; }
+  .progress > div { height:100%; width:0%; background:linear-gradient(90deg,#4f46e5,#0d9488); transition:width .25s; }
+  .question { margin-top:17px; padding:21px; background:var(--surface); border:1px solid var(--line); border-radius:16px; box-shadow:0 6px 20px #1d2b4d09; }
+  .qtop { display:flex; gap:12px; align-items:flex-start; }
+  .number { flex:0 0 34px; height:34px; border-radius:10px; display:grid; place-items:center; background:var(--purple-light); color:var(--purple); font-weight:850; }
+  h2 { margin:2px 0 7px; font-size:18px; line-height:1.35; }
+  .hint { margin:0 0 15px 46px; color:var(--muted); font-size:13px; line-height:1.5; }
+  .options { display:grid; grid-template-columns:repeat(4,1fr); gap:9px; margin-left:46px; }
+  .option { position:relative; }
+  .option input { position:absolute; opacity:0; pointer-events:none; }
+  .option label {
+    display:flex; justify-content:center; align-items:center; min-height:48px; border:1.5px solid var(--line);
+    border-radius:11px; background:#fff; cursor:pointer; font-weight:800; font-size:17px; transition:.16s;
+  }
+  .option label:hover { border-color:#8b83f5; background:#fafaff; }
+  .option input:checked + label { border-color:var(--purple); background:var(--purple-light); color:var(--purple); box-shadow:0 0 0 2px #4f46e51a; }
+  .option input:focus-visible + label { outline:3px solid #a5b4fc; outline-offset:2px; }
+  .feedback { display:none; margin:15px 0 0 46px; padding:12px 14px; border-radius:11px; font-size:14px; line-height:1.55; }
+  .feedback.show { display:block; }
+  .feedback.correct { background:var(--green-bg); color:#116344; border:1px solid #b9e7d0; }
+  .feedback.incorrect { background:var(--red-bg); color:#9f302b; border:1px solid #f4c6c2; }
+  .actions { display:flex; gap:10px; flex-wrap:wrap; margin:20px 0; }
+  button { border:0; border-radius:11px; padding:12px 18px; font-size:14px; font-weight:800; cursor:pointer; }
+  #check { color:white; background:var(--purple); box-shadow:0 5px 14px #3730a32c; }
+  #reset { color:#344054; background:#e9edf5; }
+  button:disabled { opacity:.45; cursor:not-allowed; }
+  .result { display:none; margin-top:16px; padding:18px 20px; background:#fff; border:1px solid var(--line); border-radius:15px; }
+  .result.show { display:block; }
+  .score { font-size:27px; font-weight:900; color:var(--purple); }
+  .summary { color:var(--muted); font-size:14px; line-height:1.55; margin-top:5px; }
+  .takeaway { margin-top:18px; padding:17px 19px; border-radius:14px; background:#eaf8f5; border:1px solid #bce6dc; line-height:1.65; }
+  .takeaway b { color:#087866; }
+  .math { font-family:Georgia,serif; font-size:18px; }
+  @media(max-width:520px) {
+    body { padding:16px 11px; }
+    header { padding:21px; }
+    .question { padding:17px 14px; }
+    .hint,.options,.feedback { margin-left:0; }
+    .options { gap:7px; }
+    .option label { min-height:45px; }
+  }
+</style>
+</head>
+<body>
+<main class="quiz">
+  <header>
+    <div class="eyebrow">Quantum computing · Knowledge check</div>
+    <h1>Think about this</h1>
+    <p>Suppose you have <b>4 qubits</b>. Test your understanding of basis states and complex amplitudes.</p>
+  </header>
+
+  <section class="intro">
+    Each qubit has two computational-basis possibilities: <span class="math">|0⟩</span> and <span class="math">|1⟩</span>.
+    Choose one answer for each question, then select <b>Check answers</b> to see the explanation.
+  </section>
+
+  <div class="progress-row">
+    <span>Your progress</span><span id="progressText">0 of 3 answered</span>
+  </div>
+  <div class="progress"><div id="progressBar"></div></div>
+
+  <form id="quizForm">
+    <section class="question" data-question="1">
+      <div class="qtop">
+        <div class="number">1</div>
+        <div><h2>How many basis states are possible?</h2></div>
+      </div>
+      <p class="hint">Hint: Each of the 4 qubits can be either 0 or 1.</p>
+      <div class="options">
+        <div class="option"><input type="radio" id="q1a" name="q1" value="4"><label for="q1a">4</label></div>
+        <div class="option"><input type="radio" id="q1b" name="q1" value="8"><label for="q1b">8</label></div>
+        <div class="option"><input type="radio" id="q1c" name="q1" value="16"><label for="q1c">16</label></div>
+        <div class="option"><input type="radio" id="q1d" name="q1" value="32"><label for="q1d">32</label></div>
+      </div>
+      <div class="feedback" id="f1" aria-live="polite"></div>
+    </section>
+
+    <section class="question" data-question="2">
+      <div class="qtop">
+        <div class="number">2</div>
+        <div><h2>How many complex amplitudes are needed to describe a general 4-qubit state?</h2></div>
+      </div>
+      <p class="hint">Hint: A general state has one amplitude for every basis state.</p>
+      <div class="options">
+        <div class="option"><input type="radio" id="q2a" name="q2" value="4"><label for="q2a">4</label></div>
+        <div class="option"><input type="radio" id="q2b" name="q2" value="8"><label for="q2b">8</label></div>
+        <div class="option"><input type="radio" id="q2c" name="q2" value="16"><label for="q2c">16</label></div>
+        <div class="option"><input type="radio" id="q2d" name="q2" value="32"><label for="q2d">32</label></div>
+      </div>
+      <div class="feedback" id="f2" aria-live="polite"></div>
+    </section>
+
+    <section class="question" data-question="3">
+      <div class="qtop">
+        <div class="number">3</div>
+        <div><h2>How many complex amplitudes are needed to describe the 4 individual qubits separately?</h2></div>
+      </div>
+      <p class="hint">Hint: Each individual qubit is described by two amplitudes.</p>
+      <div class="options">
+        <div class="option"><input type="radio" id="q3a" name="q3" value="4"><label for="q3a">4</label></div>
+        <div class="option"><input type="radio" id="q3b" name="q3" value="8"><label for="q3b">8</label></div>
+        <div class="option"><input type="radio" id="q3c" name="q3" value="16"><label for="q3c">16</label></div>
+        <div class="option"><input type="radio" id="q3d" name="q3" value="32"><label for="q3d">32</label></div>
+      </div>
+      <div class="feedback" id="f3" aria-live="polite"></div>
+    </section>
+
+    <div class="actions">
+      <button type="button" id="check">Check answers</button>
+      <button type="reset" id="reset">Try again</button>
+    </div>
+  </form>
+
+  <section class="result" id="result" aria-live="polite">
+    <div class="score" id="score">0 / 3 correct</div>
+    <div class="summary" id="summary"></div>
+  </section>
+
+  <section class="takeaway">
+    <b>Remember the difference:</b><br>
+    <span class="math">2ⁿ</span> = number of basis states and amplitudes in a general combined n-qubit state.<br>
+    <span class="math">2n</span> = total number of amplitudes when describing n individual qubits separately.
+  </section>
+</main>
+<script>
+  const answers = {
+    q1: {
+      value: "16",
+      message: "<b>Correct! 2⁴ = 16.</b> Each of the four qubits has two possible values, so the number of bit-string combinations is 2 × 2 × 2 × 2 = 16."
+    },
+    q2: {
+      value: "16",
+      message: "<b>Correct! A general 4-qubit state needs 2⁴ = 16 complex amplitudes.</b> There is one amplitude for each of the 16 basis states, from |0000⟩ through |1111⟩."
+    },
+    q3: {
+      value: "8",
+      message: "<b>Correct! Each qubit has 2 amplitudes, so 4 × 2 = 8.</b> This counts the amplitudes for four separate, individually described qubits."
+    }
+  };
+
+  const form = document.getElementById('quizForm');
+  const progressText = document.getElementById('progressText');
+  const progressBar = document.getElementById('progressBar');
+  const result = document.getElementById('result');
+
+  function updateProgress() {
+    const count = Object.keys(answers).filter(name => form.querySelector(`input[name="${name}"]:checked`)).length;
+    progressText.textContent = `${count} of 3 answered`;
+    progressBar.style.width = `${count/3*100}%`;
+  }
+  form.addEventListener('change', updateProgress);
+
+  document.getElementById('check').addEventListener('click', () => {
+    let score = 0;
+    let answered = 0;
+    for (const [name, item] of Object.entries(answers)) {
+      const selected = form.querySelector(`input[name="${name}"]:checked`);
+      const feedback = document.getElementById('f' + name.slice(1));
+      feedback.className = 'feedback show';
+      if (!selected) {
+        feedback.classList.add('incorrect');
+        feedback.innerHTML = '<b>Please choose an answer.</b> Then check again.';
+        continue;
+      }
+      answered++;
+      if (selected.value === item.value) {
+        score++;
+        feedback.classList.add('correct');
+        feedback.innerHTML = item.message;
+      } else {
+        feedback.classList.add('incorrect');
+        const correctText = name === 'q3' ? '8' : '16';
+        feedback.innerHTML = `<b>Not quite. The correct answer is ${correctText}.</b> ` + item.message.replace(/^<b>Correct!.*?<\/b>\s*/, '');
+      }
+    }
+    result.classList.add('show');
+    document.getElementById('score').textContent = `${score} / 3 correct`;
+    document.getElementById('summary').textContent =
+      answered < 3 ? `You answered ${answered} of 3 questions. Complete the remaining question${answered===2?'':'s'} and check again.` :
+      score === 3 ? 'Excellent! You understand the difference between 2n and 2ⁿ.' :
+      'Review the explanations above, then select “Try again” to practise once more.';
+    result.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+
+  document.getElementById('reset').addEventListener('click', () => {
+    setTimeout(() => {
+      document.querySelectorAll('.feedback').forEach(el => { el.className='feedback'; el.innerHTML=''; });
+      result.classList.remove('show');
+      updateProgress();
+    }, 0);
+  });
+  updateProgress();
+</script>
+</body>
+</html>

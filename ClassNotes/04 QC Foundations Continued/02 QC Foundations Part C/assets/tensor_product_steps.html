@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tensor product — step by step</title>
+<style>
+:root{--ink:#152744;--muted:#465a75;--blue:#214fc2;--green:#167548;--line:#c9d6e7;--bg:#edf2fa;--hi:#fff8e6}
+*{box-sizing:border-box}
+body{margin:0;padding:20px 12px;background:var(--bg);color:var(--ink);font-family:system-ui,sans-serif}
+main{max-width:720px;margin:auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}
+h1{font-size:20px;margin:0 0 8px}
+p{margin:0 0 12px;font-size:14px;color:var(--muted);line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.col{border:1px solid var(--line);border-radius:10px;padding:12px}
+.col h2{font-size:13px;margin:0 0 8px;text-transform:uppercase;color:var(--blue);letter-spacing:.05em}
+.vec{font-family:Georgia,serif;font-size:18px;line-height:1.6}
+.steps{margin:12px 0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.step{padding:12px 14px;border-bottom:1px solid var(--line);font-size:14px;display:none}
+.step.active{display:block;background:var(--hi)}
+.step:last-child{border-bottom:0}
+.eq{font-family:Georgia,serif;font-size:17px;margin:8px 0;text-align:center}
+.out{min-height:120px;border:1px dashed var(--line);border-radius:10px;padding:12px;text-align:center;font-family:Georgia,serif;font-size:18px;background:#f7f9fd}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+button{border:0;border-radius:8px;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer;background:#e9eef7;color:var(--ink)}
+button.primary{background:var(--blue);color:#fff}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>How two one-qubit columns become four entries</h1>
+<p>Example: <strong>u = (2, 3)</strong> and <strong>v = (5, 7)</strong>. Each entry of <strong>u</strong> multiplies the whole column <strong>v</strong>; results stack top to bottom.</p>
+<div class="grid">
+  <div class="col"><h2>First qubit u</h2><div class="vec">u = (2<br>3)</div></div>
+  <div class="col"><h2>Second qubit v</h2><div class="vec">v = (5<br>7)</div></div>
+</div>
+<div class="steps" id="steps"></div>
+<div class="out" id="out">Press Next to build u ⊗ v</div>
+<div class="btns">
+  <button type="button" id="prev">Previous</button>
+  <button type="button" class="primary" id="next">Next step</button>
+  <button type="button" id="reset">Reset</button>
+</div>
+</main>
+<script>
+const data=[
+  {t:"Step 1: Multiply the top entry 2 by each entry of v.",e:"2·5 = 10,   2·7 = 14",h:"First block: (10, 14)"},
+  {t:"Step 2: Multiply the bottom entry 3 by each entry of v.",e:"3·5 = 15,   3·7 = 21",h:"Second block: (15, 21)"},
+  {t:"Step 3: Stack the two blocks.",e:"u ⊗ v = (10, 14, 15, 21)ᵀ",h:"Four positions ↔ basis order |00⟩, |01⟩, |10⟩, |11⟩"},
+  {t:"Step 4: Match |0⟩⊗|1⟩.",e:"(1,0)⊗(0,1) → only 0·0, 1·0, 0·1, 1·1 → (0,1,0,0)ᵀ = |01⟩",h:"That is why |01⟩ has a 1 in the second slot."}
+];
+const stepsEl=document.getElementById("steps");
+data.forEach((d,i)=>{
+  const d0=document.createElement("div");
+  d0.className="step"+(i===0?" active":"");
+  d0.innerHTML=`<strong>${d.t}</strong><div class="eq">${d.e}</div>`;
+  stepsEl.appendChild(d0);
+});
+let i=0;
+const outs=data.map(d=>d.h);
+function show(){
+  [...stepsEl.children].forEach((el,j)=>el.classList.toggle("active",j===i));
+  document.getElementById("out").textContent=outs[i];
+}
+document.getElementById("next").onclick=()=>{if(i<data.length-1){i++;show();}};
+document.getElementById("prev").onclick=()=>{if(i>0){i--;show();}};
+document.getElementById("reset").onclick=()=>{i=0;show();};
+show();
+</script>
+</body>
+</html>

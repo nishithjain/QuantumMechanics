@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eigenvalues quiz</title>
+<style>
+:root{--ink:#172b4d;--muted:#526581;--blue:#2455c8;--line:#d7e0ef;--bg:#eef3fb;--green:#167548;--red:#b42318}
+*{box-sizing:border-box}
+body{margin:0;padding:24px 14px;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+main{max-width:760px;margin:auto;background:#fff;border-radius:16px;padding:24px;border:1px solid var(--line);box-shadow:0 8px 24px rgba(30,55,90,.06)}
+h1{font-size:22px;margin:0 0 4px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 18px}
+.q{border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0}
+.qt{font-weight:750;margin-bottom:10px;line-height:1.45}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer}
+.opt:hover{background:#f7f9ff}
+.opt input{accent-color:var(--blue)}
+.fb{display:none;margin-top:10px;padding:10px;border-radius:8px;font-size:14px}
+.fb.show{display:block}.fb.ok{background:#effaf3;color:var(--green)}.fb.bad{background:#fff3f2;color:var(--red)}
+.actions{margin-top:16px;display:flex;gap:10px}
+button{border:0;border-radius:10px;padding:11px 16px;font:inherit;font-weight:700;cursor:pointer}
+#check{background:var(--blue);color:#fff}
+#reset{background:#e9eef7}
+#score{display:none;margin-top:14px;font-weight:750}
+</style>
+</head>
+<body>
+<main>
+<h1>Test your understanding</h1>
+<p class="sub">Eigenvalues and eigenvectors</p>
+
+<section class="q" data-ans="plus1" data-exp="Av = v, so λ = +1.">
+<div class="qt">1. A matrix transforms (2, 0) into (2, 0). What is its eigenvalue for this vector?</div>
+<div class="opts">
+<label class="opt"><input type="radio" name="q1" value="0">0</label>
+<label class="opt"><input type="radio" name="q1" value="plus1">+1</label>
+<label class="opt"><input type="radio" name="q1" value="minus1">−1</label>
+<label class="opt"><input type="radio" name="q1" value="2">2</label>
+</div><div class="fb"></div>
+</section>
+
+<section class="q" data-ans="minus1" data-exp="(0, −1) = −1 × (0, 1), so λ = −1.">
+<div class="qt">2. Reflection across the x-axis maps (0, 1) to (0, −1). What is the eigenvalue?</div>
+<div class="opts">
+<label class="opt"><input type="radio" name="q2" value="plus1">+1</label>
+<label class="opt"><input type="radio" name="q2" value="0">0</label>
+<label class="opt"><input type="radio" name="q2" value="minus1">−1</label>
+<label class="opt"><input type="radio" name="q2" value="none">There is no eigenvalue</label>
+</div><div class="fb"></div>
+</section>
+
+<section class="q" data-ans="plusminus" data-exp="Pauli X has eigenvectors |+⟩ and |−⟩.">
+<div class="qt">3. Which are the eigenvectors of the Pauli X gate?</div>
+<div class="opts">
+<label class="opt"><input type="radio" name="q3" value="01">|0⟩ and |1⟩</label>
+<label class="opt"><input type="radio" name="q3" value="plusminus">|+⟩ and |−⟩</label>
+<label class="opt"><input type="radio" name="q3" value="0011">|00⟩ and |11⟩</label>
+<label class="opt"><input type="radio" name="q3" value="none">None of these</label>
+</div><div class="fb"></div>
+</section>
+
+<section class="q" data-ans="no" data-exp="If Av is not a scalar multiple of v, v is not an eigenvector.">
+<div class="qt">4. If Av is not a scalar multiple of v, is v an eigenvector of A?</div>
+<div class="opts">
+<label class="opt"><input type="radio" name="q4" value="yes">Yes, always</label>
+<label class="opt"><input type="radio" name="q4" value="norm">Only if the vector is normalized</label>
+<label class="opt"><input type="radio" name="q4" value="no">No</label>
+<label class="opt"><input type="radio" name="q4" value="plus1only">Only if the eigenvalue is +1</label>
+</div><div class="fb"></div>
+</section>
+
+<div class="actions"><button type="button" id="check">Check answers</button><button type="button" id="reset">Try again</button></div>
+<div id="score"></div>
+</main>
+<script>
+const qs=[...document.querySelectorAll(".q")];
+document.getElementById("check").onclick=()=>{
+  let n=0;
+  qs.forEach(q=>{
+    const ans=q.dataset.ans,exp=q.dataset.exp;
+    const sel=q.querySelector(`input[name="${q.querySelector("input").name}"]:checked`);
+    const fb=q.querySelector(".fb");
+    fb.classList.add("show");
+    if(sel&&sel.value===ans){fb.className="fb show ok";fb.textContent="Correct. "+exp;n++;}
+    else{fb.className="fb show bad";fb.textContent=sel?"Not quite. "+exp:"Pick an answer.";}
+  });
+  const s=document.getElementById("score");
+  s.style.display="block";s.textContent=`Score: ${n} / ${qs.length}`;
+};
+document.getElementById("reset").onclick=()=>{
+  qs.forEach(q=>{q.querySelectorAll("input").forEach(i=>i.checked=false);q.querySelector(".fb").className="fb";});
+  document.getElementById("score").style.display="none";
+};
+</script>
+</body>
+</html>

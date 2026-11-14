@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T gate</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+:root{--ink:#152744;--muted:#465a75;--accent:#2455c8;--line:#dce3ef;--bg:#f0f4fc}
+*{box-sizing:border-box}
+body{margin:0;padding:14px 16px;font:15px/1.55 system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+.wrap{max-width:640px}
+.label{display:inline-block;font-weight:800;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--accent);padding:.2rem .55rem;border-radius:6px;margin-bottom:10px}
+p{margin:0 0 .85rem}
+.eq{margin:.65rem 0 1rem;overflow-x:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+<span class="label">T</span>
+<p>The \(T\) gate is a one-qubit gate that adds a \(45^\circ\) phase to the \(\lvert1\rangle\) part of a qubit state. It leaves the \(\lvert0\rangle\) part alone.</p>
+<div class="eq">\[T\lvert0\rangle = \lvert0\rangle,\qquad T\lvert1\rangle = e^{i\pi/4}\lvert1\rangle.\]</div>
+<p>Think of \(e^{i\pi/4}\) as an instruction to rotate the complex amplitude by \(45^\circ\) while keeping its length the same.</p>
+<p>For example, apply \(T\) to the familiar state \(\lvert+\rangle\):</p>
+<div class="eq">\[\underbrace{\frac{\lvert0\rangle+\lvert1\rangle}{\sqrt{2}}}_{\lvert+\rangle} \quad\xrightarrow{\ T\ }\quad \frac{\lvert0\rangle+e^{i\pi/4}\lvert1\rangle}{\sqrt{2}}.\]</div>
+<p>If you measure either state directly in the \(Z\) basis, you still get 50% chance of \(0\) and 50% chance of \(1\). The difference is the <strong>relative phase</strong> between the two parts. A later gate such as \(H\) can turn that phase difference into a change in measurement probabilities.</p>
+</div>
+</body>
+</html>
