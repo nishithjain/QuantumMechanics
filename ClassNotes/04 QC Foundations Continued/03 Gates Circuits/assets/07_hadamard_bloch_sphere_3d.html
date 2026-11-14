@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hadamard Rotation in 3D</title>
+<style>
+* {box-sizing:border-box}
+body {margin:0;background:#eef3fa;color:#192945;font:1rem/1.5 system-ui,sans-serif;padding:clamp(12px,4vw,32px)}
+main {max-width:690px;margin:auto;background:white;border:1px solid #d7e1ef;border-radius:18px;padding:clamp(14px,4vw,28px)}
+h1 {margin:0;font-size:clamp(1.4rem,5vw,2rem)}
+p {margin:8px 0 14px}
+.controls {display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button, select {font:inherit;padding:7px 12px;min-height:44px;border:1px solid #8295b0;border-radius:8px;background:white;color:#192945;cursor:pointer}
+button[aria-pressed=true],#play {background:#234d9f;color:white;border-color:#234d9f}
+:focus-visible {outline:3px solid #234d9f;outline-offset:3px}
+canvas {display:block;width:100%;max-width:490px;aspect-ratio:1;margin:4px auto;touch-action:none;cursor:grab}
+canvas:active {cursor:grabbing}
+label {font-weight:650}
+input {display:block;width:100%;margin:10px 0;accent-color:#234d9f}
+#view-note {min-height:3em}
+.result {margin:14px 0 0;background:#ecf3ff;padding:10px 14px;border-radius:9px}
+</style>
+</head>
+<body>
+<main>
+<h1>Hadamard Rotation in 3D</h1>
+<p>Choose a basis state and watch it rotate around the purple Hadamard axis.</p>
+<p><label for="state">Input state</label>
+<select id="state">
+<option value="0">Z basis · |0⟩</option><option value="1">Z basis · |1⟩</option>
+<option value="2">X basis · |+⟩</option><option value="3">X basis · |−⟩</option>
+<option value="4">Y basis · |+i⟩</option><option value="5">Y basis · |−i⟩</option>
+</select></p>
+<div class="controls" role="group" aria-label="Camera view">
+<button type="button" data-view="orbit" aria-pressed="true">3D view</button>
+<button type="button" data-view="xz" aria-pressed="false">See the 45° axis</button>
+<button type="button" data-view="axis" aria-pressed="false">See the 180° turn</button>
+</div>
+<canvas id="sphere" aria-label="Rotatable Bloch sphere. Purple marks the Hadamard axis. Blue marks the qubit and its path." role="img">The blue vector rotates about the purple axis from the selected input to its Hadamard output.</canvas>
+<p id="view-note">Drag the sphere to change your viewpoint. The purple axis stays fixed while the blue arrow rotates around it.</p>
+<div class="controls">
+<button type="button" id="play">Play rotation</button>
+<button type="button" id="reset">Reset angle</button>
+</div>
+<label for="angle">Rotation angle <output id="degrees" for="angle">0°</output></label>
+<input id="angle" type="range" min="0" max="180" value="0" aria-valuetext="0 degrees">
+<p class="result"><strong>At 180°</strong> &nbsp; <span id="equation" aria-live="polite">H|0⟩ = |+⟩</span></p>
+<p>A global phase factor leaves the point on the Bloch sphere unchanged.</p>
+</main>
+<script>
+'use strict';
+const canvas = document.getElementById('sphere');
+const ctx = canvas.getContext('2d');
+const slider = document.getElementById('angle');
+const degrees = document.getElementById('degrees');
+const play = document.getElementById('play');
+const buttons = [...document.querySelectorAll('[data-view]')];
+const note = document.getElementById('view-note');
+const blue = '#1550bb', purple = '#792ba2', ink = '#192945';
+const root = Math.SQRT1_2;
+const axis = [root, 0, root], origin = [0, 0, 0];
+const x = [1,0,0], y = [0,1,0], z = [0,0,1];
+const dot = (a,b) => a[0]*b[0] + a[1]*b[1] + a[2]*b[2];
+const scale = (v,s) => v.map(value => value*s);
+const cross = ([a,b,c],[d,e,f]) => [b*f-c*e,c*d-a*f,a*e-b*d];
+const selector = document.getElementById('state');
+const equation = document.getElementById('equation');
+const states = [
+  {ket:'|0⟩', vector:z, output:2},
+  {ket:'|1⟩', vector:scale(z,-1), output:3},
+  {ket:'|+⟩', vector:x, output:0},
+  {ket:'|−⟩', vector:scale(x,-1), output:1},
+  {ket:'|+i⟩', vector:y, output:5, phase:'iπ/4'},
+  {ket:'|−i⟩', vector:scale(y,-1), output:4, phase:'−iπ/4'}
+];
+const notes = {
+  orbit: 'Drag the sphere to change your viewpoint. The purple axis stays fixed while the blue arrow rotates around it.',
+  xz: 'Face the x–z plane to see the two 45° angles. As the qubit turns, it leaves this plane. Its shadow in this view moves along a straight line.',
+  axis: 'Look straight down the purple axis, which appears as a dot. The blue tip follows a semicircle around that dot.'
+};
+let view = 'orbit', yaw = .55, pitch = .48, angle = 0, frame = null, drag = null;
+
+function camera() {
+  if (view === 'xz') return [x, z, [0,-1,0]];
+  if (view === 'axis') return [[-root,0,root], y, [-root,0,-root]];
+  const right = [Math.cos(yaw), -Math.sin(yaw), 0];
+  const up = [-Math.sin(yaw)*Math.sin(pitch), -Math.cos(yaw)*Math.sin(pitch), Math.cos(pitch)];
+  return [right, up, cross(right,up)];
+}
+
+// Rotate the selected basis vector about the unit axis (x + z) / √2.
+function rotated(radians) {
+  const cosine = Math.cos(radians);
+  const vector = states[Number(selector.value)].vector;
+  const tangent = cross(axis,vector);
+  const sine = Math.sin(radians);
+  const parallel = dot(axis,vector)*(1-cosine);
+  return vector.map((value,i)=>value*cosine+tangent[i]*sine+axis[i]*parallel);
+}
+
+function render() {
+  const size = canvas.clientWidth;
+  if (!size || !ctx) return;
+  const resolution = Math.round(size * (devicePixelRatio || 1));
+  if (canvas.width !== resolution || canvas.height !== resolution) {
+    canvas.width = resolution;
+    canvas.height = resolution;
+  }
+  const ratio = resolution / size;
+  ctx.setTransform(ratio,0,0,ratio,0,0);
+  ctx.clearRect(0,0,size,size);
+  const center = size/2, radius = size*.34;
+  const [right,up,front] = camera();
+  const project = vector => [center + radius*dot(vector,right),center - radius*dot(vector,up)];
+  function stroke(points, color, width, dash = []) {
+    ctx.beginPath();
+    points.forEach((vector,index) => {
+      const [px,py] = project(vector);
+      if (index === 0) ctx.moveTo(px,py);
+      else ctx.lineTo(px,py);
+    });
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.setLineDash(dash);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  function point(vector,color,r) {
+    const [px,py] = project(vector);
+    ctx.beginPath(); ctx.arc(px,py,r,0,2*Math.PI);
+    ctx.fillStyle = color; ctx.fill();
+  }
+  function label(vector,text,color,dx=0,dy=0) {
+    const [px,py] = project(vector);
+    ctx.font = 'bold ' + Math.max(12,size*.033) + 'px system-ui';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = 'white';
+    ctx.strokeText(text,px+dx,py+dy);
+    ctx.fillStyle = color;
+    ctx.fillText(text,px+dx,py+dy);
+  }
+  const samples = (fn,limit,count=100) => Array.from({length:count+1},(_,i)=>fn(limit*i/count));
+
+  const shading = ctx.createRadialGradient(center-radius*.32,center-radius*.4,0,center,center,radius);
+  shading.addColorStop(0,'#fff'); shading.addColorStop(1,'#e5edf9');
+  ctx.beginPath(); ctx.arc(center,center,radius,0,2*Math.PI);
+  ctx.fillStyle = shading; ctx.fill();
+  ctx.strokeStyle = '#9bacc5'; ctx.lineWidth = 1.3; ctx.stroke();
+  for (const circle of [
+    t=>[Math.cos(t),Math.sin(t),0],
+    t=>[Math.cos(t),0,Math.sin(t)],
+    t=>[0,Math.cos(t),Math.sin(t)]
+  ]) {
+    const grid = samples(circle,2*Math.PI);
+    for (let i=1;i<grid.length;i++) {
+      const visible = dot(grid[i],front) >= 0;
+      stroke([grid[i-1],grid[i]],visible?'#b7c6dc':'#dce5f2',1);
+    }
+  }
+  for (const [direction,color,name] of [[x,'#98511c','+x'],[y,'#147155','+y'],[z,'#405a83','+z']]) {
+    if (Math.hypot(dot(direction,right),dot(direction,up)) < .08) continue;
+    stroke([scale(direction,-1.07),scale(direction,1.1)],color,1.3);
+    if (view !== 'axis') label(scale(direction,1.18),name,color,0,-8);
+  }
+  if (view === 'axis') {
+    point(origin,purple,5);
+    label(origin,'H axis',purple,0,-15);
+  } else {
+    stroke([scale(axis,-1.12),scale(axis,1.12)],purple,2.8,[7,4]);
+    label(scale(axis,1.17),'H axis',purple,18,-14);
+  }
+  if (view === 'xz') {
+    const arc = t => [.39*Math.sin(t),0,.39*Math.cos(t)];
+    stroke(samples(arc,Math.PI/2,32),purple,1.6);
+    point(arc(Math.PI/4),purple,2.5);
+    const arcLabel = t => [.55*Math.sin(t),0,.55*Math.cos(t)];
+    label(arcLabel(Math.PI/8),'45°',purple);
+    label(arcLabel(3*Math.PI/8),'45°',purple);
+  }
+  stroke(samples(rotated,Math.PI),blue,1.8,[3,5]);
+  stroke(samples(rotated,angle*Math.PI/180),blue,3);
+  const input = states[Number(selector.value)];
+  const output = states[input.output];
+  point(input.vector,ink,3.5);
+  point(output.vector,ink,3.5);
+  const current = rotated(angle*Math.PI/180);
+  stroke([origin,current],blue,3);
+  point(current,blue,6);
+  if (view === 'axis') point(origin,purple,5);
+  for (const [index,state] of [input,output].entries()) {
+    const [px,py] = project(state.vector);
+    const dx = px-center, dy = py-center;
+    const distance = Math.hypot(dx,dy);
+    if (distance < 1) label(state.vector,state.ket,ink,index ? 25 : -25,18);
+    else label(state.vector,state.ket,ink,24*dx/distance,17*dy/distance);
+  }
+}
+
+function setAngle(value) {
+  angle = value;
+  const whole = Math.round(value);
+  slider.value = whole;
+  slider.setAttribute('aria-valuetext',whole+' degrees');
+  degrees.textContent = whole+'°';
+  render();
+}
+function stop() {
+  if (frame !== null) cancelAnimationFrame(frame);
+  frame = null;
+  play.textContent = 'Play rotation';
+}
+function setView(name) {
+  view = name;
+  buttons.forEach(button => button.setAttribute('aria-pressed',String(button.dataset.view===name)));
+  note.textContent = notes[name];
+  render();
+}
+buttons.forEach(button => button.addEventListener('click',()=>{
+  if (button.dataset.view === 'orbit') {yaw=.55; pitch=.48;}
+  setView(button.dataset.view);
+}));
+play.addEventListener('click',()=>{
+  if (frame !== null) {stop(); return;}
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {setAngle(180); return;}
+  const initial = angle >= 180 ? 0 : angle;
+  const start = performance.now();
+  play.textContent = 'Pause rotation';
+  function tick(now) {
+    setAngle(Math.min(180,initial + (now-start)*180/3200));
+    if (angle < 180) frame = requestAnimationFrame(tick);
+    else stop();
+  }
+  frame = requestAnimationFrame(tick);
+});
+selector.addEventListener('change',()=>{
+  stop();
+  const input = states[Number(selector.value)];
+  equation.textContent = 'H' + input.ket + ' = ';
+  if (input.phase) {
+    const exponent = document.createElement('sup');
+    exponent.textContent = input.phase;
+    equation.append('e',exponent);
+  }
+  equation.append(states[input.output].ket);
+  setAngle(0);
+});
+slider.addEventListener('input',()=>{stop();setAngle(Number(slider.value));});
+document.getElementById('reset').addEventListener('click',()=>{stop();setAngle(0);});
+canvas.addEventListener('pointerdown',event=>{
+  if (event.button !== 0 || view !== 'orbit') return;
+  canvas.setPointerCapture(event.pointerId);
+  drag = {id:event.pointerId,x:event.clientX,y:event.clientY};
+});
+canvas.addEventListener('pointermove',event=>{
+  if (drag?.id !== event.pointerId) return;
+  yaw += (event.clientX-drag.x)*.012;
+  pitch = Math.max(-1.53,Math.min(1.53,pitch+(event.clientY-drag.y)*.012));
+  drag.x = event.clientX;
+  drag.y = event.clientY;
+  render();
+});
+canvas.addEventListener('lostpointercapture',()=>{drag=null;});
+new ResizeObserver(render).observe(canvas);
+render();
+</script>
+</body>
+</html>

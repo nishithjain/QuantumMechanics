@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One qubit, changing state</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#edf4f3;color:#163532;font:16px/1.5 "DM Sans",system-ui,sans-serif}main{width:min(680px,calc(100% - 24px));margin:clamp(20px,7vw,72px) auto}h1{font-size:clamp(30px,6vw,48px);line-height:1.1;margin:0 0 12px;letter-spacing:-.045em}p{margin:0 0 18px}.panel{padding:clamp(14px,4vw,30px);background:white;border:1px solid #cadfdb;border-radius:20px}.wire{display:flex;align-items:center;justify-content:space-around;position:relative;isolation:isolate;margin:4px 0 22px;gap:8px}.wire::before{content:"";position:absolute;left:10%;right:10%;height:2px;background:#8ab4ad;z-index:-1}.wire span{min-width:46px;padding:7px;text-align:center;background:#edf4f3;border:1px solid #8ab4ad;border-radius:8px;font-weight:650}.wire .active{background:#0c655a;color:white;border-color:#0c655a}.qubit{text-align:center;background:#ecf8f5;border:2px solid #85bdb2;border-radius:15px;padding:14px;min-height:164px}.qubit small{font-weight:700}.ket{font:600 52px/1.25 Georgia,serif;margin:3px 0}.formula{font:21px/1.4 Georgia,serif}.description{margin:16px 0;min-height:3em}.buttons{display:flex;flex-wrap:wrap;gap:8px}button{font:inherit;font-weight:650;padding:8px 13px;border:1px solid #8ab4ad;border-radius:8px;background:white;color:#163532;cursor:pointer}button.primary{background:#0c655a;color:white;border-color:#0c655a}button:disabled{opacity:.48;cursor:default}button:focus-visible{outline:3px solid #9c5500;outline-offset:3px}.note{font-size:14px;margin:16px 0 0}
+</style>
+<main>
+<h1>One qubit, changing state</h1>
+<p>Each gate acts on the same qubit. Watch its state update in place.</p>
+<section class="panel" aria-label="Interactive single-qubit circuit">
+<div class="wire" aria-label="One circuit wire for qubit q₀"><span>q₀</span><span id="h">H</span><span id="last">X / Z</span></div>
+<div class="qubit" id="qubit" aria-live="polite" aria-atomic="true">
+<small>State of qubit q₀</small>
+<div class="ket" id="ket">|0⟩</div>
+<div class="formula" id="formula">Initial state</div>
+</div>
+<p class="description" id="description">The qubit starts in |0⟩. Apply H to put it in superposition.</p>
+<div class="buttons">
+<button class="primary" id="applyH">Apply H</button>
+<button id="applyX" disabled>Try X on |+⟩</button>
+<button id="applyZ" disabled>Try Z on |+⟩</button>
+<button id="reset">Reset</button>
+</div>
+<p class="note">After H, compare two alternatives. Each button starts from the |+⟩ state prepared by H.</p>
+</section>
+</main>
+<script>
+const byId = id => document.getElementById(id);
+const states = {
+  start: ['|0⟩', 'Initial state', 'The qubit starts in |0⟩. Apply H to put it in superposition.'],
+  H: ['|+⟩', '(|0⟩ + |1⟩) / √2', 'H creates equal amplitudes for |0⟩ and |1⟩ in the same qubit.'],
+  X: ['|+⟩', '(|1⟩ + |0⟩) / √2', 'X swaps the |0⟩ and |1⟩ terms. Their amplitudes are equal, so the state stays |+⟩.'],
+  Z: ['|−⟩', '(|0⟩ − |1⟩) / √2', 'Z changes the sign of the |1⟩ amplitude. The same qubit is now in |−⟩.']
+};
+function show(step) {
+  const [ket, formula, description] = states[step];
+  const comparison = step === 'X' || step === 'Z';
+  byId('ket').textContent = ket;
+  byId('formula').textContent = formula;
+  byId('description').textContent = description;
+  byId('h').classList.toggle('active', step === 'H');
+  byId('last').classList.toggle('active', comparison);
+  byId('last').textContent = comparison ? step : 'X / Z';
+  byId('applyH').disabled = step !== 'start';
+  byId('applyX').disabled = step === 'start';
+  byId('applyZ').disabled = step === 'start';
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    byId('qubit').animate([{backgroundColor:'#bcebdd'}, {backgroundColor:'#ecf8f5'}], {duration:480});
+  }
+}
+byId('applyH').onclick = () => { show('H'); byId('applyX').focus(); };
+byId('applyX').onclick = () => show('X');
+byId('applyZ').onclick = () => show('Z');
+byId('reset').onclick = () => { show('start'); byId('applyH').focus(); };
+</script>
+</html>

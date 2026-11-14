@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phase Gates on the Bloch Sphere</title>
+<style>
+* {box-sizing:border-box}
+body {margin:0;background:#eef3fa;color:#192945;font:1rem/1.5 system-ui,sans-serif;padding:clamp(12px,4vw,32px)}
+main {max-width:690px;margin:auto;background:white;border:1px solid #d7e1ef;border-radius:18px;padding:clamp(14px,4vw,28px)}
+h1 {margin:0;font-size:clamp(1.4rem,5vw,2rem)}
+p {margin:8px 0 14px}
+.controls {display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button, select {font:inherit;padding:7px 12px;min-height:44px;border:1px solid #8295b0;border-radius:8px;background:white;color:#192945;cursor:pointer}
+button[aria-pressed=true],#play {background:#234d9f;color:white;border-color:#234d9f}
+:focus-visible {outline:3px solid #234d9f;outline-offset:3px}
+canvas {display:block;width:100%;max-width:490px;aspect-ratio:1;margin:4px auto;touch-action:none;cursor:grab}
+canvas:active {cursor:grabbing}
+label {font-weight:650}
+input[type=range] {display:block;width:100%;margin:10px 0;accent-color:#234d9f}
+#view-note {min-height:3em}
+.result {margin:14px 0 0;background:#ecf3ff;padding:10px 14px;border-radius:9px}
+</style>
+</head>
+<body>
+<main>
+<h1>Phase Gates on the Bloch Sphere</h1>
+<p>From |+⟩, watch T, S, and Z turn the arrow by 45°, 90°, and 180° around +z. Its height stays the same.</p>
+<div class="controls" role="group" aria-label="Phase gate">
+<button type="button" data-gate="T" aria-pressed="true">T · 45°</button>
+<button type="button" data-gate="S" aria-pressed="false">S = T² · 90°</button>
+<button type="button" data-gate="Z" aria-pressed="false">Z = T⁴ · 180°</button>
+<button type="button" data-gate="I" aria-pressed="false">T⁸ = I · 360°</button>
+</div>
+<p><label for="state">Input state</label>
+<select id="state">
+<option value="0">|+⟩ · equal probabilities</option>
+<option value="1">Unequal probabilities · 75% / 25%</option>
+<option value="2">|0⟩ · north pole</option>
+<option value="3">|1⟩ · south pole</option>
+</select></p>
+<div class="controls" role="group" aria-label="Camera view">
+<button type="button" data-view="orbit" aria-pressed="true">3D view</button>
+<button type="button" data-view="top" aria-pressed="false">Look down from +z</button>
+</div>
+<canvas id="sphere" aria-label="Rotatable Bloch sphere showing the qubit path around the z axis" role="img">The qubit rotates around +z at constant height.</canvas>
+<p id="view-note">Drag to rotate the view. The blue arrow stays at the same height during the phase rotation.</p>
+<div class="controls">
+<button type="button" id="play">Play rotation</button>
+<button type="button" id="reset">Reset angle</button>
+</div>
+<label for="angle">Rotation angle <output id="degrees" for="angle">0°</output></label>
+<input id="angle" type="range" min="0" max="45" value="0" aria-valuetext="0 degrees">
+<div class="result">
+<strong>State at the selected angle</strong>
+<p id="equation"></p>
+<p><strong>Z-basis probabilities</strong> <span id="probabilities"></span></p>
+<label><input id="after-h" type="checkbox"> Compare with a Hadamard before measuring</label>
+<p id="interference" hidden></p>
+</div>
+<p>Each T adds 45° of relative phase to the |1⟩ amplitude. Two T gates give S, four give Z, and eight give a full turn. The π/8 nickname refers to the half-angle in the Rz matrix. T itself turns the Bloch vector by π/4.</p>
+</main>
+<script>
+'use strict';
+const canvas = document.getElementById('sphere');
+const ctx = canvas.getContext('2d');
+const slider = document.getElementById('angle');
+const degrees = document.getElementById('degrees');
+const play = document.getElementById('play');
+const buttons = [...document.querySelectorAll('[data-view]')];
+const note = document.getElementById('view-note');
+const gateButtons = [...document.querySelectorAll('[data-gate]')];
+const comparison = document.getElementById('after-h');
+const targetAngles = {T:45,S:90,Z:180,I:360};
+let gate = 'T';
+const blue = '#1550bb', purple = '#792ba2', ink = '#192945';
+const origin = [0,0,0];
+const x = [1,0,0], y = [0,1,0], z = [0,0,1];
+const dot = (a,b) => a[0]*b[0] + a[1]*b[1] + a[2]*b[2];
+const scale = (v,s) => v.map(value => value*s);
+const cross = ([a,b,c],[d,e,f]) => [b*f-c*e,c*d-a*f,a*e-b*d];
+const selector = document.getElementById('state');
+const equation = document.getElementById('equation');
+const probabilities = document.getElementById('probabilities');
+const interference = document.getElementById('interference');
+const inputs = [
+  {p0:.5,a:'1/√2',b:'1/√2'},
+  {p0:.75,a:'√3/2',b:'1/2'},
+  {p0:1,a:'1',b:'0'},
+  {p0:0,a:'0',b:'1'}
+];
+const notes = {
+  orbit: 'Drag to rotate the view. The blue arrow stays at the same height during the phase rotation.',
+  top: 'Viewed from +z, positive phase goes counterclockwise from +x toward +y. The labeled points are on the equator.'
+};
+let view = 'orbit', yaw = .55, pitch = .48, angle = 0, frame = null, drag = null;
+
+function camera() {
+  if (view === 'top') return [x,y,z];
+  const right = [Math.cos(yaw), -Math.sin(yaw), 0];
+  const up = [-Math.sin(yaw)*Math.sin(pitch), -Math.cos(yaw)*Math.sin(pitch), Math.cos(pitch)];
+  return [right, up, cross(right,up)];
+}
+
+function rotated(radians) {
+  const {p0} = inputs[Number(selector.value)];
+  const radius = 2*Math.sqrt(p0*(1-p0));
+  return [radius*Math.cos(radians),radius*Math.sin(radians),2*p0-1];
+}
+
+function render() {
+  const size = canvas.clientWidth;
+  if (!size || !ctx) return;
+  const resolution = Math.round(size * (devicePixelRatio || 1));
+  if (canvas.width !== resolution || canvas.height !== resolution) {
+    canvas.width = resolution;
+    canvas.height = resolution;
+  }
+  const ratio = resolution / size;
+  ctx.setTransform(ratio,0,0,ratio,0,0);
+  ctx.clearRect(0,0,size,size);
+  const center = size/2, radius = size*.34;
+  const [right,up,front] = camera();
+  const project = vector => [center + radius*dot(vector,right),center - radius*dot(vector,up)];
+  function stroke(points, color, width, dash = []) {
+    ctx.beginPath();
+    points.forEach((vector,index) => {
+      const [px,py] = project(vector);
+      if (index === 0) ctx.moveTo(px,py);
+      else ctx.lineTo(px,py);
+    });
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.setLineDash(dash);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  function point(vector,color,r) {
+    const [px,py] = project(vector);
+    ctx.beginPath(); ctx.arc(px,py,r,0,2*Math.PI);
+    ctx.fillStyle = color; ctx.fill();
+  }
+  function label(vector,text,color,dx=0,dy=0) {
+    const [px,py] = project(vector);
+    ctx.font = 'bold ' + Math.max(12,size*.033) + 'px system-ui';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = 'white';
+    ctx.strokeText(text,px+dx,py+dy);
+    ctx.fillStyle = color;
+    ctx.fillText(text,px+dx,py+dy);
+  }
+  const samples = (fn,limit,count=100) => Array.from({length:count+1},(_,i)=>fn(limit*i/count));
+
+  const shading = ctx.createRadialGradient(center-radius*.32,center-radius*.4,0,center,center,radius);
+  shading.addColorStop(0,'#fff'); shading.addColorStop(1,'#e5edf9');
+  ctx.beginPath(); ctx.arc(center,center,radius,0,2*Math.PI);
+  ctx.fillStyle = shading; ctx.fill();
+  ctx.strokeStyle = '#9bacc5'; ctx.lineWidth = 1.3; ctx.stroke();
+  for (const circle of [
+    t=>[Math.cos(t),Math.sin(t),0],
+    t=>[Math.cos(t),0,Math.sin(t)],
+    t=>[0,Math.cos(t),Math.sin(t)]
+  ]) {
+    const grid = samples(circle,2*Math.PI);
+    for (let i=1;i<grid.length;i++) {
+      const visible = dot(grid[i],front) >= 0;
+      stroke([grid[i-1],grid[i]],visible?'#b7c6dc':'#dce5f2',1);
+    }
+  }
+  for (const [direction,color,name] of [[x,'#98511c','+x'],[y,'#147155','+y'],[z,purple,'+z']]) {
+    if (view === 'top' && direction === z) continue;
+    stroke([scale(direction,-1.08),scale(direction,1.12)],color,direction===z?2.5:1.3);
+    if (view !== 'top') label(scale(direction,1.19),name,color,0,-7);
+  }
+  if (view === 'top') {
+    point(origin,purple,4);
+    label(x,'+x  |+⟩',ink,0,19);
+    label(y,'+y  |+i⟩',ink,0,-16);
+    label(scale(x,-1),'−x  |−⟩',ink,0,19);
+    label(scale(y,-1),'−y  |−i⟩',ink,0,17);
+  }
+  stroke(samples(rotated,targetAngles[gate]*Math.PI/180),blue,1.8,[3,5]);
+  stroke(samples(rotated,angle*Math.PI/180),blue,3);
+  const current = rotated(angle*Math.PI/180);
+  stroke([origin,current],blue,3);
+  point(current,blue,6);
+}
+
+function setAngle(value) {
+  angle = value;
+  const whole = Math.round(value);
+  slider.value = whole;
+  slider.setAttribute('aria-valuetext',whole+' degrees');
+  degrees.textContent = whole+'°';
+  const {p0,a,b} = inputs[Number(selector.value)];
+  const p1 = 1-p0;
+  const phase = document.createElement('sup');
+  phase.textContent = 'i·' + whole + '°';
+  equation.textContent = p0 ? '(' + a + ')|0⟩' : '';
+  if (p1) equation.append(p0 ? ' + (' + b + ')e' : 'e',phase,'|1⟩');
+  const percent = value => (100*value).toFixed(1).replace(/\.0$/,'') + '%';
+  probabilities.textContent = 'P(0) = ' + percent(p0) + ' · P(1) = ' + percent(p1);
+  const h0 = .5 + Math.sqrt(p0*p1)*Math.cos(value*Math.PI/180);
+  interference.textContent = 'After H: P(0) = ' + percent(h0) + ' · P(1) = ' + percent(1-h0);
+  render();
+}
+function stop() {
+  if (frame !== null) cancelAnimationFrame(frame);
+  frame = null;
+  play.textContent = 'Play rotation';
+}
+function setView(name) {
+  view = name;
+  buttons.forEach(button => button.setAttribute('aria-pressed',String(button.dataset.view===name)));
+  note.textContent = notes[name];
+  render();
+}
+buttons.forEach(button => button.addEventListener('click',()=>{
+  if (button.dataset.view === 'orbit') {yaw=.55; pitch=.48;}
+  setView(button.dataset.view);
+}));
+play.addEventListener('click',()=>{
+  if (frame !== null) {stop(); return;}
+  const target = targetAngles[gate];
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {setAngle(target); return;}
+  const initial = angle >= target ? 0 : angle;
+  const start = performance.now();
+  play.textContent = 'Pause rotation';
+  function tick(now) {
+    setAngle(Math.min(target,initial + (now-start)*target/2500));
+    if (angle < target) frame = requestAnimationFrame(tick);
+    else stop();
+  }
+  frame = requestAnimationFrame(tick);
+});
+selector.addEventListener('change',()=>{stop();setAngle(0);});
+gateButtons.forEach(button=>button.addEventListener('click',()=>{
+  stop();
+  gate = button.dataset.gate;
+  gateButtons.forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+  slider.max = targetAngles[gate];
+  setAngle(0);
+}));
+comparison.addEventListener('change',()=>{interference.hidden=!comparison.checked;});
+slider.addEventListener('input',()=>{stop();setAngle(Number(slider.value));});
+document.getElementById('reset').addEventListener('click',()=>{stop();setAngle(0);});
+canvas.addEventListener('pointerdown',event=>{
+  if (event.button !== 0 || view !== 'orbit') return;
+  canvas.setPointerCapture(event.pointerId);
+  drag = {id:event.pointerId,x:event.clientX,y:event.clientY};
+});
+canvas.addEventListener('pointermove',event=>{
+  if (drag?.id !== event.pointerId) return;
+  yaw += (event.clientX-drag.x)*.012;
+  pitch = Math.max(-1.53,Math.min(1.53,pitch+(event.clientY-drag.y)*.012));
+  drag.x = event.clientX;
+  drag.y = event.clientY;
+  render();
+});
+canvas.addEventListener('lostpointercapture',()=>{drag=null;});
+new ResizeObserver(render).observe(canvas);
+setAngle(0);
+</script>
+</body>
+</html>
