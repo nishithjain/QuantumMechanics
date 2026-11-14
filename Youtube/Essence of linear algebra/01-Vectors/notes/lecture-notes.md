@@ -56,14 +56,14 @@ Suppose we are comparing houses, and we care about only two things:
 1. House area in square feet.
 2. House price.
 
-The video illustrates a house using values such as **2,600 square feet** and **$300,000**. We can describe that house with an ordered pair:
+The video illustrates a house using values such as **2,600 square feet** and **\$300,000**. We can describe that house with an ordered pair:
 
-\[
+$$
 \begin{bmatrix}
-2600\\
+2600 \cr
 300000
 \end{bmatrix}
-\]
+$$
 
 Read this as:
 
@@ -72,11 +72,17 @@ Read this as:
 
 Why is the order important? Because
 
-\[
-\begin{bmatrix}2600\\300000\end{bmatrix}
+$$
+\begin{bmatrix}
+2600 \cr
+300000
+\end{bmatrix}
 \qquad\text{and}\qquad
-\begin{bmatrix}300000\\2600\end{bmatrix}
-\]
+\begin{bmatrix}
+300000 \cr
+2600
+\end{bmatrix}
+$$
 
 would assign the entries to different features. The second would describe a wildly different house if we kept the same convention that the first entry is area and the second is price.
 
@@ -130,9 +136,9 @@ Imagine placing a large sheet of graph paper on a table. Draw two perpendicular 
 
 Where they cross is the **origin**. Its coordinates are
 
-\[
+$$
 (0,0).
-\]
+$$
 
 The origin is simply our agreed starting point, like choosing the front gate of a house as the starting point when giving directions.
 
@@ -163,9 +169,9 @@ The lecturer now explains exactly how an arrow turns into a list of numbers.
 
 Consider the vector
 
-\[
-\mathbf v=\begin{bmatrix}3\\2\end{bmatrix}.
-\]
+$$
+\mathbf v=\begin{bmatrix}3\cr 2\end{bmatrix}.
+$$
 
 We read the two numbers in order:
 
@@ -174,7 +180,7 @@ We read the two numbers in order:
 
 You end at the point **(3, 2)**.
 
-Now draw a single straight arrow from the origin **(0, 0)** to **(3, 2)**. That arrow is the vector \(\mathbf v\).
+Now draw a single straight arrow from the origin **(0, 0)** to **(3, 2)**. That arrow is the vector $\mathbf v$.
 
 ![Horizontal and vertical walk ending at the same vector](../images/concept-03.png)
 
@@ -188,11 +194,11 @@ Notice that the two-part walk is only a way to **find the arrow's tip**. The vec
 
 The lecturer uses **vertical square brackets** to write a vector:
 
-\[
-\underbrace{\begin{bmatrix}3\\2\end{bmatrix}}_{\text{vector}}
+$$
+\underbrace{\begin{bmatrix}3\cr 2\end{bmatrix}}_{\text{vector}}
 \qquad\longleftrightarrow\qquad
 \underbrace{(3,2)}_{\text{tip as a point}}.
-\]
+$$
 
 The notation helps distinguish an arrow from a point, even though the numbers are the same when we draw our vector starting at the origin.
 
@@ -200,25 +206,25 @@ The notation helps distinguish an arrow from a point, even though the numbers ar
 
 The video also shows a vector pointing left and up, corresponding to
 
-\[
-\begin{bmatrix}-2\\3\end{bmatrix}.
-\]
+$$
+\begin{bmatrix}-2\cr 3\end{bmatrix}.
+$$
 
 Interpret it step by step:
 
-1. \(-2\) in the x-position means **two units left**.
-2. \(+3\) in the y-position means **three units up**.
+1. $-2$ in the x-position means **two units left**.
+2. $+3$ in the y-position means **three units up**.
 3. The tip ends at **(−2, 3)**.
 
 ![A vector with a negative horizontal component](../images/concept-04.png)
 
-**Don't confuse a negative number with a shorter distance.** The number \(-2\) means a movement of distance **2 units in the negative direction**. Its sign tells us direction.
+**Don't confuse a negative number with a shorter distance.** The number $-2$ means a movement of distance **2 units in the negative direction**. Its sign tells us direction.
 
 The same method works for all sign combinations. For example, the supplementary example
 
-\[
-\begin{bmatrix}2\\-3\end{bmatrix}
-\]
+$$
+\begin{bmatrix}2\cr -3\end{bmatrix}
+$$
 
 means two right and three down.
 
@@ -235,10 +241,10 @@ For example:
 
 | Numbers | Where the arrow points |
 |---|---|
-| \(\begin{bmatrix}3\\2\end{bmatrix}\) | right 3, up 2 |
-| \(\begin{bmatrix}-2\\3\end{bmatrix}\) | left 2, up 3 |
-| \(\begin{bmatrix}0\\4\end{bmatrix}\) | straight up 4 |
-| \(\begin{bmatrix}0\\0\end{bmatrix}\) | stays at the origin; the **zero vector** |
+| $\begin{bmatrix}3\cr 2\end{bmatrix}$ | right 3, up 2 |
+| $\begin{bmatrix}-2\cr 3\end{bmatrix}$ | left 2, up 3 |
+| $\begin{bmatrix}0\cr 4\end{bmatrix}$ | straight up 4 |
+| $\begin{bmatrix}0\cr 0\end{bmatrix}$ | stays at the origin; the **zero vector** |
 
 The last two rows are extra examples to reinforce the lecturer's rule. A coordinate can be zero; that simply means no movement along that axis.
 
@@ -251,8 +257,8 @@ Choose x = 3 and y = 2, press **Step**, and watch the horizontal motion, vertica
 ### Check your understanding
 
 1. Where is the tail of the vectors we draw in this course?
-2. What does the first component \(-4\) tell you?
-3. Where does the vector \(\begin{bmatrix}1\\-2\end{bmatrix}\) end?
+2. What does the first component $-4$ tell you?
+3. Where does the vector $\begin{bmatrix}1\cr -2\end{bmatrix}$ end?
 
 *Answers: (1) at the origin (0, 0); (2) move four units left; (3) at (1, −2).*
 
@@ -266,9 +272,9 @@ In 2D we have x and y. To describe movement through ordinary 3D space, we add a 
 
 Instead of two coordinates, we need **three**:
 
-\[
-\mathbf w=\begin{bmatrix}2\\1\\3\end{bmatrix}.
-\]
+$$
+\mathbf w=\begin{bmatrix}2\cr 1\cr 3\end{bmatrix}.
+$$
 
 The video illustrates an example with those three components. Read it as three instructions:
 
@@ -286,8 +292,8 @@ We can now compare dimensions:
 
 | Dimension | Coordinates required | Example |
 |---|---:|---|
-| 2D | 2 numbers | \(\begin{bmatrix}3\\2\end{bmatrix}\) |
-| 3D | 3 numbers | \(\begin{bmatrix}2\\1\\3\end{bmatrix}\) |
+| 2D | 2 numbers | $\begin{bmatrix}3\cr 2\end{bmatrix}$ |
+| 3D | 3 numbers | $\begin{bmatrix}2\cr 1\cr 3\end{bmatrix}$ |
 
 The same one-to-one rule applies in 3D: with a coordinate system fixed, **every ordered triplet** identifies one vector from the origin, and every vector from the origin has one triplet.
 
@@ -310,11 +316,11 @@ What does it mean to **add** them?
 
 The lecturer demonstrates a specific drawing procedure:
 
-1. Draw the **first vector**, \(\mathbf u\).
-2. **Move the drawing** of the second vector \(\mathbf v\) without changing its length or direction.
+1. Draw the **first vector**, $\mathbf u$.
+2. **Move the drawing** of the second vector $\mathbf v$ without changing its length or direction.
 3. Place the **tail of v at the tip of u**.
 4. Draw a new arrow from the **original tail of u** to the **new tip of v**.
-5. This new arrow is the **sum**, \(\mathbf u+\mathbf v\).
+5. This new arrow is the **sum**, $\mathbf u+\mathbf v$.
 
 ![Original vectors and head-to-tail addition](../images/concept-06.png)
 
@@ -331,7 +337,7 @@ Imagine you are walking:
 - First, take the journey described by **u**.
 - From where you now stand, take the journey described by **v**.
 
-Where you finish is exactly where you would finish if you had travelled along the single resultant arrow, \(\mathbf u+\mathbf v\), directly from the starting point.
+Where you finish is exactly where you would finish if you had travelled along the single resultant arrow, $\mathbf u+\mathbf v$, directly from the starting point.
 
 The two-route and one-route descriptions are different, but their **overall displacement** is the same.
 
@@ -349,9 +355,9 @@ Imagine standing at zero on a number line:
 
 Both descriptions lead to the same end position:
 
-\[
+$$
 2+5=7.
-\]
+$$
 
 ![Two steps and five steps have the same result as seven](../images/concept-07.png)
 
@@ -361,11 +367,11 @@ The difference is that number-line movement is only **one-dimensional**. Vectors
 
 The lecture now gives exact coordinates:
 
-\[
-\mathbf u=\begin{bmatrix}1\\2\end{bmatrix},
+$$
+\mathbf u=\begin{bmatrix}1\cr 2\end{bmatrix},
 \qquad
-\mathbf v=\begin{bmatrix}3\\-1\end{bmatrix}.
-\]
+\mathbf v=\begin{bmatrix}3\cr -1\end{bmatrix}.
+$$
 
 Before calculating, interpret the first vector:
 
@@ -393,31 +399,31 @@ The lecturer then makes the important connection: rather than keep all four sepa
 
 **Horizontal total:**
 
-\[
+$$
 1+3=4.
-\]
+$$
 
 So our total movement is **4 right**.
 
 **Vertical total:**
 
-\[
+$$
 2+(-1)=1.
-\]
+$$
 
 So our total movement is **1 up** (because adding −1 means moving down one).
 
 Put the totals into a column:
 
-\[
+$$
 \begin{aligned}
 \mathbf u+\mathbf v
-&=\begin{bmatrix}1\\2\end{bmatrix}
- +\begin{bmatrix}3\\-1\end{bmatrix}\\[6pt]
-&=\begin{bmatrix}1+3\\2+(-1)\end{bmatrix}\\[6pt]
-&=\boxed{\begin{bmatrix}4\\1\end{bmatrix}}.
+&=\begin{bmatrix}1\cr 2\end{bmatrix}
+ +\begin{bmatrix}3\cr -1\end{bmatrix}\cr[6pt]
+&=\begin{bmatrix}1+3\cr 2+(-1)\end{bmatrix}\cr[6pt]
+&=\boxed{\begin{bmatrix}4\cr 1\end{bmatrix}}.
 \end{aligned}
-\]
+$$
 
 The **numerical calculation** and **geometric construction** agree: the sum is an arrow from (0, 0) to (4, 1).
 
@@ -425,36 +431,36 @@ The **numerical calculation** and **geometric construction** agree: the sum is a
 
 We can now express the lecturer's pattern as a rule. Let
 
-\[
-\mathbf a=\begin{bmatrix}a_1\\a_2\end{bmatrix},
+$$
+\mathbf a=\begin{bmatrix}a_1\cr a_2\end{bmatrix},
 \qquad
-\mathbf b=\begin{bmatrix}b_1\\b_2\end{bmatrix}.
-\]
+\mathbf b=\begin{bmatrix}b_1\cr b_2\end{bmatrix}.
+$$
 
-Here, \(a_1\) and \(b_1\) are the **x-components**; \(a_2\) and \(b_2\) are the **y-components**.
+Here, $a_1$ and $b_1$ are the **x-components**; $a_2$ and $b_2$ are the **y-components**.
 
 Then:
 
-\[
+$$
 \boxed{
 \mathbf a+\mathbf b=
-\begin{bmatrix}a_1+b_1\\a_2+b_2\end{bmatrix}
+\begin{bmatrix}a_1+b_1\cr a_2+b_2\end{bmatrix}
 }
-\]
+$$
 
 In plain language: **match the positions and add the numbers.** First with first, second with second.
 
 **Extra example (for practice):**
 
-\[
-\begin{bmatrix}-2\\3\end{bmatrix}
+$$
+\begin{bmatrix}-2\cr 3\end{bmatrix}
 +
-\begin{bmatrix}4\\-5\end{bmatrix}
+\begin{bmatrix}4\cr -5\end{bmatrix}
 =
-\begin{bmatrix}-2+4\\3-5\end{bmatrix}
+\begin{bmatrix}-2+4\cr 3-5\end{bmatrix}
 =
-\begin{bmatrix}2\\-2\end{bmatrix}.
-\]
+\begin{bmatrix}2\cr -2\end{bmatrix}.
+$$
 
 The result means 2 right, 2 down.
 
@@ -482,28 +488,28 @@ This operation is called **scalar multiplication**.
 
 ### 6.1 Multiply by 2: stretch
 
-Imagine a vector \(\mathbf v\) of some length. If we calculate
+Imagine a vector $\mathbf v$ of some length. If we calculate
 
-\[
+$$
 2\mathbf v,
-\]
+$$
 
 we draw an arrow in the **same direction** but **twice as long**.
 
 For a concrete numerical example, take
 
-\[
-\mathbf v=\begin{bmatrix}1\\2\end{bmatrix}.
-\]
+$$
+\mathbf v=\begin{bmatrix}1\cr 2\end{bmatrix}.
+$$
 
 The scaled vector is
 
-\[
+$$
 2\mathbf v
-=2\begin{bmatrix}1\\2\end{bmatrix}
-=\begin{bmatrix}2\times1\\2\times2\end{bmatrix}
-=\begin{bmatrix}2\\4\end{bmatrix}.
-\]
+=2\begin{bmatrix}1\cr 2\end{bmatrix}
+=\begin{bmatrix}2\times1\cr 2\times2\end{bmatrix}
+=\begin{bmatrix}2\cr 4\end{bmatrix}.
+$$
 
 The new arrow ends at (2, 4) instead of (1, 2), so its length is twice the original.
 
@@ -511,34 +517,34 @@ The new arrow ends at (2, 4) instead of (1, 2), so its length is twice the origi
 
 Next, the lecturer uses the fraction **one-third**:
 
-\[
+$$
 \frac13\mathbf v.
-\]
+$$
 
 That tells us to create a new arrow whose length is **one-third of the original length**. It still points in the **same direction**.
 
 Using the same numerical vector:
 
-\[
-\frac13\begin{bmatrix}1\\2\end{bmatrix}
-=\begin{bmatrix}\frac13\\\frac23\end{bmatrix}.
-\]
+$$
+\frac13\begin{bmatrix}1\cr 2\end{bmatrix}
+=\begin{bmatrix}\frac13\cr \frac23\end{bmatrix}.
+$$
 
-Why \(\frac23\) in the lower entry? Because
+Why $\frac23$ in the lower entry? Because
 
-\[
+$$
 \frac13\times 2=\frac23.
-\]
+$$
 
-**Beginner analogy:** Think of a drawing on a photocopier. Scaling by \(\frac13\) makes the whole arrow one-third its original size; we do not shrink the x-part but leave the y-part unchanged.
+**Beginner analogy:** Think of a drawing on a photocopier. Scaling by $\frac13$ makes the whole arrow one-third its original size; we do not shrink the x-part but leave the y-part unchanged.
 
 ### 6.3 Multiply by −1.8: reverse and stretch
 
 The lecturer now introduces a negative number. Suppose we calculate
 
-\[
+$$
 -1.8\mathbf v.
-\]
+$$
 
 This does two things:
 
@@ -547,13 +553,13 @@ This does two things:
 
 Using our numerical vector:
 
-\[
+$$
 \begin{aligned}
--1.8\begin{bmatrix}1\\2\end{bmatrix}
-&=\begin{bmatrix}-1.8\times1\\-1.8\times2\end{bmatrix}\\[4pt]
-&=\boxed{\begin{bmatrix}-1.8\\-3.6\end{bmatrix}}.
+-1.8\begin{bmatrix}1\cr 2\end{bmatrix}
+&=\begin{bmatrix}-1.8\times1\cr -1.8\times2\end{bmatrix}\cr[4pt]
+&=\boxed{\begin{bmatrix}-1.8\cr -3.6\end{bmatrix}}.
 \end{aligned}
-\]
+$$
 
 Before scaling, the arrow pointed right and up. Afterwards, it points **left and down**. Its length is **1.8 times** the length of the original.
 
@@ -565,15 +571,15 @@ The lecturer gives a name to the number that performs this scaling: a **scalar**
 
 In
 
-\[
+$$
 2\mathbf v,
-\]
+$$
 
-- \(2\) is the **scalar**.
-- \(\mathbf v\) is the **vector**.
-- \(2\mathbf v\) is the **scaled vector**.
+- $2$ is the **scalar**.
+- $\mathbf v$ is the **vector**.
+- $2\mathbf v$ is the **scaled vector**.
 
-Numbers such as \(2\), \(\frac13\), and \(-1.8\) are scalars when we use them to multiply a vector.
+Numbers such as $2$, $\frac13$, and $-1.8$ are scalars when we use them to multiply a vector.
 
 The words **scalar** and **number** are often used nearly interchangeably in this course when discussing real-valued vectors.
 
@@ -583,27 +589,27 @@ After showing stretching and reversing graphically, the lecturer returns to nume
 
 For
 
-\[
-\mathbf v=\begin{bmatrix}x\\y\end{bmatrix}
-\]
+$$
+\mathbf v=\begin{bmatrix}x\cr y\end{bmatrix}
+$$
 
-and scalar \(k\),
+and scalar $k$,
 
-\[
+$$
 \boxed{
 k\mathbf v
-=\begin{bmatrix}kx\\ky\end{bmatrix}
+=\begin{bmatrix}kx\cr ky\end{bmatrix}
 }
-\]
+$$
 
 This rule means: **multiply every component by the same number**.
 
-| Scalar k | Geometric effect | Example for \(\mathbf v=[1,2]^T\) |
+| Scalar k | Geometric effect | Example for $\mathbf v=[1,2]^T$ |
 |---|---|---|
-| 2 | twice as long, same direction | \([2,4]^T\) |
-| 1/3 | one-third length, same direction | \([1/3,2/3]^T\) |
-| −1.8 | reversed, 1.8 times as long | \([-1.8,-3.6]^T\) |
-| 0 | becomes the zero vector | \([0,0]^T\) |
+| 2 | twice as long, same direction | $[2,4]^T$ |
+| 1/3 | one-third length, same direction | $[1/3,2/3]^T$ |
+| −1.8 | reversed, 1.8 times as long | $[-1.8,-3.6]^T$ |
+| 0 | becomes the zero vector | $[0,0]^T$ |
 
 **Additional beginner clarification:** The last case, multiplying by zero, extends the lecturer's examples. The zero vector has zero length, so it has no particular pointing direction.
 
@@ -616,7 +622,7 @@ Select **× 2**, **× ⅓**, and **× −1.8** in that order. Watch how the arro
 ### Common mistakes in scalar multiplication
 
 - **Mistake:** Multiply only the x-component. **Correction:** Multiply *every* component.
-- **Mistake:** Assume that a negative scalar always makes the vector shorter. **Correction:** The sign controls direction; the magnitude \(|k|\) controls its length.
+- **Mistake:** Assume that a negative scalar always makes the vector shorter. **Correction:** The sign controls direction; the magnitude $|k|$ controls its length.
 - **Mistake:** Think that a scalar must be a whole number. **Correction:** It can be a fraction, decimal, negative number, or zero.
 
 ---
@@ -631,8 +637,8 @@ Let's put their meanings side by side:
 
 | Operation | What it does to an arrow | What it does to numbers |
 |---|---|---|
-| Vector addition, \(\mathbf u+\mathbf v\) | combines two movements into a resultant movement | adds matching components |
-| Scalar multiplication, \(k\mathbf v\) | stretches, shrinks, or reverses a movement | multiplies every component by \(k\) |
+| Vector addition, $\mathbf u+\mathbf v$ | combines two movements into a resultant movement | adds matching components |
+| Scalar multiplication, $k\mathbf v$ | stretches, shrinks, or reverses a movement | multiplies every component by $k$ |
 
 A mathematician can study the **properties of these operations** even when the vectors are not drawn as ordinary arrows. The lecturer deliberately leaves this abstract perspective for a later chapter.
 
@@ -665,13 +671,13 @@ Computer-graphics programmers go in the opposite direction too: they start by im
 
 For example, if the movement is
 
-\[
-\begin{bmatrix}1\\2\end{bmatrix}
+$$
+\begin{bmatrix}1\cr 2\end{bmatrix}
 +
-\begin{bmatrix}3\\-1\end{bmatrix}
+\begin{bmatrix}3\cr -1\end{bmatrix}
 =
-\begin{bmatrix}4\\1\end{bmatrix},
-\]
+\begin{bmatrix}4\cr 1\end{bmatrix},
+$$
 
 then the programmer knows the final displacement is four units horizontally and one unit vertically in the chosen coordinate system. That can be turned into a position on a screen.
 
@@ -710,54 +716,54 @@ This is a revision aid **after** the full lecture, not a replacement for the exp
 
 **2D vector addition**
 
-\[
-\begin{bmatrix}a\\b\end{bmatrix}
+$$
+\begin{bmatrix}a\cr b\end{bmatrix}
 +
-\begin{bmatrix}c\\d\end{bmatrix}
+\begin{bmatrix}c\cr d\end{bmatrix}
 =
-\begin{bmatrix}a+c\\b+d\end{bmatrix}.
-\]
+\begin{bmatrix}a+c\cr b+d\end{bmatrix}.
+$$
 
 **2D scalar multiplication**
 
-\[
-k\begin{bmatrix}a\\b\end{bmatrix}
+$$
+k\begin{bmatrix}a\cr b\end{bmatrix}
 =
-\begin{bmatrix}ka\\kb\end{bmatrix}.
-\]
+\begin{bmatrix}ka\cr kb\end{bmatrix}.
+$$
 
 ## Mini-practice (with fully worked answers)
 
-**Question 1.** A vector is \(\begin{bmatrix}-3\\2\end{bmatrix}\). From the origin, where will its tip be?
+**Question 1.** A vector is $\begin{bmatrix}-3\cr 2\end{bmatrix}$. From the origin, where will its tip be?
 
-**Solution:** \(-3\) means go 3 left. \(+2\) means go 2 up. The tip is **(−3, 2)**.
+**Solution:** $-3$ means go 3 left. $+2$ means go 2 up. The tip is **(−3, 2)**.
 
-**Question 2.** Add \(\begin{bmatrix}2\\-1\end{bmatrix}\) and \(\begin{bmatrix}-4\\3\end{bmatrix}\).
+**Question 2.** Add $\begin{bmatrix}2\cr -1\end{bmatrix}$ and $\begin{bmatrix}-4\cr 3\end{bmatrix}$.
 
 **Solution:** Add each component with the one in the same position:
 
-\[
-\begin{bmatrix}2+(-4)\\-1+3\end{bmatrix}
-=\boxed{\begin{bmatrix}-2\\2\end{bmatrix}}.
-\]
+$$
+\begin{bmatrix}2+(-4)\cr -1+3\end{bmatrix}
+=\boxed{\begin{bmatrix}-2\cr 2\end{bmatrix}}.
+$$
 
 This resultant goes two left, two up.
 
-**Question 3.** Multiply \(\begin{bmatrix}3\\-2\end{bmatrix}\) by \(-2\).
+**Question 3.** Multiply $\begin{bmatrix}3\cr -2\end{bmatrix}$ by $-2$.
 
 **Solution:** Apply the number to both entries:
 
-\[
--2\begin{bmatrix}3\\-2\end{bmatrix}
-=\begin{bmatrix}-2(3)\\-2(-2)\end{bmatrix}
-=\boxed{\begin{bmatrix}-6\\4\end{bmatrix}}.
-\]
+$$
+-2\begin{bmatrix}3\cr -2\end{bmatrix}
+=\begin{bmatrix}-2(3)\cr -2(-2)\end{bmatrix}
+=\boxed{\begin{bmatrix}-6\cr 4\end{bmatrix}}.
+$$
 
 The new vector is twice as long and points in the opposite direction.
 
 **Question 4.** What happens if we multiply any vector by zero?
 
-**Solution:** Every component becomes zero. In 2D the result is \(\begin{bmatrix}0\\0\end{bmatrix}\), the **zero vector**.
+**Solution:** Every component becomes zero. In 2D the result is $\begin{bmatrix}0\cr 0\end{bmatrix}$, the **zero vector**.
 
 **Question 5.** In the lecture's house example, why does swapping the two numbers matter?
 
@@ -782,4 +788,4 @@ The new vector is twice as long and points in the opposite direction.
 
 ---
 
-**Study suggestion:** Return to the three interactive demonstrations and try to predict the result *before* clicking Step. When you can explain why \([1,2]+[3,-1]=[4,1]\) both geometrically and numerically, you have understood the core of this lecture.
+**Study suggestion:** Return to the three interactive demonstrations and try to predict the result *before* clicking Step. When you can explain why $[1,2]+[3,-1]=[4,1]$ both geometrically and numerically, you have understood the core of this lecture.

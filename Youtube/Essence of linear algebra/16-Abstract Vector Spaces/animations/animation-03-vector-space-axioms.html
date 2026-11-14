@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vector space axioms explorer</title>
+<style>
+body{font-family:system-ui,Segoe UI,sans-serif;max-width:1000px;margin:22px auto;padding:0 16px;background:#f5f8fc;color:#17243a}
+.card{background:white;border:1px solid #d7e1ef;border-radius:14px;padding:16px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+select,input{padding:8px;border:1px solid #cbd5e1;border-radius:7px;width:100%}
+label{display:block;margin:8px 0}.math{font-family:ui-monospace,Consolas,monospace;background:#f0f4fa;padding:10px;border-radius:8px;overflow-wrap:anywhere}
+button{padding:9px 13px;border:0;border-radius:8px;background:#174f91;color:white;margin:4px;cursor:pointer}
+.status{font-weight:700;padding:10px;border-radius:8px;background:#eef6ff}
+@media(max-width:650px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<h1>Explore the eight vector-space rules</h1>
+<p>Use ordinary 2D vectors to test examples of the eight standard real vector-space axioms. The examples illustrate the rules; a true vector-space proof must establish them for every allowed vector and scalar, not just one numerical test.</p>
+<div class="card">
+<div class="grid">
+<label>Vector u (x,y)<input id="ux" value="2,3"></label>
+<label>Vector v (x,y)<input id="vx" value="-1,4"></label>
+<label>Vector w (x,y)<input id="wx" value="5,-2"></label>
+<label>Scalar a<input id="a" type="number" value="2"></label>
+<label>Scalar b<input id="b" type="number" value="-3"></label>
+<label>Choose an axiom<select id="axiom">
+<option value="comm">1. Commutativity</option><option value="assoc">2. Associativity</option><option value="zero">3. Zero vector</option><option value="inverse">4. Additive inverse</option><option value="compat">5. Scalar compatibility</option><option value="identity">6. Scalar identity</option><option value="distv">7. Distributivity over vector addition</option><option value="dists">8. Distributivity over scalar addition</option>
+</select></label>
+</div>
+<p class="math" id="equation"></p><p class="status" id="result"></p>
+</div>
+<div class="card"><b>Remember</b><p>A vector space is not established by testing one or two examples. The axioms must hold for all vectors and all real scalars in the set, with the specified operations.</p></div>
+<script>
+const $=id=>document.getElementById(id);
+const parse=id=>{let a=$(id).value.split(',').map(Number);return [a[0]||0,a[1]||0]};
+const add=(u,v)=>[u[0]+v[0],u[1]+v[1]],scale=(a,u)=>[a*u[0],a*u[1]];
+const fmt=v=>'('+v.map(x=>Number(x.toFixed(4))).join(', ')+')';
+function update(){
+ let u=parse('ux'),v=parse('vx'),w=parse('wx'),a=Number($('a').value),b=Number($('b').value),key=$('axiom').value,L,R,name;
+ if(key==='comm'){L=add(u,v);R=add(v,u);name='u + v = v + u'}
+ if(key==='assoc'){L=add(add(u,v),w);R=add(u,add(v,w));name='(u + v) + w = u + (v + w)'}
+ if(key==='zero'){L=add(u,[0,0]);R=u;name='u + 0 = u'}
+ if(key==='inverse'){L=add(u,scale(-1,u));R=[0,0];name='u + (−u) = 0'}
+ if(key==='compat'){L=scale(a,scale(b,u));R=scale(a*b,u);name='a(bu) = (ab)u'}
+ if(key==='identity'){L=scale(1,u);R=u;name='1u = u'}
+ if(key==='distv'){L=scale(a,add(u,v));R=add(scale(a,u),scale(a,v));name='a(u + v) = au + av'}
+ if(key==='dists'){L=scale(a+b,u);R=add(scale(a,u),scale(b,u));name='(a + b)u = au + bu'}
+ $('equation').textContent=name+'\\nLeft side = '+fmt(L)+'\\nRight side = '+fmt(R);
+ let ok=Math.abs(L[0]-R[0])<1e-8&&Math.abs(L[1]-R[1])<1e-8;
+ $('result').textContent=(ok?'✓':'✗')+' This numerical example '+(ok?'satisfies':'does not satisfy')+' the selected equality.';
+}
+['ux','vx','wx','a','b','axiom'].forEach(id=>$(id).addEventListener('input',update));
+update();
+</script></body></html>

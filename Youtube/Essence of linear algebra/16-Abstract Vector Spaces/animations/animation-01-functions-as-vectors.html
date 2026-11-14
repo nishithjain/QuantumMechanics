@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Functions as vectors</title>
+<style>
+body{font-family:system-ui,Segoe UI,sans-serif;max-width:1050px;margin:22px auto;padding:0 16px;background:#f5f8fc;color:#17243a}
+.card{background:white;border:1px solid #d7e1ef;border-radius:14px;padding:16px;margin:14px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}canvas{width:100%;height:340px;background:#fbfdff;border-radius:10px}
+label{display:block;margin:10px 0}input{width:100%}select,button{padding:8px;border:1px solid #cbd5e1;border-radius:8px}
+button{background:#174f91;color:white;border:0;margin:4px;cursor:pointer}.math{font-family:ui-monospace,Consolas,monospace;background:#f0f4fa;padding:10px;border-radius:8px;overflow-wrap:anywhere}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<h1>Functions behave like vectors</h1>
+<p>Choose two functions f and g. The graph shows them and their sum. Change the scalar c to see how scaling a function changes every output.</p>
+<div class="card">
+<div class="grid"><div>
+<label>Function f(x)<select id="f"><option value="x2">x²</option><option value="x">x</option><option value="2x+1">2x + 1</option><option value="x2-1">x² − 1</option></select></label>
+<label>Function g(x)<select id="g"><option value="2x+1">2x + 1</option><option value="x">x</option><option value="x2">x²</option><option value="1">1</option></select></label>
+<label>Scale c: <b id="cv">2</b><input id="c" type="range" min="-3" max="3" step=".1" value="2"></label>
+<label>View <select id="mode"><option value="sum">f + g</option><option value="scale">c f</option><option value="both">f, g and f + g</option></select></label>
+<p class="math" id="equation"></p><p id="explain"></p>
+<button id="reset">Reset example</button>
+</div><div><canvas id="plot" width="720" height="340"></canvas></div></div>
+</div>
+<div class="card"><b>What to notice</b><p>Function addition is point-by-point: at each x, the height of the sum graph is the height of f plus the height of g. Scaling multiplies every output by c. These are the same kinds of operations we perform on ordinary vectors.</p></div>
+<script>
+const $=id=>document.getElementById(id);
+function fn(kind,x){if(kind==='x2')return x*x;if(kind==='x')return x;if(kind==='2x+1')return 2*x+1;if(kind==='x2-1')return x*x-1;return 1}
+function label(k){return {'x2':'x²','x':'x','2x+1':'2x + 1','x2-1':'x² − 1','1':'1'}[k]}
+function update(){
+ let f=$('f').value,g=$('g').value,c=+$('c').value,mode=$('mode').value;
+ $('cv').textContent=c.toFixed(1);
+ $('equation').textContent=mode==='scale'?`(cf)(x) = ${c.toFixed(1)} · (${label(f)})`: `(f + g)(x) = (${label(f)}) + (${label(g)})`;
+ $('explain').textContent=mode==='scale'?`At x = 2: f(2) = ${fn(f,2)}, so (cf)(2) = ${c*fn(f,2)}.`:`At x = 2: f(2) = ${fn(f,2)}, g(2) = ${fn(g,2)}, so (f + g)(2) = ${fn(f,2)+fn(g,2)}.`;
+ draw(f,g,c,mode);
+}
+function draw(f,g,c,mode){
+ let can=$('plot'),ctx=can.getContext('2d'),W=can.width,H=can.height;ctx.clearRect(0,0,W,H);
+ let X=x=>W/2+x*55,Y=y=>H/2-y*28;
+ ctx.strokeStyle='#cbd5e1';ctx.lineWidth=1;
+ for(let x=-6;x<=6;x++){ctx.beginPath();ctx.moveTo(X(x),0);ctx.lineTo(X(x),H);ctx.stroke()}
+ for(let y=-5;y<=5;y++){ctx.beginPath();ctx.moveTo(0,Y(y));ctx.lineTo(W,Y(y));ctx.stroke()}
+ ctx.strokeStyle='#475569';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,Y(0));ctx.lineTo(W,Y(0));ctx.moveTo(X(0),0);ctx.lineTo(X(0),H);ctx.stroke();
+ function curve(fun,color,name){ctx.strokeStyle=color;ctx.lineWidth=3;ctx.beginPath();let started=false;for(let px=0;px<=W;px+=2){let x=(px-W/2)/55,y=fun(x);if(!Number.isFinite(y)||Math.abs(y)>7){started=false;continue}let py=Y(y);if(!started){ctx.moveTo(px,py);started=true}else ctx.lineTo(px,py)}ctx.stroke();ctx.fillStyle=color;ctx.font='bold 15px system-ui';ctx.fillText(name,12,22+(color==='#16a34a'?20:0))}
+ if(mode==='scale'){curve(x=>c*fn(f,x),'#2563eb',`c f: ${c.toFixed(1)}(${label(f)})`);curve(x=>fn(f,x),'#94a3b8','f (original)')}
+ else if(mode==='both'){curve(x=>fn(f,x),'#2563eb','f');curve(x=>fn(g,x),'#dc2626','g');curve(x=>fn(f,x)+fn(g,x),'#16a34a','f + g')}
+ else curve(x=>fn(f,x)+fn(g,x),'#16a34a','f + g');
+}
+['f','g','c','mode'].forEach(id=>$(id).addEventListener('input',update));
+$('reset').onclick=()=>{$('f').value='x2';$('g').value='2x+1';$('c').value=2;$('mode').value='sum';update()};
+update();
+</script></body></html>

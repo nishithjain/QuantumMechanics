@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eigenvector explorer</title>
+<style>
+body{font-family:system-ui,Segoe UI,sans-serif;max-width:1050px;margin:22px auto;padding:0 16px;background:#f5f8fc;color:#17243a}
+.card{background:#fff;border:1px solid #d7e1ef;border-radius:14px;padding:16px;margin:14px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}canvas{width:100%;height:420px;background:#fbfdff;border-radius:10px}
+label{display:block;margin:10px 0}input{width:100%}.math{font-family:ui-monospace,Consolas,monospace;background:#f0f4fa;padding:10px;border-radius:8px;overflow-wrap:anywhere}
+button{padding:9px 13px;border:0;border-radius:8px;background:#174f91;color:white;margin:4px;cursor:pointer}.alt{background:#e5edf7;color:#18304e}
+@media(max-width:750px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<h1>Which vectors stay on their own line?</h1>
+<p>Explore the lecture's matrix A = [[3, 1], [0, 2]]. Choose an input vector. The blue arrow is the input; the red arrow is its transformed result. An eigenvector's two arrows lie on the same line.</p>
+<div class="card">
+<div class="grid"><div>
+<label>Input x: <b id="xv">1</b><input id="x" type="range" min="-3" max="3" step=".1" value="1"></label>
+<label>Input y: <b id="yv">0</b><input id="y" type="range" min="-3" max="3" step=".1" value="0"></label>
+<button data-v="1,0">Eigenvector (1, 0)</button><button data-v="-1,1">Eigenvector (−1, 1)</button><button data-v="1,2" class="alt">Ordinary vector (1, 2)</button>
+<p class="math" id="calc"></p><p id="verdict"></p>
+</div><div><canvas id="plot" width="700" height="420"></canvas></div></div>
+</div>
+<div class="card"><b>What makes a vector an eigenvector?</b><p>For input v = (x, y), the transformation gives Av = (3x + y, 2y). It is an eigenvector when Av is a scalar multiple of v. In 2D, that means the two arrows lie on the same line through the origin.</p></div>
+<script>
+const $=id=>document.getElementById(id),fmt=n=>Number(n.toFixed(3)).toString();
+function update(){
+ let x=+$('x').value,y=+$('y').value,tx=3*x+y,ty=2*y;
+ $('xv').textContent=fmt(x);$('yv').textContent=fmt(y);
+ let cross=x*ty-y*tx,den=x*x+y*y,lambda=den?((x*tx+y*ty)/den):NaN;
+ let eig=Math.hypot(x,y)>1e-8 && Math.abs(cross)<1e-7;
+ $('calc').textContent=`v = (${fmt(x)}, ${fmt(y)})   →   Av = (3x + y, 2y) = (${fmt(tx)}, ${fmt(ty)})`;
+ $('verdict').textContent=eig?`YES — this is an eigenvector. Scaling factor λ = ${fmt(lambda)}.`:'Not an eigenvector: the transformed arrow is not on the same line (or the zero vector was selected).';
+ draw(x,y,tx,ty,eig);
+}
+function draw(x,y,tx,ty,eig){
+ let c=$('plot'),g=c.getContext('2d');g.clearRect(0,0,c.width,c.height);
+ let O={x:350,y:210},s=48;
+ g.strokeStyle='#e2e8f0';g.lineWidth=1;
+ for(let i=-7;i<=7;i++){g.beginPath();g.moveTo(O.x+i*s,10);g.lineTo(O.x+i*s,410);g.stroke();g.beginPath();g.moveTo(10,O.y+i*s);g.lineTo(690,O.y+i*s);g.stroke()}
+ g.strokeStyle='#64748b';g.lineWidth=2;g.beginPath();g.moveTo(10,O.y);g.lineTo(690,O.y);g.moveTo(O.x,10);g.lineTo(O.x,410);g.stroke();
+ function arrow(a,b,color,label){let px=O.x+a*s,py=O.y-b*s;g.strokeStyle=color;g.fillStyle=color;g.lineWidth=5;g.beginPath();g.moveTo(O.x,O.y);g.lineTo(px,py);g.stroke();let ang=Math.atan2(py-O.y,px-O.x);g.beginPath();g.moveTo(px,py);g.lineTo(px-13*Math.cos(ang-.45),py-13*Math.sin(ang-.45));g.lineTo(px-13*Math.cos(ang+.45),py-13*Math.sin(ang+.45));g.closePath();g.fill();g.font='bold 16px system-ui';g.fillText(label,px+8,py-8)}
+ arrow(x,y,'#2563eb','v');arrow(tx,ty,'#dc2626','Av');
+ if(eig){g.strokeStyle='#16a34a';g.setLineDash([7,6]);g.lineWidth=2;g.beginPath();g.moveTo(O.x-320*x,O.y+320*y);g.lineTo(O.x+320*x,O.y-320*y);g.stroke();g.setLineDash([])}
+ g.fillStyle='#334155';g.font='14px system-ui';g.fillText('Blue = original vector     Red = transformed vector',14,24);
+}
+$('x').oninput=update;$('y').oninput=update;
+document.querySelectorAll('button[data-v]').forEach(b=>b.onclick=()=>{let a=b.dataset.v.split(',');$('x').value=a[0];$('y').value=a[1];update()});
+update();
+</script></body></html>

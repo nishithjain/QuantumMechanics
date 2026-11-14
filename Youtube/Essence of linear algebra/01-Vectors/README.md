@@ -46,7 +46,7 @@ lecture-notes/
 
 ## Troubleshooting
 
-- **Mathematical formulas appear as raw `\[ ... \]`:** Open the `.md` in VS Code's Markdown Preview or another Markdown reader with mathematical notation support. The `.html` animations work normally in any current Chrome, Edge, or Firefox browser.
+- **Mathematical formulas appear as raw `$$ ... $$`:** Open the `.md` in VS Code's Markdown Preview or another Markdown reader with mathematical notation support. The `.html` animations work normally in any current Chrome, Edge, or Firefox browser.
 - **Images are missing:** Keep the entire extracted `lecture-notes` directory together. Relative paths depend on the `notes/`, `images/`, and `animations/` folders remaining side by side.
 - **Animation doesn't respond:** Open the file in a current browser with JavaScript enabled. No internet is needed.
 

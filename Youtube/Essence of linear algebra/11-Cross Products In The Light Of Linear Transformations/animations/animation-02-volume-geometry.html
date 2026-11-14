@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Signed volume: base area and perpendicular height</title>
+<style>
+body{font-family:system-ui,Segoe UI,sans-serif;max-width:1000px;margin:24px auto;padding:0 16px;background:#f5f8fc;color:#17243a}
+.card{background:#fff;border:1px solid #d7e1ef;border-radius:14px;padding:16px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+label{display:block;margin:8px 0}input{width:100%;accent-color:#17569b}
+canvas{width:100%;height:390px;background:#fbfdff;border-radius:10px}
+.math{font-family:ui-monospace,Consolas,monospace;background:#f0f4fa;padding:10px;border-radius:8px;overflow-wrap:anywhere}
+.metric{font-weight:700;font-size:1.08rem}
+button{padding:9px 14px;border:0;border-radius:8px;background:#174f91;color:white;margin:4px;cursor:pointer}.alt{background:#e5edf7;color:#18304e}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<h1>Why the dual vector is the cross product</h1>
+<p>Think of v and w as the base of a parallelogram. The signed volume made with r is base area × signed perpendicular height. The vector p = v × w points perpendicular to the base and has length equal to its area.</p>
+<div class="card">
+<div class="grid">
+<div><b>Base vector v (xy plane)</b><label>vₓ <input id="vx" type="range" min="-3" max="3" step=".25" value="2"><span id="vxl">2</span></label><label>vᵧ <input id="vy" type="range" min="-3" max="3" step=".25" value="0"><span id="vyl">0</span></label></div>
+<div><b>Base vector w (xy plane)</b><label>wₓ <input id="wx" type="range" min="-3" max="3" step=".25" value="0"><span id="wxl">0</span></label><label>wᵧ <input id="wy" type="range" min="-3" max="3" step=".25" value="1.5"><span id="wyl">1.5</span></label></div>
+<div><b>Variable vector r</b><label>rₓ <input id="rx" type="range" min="-3" max="3" step=".25" value="1"><span id="rxl">1</span></label><label>rᵧ <input id="ry" type="range" min="-3" max="3" step=".25" value="1"><span id="ryl">1</span></label><label>r_z <input id="rz" type="range" min="-3" max="3" step=".25" value="2"><span id="rzl">2</span></label></div>
+</div>
+<p class="math" id="base"></p><p class="math" id="height"></p><p class="metric" id="volume"></p>
+<canvas id="scene" width="900" height="390"></canvas>
+<button id="flat">Put r in the base plane</button><button class="alt" id="above">Move r above the base</button><button class="alt" id="below">Move r below the base</button>
+</div>
+<div class="card"><b>Key insight</b><p>The base area is |v × w|. The signed perpendicular height is the component of r along the correctly oriented unit normal. Multiplying them gives the signed volume, which is also (v × w) · r.</p></div>
+<script>
+const $=id=>document.getElementById(id),ids=['vx','vy','wx','wy','rx','ry','rz'];
+function draw(){
+ let [vx,vy,wx,wy,rx,ry,rz]=ids.map(id=>+$(id).value);
+ ids.forEach(id=>$(id+'l').textContent=Number($(id).value).toFixed(2).replace(/\.?0+$/,''));
+ let cross=vx*wy-vy*wx,area=Math.abs(cross),rnorm=Math.hypot(rx,ry,rz);
+ let signedHeight=(cross===0?0:Math.sign(cross)*rz);
+ let volume=cross*rz;
+ $('base').textContent=`Base signed area = vₓwᵧ − vᵧwₓ = ${cross.toFixed(3)}   |   ordinary base area = ${area.toFixed(3)}`;
+ $('height').textContent=`Signed perpendicular height = ${signedHeight.toFixed(3)}   (not the full length of r = ${rnorm.toFixed(3)})`;
+ $('volume').textContent=`Signed volume = base area × signed height = ${volume.toFixed(3)}  = (v × w) · r`;
+ let g=$('scene').getContext('2d');g.clearRect(0,0,900,390);
+ // 2D oblique sketch: base in lower plane, z vertical; xy mapped obliquely
+ const O={x:340,y:300},S=62;
+ function P(x,y,z){return {x:O.x+S*(x+.48*y),y:O.y-S*(.25*y+z)}}
+ let V=P(vx,vy,0),W=P(wx,wy,0),VW=P(vx+wx,vy+wy,0),R=P(rx,ry,rz),Rbase=P(rx,ry,0);
+ g.fillStyle='rgba(59,130,246,.12)';g.beginPath();g.moveTo(O.x,O.y);g.lineTo(V.x,V.y);g.lineTo(VW.x,VW.y);g.lineTo(W.x,W.y);g.closePath();g.fill();
+ function seg(a,b,color,width=4,dash=[]){g.strokeStyle=color;g.lineWidth=width;g.setLineDash(dash);g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.stroke();g.setLineDash([])}
+ function arrow(p,color,label){seg(O,p,color,5);let ang=Math.atan2(p.y-O.y,p.x-O.x);g.fillStyle=color;g.beginPath();g.moveTo(p.x,p.y);g.lineTo(p.x-12*Math.cos(ang-.4),p.y-12*Math.sin(ang-.4));g.lineTo(p.x-12*Math.cos(ang+.4),p.y-12*Math.sin(ang+.4));g.closePath();g.fill();g.font='bold 17px system-ui';g.fillText(label,p.x+8,p.y-8)}
+ seg(R,Rbase,'#9333a8',3,[7,6]);arrow(V,'#2563eb','v');arrow(W,'#16a34a','w');arrow(R,'#dc2626','r');
+ g.fillStyle='#9333a8';g.font='bold 16px system-ui';g.fillText('perpendicular height',Rbase.x+10,(R.y+Rbase.y)/2);
+ g.fillStyle='#475569';g.font='14px system-ui';g.fillText('Schematic view: blue base parallelogram; purple dashed segment is height.',18,25);
+}
+ids.forEach(id=>$(id).addEventListener('input',draw));
+$('flat').onclick=()=>{$('rz').value=0;draw()};$('above').onclick=()=>{$('rz').value=2.5;draw()};$('below').onclick=()=>{$('rz').value=-2.5;draw()};
+draw();
+</script></body></html>

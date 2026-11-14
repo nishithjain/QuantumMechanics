@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Associativity: same three moves — Interactive Linear Algebra</title>
+<style>
+:root{color-scheme:light;--ink:#182a3f;--muted:#526579;--blue:#2167b2;--orange:#dc7722;--purple:#8750a2;--line:#dce5ec}
+*{box-sizing:border-box}body{margin:0;background:#f2f6fa;color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+main{max-width:1320px;margin:22px auto;padding:0 18px 30px}h1{font-size:clamp(1.4rem,3.5vw,2.2rem);line-height:1.15;margin:0 0 8px}p{margin:8px 0;color:var(--muted)}.head,.panel,.controls,.footer{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 4px 20px #182a3f0b}
+.head{margin-bottom:16px}.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px}.controls button{border:0;background:#2466ae;color:white;padding:11px 18px;border-radius:9px;font-size:15px;font-weight:650;cursor:pointer}
+.controls button.secondary{background:#e8eff6;color:var(--ink)}.controls button:focus-visible, input:focus-visible{outline:3px solid #5b93dd;outline-offset:2px}.controls button:hover{filter:brightness(.96)}.step{font-size:14px;font-weight:700;color:#425771;margin-left:auto}
+.sliders{display:flex;align-items:center;flex-wrap:wrap;gap:14px}.sliders label{display:flex;align-items:center;gap:7px;white-space:nowrap;font-weight:650;font-size:14px}.sliders output{min-width:22px;color:var(--purple)}input[type=range]{accent-color:#8750a2;width:100px}
+.grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:16px;margin-bottom:16px}.panel{min-width:0;padding:14px}.panel h2{font-size:18px;margin:0 0 7px}.panel p{font-size:14px;min-height:44px}.canvasWrap{border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#fbfdff}.panel canvas{width:100%;height:auto;display:block;aspect-ratio:1.38/1}.matrix{margin-top:10px;font:600 14px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;background:#f3f7fa;border-radius:8px;padding:8px;white-space:normal;overflow-wrap:anywhere}.points{font-size:13px;color:#34465c;margin-top:8px}
+.legend{font-weight:650;font-size:13px;display:flex;gap:20px;flex-wrap:wrap;margin:5px 0 15px}.legend i{display:inline-block;width:11px;height:11px;border-radius:100%;margin-right:5px}.footer{font-size:15px}.footer strong{color:#1e3c60}.back{display:inline-block;margin-top:9px;color:#175ca5;text-decoration:none}.back:hover{text-decoration:underline}
+@media(max-width:840px){.grid{grid-template-columns:1fr}.step{margin-left:0;width:100%}.controls{gap:8px}.controls button{padding:9px 13px}.panel p{min-height:auto}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style></head>
+<body><main><section class="head"><h1 id="title"></h1><p id="subtitle"></p><div class="legend"><span><i style="background:#2167b2"></i>transformed i-hat</span><span><i style="background:#dc7722"></i>transformed j-hat</span><span><i style="background:#8750a2"></i>chosen vector (x, y)</span></div></section>
+<section class="controls"><button id="play">▶ Play</button><button class="secondary" id="pause">Ⅱ Pause</button><button class="secondary" id="step">Step →</button><button class="secondary" id="reset">↺ Reset</button><div class="sliders"><label>x <input type="range" id="vx" min="-2" max="2" value="2" step="1"><output id="vxvalue">2</output></label><label>y <input type="range" id="vy" min="-2" max="2" value="1" step="1"><output id="vyvalue">1</output></label></div><span id="stage" class="step"></span></section>
+<section class="grid" id="panels"></section><section class="footer"><strong>What to notice:</strong> <span id="foot"></span><p>Instructions: click <b>Step</b> to move one transformation at a time, <b>Play</b> for an automatic sequence, <b>Pause</b> to stop, or <b>Reset</b> to return to the original grid. Move the x and y sliders to test different input vectors. No internet connection or external libraries required.</p><a class="back" href="../notes/lecture-notes.md">← Return to the Markdown lecture notes</a></section></main>
+<script>"use strict";
+const cfg={"title":"Associativity: same three moves","subtitle":"Changing parentheses changes how we group the actions—not the order we apply them.","lanes":[{"title":"C → B → A","stages":[[[1,0],[0,1]],[[2,0],[0,1]],[[2,1],[0,1]],[[0,-1],[2,1]]],"steps":["Start at the original grid.","Apply C: stretch horizontally by 2.","Apply B: shear the stretched grid.","Apply A: rotate the result by 90°."],"matrices":["I","C = [[2,0],[0,1]]","B C = [[2,1],[0,1]]","A B C = [[0,-1],[2,1]]"]}],"foot":"(A B) C = A (B C) because both mean C first, then B, then A. The final transformation is [[0,-1],[2,1]]."};
+const q=s=>document.querySelector(s);
+q('#title').textContent=cfg.title;q('#subtitle').textContent=cfg.subtitle;q('#foot').textContent=cfg.foot;
+const wrap=q('#panels'), stages=cfg.lanes[0].stages.length;
+const ui=cfg.lanes.map((lane,k)=>{const p=document.createElement('article');p.className='panel';p.innerHTML='<h2></h2><p></p><div class="canvasWrap"><canvas aria-label="Animated coordinate grid and basis arrows"></canvas></div><div class="matrix"></div><div class="points"></div>';
+p.querySelector('h2').textContent=lane.title;wrap.appendChild(p);return {canvas:p.querySelector('canvas'),hint:p.querySelector('p'),mat:p.querySelector('.matrix'),pts:p.querySelector('.points'),lane};});
+let current=0,previous=0,started=-Infinity,playing=false,advAt=performance.now(),vec=[2,1];
+const mul=(M,v)=>[M[0][0]*v[0]+M[0][1]*v[1], M[1][0]*v[0]+M[1][1]*v[1]];
+const fmt=v=>'('+v.map(n=>Number(n.toFixed(2))).join(', ')+')';
+const mix=(A,B,t)=>A.map((r,i)=>r.map((z,j)=>z*(1-t)+B[i][j]*t));
+const ease=t=>t*t*(3-2*t);
+function toStage(next){previous=current;current=next;started=performance.now();advAt=started;updateLabels()}
+function updateLabels(){q('#stage').textContent='Step '+current+' of '+(stages-1);ui.forEach(o=>{o.hint.textContent=o.lane.steps[current];o.mat.textContent=o.lane.matrices[current]})}
+function draw(canvas,M,v,finalState){
+const bounds=canvas.getBoundingClientRect(), cssW=Math.max(260,bounds.width),cssH=Math.round(cssW/1.38),dpr=Math.min(window.devicePixelRatio||1,2);
+if(canvas.width!==Math.round(cssW*dpr)||canvas.height!==Math.round(cssH*dpr)){canvas.width=Math.round(cssW*dpr);canvas.height=Math.round(cssH*dpr)}
+const g=canvas.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,cssW,cssH);g.fillStyle='#fbfdff';g.fillRect(0,0,cssW,cssH);
+const endpoint=mul(M,v),i=mul(M,[1,0]),j=mul(M,[0,1]);
+const maxAbs=Math.max(4.8,Math.abs(endpoint[0])+1.0,Math.abs(endpoint[1])+1.0,Math.abs(i[0])+1,Math.abs(i[1])+1,Math.abs(j[0])+1,Math.abs(j[1])+1);
+const u=Math.min(cssW,cssH)/(2*maxAbs), ox=cssW/2,oy=cssH/2;
+const p=(x,y)=>[ox+x*u,oy-y*u];
+const line=(a,b,col,width=1)=>{g.beginPath();g.moveTo(...p(...a));g.lineTo(...p(...b));g.strokeStyle=col;g.lineWidth=width;g.stroke()};
+for(let n=-12;n<=12;n++){let aa=mul(M,[n,-12]),bb=mul(M,[n,12]);line(aa,bb,'#d2e2ee',.85);aa=mul(M,[-12,n]);bb=mul(M,[12,n]);line(aa,bb,'#d2e2ee',.85)}
+line([-20,0],[20,0],'#a7b3c0',1.25);line([0,-20],[0,20],'#a7b3c0',1.25);
+for(let n=-4;n<=4;n+=2){if(n===0)continue;g.font='11px system-ui';g.fillStyle='#738597';let t=p(n,0);g.fillText(String(n),t[0]-4,oy+12);t=p(0,n);g.fillText(String(n),ox+6,t[1]+4)}
+const arrow=(v,color,label)=>{let ex=p(...v),radius=Math.atan2(ex[1]-oy,ex[0]-ox);g.lineWidth=3;g.strokeStyle=color;g.beginPath();g.moveTo(ox,oy);g.lineTo(ex[0],ex[1]);g.stroke();let a=11;g.fillStyle=color;g.beginPath();g.moveTo(ex[0],ex[1]);g.lineTo(ex[0]-a*Math.cos(radius-.47),ex[1]-a*Math.sin(radius-.47));g.lineTo(ex[0]-a*Math.cos(radius+.47),ex[1]-a*Math.sin(radius+.47));g.closePath();g.fill();g.font='bold 13px system-ui';let lx=ex[0]+7,ly=ex[1]-8;if(lx>cssW-120)lx=ex[0]-115;if(ly<14)ly=22;if(ly>cssH-10)ly=cssH-15;g.fillText(label,lx,ly)};
+arrow(endpoint,'#8750a2','v');arrow(i,'#2167b2','i');arrow(j,'#dc7722','j');
+g.fillStyle='#213a52';g.beginPath();g.arc(ox,oy,2.9,0,2*Math.PI);g.fill();
+}
+function loop(now){if(playing&&now-advAt>2200){if(current===stages-1){playing=false;q('#play').textContent='▶ Play again'}else toStage(current+1)}
+const t=started===-Infinity?1:Math.min(1,(now-started)/800);
+ui.forEach(o=>{const MA=o.lane.stages[previous],MB=o.lane.stages[current],MM=mix(MA,MB,ease(t));draw(o.canvas,MM,vec);o.pts.textContent='At step '+current+': i → '+fmt(mul(MB,[1,0]))+'   |   j → '+fmt(mul(MB,[0,1]))+'   |   v → '+fmt(mul(MB,vec))});requestAnimationFrame(loop)}
+q('#play').onclick=()=>{if(current===stages-1){previous=0;current=0;started=-Infinity;updateLabels()}playing=true;advAt=performance.now();q('#play').textContent='▶ Playing'};
+q('#pause').onclick=()=>{playing=false;q('#play').textContent='▶ Play'};
+q('#step').onclick=()=>{playing=false;q('#play').textContent='▶ Play';toStage((current+1)%stages)};
+q('#reset').onclick=()=>{playing=false;previous=0;current=0;started=-Infinity;advAt=performance.now();updateLabels();q('#play').textContent='▶ Play'};
+for(const [idx,key]of ['vx','vy'].entries()){q('#'+key).oninput=e=>{vec[idx]=Number(e.target.value);q('#'+key+'value').textContent=String(vec[idx])}}
+updateLabels();requestAnimationFrame(loop);
+</script></body></html>
