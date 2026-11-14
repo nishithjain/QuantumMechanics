@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Animation 1 — Coordinates are basis scalars</title>
+<style>
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#23314b;background:#f4f7fc}*{box-sizing:border-box}body{margin:0;padding:22px}main{max-width:1050px;margin:auto}h1{margin:0 0 8px;font-size:clamp(1.4rem,3vw,2rem)}p{line-height:1.6}.muted{color:#586780}.panel{background:#fff;border:1px solid #dbe3f0;box-shadow:0 7px 20px #22365209;border-radius:15px;padding:16px;margin:14px 0}.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.controls label{display:flex;flex-direction:column;gap:6px;min-width:170px;flex:1}select,button{border:1px solid #bccbe0;border-radius:10px;background:#fff;padding:10px 12px;color:#1d3152;font:inherit}button{cursor:pointer;font-weight:650}button.primary{background:#246cc8;color:white;border-color:#246cc8}button:hover{filter:brightness(.96)}input[type=range]{width:100%;accent-color:#2675d0}.stage{margin-top:12px;background:#edf3fb;border-radius:10px;padding:12px 14px;min-height:70px;line-height:1.55}svg{width:100%;height:auto;display:block;background:#fcfdff;border-radius:12px;border:1px solid #dfe7f1}#equation{font-size:1.13rem;font-weight:700;color:#203c68}.key{font-size:.9rem;margin-top:8px}.key b{display:inline-block;padding:3px 8px;border-radius:5px;color:white;margin-right:5px}.blue{background:#2375c9}.green{background:#119e80}.red{background:#d04c68}@media(max-width:560px){body{padding:10px}.controls label{min-width:120px}}
+</style></head><body><main>
+<h1>1. Coordinates are scalars of basis vectors</h1>
+<p class="muted">The video begins with <strong>(3, −2) = 3 i-hat − 2 j-hat</strong>. Try the same physical arrow using the standard basis and a diagonal alternative basis.</p>
+<section class="panel controls">
+<label>Reference basis <select id="basis"><option value="standard">Standard: i-hat, j-hat</option><option value="diagonal">Diagonal: u=(1,1), w=(1,−1)</option></select></label>
+<label>First scalar: <strong id="av"></strong><input id="a" type="range" min="-3" max="3" step="0.5" value="3"></label>
+<label>Second scalar: <strong id="bv"></strong><input id="b" type="range" min="-3" max="3" step="0.5" value="-2"></label>
+</section>
+<section class="panel">
+<svg id="plot" viewBox="0 0 850 515" role="img" aria-label="Interactive grid showing two basis arrows, their scaled versions and resultant">
+<defs><marker id="mblue" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6z" fill="#2375c9"/></marker><marker id="mgreen" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6z" fill="#119e80"/></marker><marker id="mred" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6z" fill="#d04c68"/></marker></defs>
+<g id="grid"></g><g id="geometry"></g>
+<rect x="642" y="26" width="185" height="210" rx="12" fill="#f0f4fb"/><text x="657" y="53" font-size="15" font-weight="bold" fill="#25334c">What to observe</text><g id="side"></g>
+</svg>
+<div class="key"><b class="blue">Blue</b> first scaled basis vector <b class="green">Green</b> second scaled basis vector <b class="red">Pink</b> resulting vector</div>
+</section>
+<div class="panel controls"><button class="primary" id="play">▶ Play</button><button id="pause">Ⅱ Pause</button><button id="step">Step →</button><button id="reset">↺ Reset</button><span class="muted" id="counter">Stage 0 / 3</span></div>
+<div class="panel"><div id="equation"></div><div class="stage" id="stage"></div></div>
+<p class="muted"><strong>How to use:</strong> Press <strong>Step</strong> three times to see the first scaled arrow, the second scaled arrow tip-to-tail, and the final arrow. Change the sliders or the basis to explore other combinations. The coordinate labels in this chart always refer to the standard x-y axes.</p>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg',G=$('geometry');let stage=0,timer=null;
+const ox=355,oy=255,k=48;
+function node(tag,attrs,parent=G,text){const e=document.createElementNS(NS,tag);for(const [a,v] of Object.entries(attrs))e.setAttribute(a,v);if(text!==undefined)e.textContent=text;parent.append(e);return e}
+function pt(p){return [ox+p[0]*k,oy-p[1]*k]}
+function line(p,q,color,id,width=3,opacity=1){const a=pt(p),b=pt(q);node('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:color,'stroke-width':width,'stroke-linecap':'round','marker-end':`url(#${id})`,opacity})}
+function dot(p){const a=pt(p);node('circle',{cx:a[0],cy:a[1],r:5,fill:'#d04c68',stroke:'white','stroke-width':2})}
+function tx(s,p,c='#22385b',size=15){const a=pt(p);node('text',{x:a[0]+9,y:a[1]-12,fill:c,'font-size':size,'font-weight':'650'},G,s)}
+function drawGrid(){const g=$('grid');for(let v=-5;v<=5;v++){for(const [p,q] of [[[-5,v],[5,v]],[[v,-5],[v,5]]]){const a=pt(p),b=pt(q);node('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:v===0?'#8394ad':'#e1e8f0','stroke-width':v===0?2:1},g)}}node('text',{x:603,y:oy-12,fill:'#52647d','font-size':16},g,'x');node('text',{x:ox+12,y:18,fill:'#52647d','font-size':16},g,'y');node('text',{x:ox+7,y:oy+19,fill:'#52647d','font-size':13},g,'0')}
+drawGrid();
+const add=(p,q)=>[p[0]+q[0],p[1]+q[1]],mul=(a,p)=>[a*p[0],a*p[1]],fmt=n=>Number(n).toFixed(1).replace(/\.0$/,'');
+function render(){G.replaceChildren();const std=$('basis').value==='standard';let u=std?[1,0]:[1,1],w=std?[0,1]:[1,-1],a=+$('a').value,b=+$('b').value,p=mul(a,u),q=mul(b,w),r=add(p,q);$('av').textContent=fmt(a);$('bv').textContent=fmt(b);
+line([0,0],u,'#2375c9','mblue',2,0.4);line([0,0],w,'#119e80','mgreen',2,.4);tx(std?'i-hat':'u',u,'#2375c9');tx(std?'j-hat':'w',w,'#119e80');
+if(stage>=1){line([0,0],p,'#2375c9','mblue');tx(`${fmt(a)}×${std?'i':'u'}`,p,'#2375c9')}
+if(stage>=2){line(p,add(p,q),'#119e80','mgreen');tx(`${fmt(b)}×${std?'j':'w'}`,add(p,q),'#119e80')}
+if(stage>=3){line([0,0],r,'#d04c68','mred',4);dot(r);tx(`(${fmt(r[0])}, ${fmt(r[1])})`,r,'#d04c68')}
+$('equation').textContent=`${fmt(a)} × (${u.join(', ')}) + ${fmt(b)} × (${w.join(', ')}) = (${fmt(r[0])}, ${fmt(r[1])})`;
+$('counter').textContent=`Stage ${stage} / 3`;
+$('stage').textContent=[`Basis only: the ${std?'unit x and y arrows':'two slanted arrows'} are the reference directions.`,`First: multiply the blue basis arrow by ${fmt(a)}.`, `Next: multiply the green basis arrow by ${fmt(b)} and place its tail at the end of the blue one.`,`Finally: the pink arrow connects the origin to the tip of the green arrow. It is the sum.`][stage];
+$('side').replaceChildren();['Basis: '+(std?'standard':'diagonal'),`First: ${fmt(a)}`,`Second: ${fmt(b)}`,`Result x: ${fmt(r[0])}`,`Result y: ${fmt(r[1])}`].forEach((v,i)=>{const t=node('text',{x:657,y:91+i*27,fill:'#52627b','font-size':13},$('side'));t.textContent=v});
+}
+function stop(){if(timer!==null){clearInterval(timer);timer=null}}
+function step(){stage=(stage+1)%4;render()}
+$('basis').onchange=()=>{stop();const d=$('basis').value==='diagonal';$('a').value=d?'0.5':'3';$('b').value=d?'2.5':'-2';stage=0;render()};
+for(const s of ['a','b'])$(s).oninput=()=>{stop();stage=3;render()};
+$('step').onclick=()=>{stop();step()};$('play').onclick=()=>{stop();timer=setInterval(step,1250);step()};$('pause').onclick=stop;
+$('reset').onclick=()=>{stop();$('basis').value='standard';$('a').value=3;$('b').value=-2;stage=0;render()};render();
+</script></body></html>
