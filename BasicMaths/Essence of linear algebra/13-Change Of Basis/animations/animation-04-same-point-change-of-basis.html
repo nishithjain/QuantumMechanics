@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Same point, two coordinate systems</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101923;color:#edf4fa;font:16px/1.55 Inter,system-ui,sans-serif}
+main{max-width:1100px;margin:auto;padding:clamp(14px,4vw,44px)}
+h1{font-size:clamp(29px,5vw,48px);line-height:1.1;letter-spacing:-.04em;margin:0}
+h2{font-size:19px;margin:0 0 8px}p{color:#bdcddd;margin:8px 0}
+.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:15px;margin-top:18px}
+section{min-width:0;background:#192735;border:1px solid #3c5366;border-radius:15px;padding:15px}
+canvas{display:block;width:100%;height:auto;background:#101923;border-radius:9px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+button{font:inherit;padding:7px 11px;color:#edf4fa;background:#293d50;border:1px solid #647d92;border-radius:8px;cursor:pointer}
+button[aria-pressed=true],#play{background:#ffda93;color:#172735;font-weight:700;border-color:#ffda93}
+:focus-visible{outline:3px solid #ffda93;outline-offset:3px}
+input{width:100%;accent-color:#ffda93}
+label{font-size:14px}
+.gold{color:#ffda93}.mint{color:#88e7d0}
+.rule{border-top:1px solid #41586a;padding-top:12px;margin-top:14px}
+#motion{min-height:3em}
+ol{margin:8px 0;padding-left:22px}li+li{margin-top:6px}
+.math{font-variant-numeric:tabular-nums;color:#edf4fa}
+@media(max-width:760px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>Same point, two coordinate systems</h1>
+<p>The white dot is always P. Watch how two sets of directions take you to it from the same origin.</p>
+<div class="controls" role="group" aria-label="Choose which routes to draw">
+<button type="button" data-mode="standard" aria-pressed="false">Your route</button>
+<button type="button" data-mode="jennifer" aria-pressed="false">Jennifer’s route</button>
+<button type="button" data-mode="both" aria-pressed="true">Compare both</button>
+</div>
+<div class="layout">
+<section aria-label="Animated routes to P">
+<canvas id="plot" width="660" height="410" role="img" aria-label="Two routes from the origin to the fixed point P at standard coordinates (3, 2)."></canvas>
+<p><strong class="mint">Mint</strong> · your route &nbsp; <strong class="gold">Gold</strong> · Jennifer’s route</p>
+<p id="motion"></p>
+<div class="controls">
+<button type="button" id="play">Play routes</button>
+<button type="button" id="start">Show start</button>
+<button type="button" id="turn">Show first legs</button>
+<button type="button" id="end">Show complete routes</button>
+</div>
+<label for="seek">Route progress <output id="percent" for="seek">0%</output></label>
+<input id="seek" type="range" min="0" max="100" value="0">
+</section>
+<section aria-label="Coordinate calculation">
+<h2 class="mint">Your coordinates (3, 2)</h2>
+<p class="math">î = (1, 0) and ĵ = (0, 1)</p>
+<p>Go 3 units right, then 2 units up.</p>
+<p class="math"><strong>P = 3î + 2ĵ</strong></p>
+<h2 class="rule gold">Jennifer’s coordinates (5/3, 1/3)<sub>J</sub></h2>
+<p class="math">b₁ = (2, 1) and b₂ = (−1, 1)</p>
+<p>Go 5/3 times along b₁, then 1/3 times along b₂. That second leg moves left and up.</p>
+<p class="math"><strong>P = (5/3)b₁ + (1/3)b₂</strong></p>
+<h2 class="rule">Where the fractions come from</h2>
+<p class="math">a(2, 1) + b(−1, 1) = (3, 2)</p>
+<ol>
+<li>Match x and y to get <span class="math">2a − b = 3</span> and <span class="math">a + b = 2</span>.</li>
+<li>Add the equations. The b terms cancel, leaving <span class="math">3a = 5</span>, so <span class="math">a = 5/3</span>.</li>
+<li>Substitute into the second equation to get <span class="math">b = 2 − 5/3 = 1/3</span>.</li>
+</ol>
+<p class="math">Check the endpoint<br>(10/3, 5/3) + (−1/3, 1/3) = <strong>(3, 2)</strong></p>
+</section>
+</div>
+</main>
+<script>
+const byId = id => document.getElementById(id);
+const canvas = byId('plot');
+const ctx = canvas.getContext('2d');
+const slider = byId('seek');
+const play = byId('play');
+const buttons = [...document.querySelectorAll('[data-mode]')];
+const origin = [0, 0];
+const point = [3, 2];
+const routes = {
+  standard: {corner:[3,0], color:'#88e7d0', first:'3î', second:'2ĵ'},
+  jennifer: {corner:[10/3,5/3], color:'#ffda93', first:'(5/3)b₁', second:'(1/3)b₂'}
+};
+let mode = 'both';
+let progress = 0;
+let frame = null;
+const screen = ([x,y]) => [160+95*x,315-95*y];
+
+function segment(from,to,color,width) {
+  ctx.beginPath();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
+  ctx.moveTo(...screen(from));
+  ctx.lineTo(...screen(to));
+  ctx.stroke();
+}
+
+function arrow(from,to,color) {
+  const length = Math.hypot(to[0]-from[0],to[1]-from[1]);
+  if (length < .001) return;
+  segment(from,to,color,3.5);
+  const angle = Math.atan2(to[1]-from[1],to[0]-from[0]);
+  const head = Math.min(.14,length);
+  for (const offset of [-.5,.5]) {
+    segment(to,[to[0]-head*Math.cos(angle+offset),to[1]-head*Math.sin(angle+offset)],color,2.5);
+  }
+}
+
+function label(text,point,dx,dy,color,size=17) {
+  const [x,y] = screen(point);
+  ctx.font = size+'px system-ui';
+  ctx.fillStyle = color;
+  ctx.fillText(text,x+dx,y+dy);
+}
+
+function dot(point,radius,color) {
+  ctx.beginPath();
+  ctx.arc(...screen(point),radius,0,2*Math.PI);
+  ctx.fillStyle = color;
+  ctx.fill();
+}
+
+function lerp(from,to,t) {
+  return from.map((v,index) => v+(to[index]-v)*t);
+}
+
+function drawRoute(route, value, name) {
+  const {corner,color,first,second} = route;
+  const firstProgress = Math.min(1,2*value);
+  const secondProgress = Math.max(0,2*value-1);
+  const standard = name === 'standard';
+  arrow(origin,lerp(origin,corner,firstProgress),color);
+  arrow(corner,lerp(corner,point,secondProgress),color);
+  if (firstProgress > .2) label(first,lerp(origin,corner,.5),-20,standard?28:-15,color,20);
+  if (secondProgress > .2) label(second,lerp(corner,point,.5),standard?-40:18,standard?-4:1,color,19);
+  if (value >= .5) dot(corner,4,color);
+}
+
+function draw(value) {
+  progress = value;
+  slider.value = Math.round(100*value);
+  byId('percent').textContent = slider.value+'%';
+  const firstLeg = mode === 'standard' ? 'Move 3 units right along î.' :
+    mode === 'jennifer' ? 'Move 5/3 times along b₁, diagonally up and right.' :
+    'First legs. Your route goes right. Jennifer’s route goes diagonally up and right.';
+  const secondLeg = mode === 'standard' ? 'From (3, 0), move 2 units up along ĵ.' :
+    mode === 'jennifer' ? 'From (10/3, 5/3), move 1/3 times along b₂, diagonally up and left.' :
+    'Second legs. Your route goes straight up. Jennifer’s route goes up and left.';
+  const motion = value === 0 ? 'Start at the origin. The destination P is already marked.' :
+    value === 1 ? 'Reached P. Both coordinate descriptions give the same point.' :
+    value <= .5 ? firstLeg : secondLeg;
+  byId('motion').textContent = motion;
+  canvas.setAttribute('aria-label','Fixed point P at standard coordinates (3, 2). '+motion);
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for (let x=-1;x<=5;x++) {
+    segment([x,-.65],[x,3],x===0?'#869cb0':'#304253',x===0?1.6:1);
+    if (x!==0) label(String(x),[x,0],-6,19,'#b1c3d4',14);
+  }
+  for (let y=0;y<=3;y++) {
+    segment([-1.4,y],[5,y],y===0?'#869cb0':'#304253',y===0?1.6:1);
+    if (y!==0) label(String(y),[0,y],-20,5,'#b1c3d4',14);
+  }
+  label('x',[5,0],5,5,'#b1c3d4');
+  label('y',[0,3],-5,-8,'#b1c3d4');
+  label('O',origin,-22,23,'#e2edf6');
+  if (mode === 'jennifer') {
+    ctx.setLineDash([5,5]);
+    segment(origin,[-1,1],'#a88ebf',1.5);
+    segment(origin,[2,1],'#a88ebf',1.5);
+    ctx.setLineDash([]);
+    label('b₂',[-1,1],-11,-10,'#d9bdee');
+    label('b₁',[2,1],6,24,'#d9bdee');
+  }
+  for (const [name,route] of Object.entries(routes)) {
+    if (mode === 'both' || mode === name) drawRoute(route,value,name);
+  }
+  dot(origin,4,'#dceaf6');
+  dot(point,7,'#101923');
+  dot(point,5,'#fff');
+  label('P (3, 2)',point,10,-12,'#fff',19);
+}
+
+function stop() {
+  if (frame !== null) cancelAnimationFrame(frame);
+  frame = null;
+  play.textContent = progress === 1 ? 'Replay routes' : progress === 0 ? 'Play routes' : 'Resume';
+}
+function seek(value) {
+  draw(value);
+  stop();
+}
+
+for (const button of buttons) {
+  button.addEventListener('click',() => {
+    for (const option of buttons) option.setAttribute('aria-pressed',String(option === button));
+    mode = button.dataset.mode;
+    seek(0);
+  });
+}
+
+play.addEventListener('click',() => {
+  if (frame !== null) {
+    stop();
+    return;
+  }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    seek(1);
+    return;
+  }
+  if (progress === 1) draw(0);
+  const initial = progress;
+  let start;
+  play.textContent = 'Pause';
+  function animate(now) {
+    start ??= now;
+    draw(Math.min(1,initial+(now-start)/4400));
+    if (progress === 1) stop();
+    else frame = requestAnimationFrame(animate);
+  }
+  frame = requestAnimationFrame(animate);
+});
+slider.addEventListener('input',() => seek(Number(slider.value)/100));
+byId('start').addEventListener('click',() => seek(0));
+byId('turn').addEventListener('click',() => seek(.5));
+byId('end').addEventListener('click',() => seek(1));
+draw(0);
+</script>
+</body>
+</html>

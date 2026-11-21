@@ -5,7 +5,7 @@ A self-contained set of study notes, diagrams, and browser-based interactive dem
 ## Start here
 
 1. Open **[`notes/lecture-notes.md`](notes/lecture-notes.md)** in VS Code or Cursor and use its Markdown preview (`Ctrl+Shift+V` in VS Code).
-2. Read in order. The headings follow the **professor's sequence** in the Part B recording, beginning with Deutsch–Jozsa and ending with audience questions on earlier linear algebra exercises.
+2. Read in order. The headings follow the **lecture sequence** in Part B, beginning with Deutsch–Jozsa and ending with audience questions on earlier linear algebra exercises.
 3. When you see an image, it is already linked using a relative path: `../images/concept-XX.png`.
 4. Click or open a relative animation link such as `../animations/animation-02.html`. If your Markdown preview doesn't open local links, navigate to the `animations/` folder and **double-click the HTML file** to open it in your browser. No server, installation, network connection, or third-party libraries are needed.
 5. Each animation has **Play, Pause, Step, and Reset**. It is best to start with **Step** and read the accompanying explanation before moving on.

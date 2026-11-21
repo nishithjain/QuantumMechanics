@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summation Basics for Quantum Computing</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+  body {
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.65;
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 24px 20px 48px;
+    color: #1a1a1a;
+    background: #fafafa;
+  }
+  #notes h1, #notes h2, #notes h3 { color: #183b66; }
+  #notes table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+  #notes th, #notes td { border: 1px solid #ccd3de; padding: 8px 10px; }
+  #notes th { background: #eef2f7; }
+  #notes code { background: #eef2f7; padding: 2px 5px; border-radius: 4px; }
+  .quiz-frame {
+    width: 100%;
+    min-height: 1400px;
+    border: 1px solid #dce3ed;
+    border-radius: 12px;
+    margin-top: 24px;
+    background: #f5f7fb;
+  }
+  hr { border: 0; border-top: 1px solid #dce3ed; margin: 2.5rem 0; }
+</style>
+</head>
+<body>
+<div id="notes"></div>
+<hr>
+<h2 style="color:#183b66;">Self-assessment quiz</h2>
+<iframe class="quiz-frame" title="Quiz" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;title&gt;Summation and Quantum States — Quiz&lt;/title&gt;
+&lt;style&gt;
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    max-width: 850px;
+    margin: 30px auto;
+    padding: 0 18px;
+    background: #f5f7fb;
+    color: #202938;
+  }
+  h1, h2 { color: #183b66; }
+  .intro, .question, .result {
+    background: white;
+    border: 1px solid #dce3ed;
+    border-radius: 12px;
+    padding: 18px;
+    margin: 16px 0;
+  }
+  .question h3 { margin-top: 0; }
+  label {
+    display: block;
+    padding: 7px 9px;
+    margin: 5px 0;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  label:hover { background: #f0f5fc; }
+  input { margin-right: 8px; }
+  button {
+    border: 0;
+    border-radius: 8px;
+    padding: 11px 18px;
+    margin: 8px 6px 8px 0;
+    background: #1769aa;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  button.secondary { background: #596579; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  .feedback { margin-top: 10px; padding: 10px; border-radius: 7px; }
+  .correct { background: #e5f7ec; color: #176536; }
+  .incorrect { background: #fff0ed; color: #9c3025; }
+  .muted { color: #667085; }
+  .result { display: none; }
+  code { background: #eef2f7; padding: 2px 5px; border-radius: 4px; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Summation and Quantum States&lt;/h1&gt;
+&lt;p class=&quot;muted&quot;&gt;Beginner quiz covering Lessons 1–7&lt;/p&gt;
+&lt;div class=&quot;intro&quot;&gt;
+  &lt;strong&gt;Instructions&lt;/strong&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Choose one answer for every question.&lt;/li&gt;
+    &lt;li&gt;Click “Check answers” to see explanations.&lt;/li&gt;
+    &lt;li&gt;Your final score will appear at the end.&lt;/li&gt;
+    &lt;li&gt;You can reset the quiz and try again.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&quot;quiz&quot;&gt;&lt;/div&gt;
+&lt;button id=&quot;checkButton&quot; onclick=&quot;checkAnswers()&quot;&gt;Check answers&lt;/button&gt;
+&lt;button class=&quot;secondary&quot; onclick=&quot;resetQuiz()&quot;&gt;Reset quiz&lt;/button&gt;
+&lt;div id=&quot;result&quot; class=&quot;result&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+const questions = [
+  {
+    lesson: &quot;Lesson 1 — Basic summation&quot;,
+    question: &quot;What does the Sigma symbol (Σ) mean?&quot;,
+    options: [&quot;Multiply numbers&quot;, &quot;Add terms together&quot;, &quot;Divide terms&quot;],
+    answer: 1,
+    explanation: &quot;Sigma is the summation symbol. It tells us to add a collection of terms.&quot;
+  },
+  {
+    lesson: &quot;Lesson 1 — Basic summation&quot;,
+    question: &quot;Calculate: Σ from i = 1 to 4 of i.&quot;,
+    options: [&quot;10&quot;, &quot;4&quot;, &quot;8&quot;],
+    answer: 0,
+    explanation: &quot;Expand it: 1 + 2 + 3 + 4 = 10.&quot;
+  },
+  {
+    lesson: &quot;Lesson 2 — Variables and indices&quot;,
+    question: &quot;In Σ from i = 1 to 4 of 3i, what is i?&quot;,
+    options: [&quot;The final answer&quot;, &quot;The index or counter&quot;, &quot;Always the number 3&quot;],
+    answer: 1,
+    explanation: &quot;The index i takes the values 1, 2, 3 and 4.&quot;
+  },
+  {
+    lesson: &quot;Lesson 2 — Variables and indices&quot;,
+    question: &quot;What is Σ from i = 1 to 3 of 5?&quot;,
+    options: [&quot;5&quot;, &quot;10&quot;, &quot;15&quot;],
+    answer: 2,
+    explanation: &quot;The term 5 is added three times: 5 + 5 + 5 = 15.&quot;
+  },
+  {
+    lesson: &quot;Lesson 3 — Powers&quot;,
+    question: &quot;What is the value of 3²?&quot;,
+    options: [&quot;6&quot;, &quot;9&quot;, &quot;8&quot;],
+    answer: 1,
+    explanation: &quot;3² means 3 multiplied by itself: 3 × 3 = 9.&quot;
+  },
+  {
+    lesson: &quot;Lesson 3 — Powers&quot;,
+    question: &quot;Calculate: Σ from i = 1 to 3 of i².&quot;,
+    options: [&quot;6&quot;, &quot;14&quot;, &quot;9&quot;],
+    answer: 1,
+    explanation: &quot;1² + 2² + 3² = 1 + 4 + 9 = 14.&quot;
+  },
+  {
+    lesson: &quot;Lesson 3 — Powers&quot;,
+    question: &quot;Calculate: Σ from i = 1 to 2 of (i² + 2).&quot;,
+    options: [&quot;7&quot;, &quot;9&quot;, &quot;11&quot;],
+    answer: 1,
+    explanation: &quot;(1² + 2) + (2² + 2) = 3 + 6 = 9.&quot;
+  },
+  {
+    lesson: &quot;Lesson 4 — Double summation&quot;,
+    question: &quot;If i has 2 possible values and j has 3 possible values, how many pairs are there?&quot;,
+    options: [&quot;5&quot;, &quot;6&quot;, &quot;9&quot;],
+    answer: 1,
+    explanation: &quot;There are 2 × 3 = 6 combinations.&quot;
+  },
+  {
+    lesson: &quot;Lesson 4 — Double summation&quot;,
+    question: &quot;Calculate: Σ i=1..2 Σ j=1..2 (i+j).&quot;,
+    options: [&quot;10&quot;, &quot;12&quot;, &quot;14&quot;],
+    answer: 1,
+    explanation: &quot;(1+1) + (1+2) + (2+1) + (2+2) = 2 + 3 + 3 + 4 = 12.&quot;
+  },
+  {
+    lesson: &quot;Lesson 5 — Complex numbers&quot;,
+    question: &quot;What is i² for the imaginary unit?&quot;,
+    options: [&quot;1&quot;, &quot;-1&quot;, &quot;0&quot;],
+    answer: 1,
+    explanation: &quot;The imaginary unit is defined by i² = -1.&quot;
+  },
+  {
+    lesson: &quot;Lesson 5 — Complex numbers&quot;,
+    question: &quot;Calculate (2 + 3i) + (4 + 5i).&quot;,
+    options: [&quot;6 + 8i&quot;, &quot;6 + 15i&quot;, &quot;8 + 8i&quot;],
+    answer: 0,
+    explanation: &quot;Add real parts: 2 + 4 = 6. Add imaginary parts: 3i + 5i = 8i.&quot;
+  },
+  {
+    lesson: &quot;Lesson 5 — Complex numbers&quot;,
+    question: &quot;What is the magnitude squared of z = 3 + 4i?&quot;,
+    options: [&quot;5&quot;, &quot;25&quot;, &quot;7&quot;],
+    answer: 1,
+    explanation: &quot;|z|² = 3² + 4² = 9 + 16 = 25.&quot;
+  },
+  {
+    lesson: &quot;Lesson 6 — Binary strings&quot;,
+    question: &quot;What does {0,1}³ represent?&quot;,
+    options: [
+      &quot;Three values: 0, 1 and 3&quot;,
+      &quot;All binary strings of length 3&quot;,
+      &quot;Only 000 and 111&quot;
+    ],
+    answer: 1,
+    explanation: &quot;It represents all eight strings of length 3, from 000 to 111.&quot;
+  },
+  {
+    lesson: &quot;Lesson 6 — Binary strings&quot;,
+    question: &quot;How many strings are in {0,1}⁴?&quot;,
+    options: [&quot;4&quot;, &quot;8&quot;, &quot;16&quot;],
+    answer: 2,
+    explanation: &quot;There are 2⁴ = 16 binary strings of length 4.&quot;
+  },
+  {
+    lesson: &quot;Lesson 6 — Binary strings&quot;,
+    question: &quot;Expand Σ over x ∈ {0,1}² of f(x).&quot;,
+    options: [
+      &quot;f(00) + f(11)&quot;,
+      &quot;f(00) + f(01) + f(10) + f(11)&quot;,
+      &quot;f(0) + f(1)&quot;
+    ],
+    answer: 1,
+    explanation: &quot;The four binary strings of length 2 are 00, 01, 10 and 11.&quot;
+  },
+  {
+    lesson: &quot;Lesson 7 — Quantum state formula&quot;,
+    question: &quot;How many amplitudes are needed to describe a general pure state of 3 qubits?&quot;,
+    options: [&quot;3&quot;, &quot;6&quot;, &quot;8&quot;],
+    answer: 2,
+    explanation: &quot;There are 2³ = 8 computational basis states, each with an amplitude.&quot;
+  },
+  {
+    lesson: &quot;Lesson 7 — Quantum state formula&quot;,
+    question: &quot;In αₓ|x⟩, what does αₓ represent?&quot;,
+    options: [
+      &quot;The number of qubits&quot;,
+      &quot;The amplitude associated with basis state |x⟩&quot;,
+      &quot;The measurement result&quot;
+    ],
+    answer: 1,
+    explanation: &quot;αₓ is the complex amplitude associated with the basis state |x⟩.&quot;
+  },
+  {
+    lesson: &quot;Lesson 7 — Quantum state formula&quot;,
+    question: &quot;What does Σₓ |αₓ|² = 1 mean?&quot;,
+    options: [
+      &quot;All amplitudes must be equal&quot;,
+      &quot;The total probability of all measurement outcomes is 1&quot;,
+      &quot;There must be exactly one qubit&quot;
+    ],
+    answer: 1,
+    explanation: &quot;The squared magnitudes of all amplitudes are probabilities, and their sum must be 1.&quot;
+  },
+  {
+    lesson: &quot;Lesson 7 — Quantum state formula&quot;,
+    question: &quot;What does Σ over x ∈ {0,1}ⁿ of αₓ|x⟩ mean?&quot;,
+    options: [
+      &quot;Add every basis state multiplied by its corresponding amplitude&quot;,
+      &quot;Multiply all the binary strings&quot;,
+      &quot;Measure all basis states at once&quot;
+    ],
+    answer: 0,
+    explanation: &quot;The quantum state is a sum of all computational basis states, each weighted by its amplitude.&quot;
+  },
+  {
+    lesson: &quot;Lesson 7 — Measurement&quot;,
+    question: &quot;Does one computational-basis measurement reveal every amplitude?&quot;,
+    options: [
+      &quot;Yes, all amplitudes are returned&quot;,
+      &quot;No, one measurement returns one outcome&quot;,
+      &quot;Yes, if there are two qubits&quot;
+    ],
+    answer: 1,
+    explanation: &quot;A measurement returns one outcome. Repeated experiments and additional methods are needed to learn about the state.&quot;
+  }
+];
+const quiz = document.getElementById(&quot;quiz&quot;);
+function renderQuiz() {
+  quiz.innerHTML = &quot;&quot;;
+  questions.forEach((q, index) =&gt; {
+    const card = document.createElement(&quot;section&quot;);
+    card.className = &quot;question&quot;;
+    card.id = &quot;question-&quot; + index;
+    const heading = document.createElement(&quot;p&quot;);
+    heading.className = &quot;muted&quot;;
+    heading.textContent = q.lesson;
+    const title = document.createElement(&quot;h3&quot;);
+    title.textContent = (index + 1) + &quot;. &quot; + q.question;
+    card.appendChild(heading);
+    card.appendChild(title);
+    q.options.forEach((option, optionIndex) =&gt; {
+      const label = document.createElement(&quot;label&quot;);
+      const radio = document.createElement(&quot;input&quot;);
+      radio.type = &quot;radio&quot;;
+      radio.name = &quot;q&quot; + index;
+      radio.value = optionIndex;
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(option));
+      card.appendChild(label);
+    });
+    const feedback = document.createElement(&quot;div&quot;);
+    feedback.className = &quot;feedback&quot;;
+    feedback.id = &quot;feedback-&quot; + index;
+    feedback.hidden = true;
+    card.appendChild(feedback);
+    quiz.appendChild(card);
+  });
+}
+function checkAnswers() {
+  let score = 0;
+  let unanswered = 0;
+  questions.forEach((q, index) =&gt; {
+    const selected = document.querySelector(
+      &#x27;input[name=&quot;q&#x27; + index + &#x27;&quot;]:checked&#x27;
+    );
+    const feedback = document.getElementById(&quot;feedback-&quot; + index);
+    feedback.hidden = false;
+    if (!selected) {
+      unanswered++;
+      feedback.className = &quot;feedback incorrect&quot;;
+      feedback.textContent = &quot;Not answered. &quot; + q.explanation;
+      return;
+    }
+    if (Number(selected.value) === q.answer) {
+      score++;
+      feedback.className = &quot;feedback correct&quot;;
+      feedback.textContent = &quot;Correct! &quot; + q.explanation;
+    } else {
+      feedback.className = &quot;feedback incorrect&quot;;
+      feedback.textContent =
+        &quot;Not quite. Correct answer: &quot; + q.options[q.answer] +
+        &quot;. &quot; + q.explanation;
+    }
+  });
+  const result = document.getElementById(&quot;result&quot;);
+  result.style.display = &quot;block&quot;;
+  result.innerHTML =
+    &quot;&lt;h2&gt;Your score: &quot; + score + &quot; / &quot; + questions.length + &quot;&lt;/h2&gt;&quot; +
+    &quot;&lt;p&gt;Unanswered questions: &quot; + unanswered + &quot;&lt;/p&gt;&quot; +
+    &quot;&lt;p&gt;&quot; +
+    (score &gt;= 18 ? &quot;Excellent work! You have a strong grasp of these concepts.&quot; :
+     score &gt;= 14 ? &quot;Good progress. Review the explanations for any mistakes.&quot; :
+     &quot;Keep practising. Revisit the relevant lessons and try again.&quot;) +
+    &quot;&lt;/p&gt;&quot;;
+  document.getElementById(&quot;checkButton&quot;).disabled = true;
+  window.scrollTo({ top: result.offsetTop, behavior: &quot;smooth&quot; });
+}
+function resetQuiz() {
+  document.getElementById(&quot;result&quot;).style.display = &quot;none&quot;;
+  document.getElementById(&quot;checkButton&quot;).disabled = false;
+  renderQuiz();
+  window.scrollTo({ top: 0, behavior: &quot;smooth&quot; });
+}
+renderQuiz();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;"></iframe>
+<script>
+marked.setOptions({ breaks: true, gfm: true });
+const md = "# Summation Basics for Quantum Computing\n\n## Beginner-friendly notes: Lessons 1\u20137\n\nThese notes explain summation notation from the ground up and then connect it to the quantum-state formula:\n$$\n|\\psi\\rangle = \\sum_{x\\in\\{0,1\\}^n}\\alpha_x|x\\rangle\n$$\nThe goal is to understand what each symbol means\u2014not just memorize the formula.\n\n---\n\n## Learning roadmap\n\n1. **Lesson 1:** What summation (\u03a3) means\n\n2. **Lesson 2:** Variables and indices\n\n3. **Lesson 3:** Powers and expressions inside a summation\n\n4. **Lesson 4:** Double summation\n\n5. **Lesson 5:** Complex numbers and summation\n\n6. **Lesson 6:** Binary strings and summation over them\n\n7. **Lesson 7:** Putting everything together: the quantum-state formula\n\n---\n\n# Lesson 1 \u2014 What does summation (\u03a3) mean?\n\n## 1.1 The basic idea\n\nSummation is a short way of writing \u201cadd these things together.\u201d\nFor example:\n\n$$\n2+3+4+5=14\n$$\nInstead of writing every number with a plus sign, mathematicians use the Greek capital letter Sigma:\n$$\n\\sum\n$$\nFor example:\n\n$$\n\\sum_{i=2}^{5}i\n$$\nThis means: start at $i=2$, increase $i$ by 1 until it reaches 5, and add each value of $i$.\nExpand it:\n\n$$\n\\sum_{i=2}^{5}i=2+3+4+5=14\n$$\n\n## 1.2 Reading the parts\n\nIn\n\n$$\n\\sum_{i=2}^{5}i\n$$\n\n- $\\sum$: add the terms.\n\n- $i$: the index (a counter).\n\n- $i=2$: the starting value.\n\n- $5$: the ending value.\n- The final $i$: the expression to calculate and add.\nThe upper limit is included. So the values are 2, 3, 4, and 5.\n\n## 1.3 Another example\n\n$$\n\\sum_{i=1}^{4}i=1+2+3+4=10\n$$\n**Key idea:** When you see \u03a3, expand it into ordinary addition first.\n\n---\n\n# Lesson 2 \u2014 Variables and indices\n\n## 2.1 What is a variable?\n\nA variable is a symbol that stands for a value.\nFor example, if $x=5$, then:\n$$\n2x+3=2(5)+3=13\n$$\nIf $x=10$, the expression has a different value:\n$$\n2(10)+3=23\n$$\n\n## 2.2 What is an index?\n\nIn a summation, the index is a counter that tells us which term we are currently calculating.\nFor example:\n\n$$\n\\sum_{i=1}^{4}i\n$$\nThe index $i$ takes these values:\n$$\n1,\\ 2,\\ 3,\\ 4\n$$\nIt is common to use letters such as $i$, $j$, $k$, or $x$ as indices.\n\n## 2.3 The index versus the expression\n\nConsider:\n\n$$\n\\sum_{i=1}^{4}3i\n$$\n\n- $i$ is the counter.\n\n- $3i$ is the expression we calculate for each value of the counter.\n| $i$ | Calculation | Term |\n|---:|---:|---:|\n| 1 | $3\\times1$ | 3 |\n| 2 | $3\\times2$ | 6 |\n| 3 | $3\\times3$ | 9 |\n| 4 | $3\\times4$ | 12 |\n\nTherefore:\n\n$$\n\\sum_{i=1}^{4}3i=3+6+9+12=30\n$$\n\n## 2.4 Can we use x instead of i?\n\nYes. The name of the index does not change the result:\n$$\n\\sum_{i=1}^{4}i=\\sum_{x=1}^{4}x=10\n$$\nThe index is often called a **dummy variable** because its name can be changed, provided the expression and limits are changed consistently.\n\n## 2.5 What if the expression does not use the index?\n\nConsider:\n\n$$\n\\sum_{i=1}^{4}5\n$$\nThe index still takes four values, but the term is always 5:\n$$\n5+5+5+5=20\n$$\n**Key idea:** The limits tell you how many terms to add. The expression tells you what each term is.\n\n---\n\n# Lesson 3 \u2014 Powers and expressions inside summation\n\n## 3.1 Multiplication is not the same as a power\n\nThese expressions mean different things:\n| Expression | Meaning | Example when $i=3$ |\n|---|---|---:|\n| $2i$ | $2\\times i$ | 6 |\n| $i^2$ | $i\\times i$ | 9 |\n| $i^3$ | $i\\times i\\times i$ | 27 |\n| $2i^2$ | $2\\times i\\times i$ | 18 |\nRemember: $2i$ is not the same as $i^2$.\n\n## 3.2 Summing squares\n\nConsider:\n\n$$\n\\sum_{i=1}^{4}i^2\n$$\nSubstitute each value of $i$, square it, and then add:\n$$\n\\begin{aligned}\n\\sum_{i=1}^{4}i^2\n&=1^2+2^2+3^2+4^2\\\\\n&=1+4+9+16\\\\\n&=30\n\\end{aligned}\n$$\n\n## 3.3 Summing cubes\n\n$$\n\\begin{aligned}\n\\sum_{i=1}^{3}i^3\n&=1^3+2^3+3^3\\\\\n&=1+8+27\\\\\n&=36\n\\end{aligned}\n$$\n\n## 3.4 More complicated expressions\n\nConsider:\n\n$$\n\\sum_{i=1}^{3}(2i^2+1)\n$$\nCalculate the entire expression for each value of $i$:\n- When $i=1$: $2(1)^2+1=3$\n- When $i=2$: $2(2)^2+1=9$\n- When $i=3$: $2(3)^2+1=19$\nThen add:\n$$\n3+9+19=31\n$$\n**Key idea:** Substitute the index into the whole expression, calculate each term, and then add the results.\n\n---\n\n# Lesson 4 \u2014 Double summation\n\n## 4.1 Why use two summations?\n\nSometimes we need to consider combinations of two changing values.\nSuppose:\n\n- $i$ can be 1 or 2.\n\n- $j$ can be 1 or 2.\nThe possible pairs are:\n$$\n(1,1),\\ (1,2),\\ (2,1),\\ (2,2)\n$$\nThere are $2\\times2=4$ combinations.\n\n## 4.2 Reading a double summation\n\nConsider:\n\n$$\n\\sum_{i=1}^{2}\\sum_{j=1}^{2}(i+j)\n$$\n- The outer summation changes $i$.\n- For each fixed value of $i$, the inner summation runs through all values of $j$.\n- Calculate $i+j$ for every pair.\n- Add all the results.\nFor $i=1$:\n$$\n(1+1)+(1+2)=2+3=5\n$$\nFor $i=2$:\n$$\n(2+1)+(2+2)=3+4=7\n$$\nTotal:\n$$\n5+7=12\n$$\nThe complete expansion is:\n$$\n\\begin{aligned}\n\\sum_{i=1}^{2}\\sum_{j=1}^{2}(i+j)\n&=(1+1)+(1+2)+(2+1)+(2+2)\\\\\n&=2+3+3+4\\\\\n&=12\n\\end{aligned}\n$$\n\n## 4.3 Double summation with multiplication\n\n$$\n\\sum_{i=1}^{2}\\sum_{j=1}^{3}ij\n$$\nList every pair:\n| $i$ | $j$ | $ij$ |\n|---:|---:|---:|\n| 1 | 1 | 1 |\n| 1 | 2 | 2 |\n| 1 | 3 | 3 |\n| 2 | 1 | 2 |\n| 2 | 2 | 4 |\n| 2 | 3 | 6 |\nAdd the terms:\n$$\n1+2+3+2+4+6=18\n$$\nThere are $2\\times3=6$ combinations.\n**Key idea:** The inner index completes its full range for every value of the outer index.\n\n---\n\n# Lesson 5 \u2014 Complex numbers and summation\n\nComplex numbers are important in quantum computing because quantum amplitudes can be complex.\n\n## 5.1 The imaginary unit\n\nThe imaginary unit is written as $i$ and is defined by:\n$$\ni=\\sqrt{-1}\n$$\nTherefore:\n\n$$\ni^2=-1\n$$\n**Important:** The letter $i$ can have two different jobs in mathematics:\n- In a summation such as $\\sum_{i=1}^{4}i$, it is an ordinary index variable.\n- In a complex number such as $3+2i$, it is the imaginary unit.\nThe meaning comes from the context.\n\n## 5.2 What is a complex number?\n\nA complex number has the form:\n\n$$\nz=a+bi\n$$\n\n- $a$ is the real part.\n\n- $b$ is the imaginary coefficient.\n\n- $i$ is the imaginary unit.\nFor example, in $3+2i$:\n- Real part = 3\n- Imaginary coefficient = 2\nExamples:\n| Number | Real part | Imaginary coefficient |\n|---|---:|---:|\n| $2+3i$ | 2 | 3 |\n| $5-4i$ | 5 | -4 |\n| $6$ | 6 | 0 |\n| $4i$ | 0 | 4 |\n\n## 5.3 Adding complex numbers\n\nAdd real parts together and imaginary parts together:\n$$\n\\begin{aligned}\n(2+3i)+(4+5i)\n&=(2+4)+(3i+5i)\\\\\n&=6+8i\n\\end{aligned}\n$$\nAnother example:\n$$\n(5+2i)+(3-4i)=8-2i\n$$\n\n## 5.4 Summing complex numbers\n\nConsider:\n\n$$\n\\sum_{k=1}^{3}(2+ki)\n$$\nSubstitute $k=1,2,3$:\n$$\n(2+i)+(2+2i)+(2+3i)\n$$\nGroup real and imaginary parts:\n$$\n(2+2+2)+(i+2i+3i)=6+6i\n$$\nThe summation process is unchanged. We still substitute, calculate, and add.\n\n## 5.5 Magnitude and magnitude squared\n\nFor a complex number $z=a+bi$, its magnitude is:\n$$\n\\lvert z\\rvert=\\sqrt{a^2+b^2}\n$$\nFor $z=3+4i$:\n$$\n\\lvert z\\rvert=\\sqrt{3^2+4^2}=5\n$$\nIts magnitude squared is:\n$$\n\\lvert z\\rvert^2=a^2+b^2=3^2+4^2=25\n$$\nIn quantum mechanics, the probability associated with an amplitude $\\alpha$ is:\n\n$$\nP=\\lvert\\alpha\\rvert^2\n$$\n\nThis is why magnitude squared is especially important.\n\n---\n\n# Lesson 6 \u2014 Binary strings and summation over them\n\nThis lesson connects summation to the basis states of qubits.\n\n## 6.1 What is a binary string?\n\nA binary string is a sequence made only of 0s and 1s.\nExamples:\n- `0` has length 1.\n- `10` has length 2.\n- `101` has length 3.\n- `1101` has length 4.\nIn quantum computing, binary strings label computational basis states:\n\n| Binary string | Basis state |\n|---|---|\n| 0 | $\\lvert 0\\rangle$ |\n| 1 | $\\lvert 1\\rangle$ |\n| 00 | $\\lvert 00\\rangle$ |\n| 01 | $\\lvert 01\\rangle$ |\n| 10 | $\\lvert 10\\rangle$ |\n| 11 | $\\lvert 11\\rangle$ |\n\n## 6.2 What does $\\{0,1\\}^n$ mean?\n\nIt means **the set of every possible binary string of length $n$**.\nFor $n=1$:\n$$\n\\{0,1\\}^1=\\{0,1\\}\n$$\nFor $n=2$:\n$$\n\\{0,1\\}^2=\\{00,01,10,11\\}\n$$\nFor $n=3$:\n$$\n\\{0,1\\}^3=\n\\{000,001,010,011,100,101,110,111\\}\n$$\nEvery extra bit doubles the number of strings:\n$$\n\\boxed{\\text{Number of strings}=2^n}\n$$\n**Correction to a common typo:** The number is $2^n$, not $2n$.\n\n## 6.3 What does the symbol $\\in$ mean?\n\nThe symbol $\\in$ means \u201cbelongs to\u201d or \u201cis an element of.\u201d\nFor example:\n\n$$\n01\\in\\{00,01,10,11\\}\n$$\nThis is true because `01` is one of the strings in that set.\nTherefore:\n\n$$\nx\\in\\{0,1\\}^n\n$$\nmeans that $x$ is one of the binary strings of length $n$.\n\n## 6.4 Summing over binary strings\n\nConsider:\n\n$$\n\\sum_{x\\in\\{0,1\\}^{2}}f(x)\n$$\nFor two bits, the possible strings are:\n$$\n00,\\ 01,\\ 10,\\ 11\n$$\nSo the summation expands to:\n$$\nf(00)+f(01)+f(10)+f(11)\n$$\nThis is just ordinary summation, except the index runs over binary strings rather than counting numbers.\n\n---\n\n# Lesson 7 \u2014 Decoding the complete quantum-state formula\n\nNow we can put everything together.\nThe formula is:\n$$\n\\boxed{\n|\\psi\\rangle =\n\\sum_{x\\in\\{0,1\\}^{n}}\\alpha_x|x\\rangle\n}\n$$\n\n## 7.1 Understand every symbol\n\n| Symbol | Beginner-friendly meaning |\n|---|---|\n| $\\lvert \\psi\\rangle$ | The complete quantum state |\n| $\\sum$ | Add all the terms |\n| $x$ | A binary string, such as 00 or 101 |\n| $\\in$ | Belongs to |\n| $\\{0,1\\}^n$ | All binary strings of length $n$ |\n| $\\alpha_x$ | The complex amplitude associated with string $x$ |\n| $\\lvert x\\rangle$ | The basis state labelled by binary string $x$ |\n\nRead the whole expression in plain English:\n> A quantum state is a sum of all possible computational basis states. Each basis state is multiplied by its own complex amplitude.\n\n## 7.2 Expand it for one qubit\n\nWhen $n=1$:\n$$\n\\{0,1\\}^1=\\{0,1\\}\n$$\nTherefore:\n\n$$\n|\\psi\\rangle=\\alpha_0|0\\rangle+\\alpha_1|1\\rangle\n$$\n\nThere are two basis states and two amplitudes.\n\n## 7.3 Expand it for two qubits\n\nWhen $n=2$:\n$$\n\\{0,1\\}^2=\\{00,01,10,11\\}\n$$\nTherefore:\n\n$$\n\\begin{aligned}\n|\\psi\\rangle={}&\n\\alpha_{00}|00\\rangle\\\\\n&+\\alpha_{01}|01\\rangle\\\\\n&+\\alpha_{10}|10\\rangle\\\\\n&+\\alpha_{11}|11\\rangle\n\\end{aligned}\n$$\nThere are four basis states and four amplitudes.\n\n## 7.4 Expand it for three qubits\n\nWhen $n=3$, there are $2^3=8$ binary strings:\n$$\n\\begin{aligned}\n|\\psi\\rangle={}&\n\\alpha_{000}|000\\rangle+\n\\alpha_{001}|001\\rangle\\\\\n&+\\alpha_{010}|010\\rangle+\n\\alpha_{011}|011\\rangle\\\\\n&+\\alpha_{100}|100\\rangle+\n\\alpha_{101}|101\\rangle\\\\\n&+\\alpha_{110}|110\\rangle+\n\\alpha_{111}|111\\rangle\n\\end{aligned}\n$$\nThere are eight basis states and eight amplitudes.\n\n## 7.5 What are amplitudes?\n\nAn amplitude is a number associated with a basis state. It can be real or complex.\nFor example, a two-qubit state might be:\n$$\n|\\psi\\rangle=\n\\frac12|00\\rangle+\n\\frac{i}{2}|01\\rangle+\n\\frac12|10\\rangle-\n\\frac{i}{2}|11\\rangle\n$$\nThe amplitudes are:\n| Basis state | Amplitude |\n|---|---|\n| $\\lvert 00\\rangle$ | $1/2$ |\n| $\\lvert 01\\rangle$ | $i/2$ |\n| $\\lvert 10\\rangle$ | $1/2$ |\n| $\\lvert 11\\rangle$ | $-i/2$ |\n\n## 7.6 The normalization condition\n\nA valid normalized pure quantum state must satisfy:\n$$\n\\boxed{\\sum_x|\\alpha_x|^2=1}\n$$\nIn plain English:\n> Calculate the squared magnitude of every amplitude and add those values. The total must be 1.\nFor the example above:\n$$\n\\begin{aligned}\n\\sum_x|\\alpha_x|^2\n&=\\left|\\frac12\\right|^2+\n\\left|\\frac{i}{2}\\right|^2+\n\\left|\\frac12\\right|^2+\n\\left|-\\frac{i}{2}\\right|^2\\\\\n&=\\frac14+\\frac14+\\frac14+\\frac14\\\\\n&=1\n\\end{aligned}\n$$\nThis is the total-probability rule.\n\n## 7.7 Why doesn't one measurement reveal all amplitudes?\n\nA quantum state may have many amplitudes in its mathematical description. But measuring the qubits in the computational basis produces one outcome per measurement.\nFor the equal-amplitude two-qubit state:\n$$\n|\\psi\\rangle=\n\\frac12|00\\rangle+\n\\frac12|01\\rangle+\n\\frac12|10\\rangle+\n\\frac12|11\\rangle\n$$\neach outcome has probability:\n$$\n\\left|\\frac12\\right|^2=\\frac14=25\\%\n$$\nOne measurement returns one of `00`, `01`, `10`, or `11`\u2014not all four amplitudes.\nTo estimate the probabilities, we repeat measurements on identically prepared states. To reconstruct the full quantum state, including phase information, more involved methods such as quantum state tomography are needed.\n\n---\n\n# Quick reference \u2014 Important formulas\n\n| Concept | Formula |\n|---|---|\n| Number of binary strings | $2^n$ |\n| Basic summation | $\\sum_{i=1}^{n}i$ |\n| Sum of squares | $\\sum_{i=1}^{n}i^2$ |\n| Complex number | $z=a+bi$ |\n| Imaginary unit | $i=\\sqrt{-1}$, $i^2=-1$ |\n| Magnitude squared | $\\lvert z\\rvert^2=a^2+b^2$ |\n| Quantum state | $\\lvert\\psi\\rangle=\\sum_x\\alpha_x\\lvert x\\rangle$ |\n| Normalization | $\\sum_x\\lvert\\alpha_x\\rvert^2=1$ |\n| Measurement probability | $P(x)=\\lvert\\alpha_x\\rvert^2$ |\n\n---";
+document.getElementById("notes").innerHTML = marked.parse(md);
+if (typeof renderMathInElement === "function") {
+  renderMathInElement(document.getElementById("notes"), {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+}
+</script>
+</body>
+</html>

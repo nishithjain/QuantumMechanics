@@ -1803,7 +1803,7 @@ Short answers to the questions raised during the lecture.
 | Can $z^{\infty} = 1$ be solved? | No. Infinity is not a number, so the question has no meaning. But $z^{100} = 1$ or $z^{1000} = 1$ are fine. |
 | Can angles be negative? | Yes. Positive is anticlockwise, negative is clockwise. Angles are measured from the positive real axis. |
 | Why does physics need complex numbers or probabilities? | No known deeper reason. It is how nature is observed to behave. |
-| Is the session recorded? | Yes; recordings will be shared after the course. |
+| Is the session recorded? | Yes; session replays will be shared after the course. |
 
 ---
 

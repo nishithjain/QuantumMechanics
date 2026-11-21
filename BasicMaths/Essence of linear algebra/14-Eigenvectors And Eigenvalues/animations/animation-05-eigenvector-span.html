@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eigenvectors: vectors that stay on their span</title>
+<style>
+:root{color-scheme:light;--ink:#172334;--muted:#5b6879;--line:#dce4ed;--green:#16865d;--blue:#2878cf;--orange:#e58b27;--purple:#8656c7}
+*{box-sizing:border-box}
+body{margin:0;padding:22px;background:#f3f6fa;color:var(--ink);font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+main{max-width:1050px;margin:auto}
+h1{font-size:clamp(1.4rem,3vw,2rem);margin:0 0 6px}
+.lead{color:var(--muted);line-height:1.55;margin:0 0 18px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:15px;align-items:start}
+.panel{background:white;border:1px solid var(--line);border-radius:15px;padding:15px;box-shadow:0 5px 18px #20334a0a}
+canvas{display:block;width:100%;max-height:420px;height:auto;background:#fbfdff;border:1px solid #e5ebf1;border-radius:10px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button{border:1px solid #cbd5e1;background:#fff;border-radius:9px;padding:9px 11px;color:var(--ink);font-weight:650;cursor:pointer}
+button.type-primary{background:#2878cf;color:#fff;border-color:#2878cf}
+button.active{background:#eaf3ff;border-color:#2878cf;color:#175ba6}
+button:focus-visible{outline:3px solid #9bcaff;outline-offset:2px}
+h2{font-size:1.05rem;margin:0 0 10px}
+.step{font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;font-weight:750;color:#68788d;margin-bottom:7px}
+.matrix{display:inline-grid;grid-template-columns:repeat(2,25px);gap:5px 14px;position:relative;padding:6px 13px;margin:4px 0 12px;font-weight:750}
+.matrix:before,.matrix:after{content:"";position:absolute;top:0;bottom:0;width:6px;border-top:2px solid #344256;border-bottom:2px solid #344256}
+.matrix:before{left:0;border-left:2px solid #344256}.matrix:after{right:0;border-right:2px solid #344256}
+.formula{background:#f2f6fb;border-radius:10px;padding:11px;line-height:1.7;margin:9px 0}
+.status{line-height:1.55;min-height:76px;margin:12px 0 5px}
+.legend{display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--muted);margin:8px 0}
+.dot{width:11px;height:11px;border-radius:50%;flex:none}
+.small{font-size:.86rem;color:var(--muted);line-height:1.5}
+.tag{display:inline-block;border-radius:20px;padding:4px 9px;font-size:.8rem;font-weight:750;background:#e8f5ef;color:#116744}
+.tag.no{background:#fef2f2;color:#b42318}
+@media(max-width:760px){body{padding:12px}.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>Eigenvectors: vectors that stay on their own line</h1>
+<p class="lead">Choose a vector and apply the same matrix transformation. The green line is the vector's span: the complete straight line through the origin and its tip. Does the transformed vector stay on that line?</p>
+<div class="layout">
+<section class="panel">
+<canvas id="plot" width="760" height="570" aria-label="Coordinate plane comparing a vector with its transformed vector"></canvas>
+<div class="controls" aria-label="Choose a vector">
+<button type="button" class="active" data-mode="general">General vector</button>
+<button type="button" data-mode="eig3">Eigenvector · λ = 3</button>
+<button type="button" data-mode="eig2">Eigenvector · λ = 2</button>
+<button type="button" data-mode="all">All three</button>
+</div>
+<div class="controls">
+<button type="button" id="btnAnimate" class="type-primary">▶ Animate transformation</button>
+<button type="button" id="reset">↺ Reset</button>
+</div>
+<p class="small">Light <strong>dashed</strong> grid = original plane. Solid grid = transformed plane. Blue = v · Orange = Av. Green = span of v (fixed). Dotted orange links v to the moving tip.</p>
+</section>
+<aside class="panel">
+<div class="step" id="step">Try a general vector</div>
+<h2>Our matrix</h2>
+<div style="display:flex;align-items:center;gap:8px"><b>A =</b><div class="matrix"><span>3</span><span>1</span><span>0</span><span>2</span></div></div>
+<div class="formula" id="calculation">
+<b>Choose a vector</b><br>For the general vector v = (1, 1):<br>
+Av = (3×1 + 1×1, 0×1 + 2×1)<br>
+Av = (4, 2)
+</div>
+<div id="result"><span class="tag no">Not an eigenvector</span></div>
+<div class="status" id="status">The original vector points along the line y = x. Its transformed vector points in a different direction, so it has left its original span.</div>
+<hr style="border:0;border-top:1px solid #e5ebf1;margin:14px 0">
+<div class="legend"><span class="dot" style="background:#2878cf"></span>Original vector v</div>
+<div class="legend"><span class="dot" style="background:#e58b27"></span>Transformed vector Av</div>
+<div class="legend"><span class="dot" style="background:#16865d"></span>Span of v</div>
+<p class="small"><b>Remember:</b> For an eigenvector, Av = λv. The eigenvalue λ tells us the scale: stretch if λ is bigger than 1, shrink if between 0 and 1, and flip direction if negative.</p>
+</aside>
+</div>
+</main>
+<script>
+(()=>{
+const canvas=document.getElementById('plot'),ctx=canvas.getContext('2d');
+const W=canvas.width,H=canvas.height,O={x:W*.47,y:H*.53},S=65;
+const modes={
+ general:{v:[1,1],name:'General vector',lambda:null,step:'A general vector',calc:'<b>Try v = (1, 1)</b><br>Av = (3×1 + 1×1, 0×1 + 2×1)<br>Av = (4, 2)',status:'The original vector points along y = x. Its transformed vector points in a different direction, so it has left its original span.',tag:'Not an eigenvector',eigen:false},
+ eig3:{v:[1,0],name:'Eigenvector · λ = 3',lambda:3,step:'Eigenvector for λ = 3',calc:'<b>Try v = (1, 0)</b><br>Av = (3×1 + 1×0, 0×1 + 2×0)<br>Av = (3, 0) = 3v',status:'The transformed vector stays on the x-axis, exactly the same span as the original vector. It becomes 3 times as long.',tag:'Yes — eigenvector',eigen:true},
+ eig2:{v:[-1,1],name:'Eigenvector · λ = 2',lambda:2,step:'Eigenvector for λ = 2',calc:'<b>Try v = (−1, 1)</b><br>Av = (3×−1 + 1×1, 0×−1 + 2×1)<br>Av = (−2, 2) = 2v',status:'The transformed vector stays on the same diagonal line. It becomes 2 times as long, without changing direction.',tag:'Yes — eigenvector',eigen:true},
+ all:{
+  multi:true,
+  vectors:[
+   {v:[1,1],label:'v₁',alabel:'Av₁',spanColor:'#16865d',vecColor:'#2878cf',avColor:'#e58b27',labelOff:[8,-9],eigen:false},
+   {v:[1,0],label:'v₂',alabel:'Av₂',spanColor:'#0d9488',vecColor:'#0369a1',avColor:'#ea580c',labelOff:[8,14],eigen:true},
+   {v:[-1,1],label:'v₃',alabel:'Av₃',spanColor:'#8656c7',vecColor:'#6d28d9',avColor:'#c2410c',labelOff:[-52,-9],eigen:true}
+  ],
+  step:'All three at once',
+  calc:'<b>v₁ = (1, 1)</b> → Av₁ = (4, 2)<br><b>v₂ = (1, 0)</b> → Av₂ = (3, 0) = 3v₂<br><b>v₃ = (−1, 1)</b> → Av₃ = (−2, 2) = 2v₃',
+  status:'v₂ and v₃ stay on their spans (teal = x-axis, purple = y = −x). v₁ leaves the green line y = x.',
+  tag:'v₁ not eigen · v₂, v₃ eigen',
+  eigen:'mixed'
+ }
+};
+let mode='general',t=1,raf=0,playing=false,last=0;
+const screen=([x,y])=>[O.x+S*x,O.y-S*y];
+const applyA=(x,y)=>[3*x+y,2*y];
+const lerpA=(x,y,k)=>[(1-k)*x+k*applyA(x,y)[0],(1-k)*y+k*applyA(x,y)[1]];
+function line(a,b,color,width=2,dash=[]){ctx.beginPath();ctx.setLineDash(dash);ctx.moveTo(...a);ctx.lineTo(...b);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();ctx.setLineDash([])}
+function segMa(pa,pb,color,width,dash){line(screen(pa),screen(pb),color,width,dash)}
+function drawGrid(k,style){
+ const{color='#e1e7ee',width=1,dash=[],axesColor='#8997a8',axesWidth=1.5}=style;
+ for(let n=-5;n<=5;n++){
+  segMa(lerpA(n,-4,k),lerpA(n,4,k),color,width,dash);
+  segMa(lerpA(-5,n,k),lerpA(5,n,k),color,width,dash);
+ }
+ segMa(lerpA(-5,0,k),lerpA(5,0,k),axesColor,axesWidth,dash);
+ segMa(lerpA(0,-4,k),lerpA(0,4,k),axesColor,axesWidth,dash);
+}
+function arrow(a,b,color,label,off=[8,-9],size=13){line(a,b,color,4);let ang=Math.atan2(b[1]-a[1],b[0]-a[0]),L=size;ctx.beginPath();ctx.moveTo(...b);ctx.lineTo(b[0]-L*Math.cos(ang-.48),b[1]-L*Math.sin(ang-.48));ctx.lineTo(b[0]-L*Math.cos(ang+.48),b[1]-L*Math.sin(ang+.48));ctx.closePath();ctx.fillStyle=color;ctx.fill();ctx.font='bold '+(size>12?17:15)+'px system-ui';ctx.fillText(label,b[0]+off[0],b[1]+off[1])}
+const maxSpan=5.2;
+function drawVectorPair(item){
+ const v=item.v,w=applyA(v[0],v[1]),end=lerpA(v[0],v[1],t);
+ const norm=Math.hypot(v[0],v[1])||1,unit=[v[0]/norm,v[1]/norm];
+ line(screen(unit.map(x=>-maxSpan*x)),screen(unit.map(x=>maxSpan*x)),item.spanColor,mode==='all'?2.5:3,[8,5]);
+ const o=screen([0,0]),tip=screen(end),start=screen(v);
+ arrow(o,start,item.vecColor,item.label,item.labelOff||[8,-9],mode==='all'?11:13);
+ line(start,screen(w),item.avColor,2,[5,5]);
+ const aLabel=t>.98?item.alabel:(mode==='all'?'':'moving tip');
+ arrow(o,tip,item.avColor,aLabel,item.labelOff||[8,-9],mode==='all'?11:13);
+ ctx.beginPath();ctx.arc(tip[0],tip[1],mode==='all'?4:5,0,Math.PI*2);ctx.fillStyle=item.avColor;ctx.fill();
+ return {v,w,tip};
+}
+function draw(){
+ ctx.clearRect(0,0,W,H);
+ if(t>0.02)drawGrid(0,{color:'#b8d4f0',width:1,dash:[5,6],axesColor:'#9eb8d4',axesWidth:1.2});
+ const onGrid=t<0.02;
+ drawGrid(t,{
+  color:onGrid?'#e1e7ee':'#94a8bf',
+  width:onGrid?1:1.15,
+  dash:[],
+  axesColor:onGrid?'#8997a8':'#5e7389',
+  axesWidth:onGrid?1.5:1.8
+ });
+ const d=modes[mode];
+ const multi=!!d.multi;
+ ctx.fillStyle='#16865d';ctx.font='bold 15px system-ui';
+ const topHint=multi
+  ?(t>0.02?'Dashed = original · Solid = transformed · colored lines = spans of v₁, v₂, v₃':'v₁, v₂, v₃ with their spans')
+  :(t>0.02?'Dashed = original · Solid = transformed · Green = span of v':'span of v');
+ ctx.fillText(topHint,20,28);
+ const drawn=multi?d.vectors.map(drawVectorPair):[drawVectorPair({v:d.v,label:'v',alabel:'Av',spanColor:'#16865d',vecColor:'#2878cf',avColor:'#e58b27',eigen:d.eigen})];
+ ctx.fillStyle='#344256';ctx.font='14px system-ui';ctx.fillText('origin (0, 0)',O.x+10,O.y+20);
+ ctx.fillStyle='#64748b';ctx.font='13px system-ui';
+ ctx.fillText(multi?'Green = span v₁ · Teal = x-axis (v₂) · Purple = y = −x (v₃)':'Green line = all multiples of v',20,H-20);
+ if(mode==='general'&&t>.98){
+  const b=screen(drawn[0].w);
+  ctx.fillStyle='#a34c20';ctx.font='bold 14px system-ui';ctx.fillText('Av is off the green line',Math.min(b[0]+10,W-210),Math.max(55,b[1]-14));
+ }
+ if(multi&&t>.98){
+  const b=screen(drawn[0].w);
+  ctx.fillStyle='#a34c20';ctx.font='bold 13px system-ui';ctx.fillText('Av₁ off span',Math.min(b[0]+8,W-120),Math.max(48,b[1]-8));
+ }
+}
+function update(){
+ const d=modes[mode];document.getElementById('step').textContent=d.step;
+ document.getElementById('calculation').innerHTML=d.calc;
+ document.getElementById('status').textContent=d.status;
+ const tag=document.getElementById('result');
+ if(d.eigen==='mixed')tag.innerHTML='<span class="tag no">v₁ not eigen</span> <span class="tag">v₂, v₃ eigen</span>';
+ else tag.innerHTML='<span class="tag'+(d.eigen?'':' no')+'">'+d.tag+'</span>';
+ draw();
+}
+document.querySelectorAll('[data-mode]').forEach(btn=>btn.addEventListener('click',()=>{
+ stop();mode=btn.dataset.mode;t=1;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b===btn));update();
+}));
+function stop(){playing=false;cancelAnimationFrame(raf);document.getElementById('btnAnimate').textContent='▶ Animate transformation'}
+function animate(ts){if(!playing)return;if(!last)last=ts;let dt=ts-last;last=ts;t=Math.min(1,t+dt/1800);draw();if(t>=1){stop();return}raf=requestAnimationFrame(animate)}
+document.getElementById('btnAnimate').addEventListener('click',()=>{stop();t=0;playing=true;last=0;document.getElementById('btnAnimate').textContent='Animating…';raf=requestAnimationFrame(animate)});
+document.getElementById('reset').addEventListener('click',()=>{stop();t=0;draw()});
+update();
+})();
+</script>
+</body>
+</html>

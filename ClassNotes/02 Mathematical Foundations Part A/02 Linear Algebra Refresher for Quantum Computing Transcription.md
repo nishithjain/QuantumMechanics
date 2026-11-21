@@ -289,7 +289,7 @@ Just notion of basis, orthogonality, orthonormal. That's all we have done today.
 
 So tomorrow the TA will be here and she will be. I may also join for a while actually. So initial part, I'll be there. Like you will be starting the initial session. I will be starting so that you know, I clear that. Right, so she would be here and I would be starting with some of the exercises and then she would. Sure, alright. We may join from different places or we may join together. I will let you. of this. And I think we will give you an updated list of like that list becauseₙot everything was covered. But I think, yeah, so we will still leave it. professor so assignments apart from what was previously shared there is some additional. No not additional but I need to cut them down right they were more than what. Yes.
 
-You can share the first file, were two files. So the first file I think is the learners, the learners have access to it. Yeah. Okay. Okay. So they can do whatever they can do. But the complex number part, everything was there, that's fine. Anything else professor that we want to cover right now? No, so I will leave then, right? Yeah. At some point you can tell me the feedback, right? Sure, 100%. You are recording already, right? Yeah. Okay. All right. Thank you. All right. Thank you, professor. Thank you, learners.
+You can share the first file, were two files. So the first file I think is the learners, the learners have access to it. Yeah. Okay. Okay. So they can do whatever they can do. But the complex number part, everything was there, that's fine. Anything else professor that we want to cover right now? No, so I will leave then, right? Yeah. At some point you can tell me the feedback, right? Sure, 100%. You are capturing this session already, right? Yeah. Okay. All right. Thank you. All right. Thank you, professor. Thank you, learners.
 
 ---
 
@@ -336,4 +336,4 @@ You can share the first file, were two files. So the first file I think is the l
 1. The lecture often says “dot product” when referring to the complex **inner product**; the mathematical expression above uses conjugation in the first argument, as on the slides.
 2. When the professor sketches a vector space using real arrows, the pictures illustrate intuition. A vector in ℂ² has four real coordinates and cannot be faithfully depicted as one ordinary 2D arrow.
 3. The slide deck's claim that quantum states are **unit vectors** should not be read as saying that every unit vector in every vector space is necessarily a quantum state: the relevant physical state space matters.
-4. Any wording in the automatically generated transcript that is still garbled should be checked against the original recording rather than treated as the professor's exact words.
+4. Any wording in the automatically generated transcript that is still garbled should be checked against the original lecture audio rather than treated as the professor's exact words.

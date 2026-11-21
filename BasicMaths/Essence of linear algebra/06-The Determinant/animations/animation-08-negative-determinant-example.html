@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Negative Determinant — Corrected Orientation Animation</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:#f3f6fb;color:#243047;font-family:Arial,Helvetica,sans-serif}
+.app{max-width:980px;margin:auto;background:#fff;padding:22px;border-radius:16px;box-shadow:0 5px 24px #1e32501a}
+h1{font-size:clamp(22px,4vw,30px);margin:0 0 8px}
+p{line-height:1.55}
+.muted{color:#59677d;margin-top:0}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0}
+button{border:0;border-radius:8px;padding:11px 15px;background:#315da8;color:white;font-weight:600;cursor:pointer}
+button.alt{background:#e8eef8;color:#29436d}
+button:focus-visible{outline:3px solid #f0b84b;outline-offset:2px}
+.visual{border:1px solid #dce4ef;border-radius:12px;overflow:hidden}
+svg{display:block;width:100%;height:auto;background:#fbfcff}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.metric{padding:12px;background:#f1f5fa;border-radius:9px}
+.metric small{display:block;color:#65738a;margin-bottom:5px}
+.metric strong{font-size:20px}
+.explain{padding:16px;background:#edf4ff;border-radius:10px;line-height:1.65;min-height:125px}
+.explain h2{font-size:19px;margin:0 0 7px}
+.math{font-size:18px;font-weight:700;text-align:center;padding:12px}
+.matrix-equation{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap}
+.matrix-name{white-space:nowrap}
+.matrix-bracket{position:relative;display:grid;grid-template-columns:repeat(2,minmax(22px,auto));gap:5px 18px;padding:5px 13px;font-weight:700;line-height:1.35}
+.matrix-bracket:before,.matrix-bracket:after{content:"";position:absolute;top:0;bottom:0;width:7px;border-top:2px solid #243047;border-bottom:2px solid #243047}
+.matrix-bracket:before{left:0;border-left:2px solid #243047}
+.matrix-bracket:after{right:0;border-right:2px solid #243047}
+.det-equation{white-space:normal}
+
+.legend{display:flex;gap:18px;flex-wrap:wrap;padding:10px 14px;color:#53627a;font-size:13px}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px}
+@media(max-width:600px){body{padding:9px}.app{padding:13px}.metrics{grid-template-columns:1fr}button{flex:1 1 42%}}
+</style>
+</head>
+<body>
+<main class="app">
+<h1>Negative Determinant: Area Grows, Orientation Flips</h1>
+<p class="muted">The columns of this matrix send the unit basis vectors to (1, 1) and (2, −1).</p>
+
+<div class="math">
+  <div class="matrix-equation">
+    <span class="matrix-name">A =</span>
+    <span class="matrix-bracket" aria-label="matrix">
+      <span>1</span><span>2</span>
+      <span>1</span><span>−1</span>
+    </span>
+    <span class="det-equation">det(A) = (1)(−1) − (2)(1) = −3</span>
+  </div>
+</div>
+
+<div class="controls">
+<button type="button" id="btnAnimate">▶ Show transformation</button>
+<button type="button" class="alt" id="btnOriginal">Original square</button>
+<button type="button" class="alt" id="btnFinal">Final parallelogram</button>
+<button type="button" class="alt" id="btnReset">↺ Reset</button>
+</div>
+
+<div class="visual">
+<svg viewBox="0 0 900 500" role="img" aria-label="A unit square transforms into a parallelogram with three times the area and reversed orientation">
+<defs>
+ <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+  <path d="M40 0H0V40" fill="none" stroke="#e8edf4" stroke-width="1"/>
+ </pattern>
+ <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#2867b2"/></marker>
+</defs>
+<rect width="900" height="500" fill="url(#grid)"/>
+<text x="110" y="38" font-size="19" font-weight="bold" fill="#34445e">Original unit square</text>
+<text x="505" y="38" font-size="19" font-weight="bold" fill="#34445e">Transformed shape</text>
+<g stroke="#8491a5" stroke-width="1.5"><path d="M50 390H850M150 455V55"/></g>
+
+<polygon points="150,390 250,390 250,290 150,290"
+ fill="#8db8f1" fill-opacity=".42" stroke="#2867b2" stroke-width="3"/>
+<path d="M150 390L250 390" stroke="#16834a" stroke-width="4"/>
+<path d="M150 390L150 290" stroke="#d97706" stroke-width="4"/>
+<text x="130" y="412" font-size="15" fill="#34445e">O</text>
+<text x="254" y="407" font-size="15" fill="#16834a">i = (1,0)</text>
+<text x="55" y="285" font-size="15" fill="#d97706">j = (0,1)</text>
+<text x="150" y="445" font-size="16" font-weight="bold" fill="#2867b2">Area = 1</text>
+<path d="M168 374L230 374L230 312" fill="none" stroke="#2867b2" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+<text x="175" y="304" font-size="14" fill="#2867b2">CCW</text>
+
+<polygon id="poly" points="520,390 620,390 620,290 520,290"
+ fill="#e7a34b" fill-opacity=".35" stroke="#c56a16" stroke-width="3"/>
+<line id="vec1" x1="520" y1="390" x2="620" y2="390" stroke="#16834a" stroke-width="4"/>
+<line id="vec2" x1="520" y1="390" x2="520" y2="290" stroke="#d97706" stroke-width="4"/>
+<text x="525" y="415" font-size="14" fill="#34445e">O</text>
+<text id="v1label" x="625" y="390" font-size="15" fill="#16834a">i' = (1,0)</text>
+<text id="v2label" x="525" y="278" font-size="15" fill="#d97706">j' = (0,1)</text>
+<text id="shapeLabel" x="505" y="455" font-size="16" font-weight="bold" fill="#a4510b">Area = 1</text>
+<text x="355" y="225" text-anchor="middle" font-size="15" fill="#68758b">Apply A</text>
+<path d="M315 245H405" stroke="#68758b" stroke-width="2" marker-end="url(#arrowBlue)"/>
+<text x="450" y="480" text-anchor="middle" font-size="13" fill="#68758b" id="progressLabel">Starting with the original square</text>
+</svg>
+<div class="legend">
+<span><i class="dot" style="background:#8db8f1"></i>Original square</span>
+<span><i class="dot" style="background:#e7a34b"></i>Shape being transformed</span>
+<span><i class="dot" style="background:#16834a"></i>First column: (1,1)</span>
+<span><i class="dot" style="background:#d97706"></i>Second column: (2,−1)</span>
+</div>
+</div>
+
+<div class="metrics">
+ <div class="metric"><small>Determinant</small><strong>−3</strong></div>
+ <div class="metric"><small>Area scale factor</small><strong>|−3| = 3</strong></div>
+ <div class="metric"><small>Final orientation</small><strong id="orientation">Counterclockwise</strong></div>
+</div>
+
+<section class="explain" aria-live="polite">
+<h2 id="heading">Start with the original square</h2>
+<p id="description">The square has area 1. Its corners are ordered counterclockwise. Press “Show transformation” to watch it change.</p>
+</section>
+<p class="muted" style="font-size:13px;margin-bottom:0">
+During the continuous animation, the shape briefly collapses to zero area before reappearing with the opposite orientation. This is how the orientation reversal can happen without the shape suddenly jumping or tearing.
+</p>
+</main>
+
+<script>
+const poly=document.getElementById('poly');
+const vec1=document.getElementById('vec1');
+const vec2=document.getElementById('vec2');
+const heading=document.getElementById('heading');
+const description=document.getElementById('description');
+const orientation=document.getElementById('orientation');
+const progressLabel=document.getElementById('progressLabel');
+const shapeLabel=document.getElementById('shapeLabel');
+let raf=null;
+let currentProgress=1;
+
+function render(t){
+  const apply=(x,y)=>[x+2*t*y, t*x+(1-2*t)*y];
+  const corners=[[0,0],[1,0],[1,1],[0,1]].map(([x,y])=>apply(x,y));
+  const screen=corners.map(([x,y])=>[520+100*x,390-100*y]);
+  poly.setAttribute('points',screen.map(p=>p.join(',')).join(' '));
+
+  vec1.setAttribute('x2',screen[1][0]);
+  vec1.setAttribute('y2',screen[1][1]);
+  vec2.setAttribute('x2',screen[3][0]);
+  vec2.setAttribute('y2',screen[3][1]);
+
+  document.getElementById('v1label').setAttribute('x',screen[1][0]+6);
+  document.getElementById('v1label').setAttribute('y',screen[1][1]-10);
+  document.getElementById('v2label').setAttribute('x',screen[3][0]+6);
+  document.getElementById('v2label').setAttribute('y',screen[3][1]-8);
+
+  const det=(1-2*t-2*t*t);
+  const area=Math.abs(det);
+  const signed=det>0.0001?'Counterclockwise':(det< -0.0001?'Clockwise':'Collapsed to a line');
+  orientation.textContent=t===0?'Counterclockwise':(t===1?'Clockwise':signed);
+  shapeLabel.textContent='Current area = '+area.toFixed(2);
+  progressLabel.textContent=t===0?'Original square':(t===1?'Transformation complete':'Transforming…');
+
+  if(t===0){
+    heading.textContent='Start with the original square';
+    description.textContent='The square has area 1. Its corners are ordered counterclockwise.';
+  }else if(Math.abs(det)<0.025){
+    heading.textContent='Momentarily, the shape collapses to a line';
+    description.textContent='At this intermediate moment the area is zero. The transformation passes through this collapsed state as it changes the orientation.';
+  }else if(t<1){
+    heading.textContent='Watch the shape transform';
+    description.textContent='The square is changing into a parallelogram. Its area and orientation change continuously; the orientation switches when the shape passes through zero area.';
+  }else{
+    heading.textContent='The orientation has flipped!';
+    description.textContent='The original corners went counterclockwise. The transformed corners go clockwise. The determinant is −3: its negative sign records the flip, and |−3| = 3 means the area is three times the original area.';
+  }
+}
+
+function stop(){if(raf!==null){cancelAnimationFrame(raf);raf=null;}}
+function goTo(target){
+  stop();
+  const startT=performance.now(), duration=1000;
+  const from=currentProgress;
+  function step(now){
+    const u=Math.min((now-startT)/duration,1);
+    const eased=1-Math.pow(1-u,3);
+    const t=from+(target-from)*eased;
+    currentProgress=t;
+    render(t);
+    if(u<1)raf=requestAnimationFrame(step);else raf=null;
+  }
+  raf=requestAnimationFrame(step);
+}
+function animateTo(){
+  stop();
+  currentProgress=0;
+  render(0);
+  const start=performance.now(),duration=2600;
+  function step(now){
+    const u=Math.min((now-start)/duration,1);
+    const eased=1-Math.pow(1-u,3);
+    currentProgress=eased;
+    render(eased);
+    if(u<1)raf=requestAnimationFrame(step);else raf=null;
+  }
+  raf=requestAnimationFrame(step);
+}
+function resetView(){stop();currentProgress=0;render(0);}
+
+document.getElementById('btnAnimate').addEventListener('click', animateTo);
+document.getElementById('btnOriginal').addEventListener('click', () => goTo(0));
+document.getElementById('btnFinal').addEventListener('click', () => goTo(1));
+document.getElementById('btnReset').addEventListener('click', resetView);
+
+render(1);
+</script>
+</body>
+</html>

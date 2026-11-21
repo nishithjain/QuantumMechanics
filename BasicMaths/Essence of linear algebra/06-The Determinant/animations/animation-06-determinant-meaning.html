@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What the Determinant Tells Us — Interactive Animation</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 22px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f3f6fb; color: #243047;
+  }
+  .app {
+    max-width: 980px; margin: auto; padding: 22px;
+    background: #fff; border-radius: 16px;
+    box-shadow: 0 5px 24px rgba(30,50,80,.10);
+  }
+  h1 { margin: 0 0 8px; font-size: clamp(22px, 4vw, 30px); }
+  .intro { margin: 0 0 18px; color: #526078; line-height: 1.55; }
+  .stagebar { display:flex; flex-wrap:wrap; gap:9px; margin: 14px 0; }
+  button {
+    border:0; border-radius:8px; padding:11px 15px;
+    background:#315da8; color:white; font-weight:600;
+    cursor:pointer; font-size:14px;
+  }
+  button.secondary { background:#e8eef8; color:#29436d; }
+  button:focus-visible { outline:3px solid #f0b84b; outline-offset:2px; }
+  .visual-wrap { border:1px solid #dce4ef; border-radius:12px; overflow:hidden; }
+  svg { display:block; width:100%; height:auto; background:#fbfcff; }
+  .info {
+    display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:10px; margin:14px 0;
+  }
+  .metric { background:#f1f5fa; border-radius:9px; padding:12px; }
+  .metric small { display:block; color:#65738a; margin-bottom:5px; }
+  .metric strong { font-size:19px; }
+  .explain {
+    background:#edf4ff; border-radius:10px; padding:16px;
+    line-height:1.65; min-height:112px;
+  }
+  .explain h2 { margin:0 0 6px; font-size:19px; }
+  .explain p { margin:5px 0; }
+  .note { color:#59677d; font-size:13px; margin-top:12px; line-height:1.5; }
+  @media(max-width:600px) {
+    body { padding:10px; } .app { padding:14px; }
+    .info { grid-template-columns:1fr; }
+    button { flex:1 1 42%; }
+  }
+</style>
+</head>
+<body>
+<main class="app">
+  <h1>What does the determinant tell us?</h1>
+  <p class="intro">
+    Watch the same unit square change under three linear transformations.
+    The determinant tells us the factor by which <b>area</b> changes.
+  </p>
+
+  <div class="stagebar" aria-label="Choose determinant example">
+    <button type="button" data-index="0">Determinant = 3</button>
+    <button type="button" data-index="1">Determinant = ½</button>
+    <button type="button" data-index="2">Determinant = 0</button>
+    <button type="button" class="secondary" id="btnPlayAll">▶ Play all</button>
+    <button type="button" class="secondary" id="btnReset">↺ Reset</button>
+  </div>
+
+  <div class="visual-wrap">
+    <svg id="scene" viewBox="0 0 900 470" role="img"
+         aria-label="An original unit square and its transformed shape">
+      <defs>
+        <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+          <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#e4eaf2" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect x="0" y="0" width="900" height="470" fill="url(#grid)"/>
+      <line x1="40" y1="365" x2="860" y2="365" stroke="#8794a8" stroke-width="2"/>
+      <line x1="130" y1="425" x2="130" y2="35" stroke="#8794a8" stroke-width="2"/>
+      <text x="45" y="35" font-size="16" fill="#53627a">Original shape</text>
+      <text x="490" y="35" font-size="16" fill="#53627a">After transformation</text>
+      <g id="original">
+        <rect x="130" y="215" width="100" height="100" fill="#8db8f1" fill-opacity=".35"
+              stroke="#2867b2" stroke-width="3"/>
+        <text x="130" y="340" font-size="15" fill="#2867b2">1 × 1 = 1 square unit</text>
+      </g>
+      <g id="transformed" transform="translate(520 315)">
+        <polygon id="shape" points="0,0 100,0 100,-100 0,-100"
+                 fill="#56b88b" fill-opacity=".32" stroke="#16834a" stroke-width="3"/>
+        <line id="height" x1="100" y1="0" x2="100" y2="-100"
+              stroke="#16834a" stroke-width="2" stroke-dasharray="5 5"/>
+      </g>
+      <text x="520" y="340" font-size="15" fill="#16834a" id="shapeLabel">Transformed area</text>
+      <text x="520" y="390" font-size="14" fill="#53627a" id="matrixLabel">A = [[3, 0], [0, 1]]</text>
+    </svg>
+  </div>
+
+  <div class="info">
+    <div class="metric"><small>Determinant</small><strong id="detValue">3</strong></div>
+    <div class="metric"><small>Area before</small><strong>1 square unit</strong></div>
+    <div class="metric"><small>Area after</small><strong id="areaValue">3 square units</strong></div>
+  </div>
+
+  <section class="explain" aria-live="polite">
+    <h2 id="heading">1. Determinant = 3 — area becomes three times larger</h2>
+    <p id="description">
+      The square stretches horizontally by a factor of 3. Its height stays 1,
+      so the new area is 3 × 1 = 3.
+    </p>
+  </section>
+  <p class="note">
+    The pictures use simple example matrices: diag(3,1), diag(½,1), and diag(1,0).
+    They illustrate the area effect; many different matrices can have the same determinant.
+  </p>
+</main>
+
+<script>
+const examples = [
+  {
+    det: "3", area: "3 square units", x: 300, y: 100,
+    matrix: "A = [[3, 0], [0, 1]]",
+    title: "1. Determinant = 3 — area becomes three times larger",
+    desc: "The square stretches horizontally by a factor of 3. Its height stays 1, so the new area is 3 × 1 = 3. Every region's area is multiplied by 3."
+  },
+  {
+    det: "½", area: "½ square unit", x: 50, y: 100,
+    matrix: "A = [[½, 0], [0, 1]]",
+    title: "2. Determinant = ½ — area becomes half as large",
+    desc: "The square is compressed horizontally to half its original width. Its height stays 1, so the new area is ½ × 1 = ½. Every region's area is multiplied by one-half."
+  },
+  {
+    det: "0", area: "0 square units", x: 100, y: 0,
+    matrix: "A = [[1, 0], [0, 0]]",
+    title: "3. Determinant = 0 — the square collapses to a line",
+    desc: "The vertical dimension is squashed to zero. The square becomes a line segment, which has no two-dimensional area. The whole plane is collapsed onto the x-axis."
+  }
+];
+
+let current = 0;
+let animation = null;
+let playAllTimer = null;
+
+function render(progress = 1) {
+  const e = examples[current];
+  const width = 100 + (e.x - 100) * progress;
+  const height = 100 + (e.y - 100) * progress;
+  const yTop = -height;
+  const points = `0,0 ${width},0 ${width},${yTop} 0,${yTop}`;
+  document.getElementById("shape").setAttribute("points", points);
+  const h = document.getElementById("height");
+  h.setAttribute("x1", width); h.setAttribute("x2", width);
+  h.setAttribute("y1", "0"); h.setAttribute("y2", yTop);
+  h.style.opacity = current === 2 ? "0" : "1";
+
+  document.getElementById("detValue").textContent = e.det;
+  document.getElementById("areaValue").textContent =
+    progress < 1 ? "Transforming…" : e.area;
+  document.getElementById("heading").textContent = e.title;
+  document.getElementById("description").textContent = e.desc;
+  document.getElementById("matrixLabel").textContent = e.matrix;
+  document.getElementById("shapeLabel").textContent =
+    current === 2 ? "A line has zero 2D area" : "Transformed shape";
+  document.getElementById("shape").setAttribute("fill",
+    current === 2 ? "#d97706" : "#56b88b");
+  document.getElementById("shape").setAttribute("stroke",
+    current === 2 ? "#d97706" : "#16834a");
+}
+
+function stopTransform() {
+  if (animation !== null) {
+    cancelAnimationFrame(animation);
+    animation = null;
+  }
+}
+
+function stopPlayAll() {
+  if (playAllTimer !== null) {
+    clearTimeout(playAllTimer);
+    playAllTimer = null;
+  }
+}
+
+function stopAll() {
+  stopTransform();
+  stopPlayAll();
+}
+
+function choose(index) {
+  stopTransform();
+  current = index;
+  render(0);
+  const start = performance.now();
+  const duration = 900;
+  function frame(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    render(eased);
+    if (t < 1) animation = requestAnimationFrame(frame);
+    else animation = null;
+  }
+  animation = requestAnimationFrame(frame);
+}
+
+function playAllExamples() {
+  stopAll();
+  let index = 0;
+  const step = () => {
+    choose(index);
+    if (index < examples.length - 1) {
+      index++;
+      playAllTimer = setTimeout(step, 1700);
+    }
+  };
+  step();
+}
+
+function resetView() {
+  stopAll();
+  current = 0;
+  render(1);
+}
+
+document.querySelectorAll("[data-index]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    stopPlayAll();
+    choose(Number(btn.dataset.index));
+  });
+});
+document.getElementById("btnPlayAll").addEventListener("click", playAllExamples);
+document.getElementById("btnReset").addEventListener("click", resetView);
+
+render(1);
+</script>
+</body>
+</html>

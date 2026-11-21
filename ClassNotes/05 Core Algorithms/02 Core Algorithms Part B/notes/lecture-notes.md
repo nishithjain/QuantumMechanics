@@ -1,7 +1,7 @@
 # Core Algorithms — Part B
 ## Complete beginner-friendly notes, following the lecture in order
 
-> **Source:** `02 Core Algorithms Part B.txt` (the class after the break in Part A). **How to read these notes:** The main explanations track the professor's sequence, including repeated ideas and the end-of-class questions. Paragraphs labeled **Extra explanation** add scaffolding for a beginner. Notes labeled **Transcript clarification / correction** identify a mathematical or transcription issue without attributing the correction to the professor. The lecture *starts* by returning to Deutsch–Jozsa and *ends* with the beginning—not the full later theory—of Simon's algorithm and some linear algebra questions.
+> **Source:** `02 Core Algorithms Part B.txt` (the class after the break in Part A). **How to read these notes:** The main explanations follow the lecture in order, including repeated ideas and the end-of-class questions. Paragraphs labeled **Extra explanation** add scaffolding for a beginner. Notes labeled **Transcript clarification / correction** identify a mathematical or transcription issue surfaced in the transcript. The lecture *starts* by returning to Deutsch–Jozsa and *ends* with the beginning—not the full later theory—of Simon's algorithm and some linear algebra questions.
 
 **Before starting:** If `|ψ⟩`, `⊕`, or `H` look unfamiliar, see the [tiny notation refresher](#a-tiny-notation-refresher). You can read the notes normally, then return to it as needed.
 
@@ -61,7 +61,7 @@ Therefore, after the oracle and Hadamard, measuring `0` means the two function v
 
 ## 2. Generalizing Deutsch: the Deutsch–Jozsa promise
 
-The professor now increases the input length from one bit to **n bits**:
+The lecture now increases the input length from one bit to **n bits**:
 
 \[
 f:\{0,1\}^n\longrightarrow\{0,1\}.
@@ -109,7 +109,7 @@ For `n=1`, the formula gives `2`: exactly Deutsch's original classical cost.
 
 ### 2.2 The lecturer's practical alternative: randomized classical checking
 
-The professor makes an important distinction: **having a mathematical guarantee of zero error** is not the same as **getting the correct answer with overwhelmingly high probability**.
+The lecture makes an important distinction: **having a mathematical guarantee of zero error** is not the same as **getting the correct answer with overwhelmingly high probability**.
 
 A classical computer can use randomness:
 
@@ -160,7 +160,7 @@ At this point the lecturer previews **Bernstein–Vazirani** and **Simon**, sayi
 
 ## 3. The Deutsch–Jozsa quantum circuit: exactly the same pattern
 
-The professor now returns to the same circuit pattern seen in Deutsch's algorithm, except the top register has **n qubits** rather than one.
+The lecture now returns to the same circuit pattern seen in Deutsch's algorithm, except the top register has **n qubits** rather than one.
 
 ![Deutsch–Jozsa circuit, with separate data and helper registers](../images/concept-02.png)
 
@@ -272,7 +272,7 @@ Therefore:
 
 ### Step 5 — What if `f` is balanced? This is the important calculation
 
-This is the portion the professor slows down to explain. We need to show that **the all-zero result cannot happen** for a balanced function.
+This is the portion the lecture slows down to explain. We need to show that **the all-zero result cannot happen** for a balanced function.
 
 The Hadamard identity from Part A says
 
@@ -303,7 +303,7 @@ H^{\otimes n}|\phi_f\rangle
 
 **What happened to the constants?** Each Hadamard contributes `1/√(2^n)`, so multiplying two factors gives `1/2^n`. **What are the two sums?** The outer operation originally includes every input `x`, and each Hadamard creates contributions to every possible output `z`.
 
-We don't need to calculate every output. Instead, the professor asks about just **one particular result**:
+We don't need to calculate every output. Instead, the notes focus on just **one particular result**:
 
 \[
 z=0^n=00\ldots0.
@@ -344,7 +344,7 @@ Notice the powerful feature: we did **not** need to know which other output `z` 
 
 [Run the Deutsch–Jozsa circuit in your browser](../animations/animation-02.html): choose constant or balanced functions, then step through the uniform amplitudes, oracle signs, interference, and final measurement.
 
-## 4. Working through the professor's two-bit balanced example
+## 4. Working through the two-bit balanced example
 
 To make the abstract sums visible, the lecturer uses two qubits and a particular balanced function. Let
 
@@ -400,7 +400,7 @@ That is **more specific** than the general theorem. The theorem only promises a 
 
 ### 4.2 A general statement about “adding amplitudes”
 
-The professor rewrites the idea using arbitrary coefficients. Suppose an n-qubit state is
+The argument is rewritten using arbitrary coefficients. Suppose an n-qubit state is
 
 \[
 |\psi\rangle=\sum_x \alpha_x|x\rangle.
@@ -430,7 +430,7 @@ This is a surprisingly reusable trick: **Hadamard converts a global sum of input
 
 ## 5. Next problem: Bernstein–Vazirani — find a hidden bit string
 
-After finishing Deutsch–Jozsa, the professor introduces a closely related problem, usually called the **Bernstein–Vazirani algorithm**.
+After finishing Deutsch–Jozsa, the lecture introduces a closely related problem, usually called the **Bernstein–Vazirani algorithm**.
 
 Again, a black-box function accepts `n` input bits and returns **one** output bit:
 
@@ -482,7 +482,7 @@ The output is not telling you the secret directly—it tells you **whether the s
 
 If `s` contains at least one `1`, then exactly half of the input strings have selected-bit parity `0`, and half have selected-bit parity `1`. This is the parity fact established in Part A. So `f(x)=s·x` is **balanced when `s≠0^n`**.
 
-If `s=0^n`, no bit is selected and `f(x)=0` for every input: a **constant** function. The professor mentions this exception while describing why the new problem is closely connected to Deutsch–Jozsa.
+If `s=0^n`, no bit is selected and `f(x)=0` for every input: a **constant** function. The lecture mentions this exception while describing why the new problem is closely connected to Deutsch–Jozsa.
 
 But the task has changed! Even if we already know `f` is balanced, we still don't know *which input positions* are being checked. That is what we must discover.
 
@@ -520,7 +520,7 @@ For `s=101`, the three questions are:
 
 This is also an optimal worst-case query bound for a classical exact black-box algorithm: there are `2^n` possible secrets, and each ordinary query gives only one bit of output. Fewer than `n` binary answers cannot distinguish all `2^n` secrets.
 
-> **Important distinction:** The professor is comparing the **number of oracle queries**, not claiming a quantum circuit uses only one physical gate. We still need Hadamards and other operations.
+> **Important distinction:** The comparison here is the **number of oracle queries**, not a claim that a quantum circuit uses only one physical gate. We still need Hadamards and other operations.
 
 ## 6. Bernstein–Vazirani with one quantum oracle call
 
@@ -602,7 +602,7 @@ Finally measure the three data qubits: the outcome is `101` with certainty in th
 
 ### 6.2 A question from class: why is it **one query** if there are n qubits?
 
-The professor explicitly clarifies that the entire superposition enters the **single** oracle block in the circuit. A superposition is a *single quantum state*, not `2^n` independent classical oracle calls.
+The lecture explicitly clarifies that the entire superposition enters the **single** oracle block in the circuit. A superposition is a *single quantum state*, not `2^n` independent classical oracle calls.
 
 At the same time, it is misleading to say the quantum computer “reads every computation in parallel”: **measurement returns one result**, and measuring prematurely destroys the interference that encodes the secret. Quantum advantage here comes from the whole transformation, not separately accessing all branches.
 
@@ -610,7 +610,7 @@ Gate count and query count are not the same thing. The algorithm has `2n` data-r
 
 ### 6.3 The lecturer's deeper question: where do the other outputs go?
 
-Rather than merely invoke `H²=I`, the professor asks us to see **how the amplitudes cancel**. Let the amplitude of output `|z⟩` after the final Hadamard be `a_z`.
+Rather than merely invoke `H²=I`, the lecture asks us to see **how the amplitudes cancel**. Let the amplitude of output `|z⟩` after the final Hadamard be `a_z`.
 
 Using the Hadamard identity twice,
 
@@ -648,7 +648,7 @@ Therefore
 
 Every **incorrect** output cancels; only `|s⟩` survives. This is why quantum **interference** is the correct mental model—not magically retrieving `n` separate classical answers.
 
-### 6.4 The professor changes the function slightly: adding a hidden constant `b`
+### 6.4 A variant of the function: adding a hidden constant `b`
 
 Next, the lecturer considers a uniform bit flip of all the function answers:
 
@@ -690,7 +690,7 @@ For `b=0` we have `|s⟩`; for `b=1` we have `−|s⟩`. Either way the measurem
 
 ### 6.5 What if we measure too early?
 
-The professor asks what happens if we measure the data register *after phase kickback but before the last Hadamard*. We have the state
+The lecture asks what happens if we measure the data register *after phase kickback but before the last Hadamard*. We have the state
 
 \[
 \frac1{\sqrt{2^n}}\sum_x(-1)^{s\cdot x}|x\rangle.
@@ -705,7 +705,7 @@ For each basis state `x`, its amplitude is plus or minus the same magnitude:
 
 So measuring at this stage produces a **uniformly random n-bit string**, independent of `s`! We don't even learn the parity signs, because measurement in the computational basis ignores a coefficient's sign.
 
-**Transcript clarification:** The professor briefly describes prematurely measuring “plus one or minus one.” The meaningful measurement here is **a bit string `x`**, not a directly observable positive or negative amplitude. The signs are only made useful by the final interference step.
+**Transcript clarification:** The transcript briefly describes prematurely measuring “plus one or minus one.” The meaningful measurement here is **a bit string `x`**, not a directly observable positive or negative amplitude. The signs are only made useful by the final interference step.
 
 ### Check your understanding — Bernstein–Vazirani
 
@@ -794,7 +794,7 @@ There are `2^n` total inputs, but only `2^(n−1)` different output values actua
 
 **Transcript clarification:** One early spoken pairing in the three-bit example is garbled: for `s=110`, the partner of `001` is **`111`**, not `110` or `101`. The XOR calculations above supply the unambiguous pairing.
 
-### 7.3 The professor's larger five-bit example
+### 7.3 Larger five-bit example
 
 Suppose the hidden string is
 
@@ -875,7 +875,7 @@ Thus **one collision reveals the entire secret**:
 
 For example, `x=010` and `y=100` give `010⊕100=110`, so the secret is `110`.
 
-The difficulty is **finding a collision in the first place**. The professor compares it with the famous *birthday paradox*: finding two people with the same birthday may take many samples, even though some matches are guaranteed in a sufficiently large group. Here the oracle outputs are paired in a hidden way.
+The difficulty is **finding a collision in the first place**. The lecture compares it with the famous *birthday paradox*: finding two people with the same birthday may take many samples, even though some matches are guaranteed in a sufficiently large group. Here the oracle outputs are paired in a hidden way.
 
 ### 8.1 How many classical queries are needed?
 
@@ -895,7 +895,7 @@ up to constant factors, for fixed success probability. This is **exponential in 
 
 This intuition is not the full lower-bound proof, but it explains why the square root appears. Unlike Deutsch–Jozsa, even a **randomized** classical approach requires exponentially many black-box queries to solve Simon's promise problem with substantial success probability.
 
-> **Transcript correction:** The recording has an unclear phrase resembling “`2^n` queries.” The standard classical randomized query complexity of Simon's problem is exponential but scales as **`2^(n/2)`** (up to asymptotic factors), rather than `2^n`. The professor's numerical example for `n=100`—approximately `10^15`—is consistent with `2^50≈1.13×10^15`, i.e. `2^(n/2)`.
+> **Transcript correction:** The transcript has an unclear phrase resembling “`2^n` queries.” The standard classical randomized query complexity of Simon's problem is exponential but scales as **`2^(n/2)`** (up to asymptotic factors), rather than `2^n`. The numerical example for `n=100`—approximately `10^15`—is consistent with `2^50≈1.13×10^15`, i.e. `2^(n/2)`.
 
 For `n=100`, the contrast is therefore roughly **a quadrillion** random classical oracle calls at birthday scale, versus **on the order of a hundred** quantum oracle calls (plus polynomial-time processing). This is a statement about an *ideal black-box problem*; it is not automatically a benchmark of real hardware speed.
 
@@ -908,7 +908,7 @@ This is a new strategy compared with Bernstein–Vazirani:
 - Bernstein–Vazirani: a **single query** gives enough phase structure to recover all of `s`.
 - Simon: each run usually gives **one useful linear equation** about `s`; repeat the circuit roughly `O(n)` times and solve a system of equations.
 
-The professor says this session will stop at how those equations arise. Their efficient solution and the Fourier perspective are discussed more deeply later.
+This session stops once those equations are set up. Their efficient solution and the Fourier perspective are discussed more deeply later.
 
 ---
 
@@ -939,7 +939,7 @@ This is like a blank notebook: the input stays intact and the helper register re
 
 ## 10. Preparing a superposition of input–output pairs
 
-The professor next shows exactly how to prepare the state he needs. Start with `2n` qubits:
+The lecture next shows exactly how to prepare the required state. Start with `2n` qubits:
 
 \[
 |0^n\rangle|0^n\rangle.
@@ -1013,7 +1013,7 @@ for some `x` whose output was measured.
 
 This is the fundamental bridge to the next step. We no longer have a list of all inputs, but a coherent quantum **superposition of the two matching partners**.
 
-### 11.1 A question the professor explicitly asks: why not measure the first register now?
+### 11.1 An explicit question from the lecture: why not measure the first register now?
 
 If we measured the first n qubits **at this moment**, we would get either `x` or `x⊕s`, each with probability `1/2`. We would not be given both outcomes simultaneously, so we could not immediately XOR them to obtain `s`.
 
@@ -1191,7 +1191,7 @@ The terms `|01⟩` and `|11⟩` cancel. The surviving `z` strings are `00` and `
 
 ## 13. Repeat the circuit, collect equations, and solve
 
-The professor now assembles the overall algorithm conceptually:
+The lecture now assembles the overall algorithm conceptually:
 
 1. Start with **two n-qubit registers**, all zero.
 2. Apply Hadamard to the first register to create a superposition of all `x`.
@@ -1249,7 +1249,7 @@ The resulting contrast is exponential versus linear **query complexity**:
 \text{quantum: }O(n).
 \]
 
-**This is the point where the lecturer stops developing Simon's algorithm.** The fuller solution method, Fourier-sampling interpretation, and deeper connections with group symmetries are announced for the subsequent lecture. We have followed the algorithm only as far as this recording teaches it.
+**This is the point where the lecturer stops developing Simon's algorithm.** The fuller solution method, Fourier-sampling interpretation, and deeper connections with group symmetries are announced for the subsequent lecture. We have followed the algorithm only as far as this session covers it.
 
 ### Key takeaways — Simon's algorithm
 
@@ -1271,7 +1271,7 @@ The resulting contrast is exponential versus linear **query complexity**:
 
 ## 14. After the main lecture: questions about linear algebra matrices
 
-The recording then switches from Simon's algorithm to short audience questions about earlier exercises. We preserve these here because they occur **after** the algorithm discussion rather than relocating them to the beginning.
+The lecture then switches from Simon's algorithm to short audience questions about earlier exercises. We preserve these here because they occur **after** the algorithm discussion rather than relocating them to the beginning.
 
 ### 14.1 Rotating a vector by 90° counterclockwise
 
@@ -1297,11 +1297,11 @@ R_{90^\circ}\begin{pmatrix}2\\1\end{pmatrix}
 =\begin{pmatrix}-1\\2\end{pmatrix}.
 \]
 
-This is an **extra worked explanation** of the question the professor alludes to; the recording does not develop it completely.
+This is an **extra worked explanation** of the question the lecture alludes to; the lecture does not develop it completely.
 
 ### 14.2 Orthogonal projection onto the line `y=x`
 
-Now the professor addresses an assignment question: **If a point is projected perpendicularly onto the line `y=x`, where does it land?**
+The lecture next addresses an assignment question: **If a point is projected perpendicularly onto the line `y=x`, where does it land?**
 
 Think of shining a light straight toward the diagonal line: every point casts a shadow onto that line along a perpendicular direction. The projected point must lie on the diagonal.
 
@@ -1351,7 +1351,7 @@ P\begin{pmatrix}1\\-1\end{pmatrix}=\begin{pmatrix}0\\0\end{pmatrix}.
 
 [Try the interactive orthogonal projection](../animations/animation-06.html). Drag an input point or change its coordinates and watch the perpendicular shadow fall onto the diagonal.
 
-> **Important transcript error:** The professor seems to give `(1/√2,1/√2)` for the projection of `(1,0)`. That is the *unit vector pointing along the diagonal*, **not** the orthogonal projection of `(1,0)`. The projection is `(1/2,1/2)`. The distinction is between a **unit direction** and the **correct length along that direction**.
+> **Important transcript error:** The transcript seems to give `(1/√2,1/√2)` for the projection of `(1,0)`. That is the *unit vector pointing along the diagonal*, **not** the orthogonal projection of `(1,0)`. The projection is `(1/2,1/2)`. The distinction is between a **unit direction** and the **correct length along that direction**.
 
 ### 14.3 The Z gate in the `|+⟩,|−⟩` basis
 
@@ -1420,13 +1420,13 @@ Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
 
 The student seems to be asking about the graphical circuit tool **Quirk** and its `X^(1/2)` label. **Extra clarification:** `X^(1/2)` is normally the *square-root-of-X* gate, **not** the ordinary X gate. Applying it **twice** gives X, up to any global-phase convention used by a particular tool. A label with a superscript `1/2` should therefore not be silently treated as just `X`.
 
-The professor ends by encouraging hands-on circuit exercises, including Qiskit, because writing and running gates makes the mathematics more concrete. He also previews the next lecture's **Fourier transform/Fourier sampling** viewpoint and says students may ask questions when the notation becomes difficult.
+The session ends by encouraging hands-on circuit exercises, including Qiskit, because writing and running gates makes the mathematics more concrete. It also previews the next lecture's **Fourier transform/Fourier sampling** viewpoint and notes that questions are welcome when the notation becomes difficult.
 
 ---
 
 ## 15. Lecture-end review and self-test
 
-This section comes **after** the professor's final questions so that it does not interrupt the original sequence.
+This section comes **after** the lecture's final questions so that it does not interrupt the original sequence.
 
 ### Summary comparison, now that all three problems have been introduced
 

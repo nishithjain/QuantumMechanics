@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Approximating a Shape with Small Squares</title>
+<style>
+:root{font-family:system-ui,Segoe UI,Arial,sans-serif;color:#203047;background:#f3f6fb}
+*{box-sizing:border-box}body{margin:0;padding:24px}.wrap{max-width:920px;margin:auto;background:white;border-radius:16px;padding:22px;box-shadow:0 8px 28px #1b355014}
+h1{font-size:clamp(22px,4vw,30px);margin:0 0 8px}p{line-height:1.55}.sub{color:#53647b;margin-top:0}
+.stage{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.stage button,.btn-auto{border:0;border-radius:9px;padding:10px 14px;background:#315fa8;color:white;font-weight:600;cursor:pointer}.stage button[aria-pressed=true]{background:#17365f;outline:3px solid #c8d9f4}.btn-auto{background:#16804d}.stage button:focus-visible,.btn-auto:focus-visible{outline:3px solid #f0bd54;outline-offset:2px}
+.panel{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:16px;align-items:center}svg{width:100%;height:auto;background:#fbfcff;border:1px solid #e0e6ef;border-radius:12px}.legend{font-size:14px;line-height:1.8}.key{display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:7px;vertical-align:-2px}.inside{background:#58b88a}.edge{background:#f2c46c}.outside{background:#fff;border:1px solid #aeb9c8}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}.stat{background:#f1f5fa;padding:12px;border-radius:10px}.stat b{display:block;font-size:12px;color:#63738a;margin-bottom:4px}.stat span{font-size:19px;font-weight:700}.explain{background:#edf4ff;border-radius:10px;padding:14px 16px;margin-top:14px}.explain h2{font-size:18px;margin:0 0 5px}.explain p{margin:0}.foot{font-size:13px;color:#66758a;margin-top:12px}
+@media(max-width:650px){body{padding:10px}.wrap{padding:14px}.panel{grid-template-columns:1fr}.legend{display:flex;gap:14px;flex-wrap:wrap}.stats{grid-template-columns:1fr 1fr 1fr}.stat span{font-size:16px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<h1>How can small squares approximate any shape?</h1>
+<p class="sub">Watch an irregular region being covered by a finer and finer grid.</p>
+<div class="stage" aria-label="Choose animation stage">
+<button type="button" data-stage="0" aria-pressed="true">1 · Large squares</button>
+<button type="button" data-stage="1" aria-pressed="false">2 · Smaller squares</button>
+<button type="button" data-stage="2" aria-pressed="false">3 · Tiny squares</button>
+<button type="button" data-stage="3" aria-pressed="false">4 · Very tiny squares</button>
+<button type="button" class="btn-auto" id="btnAutoPlay">▶ Play automatically</button>
+</div>
+<div class="panel">
+<svg id="viz" viewBox="0 0 640 430" role="img" aria-label="An irregular blue region covered by green, yellow and white grid squares"></svg>
+<div class="legend">
+<div><i class="key inside"></i>Fully inside</div>
+<div><i class="key edge"></i>Touches/crosses boundary</div>
+<div><i class="key outside"></i>Outside</div>
+<p style="margin-top:18px">The blue outline is the actual region. Yellow squares show where the grid does not fit the boundary exactly.</p>
+</div>
+</div>
+<div class="stats">
+<div class="stat"><b>Grid</b><span id="grid">4 × 4</span></div>
+<div class="stat"><b>Boundary squares</b><span id="boundary">—</span></div>
+<div class="stat"><b>Grid-cell area</b><span id="cell">—</span></div>
+</div>
+<section class="explain"><h2 id="heading">Stage 1: Large squares</h2><p id="description">A coarse grid gives a rough fit. Many squares along the edge cross the boundary, so they cannot be classified as fully inside or fully outside.</p></section>
+<p class="foot">Teaching model: the grid is refined while the region stays exactly the same. The number of boundary squares is counted using a fine sampling of each cell.</p>
+</main>
+<script>
+(() => {
+ const svg = document.getElementById('viz');
+ const btnAutoPlay = document.getElementById('btnAutoPlay');
+ const NS = 'http://www.w3.org/2000/svg';
+ const stages = [
+  {n:5,title:'Stage 1: Large squares',desc:'A coarse grid gives a rough fit. Many squares along the edge cross the boundary, so they cannot be classified as fully inside or fully outside.'},
+  {n:10,title:'Stage 2: Smaller squares',desc:'Now each square is smaller. The same boundary is described with more detail, so the mismatch is confined to thinner strips around the edge.'},
+  {n:20,title:'Stage 3: Tiny squares',desc:'The squares touching the boundary are now much smaller. The inside and outside parts are separated more accurately.'},
+  {n:40,title:'Stage 4: Very tiny squares',desc:'Refining the grid further makes the boundary mismatch arbitrarily small for this smooth shape. This is the idea behind approximating a region using small squares.'}
+ ];
+ const x0 = 45, y0 = 28, S = 360;
+ function boundaryPoint(t) {
+  const r = 1 + 0.13 * Math.sin(3 * t) + 0.085 * Math.cos(5 * t) + 0.045 * Math.sin(7 * t);
+  return [0.5 + 0.39 * r * Math.cos(t), 0.5 + 0.36 * r * Math.sin(t)];
+ }
+ function inside(x, y) {
+  const dx = (x - 0.5) / 0.39, dy = (y - 0.5) / 0.36;
+  const a = Math.atan2(dy, dx), r = Math.hypot(dx, dy);
+  return r < 1 + 0.13 * Math.sin(3 * a) + 0.085 * Math.cos(5 * a) + 0.045 * Math.sin(7 * a);
+ }
+ function el(name, attrs = {}) {
+  const e = document.createElementNS(NS, name);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  return e;
+ }
+ function addText(x, y, content, attrs) {
+  const t = el('text', { x, y, ...attrs });
+  t.textContent = content;
+  svg.append(t);
+ }
+ function render(index) {
+  const { n, title, desc } = stages[index];
+  svg.replaceChildren();
+  svg.append(el('rect', { x: x0, y: y0, width: S, height: S, fill: '#fff' }));
+  let edge = 0, insideCount = 0, outside = 0;
+  const cell = S / n;
+  for (let i = 0; i < n; i++) {
+   for (let j = 0; j < n; j++) {
+    let hits = 0;
+    for (let a = 0; a < 5; a++) {
+     for (let b = 0; b < 5; b++) {
+      if (inside((i + (a + 0.5) / 5) / n, (j + (b + 0.5) / 5) / n)) hits++;
+     }
+    }
+    let fill;
+    if (hits === 25) { fill = '#58b88a'; insideCount++; }
+    else if (hits === 0) { fill = '#fff'; outside++; }
+    else { fill = '#f2c46c'; edge++; }
+    svg.append(el('rect', {
+     x: x0 + i * cell, y: y0 + j * cell, width: cell, height: cell,
+     fill, stroke: '#b9c4d2', 'stroke-width': n > 25 ? 0.55 : 1
+    }));
+   }
+  }
+  const pts = [];
+  for (let k = 0; k <= 500; k++) {
+   const [x, y] = boundaryPoint(k / 500 * Math.PI * 2);
+   pts.push(`${x0 + x * S},${y0 + y * S}`);
+  }
+  svg.append(el('polygon', {
+   points: pts.join(' '), fill: 'none', stroke: '#245ca8',
+   'stroke-width': 3, 'stroke-linejoin': 'round'
+  }));
+  addText(450, 65, 'One fixed region', { fill: '#203047', 'font-size': 17, 'font-weight': 700 });
+  addText(450, 95, 'Only the grid changes', { fill: '#53647b', 'font-size': 13 });
+  document.getElementById('grid').textContent = `${n} × ${n}`;
+  document.getElementById('boundary').textContent = `${edge} cells`;
+  document.getElementById('cell').textContent = (1 / (n * n)).toFixed(4) + ' square units';
+  document.getElementById('heading').textContent = title;
+  document.getElementById('description').textContent = desc;
+  document.querySelectorAll('[data-stage]').forEach(b => {
+   b.setAttribute('aria-pressed', String(Number(b.dataset.stage) === index));
+  });
+ }
+ let timer = null;
+ function stopAutoPlay() {
+  if (timer) { clearInterval(timer); timer = null; }
+  btnAutoPlay.textContent = '▶ Play automatically';
+ }
+ document.querySelectorAll('[data-stage]').forEach(b => {
+  b.addEventListener('click', () => { stopAutoPlay(); render(Number(b.dataset.stage)); });
+ });
+ btnAutoPlay.addEventListener('click', () => {
+  if (timer) { stopAutoPlay(); return; }
+  let i = 0;
+  render(i);
+  btnAutoPlay.textContent = 'Ⅱ Pause';
+  timer = setInterval(() => {
+   i++;
+   if (i >= stages.length) { stopAutoPlay(); return; }
+   render(i);
+  }, 1800);
+ });
+ render(0);
+})();
+</script>
+</body>
+</html>

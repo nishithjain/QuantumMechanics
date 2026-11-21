@@ -1336,9 +1336,9 @@ That normalization condition reduces the number of independent real parameters f
 
 **Professor:** The next major topic is the **tensor product**, in preparation for discussing multiple qubits.
 
-### 15.6 Assignments, recordings, and administrative questions
+### 15.6 Assignments, session replays, and administrative questions
 
-**Participants and course support:** There is a brief discussion about the availability of the annotated notes, recordings, assignments, and solutions in the Learning Management System (LMS). Course support explains that learners should look in the LMS rather than expect an individual email notification about each upload. They are also directed to the community/support channel for guidance about accessing course materials and assignments. The transcript's name for the communication channel is not clear enough to verify, so it is not standardized here.
+**Participants and course support:** There is a brief discussion about the availability of the annotated notes, session replays, assignments, and solutions in the Learning Management System (LMS). Course support explains that learners should look in the LMS rather than expect an individual email notification about each upload. They are also directed to the community/support channel for guidance about accessing course materials and assignments. The transcript's name for the communication channel is not clear enough to verify, so it is not standardized here.
 
 **Professor:** I will share more problem-solving exercises, and we can discuss questions at the beginning of the next session. We will also coordinate when the solutions are released.
 

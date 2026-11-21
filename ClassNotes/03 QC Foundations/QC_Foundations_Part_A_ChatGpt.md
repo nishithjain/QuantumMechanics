@@ -8,7 +8,7 @@
 >
 > **How to use these notes:** Read in order the first time. Pause at each **Try it** question. Equations are explained symbol by symbol; don't try to memorise them all on day one.
 >
-> **Source boundary:** The lecture introduces these concepts mostly through intuition and defers some formal derivations. The step-by-step arithmetic, everyday comparisons, and practice questions labelled **Learning aid** are added explanations, not quotations from the lecture recording. A few misleading spoken analogies are qualified in **Be careful** notes. The lecture recording provided stops after its Bell-pair discussion; the slides also show Quirk/Qiskit exercises and further reading, which are included as **slide-only activities**, not purported speech.
+> **Source boundary:** The lecture introduces these concepts mostly through intuition and defers some formal derivations. The step-by-step arithmetic, everyday comparisons, and practice questions labelled **Learning aid** are added explanations, not quotations from the lecture transcript. A few misleading spoken analogies are qualified in **Be careful** notes. The transcript provided stops after its Bell-pair discussion; the slides also show Quirk/Qiskit exercises and further reading, which are included as **slide-only activities**, not purported speech.
 
 ---
 

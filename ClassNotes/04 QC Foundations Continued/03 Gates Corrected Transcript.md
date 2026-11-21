@@ -6,7 +6,7 @@
 **Reference:** `03 GatesCircuits.pdf` (37 numbered slide frames; incremental reveals across 21 PDF pages)  
 **Source:** `03 Gates.txt` (automatic speech-to-text transcript)
 
-> **Editorial note:** This is a transcript, not lecture notes. The professor’s spoken demonstrations, side remarks, questions and answers, and stated decisions to skip material are retained. Slide references indicate the closest corresponding lecture frame, not additional material read into the transcript. Technical wording and unambiguous mathematical notation have been corrected using the slides. Unrecoverable audio-to-text errors are marked `[UNCLEAR IN AUDIO/TRANSCRIPT]`; no recording was supplied for acoustic verification.
+> **Editorial note:** This is a transcript, not lecture notes. The professor’s spoken demonstrations, side remarks, questions and answers, and stated decisions to skip material are retained. Slide references indicate the closest corresponding lecture frame, not additional material read into the transcript. Technical wording and unambiguous mathematical notation have been corrected using the slides. Unrecoverable audio-to-text errors are marked `[UNCLEAR IN AUDIO/TRANSCRIPT]`; no source audio was supplied for acoustic verification.
 
 ## Introduction: From Yesterday to Today [Slide 1–2]
 

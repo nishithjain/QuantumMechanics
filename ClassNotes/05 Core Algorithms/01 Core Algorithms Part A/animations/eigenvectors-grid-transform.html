@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eigenvectors — Animated Grid Transformation</title>
+  <style>
+    :root { --ink:#172236; --muted:#536177; --border:#dbe3ee; --blue:#2563eb; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:clamp(12px,3vw,28px); background:#f4f7fb; color:var(--ink); font-family:Arial,Helvetica,sans-serif; }
+    main { width:min(1100px,100%); margin:auto; padding:clamp(14px,2.6vw,28px); border-radius:16px; background:#fff; box-shadow:0 8px 30px rgba(28,42,70,.08); }
+    h1 { font-size:clamp(23px,3.2vw,31px); line-height:1.2; margin:0 0 10px; }
+    p { line-height:1.6; margin:8px 0 18px; color:#35435a; }
+    .formula { padding:3px 7px; border-radius:5px; background:#edf2f9; font-family:Consolas,Monaco,monospace; font-size:.94em; white-space:nowrap; }
+    .controls { display:flex; gap:9px; flex-wrap:wrap; align-items:center; margin:16px 0 14px; }
+    button { border:1px solid #2563eb; border-radius:8px; background:#2563eb; color:#fff; font:inherit; font-weight:600; cursor:pointer; padding:10px 15px; }
+    button:hover { background:#174ebd; }
+    button.secondary { color:#1f4fae; background:#eff5ff; }
+    button.secondary:hover { background:#dce9ff; }
+    button:focus-visible,input:focus-visible { outline:3px solid #f59e0b; outline-offset:2px; }
+    .slider-wrap { display:flex; align-items:center; flex:1 1 330px; min-width:220px; gap:10px; margin-left:6px; }
+    .slider-wrap label { font-size:14px; font-weight:600; white-space:nowrap; }
+    input[type=range] { flex:1; min-width:65px; cursor:pointer; }
+    output { font-variant-numeric:tabular-nums; width:43px; text-align:right; font-weight:bold; }
+    .plot-shell { border:1px solid var(--border); border-radius:12px; padding:8px; background:#fbfdff; }
+    canvas { display:block; width:100%; height:auto; aspect-ratio:960 / 630; }
+    .keys { display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin:12px 3px 4px; font-size:13px; color:#49566c; }
+    .key { display:inline-flex; gap:8px; align-items:center; }
+    .swatch { width:34px; height:0; border-top:3px solid #555; }
+    .swatch.gray { border-color:#a8b3c6; border-top-style:dotted; }
+    .swatch.grid { border-color:#6aa5ce; opacity:.85; }
+    .swatch.arrow { border-color:#dc4151; }
+    .swatch.orig { border-color:#9aabc1; border-top-style:dashed; }
+    .insight { background:#eff5ff; border-left:4px solid #2563eb; border-radius:8px; padding:12px 15px; margin:14px 0 20px; line-height:1.55; }
+    h2 { font-size:19px; margin:18px 0 10px; }
+    .readout { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .vector-card { border:1px solid var(--border); border-radius:10px; background:#fcfdff; padding:14px; min-width:0; }
+    .vector-card h3 { display:flex; align-items:center; gap:8px; margin:0 0 10px; font-size:17px; }
+    .dot { width:12px; height:12px; border-radius:50%; background:var(--vec); display:inline-block; flex-shrink:0; }
+    .vector-card p { margin:5px 0; font-size:14px; color:#35435a; }
+    .vector-card .value { font-family:Consolas,Monaco,monospace; font-weight:700; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+    .vector-card .status { color:#596678; font-size:13px; margin-top:10px; }
+    .note { font-size:13px; color:#606e83; margin-top:13px; }
+    @media(max-width:720px) { .readout { grid-template-columns:1fr; } .slider-wrap { flex-basis:100%; margin:8px 0 0; } .keys { gap:10px; } }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Eigenvectors: directions that a matrix does not turn</h1>
+  <p>
+    Watch what happens when we apply <span class="formula">A = [[2, 1], [1, 2]]</span>.
+    The <strong>dotted gray grid stays fixed</strong>, while the <strong>blue grid transforms</strong>.
+    The arrows change too: eigenvectors remain along their original lines, while an ordinary vector turns.
+  </p>
+  <div class="controls">
+    <button id="playBtn" type="button">▶ Play</button>
+    <button id="pauseBtn" type="button" class="secondary">Ⅱ Pause</button>
+    <button id="resetBtn" type="button" class="secondary">↺ Reset</button>
+    <button id="stepBtn" type="button" class="secondary">Step +10%</button>
+    <div class="slider-wrap">
+      <label for="tSlider">Progress</label>
+      <input type="range" id="tSlider" min="0" max="1000" value="0" aria-label="Transformation progress">
+      <output id="tValue" for="tSlider">0%</output>
+    </div>
+  </div>
+  <div class="plot-shell">
+    <canvas id="canvas" width="960" height="630" aria-label="Coordinate graph with a dotted original grid, an animated transformed grid, and three vectors"></canvas>
+    <div class="keys">
+      <span class="key"><span class="swatch gray"></span> Original grid (fixed, dotted)</span>
+      <span class="key"><span class="swatch grid"></span> Transformed grid (animated)</span>
+      <span class="key"><span class="swatch orig"></span> Original vectors (dashed)</span>
+      <span class="key"><span class="swatch arrow"></span> Current vectors (solid)</span>
+    </div>
+  </div>
+  <div id="explanation" class="insight" role="status" aria-live="off">
+    At 0%, the transformation is the identity matrix. Each original arrow is in exactly the same place as its moving arrow.
+  </div>
+  <h2>Vector coordinates — shown separately to prevent overlap</h2>
+  <div class="readout">
+    <section class="vector-card" style="--vec:#d63b4a">
+      <h3><span class="dot"></span> u — ordinary vector</h3>
+      <p>Original: <span class="value">u = (1, 0)</span></p>
+      <p>Current: <span class="value" id="uReadout">(1.00, 0.00)</span></p>
+      <p class="status">At 100%: Au = (2, 1). Its direction changes → not an eigenvector.</p>
+    </section>
+    <section class="vector-card" style="--vec:#2675cf">
+      <h3><span class="dot"></span> v — eigenvector</h3>
+      <p>Original: <span class="value">v = (1, 1)</span></p>
+      <p>Current: <span class="value" id="vReadout">(1.00, 1.00)</span></p>
+      <p class="status">At 100%: Av = (3, 3) = 3v. Eigenvalue λ = 3.</p>
+    </section>
+    <section class="vector-card" style="--vec:#15905d">
+      <h3><span class="dot"></span> w — eigenvector</h3>
+      <p>Original: <span class="value">w = (1, −1)</span></p>
+      <p>Current: <span class="value" id="wReadout">(1.00, −1.00)</span></p>
+      <p class="status">At 100%: Aw = (1, −1) = 1w. Eigenvalue λ = 1.</p>
+    </section>
+  </div>
+  <p class="note">Mathematical note: During the animation we smoothly interpolate from the identity I to A, using M(t) = (1 − t)I + tA. At 100%, M(1) = A.</p>
+</main>
+<script>
+(() => {
+  'use strict';
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  const playBtn = document.getElementById('playBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const stepBtn = document.getElementById('stepBtn');
+  const slider = document.getElementById('tSlider');
+  const output = document.getElementById('tValue');
+  const explanation = document.getElementById('explanation');
+
+  const W=canvas.width, H=canvas.height;
+  const ox=453, oy=368, unit=71;
+  let t=0, playing=false, lastTime=null, frameId=null;
+  const zero={x:0,y:0};
+  const vecs=[
+    {key:'u',name:'u′',p:{x:1,y:0},color:'#d63b4a'},
+    {key:'v',name:'v′',p:{x:1,y:1},color:'#2675cf'},
+    {key:'w',name:'w′',p:{x:1,y:-1},color:'#15905d'}
+  ];
+  const projected = p => ({x:ox+p.x*unit,y:oy-p.y*unit});
+  const current = p => ({x:(1+t)*p.x+t*p.y,y:t*p.x+(1+t)*p.y});
+  const fmt = n => (Math.abs(n)<0.0005?0:n).toFixed(2);
+
+  function segment(a,b) {
+    const p=projected(a), q=projected(b);
+    ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y);
+  }
+  function lines() {
+    // Original reference grid: never changes.
+    ctx.save();ctx.strokeStyle='#b3bfd0';ctx.lineWidth=1.35;ctx.setLineDash([2,7]);
+    ctx.beginPath();
+    for(let i=-12;i<=12;i++){
+      segment({x:i,y:-12},{x:i,y:12});
+      segment({x:-12,y:i},{x:12,y:i});
+    }
+    ctx.stroke();ctx.restore();
+
+    // Animated grid: each original grid line is transformed by M(t).
+    ctx.save();ctx.strokeStyle='rgba(54,136,195,0.65)';ctx.lineWidth=1.6;
+    ctx.beginPath();
+    for(let i=-12;i<=12;i++){
+      segment(current({x:i,y:-12}),current({x:i,y:12}));
+      segment(current({x:-12,y:i}),current({x:12,y:i}));
+    }
+    ctx.stroke();ctx.restore();
+  }
+  function axes() {
+    ctx.save();ctx.lineWidth=2.1;ctx.strokeStyle='#53647d';ctx.beginPath();
+    segment({x:-15,y:0},{x:15,y:0});segment({x:0,y:-15},{x:0,y:15});ctx.stroke();
+    ctx.fillStyle='#5c6a7e';ctx.font='13px Arial';ctx.textBaseline='middle';
+    for(let i=-5;i<=6;i++){
+      const x=ox+i*unit, y=oy-i*unit;
+      if(i!==0){
+        if(x>16&&x<W-12) ctx.fillText(String(i),x-5,oy+18);
+        if(y>15&&y<H-12) ctx.fillText(String(i),ox-23,y);
+      }
+    }
+    ctx.fillText('0',ox-16,oy+18);ctx.restore();
+  }
+  function arrow(target,color,dashed=false){
+    const a=projected(zero), b=projected(target);
+    const angle=Math.atan2(b.y-a.y,b.x-a.x);
+    const len=10;
+    ctx.save();ctx.strokeStyle=color;ctx.fillStyle=color;
+    ctx.lineWidth=dashed?2.2:4.2;
+    if(dashed){ctx.globalAlpha=.45;ctx.setLineDash([7,5]);}
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath();ctx.moveTo(b.x,b.y);
+    ctx.lineTo(b.x-len*Math.cos(angle-.48),b.y-len*Math.sin(angle-.48));
+    ctx.lineTo(b.x-len*Math.cos(angle+.48),b.y-len*Math.sin(angle+.48));
+    ctx.closePath();ctx.fill();ctx.restore();
+  }
+  function pillAt(point,label,color){
+    const pos=projected(point);
+    ctx.save();ctx.font='bold 16px Arial';
+    const textWidth=ctx.measureText(label).width;
+    const boxW=Math.ceil(textWidth+22), boxH=29;
+    // Only short identifiers go on the graph. Full coordinate strings live below it.
+    const x=Math.max(5,Math.min(W-boxW-5,pos.x+14));
+    const y=Math.max(5,Math.min(H-boxH-5,pos.y-14));
+    ctx.fillStyle='#fff';ctx.strokeStyle=color;ctx.lineWidth=1.6;
+    ctx.beginPath();ctx.roundRect(x,y,boxW,boxH,7);ctx.fill();ctx.stroke();
+    ctx.fillStyle=color;ctx.textBaseline='middle';ctx.fillText(label,x+11,y+boxH/2);ctx.restore();
+  }
+  function updateText(){
+    output.value=Math.round(t*100)+'%'; slider.value=String(Math.round(t*1000));
+    for(const v of vecs){const p=current(v.p);document.getElementById(v.key+'Readout').textContent=`(${fmt(p.x)}, ${fmt(p.y)})`;}
+    if(t<.001){
+      explanation.innerHTML='<strong>0% — Starting state.</strong> The current matrix is I, so the moving arrows lie directly on top of the original dashed arrows. Notice that the coordinate labels are kept below the graph.';
+    } else if(t<.999){
+      explanation.innerHTML=`<strong>${Math.round(t*100)}% — During transformation.</strong> Red u turns away from its original horizontal line. Blue v remains on the line y = x and stretches. Green w stays unchanged on the line y = −x.`;
+    } else {
+      explanation.innerHTML='<strong>100% — Final result.</strong> Red u goes from (1,0) to (2,1), so it is not an eigenvector. Blue v goes from (1,1) to (3,3), so λ = 3. Green w remains at (1,−1), so λ = 1.';
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#fbfdff';ctx.fillRect(0,0,W,H);
+    lines();axes();
+    // Draw faint original vectors with no labels: avoids duplicate overlapping text.
+    for(const v of vecs)arrow(v.p,v.color,true);
+    // Current arrows are prominent. One short identifier per vector, not six full labels.
+    for(const v of vecs)arrow(current(v.p),v.color,false);
+    for(const v of vecs)pillAt(current(v.p),v.name,v.color);
+    updateText();
+  }
+  function stop(){playing=false;lastTime=null;if(frameId!==null)cancelAnimationFrame(frameId);frameId=null;}
+  function animate(stamp){
+    if(!playing)return;
+    if(lastTime!==null)t=Math.min(1,t+(stamp-lastTime)/4500);
+    lastTime=stamp;draw();
+    if(t>=1){stop();return;}
+    frameId=requestAnimationFrame(animate);
+  }
+  playBtn.addEventListener('click',()=>{if(playing)return;if(t>=1)t=0;playing=true;lastTime=null;frameId=requestAnimationFrame(animate);});
+  pauseBtn.addEventListener('click',stop);
+  resetBtn.addEventListener('click',()=>{stop();t=0;draw();});
+  stepBtn.addEventListener('click',()=>{stop();t=Math.min(1,Math.round((t+.1)*1000)/1000);draw();});
+  slider.addEventListener('input',()=>{stop();t=Number(slider.value)/1000;draw();});
+  draw();
+})();
+</script>
+</body>
+</html>

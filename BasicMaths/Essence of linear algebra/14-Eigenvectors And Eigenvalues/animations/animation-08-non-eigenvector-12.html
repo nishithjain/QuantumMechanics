@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>When a matrix turns a vector</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101923;color:#edf4fa;font:16px/1.5 Inter,system-ui,sans-serif}
+main{max-width:1000px;margin:auto;padding:clamp(16px,4vw,44px)}
+h1{font-size:clamp(30px,5vw,48px);letter-spacing:-.04em;line-height:1.1;margin:0}
+h2{font-size:19px;margin:0 0 8px}
+p{color:#bdcedd;margin:8px 0}
+.layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px}
+section,aside{padding:15px;border:1px solid #3f5466;border-radius:15px;background:#192735}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+button{color:#edf4fa;background:#293d50;border:1px solid #687e91;border-radius:8px;padding:7px 11px;font:inherit;cursor:pointer}
+button[aria-pressed=true]{background:#b4e8dc;color:#142632;font-weight:700}
+#btnPlay{background:#ffda91;color:#172735;font-weight:700;border-color:#ffda91}
+:focus-visible{outline:3px solid #ffda91;outline-offset:3px}
+canvas{display:block;width:100%;max-height:400px;height:auto;background:#101923;border-radius:8px}
+label{font-size:14px}input{display:block;width:100%;accent-color:#ffda91}
+.matrix{display:inline-grid;grid-template-columns:repeat(2,1.4em);border-inline:2px solid;border-radius:5px;text-align:center;vertical-align:middle;margin-left:.25em}
+dl{display:grid;grid-template-columns:1fr auto;gap:8px;margin:16px 0}
+dd{margin:0;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.gold{color:#ffda91}.mint{color:#8ce7d1}.violet{color:#d9bfff}
+.legend{font-size:14px}.rule{border-top:1px solid #405469;padding-top:10px}
+@media(max-width:720px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>Does the vector turn?</h1>
+<p>Apply the same matrix to three vectors and compare what happens to their direction.</p>
+<div class="controls" role="group" aria-label="Choose a starting vector">
+<button type="button" data-example="general" aria-pressed="true">General vector (1, 2)</button>
+<button type="button" data-example="horizontal" aria-pressed="false">x-axis (1, 0)</button>
+<button type="button" data-example="diagonal" aria-pressed="false">Diagonal (−1, 1)</button>
+</div>
+<div class="layout">
+<section aria-label="Vector animation">
+<canvas id="plot" width="640" height="530" role="img" aria-label="Coordinate grid showing the starting and moving vectors.">See the vector coordinates in the calculation panel.</canvas>
+<p class="legend"><span class="mint">Dashed arrow</span> · starting vector &nbsp; <span class="gold">Solid arrow</span> · moving vector &nbsp; <span class="violet">Purple lines</span> · eigendirections</p>
+<p class="legend" style="margin-top:4px">Light <strong>dashed</strong> grid = original plane. Solid grid = plane moving with A.</p>
+<div class="controls">
+<button type="button" id="btnPlay">Play transformation</button>
+<button type="button" id="start">Show start</button>
+<button type="button" id="end">Show result</button>
+</div>
+<label for="progress">Progress <output id="percent" for="progress">0%</output></label>
+<input id="progress" type="range" min="0" max="100" value="0">
+</section>
+<aside>
+<h2>What the matrix does</h2>
+<div aria-label="A has first row 3, 1 and second row 0, 2">A = <span class="matrix" aria-hidden="true"><span>3</span><span>1</span><span>0</span><span>2</span></span></div>
+<p>A takes (x, y) to (3x + y, 2y).</p>
+<p id="calculation"></p>
+<dl>
+<dt>Starting vector</dt><dd class="mint" id="input"></dd>
+<dt>Moving vector</dt><dd class="gold" id="current"></dd>
+<dt>Clockwise turn so far</dt><dd id="turn"></dd>
+</dl>
+<h2 class="rule" id="verdict"></h2>
+<p id="why"></p>
+</aside>
+</div>
+</main>
+<script>
+const examples = {
+  general: {start:[1,2], verdict:'Direction changes', why:'To get from (1, 2) to (5, 4), x is multiplied by 5 while y is multiplied by 2. A single multiplier would have to work for both coordinates. So (1, 2) is not an eigenvector.'},
+  horizontal: {start:[1,0], verdict:'Eigenvalue 3', why:'(3, 0) = 3 × (1, 0). The arrow stays on the x-axis and triples in length. Every nonzero vector on this axis behaves the same way.'},
+  diagonal: {start:[-1,1], verdict:'Eigenvalue 2', why:'(−2, 2) = 2 × (−1, 1). The arrow stays on the diagonal y = −x and doubles in length. Every nonzero vector on this line behaves the same way.'}
+};
+const byId = id => document.getElementById(id);
+const canvas = byId('plot');
+const ctx = canvas.getContext('2d');
+const slider = byId('progress');
+const btnPlay = byId('btnPlay');
+const buttons = [...document.querySelectorAll('[data-example]')];
+const origin = [234,302];
+const scale = 59;
+const format = n => String(Number(n.toFixed(2))).replace('-', '−');
+const pair = ([x,y]) => '(' + format(x) + ', ' + format(y) + ')';
+const screen = ([x,y]) => [origin[0] + scale*x, origin[1] - scale*y];
+const transform = (x, y, k) => [
+  (1 - k) * x + k * (3 * x + y),
+  (1 - k) * y + k * (2 * y)
+];
+let example = examples.general;
+let progress = 0;
+let frame = null;
+
+function line(from, to, color, width = 1, dash = []) {
+  ctx.beginPath();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
+  ctx.setLineDash(dash);
+  ctx.moveTo(...from);
+  ctx.lineTo(...to);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function seg(a, b, color, width = 1, dash = []) {
+  line(screen(a), screen(b), color, width, dash);
+}
+
+function drawGrid(k, style) {
+  const {
+    color = '#2e4254',
+    width = 1,
+    dash = [],
+    axesColor = '#8499ac',
+    axesWidth = 1.6
+  } = style;
+  for (let i = -3; i <= 6; i++) {
+    seg(transform(i, -3.25, k), transform(i, 4.6, k), color, width, dash);
+  }
+  for (let i = -3; i <= 4; i++) {
+    seg(transform(-3.2, i, k), transform(6.35, i, k), color, width, dash);
+  }
+  seg(transform(0, -3.25, k), transform(0, 4.6, k), axesColor, axesWidth, dash);
+  seg(transform(-3.2, 0, k), transform(6.35, 0, k), '#a58dc5', 2, dash);
+  seg(transform(-3.2, 3.2, k), transform(3.25, -3.25, k), '#a58dc5', 2, dash);
+}
+
+function arrow(vector, color, width, dashed = false) {
+  const tip = screen(vector);
+  ctx.setLineDash(dashed ? [6,5] : []);
+  line(origin,tip,color,width);
+  ctx.setLineDash([]);
+  const angle = Math.atan2(tip[1]-origin[1],tip[0]-origin[0]);
+  for (const side of [-.5,.5]) {
+    line(tip,[tip[0]-14*Math.cos(angle+side),tip[1]-14*Math.sin(angle+side)],color,width);
+  }
+}
+
+function draw(value) {
+  progress = value;
+  const [x,y] = example.start;
+  const end = [3 * x + y, 2 * y];
+  const current = transform(x, y, value);
+  const initialAngle = Math.atan2(y,x);
+  const currentAngle = Math.atan2(current[1],current[0]);
+  const turn = Math.max(0,(initialAngle-currentAngle)*180/Math.PI);
+  slider.value = Math.round(value*100);
+  byId('percent').textContent = slider.value + '%';
+  byId('input').textContent = pair(example.start);
+  byId('current').textContent = pair(current);
+  byId('turn').textContent = format(turn) + '°';
+  byId('calculation').textContent = 'A' + pair(example.start) + ' = (3 × (' + format(x) + ') + ' + format(y) + ', 2 × ' + format(y) + ') = ' + pair(end);
+  byId('verdict').textContent = example.verdict;
+  byId('why').textContent = example.why;
+  canvas.setAttribute('aria-label', 'Starting vector ' + pair(example.start) + '. Moving vector ' + pair(current) + '. Clockwise turn ' + format(turn) + ' degrees.');
+
+  ctx.clearRect(0,0,640,530);
+  ctx.font = '16px system-ui';
+  if (value > 0.02) {
+    drawGrid(0, {
+      color: '#3d5268',
+      width: 1,
+      dash: [5, 6],
+      axesColor: '#5a7085',
+      axesWidth: 1.2
+    });
+  }
+  const onGrid = value < 0.02;
+  drawGrid(value, {
+    color: onGrid ? '#2e4254' : '#4a6278',
+    width: onGrid ? 1 : 1.15,
+    dash: [],
+    axesColor: onGrid ? '#8499ac' : '#9ab0c4',
+    axesWidth: onGrid ? 1.6 : 1.8
+  });
+  if (onGrid) {
+    ctx.fillStyle = '#9fb5c9';
+    for (let i = -3; i <= 6; i++) {
+      if (i !== 0) ctx.fillText(format(i), screen([i, 0])[0] - 5, origin[1] + 22);
+    }
+    for (let i = -3; i <= 4; i++) {
+      if (i !== 0) ctx.fillText(format(i), origin[0] - 26, screen([0, i])[1] + 5);
+    }
+  }
+  ctx.fillStyle = '#d9bfff';
+  ctx.fillText(value > 0.02 ? 'Dashed = original · Solid = transformed' : 'y = −x', 48, 104);
+  ctx.fillText('x',620,origin[1]+5);
+  ctx.fillStyle = '#bdcedd';
+  ctx.fillText('y',origin[0]-4,23);
+
+  if (turn > .05) {
+    ctx.beginPath();
+    ctx.strokeStyle = '#f4afc7';
+    ctx.lineWidth = 3;
+    ctx.arc(...origin,48,-initialAngle,-currentAngle);
+    ctx.stroke();
+  }
+  arrow(current,'#ffda91',4);
+  arrow(example.start,'#8ce7d1',2,true);
+  const [tipX,tipY] = screen(current);
+  ctx.font = 'bold 18px system-ui';
+  ctx.fillStyle = '#ffda91';
+  ctx.textAlign = tipX > 480 ? 'right' : 'left';
+  ctx.fillText(pair(current),tipX+(tipX>480?-9:9),tipY-12);
+  ctx.textAlign = 'left';
+}
+
+function stop() {
+  if (frame !== null) cancelAnimationFrame(frame);
+  frame = null;
+  btnPlay.textContent = progress === 1 ? 'Replay transformation' : progress === 0 ? 'Play transformation' : 'Resume';
+}
+
+function seek(value) {
+  draw(value);
+  stop();
+}
+
+for (const button of buttons) {
+  button.addEventListener('click', () => {
+    for (const option of buttons) option.setAttribute('aria-pressed',String(option === button));
+    example = examples[button.dataset.example];
+    seek(0);
+  });
+}
+
+btnPlay.addEventListener('click', () => {
+  if (frame !== null) {
+    stop();
+    return;
+  }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    seek(1);
+    return;
+  }
+  if (progress === 1) draw(0);
+  const initial = progress;
+  let start;
+  btnPlay.textContent = 'Pause';
+  function animateFrame(now) {
+    start ??= now;
+    draw(Math.min(1,initial+(now-start)/3000));
+    if (progress === 1) stop();
+    else frame = requestAnimationFrame(animateFrame);
+  }
+  frame = requestAnimationFrame(animateFrame);
+});
+slider.addEventListener('input',() => seek(Number(slider.value)/100));
+byId('start').addEventListener('click',() => seek(0));
+byId('end').addEventListener('click',() => seek(1));
+draw(0);
+</script>
+</body>
+</html>

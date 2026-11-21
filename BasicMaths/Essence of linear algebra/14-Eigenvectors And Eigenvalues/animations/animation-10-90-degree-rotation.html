@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>90 degree rotation and eigenvectors</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:20px;background:#f3f6fa;color:#172334;font:16px system-ui,Arial}main{max-width:1050px;margin:auto}h1{font-size:clamp(1.4rem,3vw,2rem);margin:0 0 8px}.lead{color:#5b6879;line-height:1.5}.layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:14px}.panel{background:white;border:1px solid #dce4ed;border-radius:14px;padding:15px;margin-top:12px}canvas{width:100%;height:auto;border:1px solid #e5ebf1;border-radius:10px;background:#fbfdff;display:block}.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}button{border:1px solid #cbd5e1;background:white;border-radius:8px;padding:9px 12px;font-weight:650;cursor:pointer}button.primary{background:#1f6fc7;color:white;border-color:#1f6fc7}input{width:100%;accent-color:#1f6fc7}.formula{background:#f2f6fb;border-radius:10px;padding:12px;line-height:1.7;margin:10px 0}.muted{color:#5b6879;font-size:.9rem;line-height:1.5}.status{min-height:72px;line-height:1.55}.legend{display:flex;gap:8px;align-items:center;margin:8px 0;color:#5b6879;font-size:.9rem}.dot{width:11px;height:11px;border-radius:50%}
+.matrix{display:inline-grid;grid-template-columns:repeat(2,minmax(1.6em,auto));gap:2px 10px;text-align:center;vertical-align:middle;padding:2px 10px;border-inline:2px solid #344256;border-radius:4px;font-variant-numeric:tabular-nums;font-weight:650}
+.math-line{margin:.35em 0}
+.arrow{margin:0 .25em;color:#5b6879}
+@media(max-width:760px){.layout{grid-template-columns:1fr}body{padding:12px}}
+</style></head><body><main>
+<h1>Why a 90° rotation has no real eigenvectors</h1>
+<p class="lead">Watch a vector rotate counterclockwise by 90°. Its length stays the same, but its direction changes to a different line through the origin.</p>
+<div class="layout"><section class="panel">
+<canvas id="plane" width="760" height="570"></canvas>
+<div class="controls"><button class="primary" id="play">▶ Rotate vector</button><button id="reset">↺ Reset</button><button id="next">Try another vector</button></div>
+<p><b>Rotation progress: <span id="pct">0°</span></b></p><input id="progress" type="range" min="0" max="90" value="0">
+<p class="muted">Blue = original vector and its span (dashed line). Orange = rotated vector. Green = rotation arc.</p>
+</section><aside class="panel">
+<h2>The transformation</h2>
+<div class="formula"><span class="math-line"><b>R</b> = <span class="matrix" aria-label="Rotation matrix"><span>0</span><span>−1</span><span>1</span><span>0</span></span></span></div>
+<div class="formula">For <b>v</b> = (<i>x</i>, <i>y</i>):<br><b>Rv</b> = (−<i>y</i>, <i>x</i>)<br>The vector turns 90° counterclockwise.</div>
+<p class="status" id="status">Start with a non-zero vector. Its span is the complete line through the origin and its tip.</p>
+<div class="legend"><span class="dot" style="background:#2878cf"></span>Original vector and span</div>
+<div class="legend"><span class="dot" style="background:#e58b27"></span>Rotated vector</div>
+<div class="legend"><span class="dot" style="background:#16865d"></span>Rotation arc</div>
+<div class="formula"><b>Eigenvector test</b><br>For an eigenvector, <b>Rv</b> = λ<b>v</b>. The rotated vector must stay on the original line. Here, it turns onto a perpendicular line instead.</div>
+</aside></div>
+<section class="panel"><h2>Connect the picture to the calculation</h2>
+<p class="muted">The geometry shows that no non-zero real vector stays on its original line. The characteristic equation confirms this algebraically.</p>
+<div class="formula">
+<p class="math-line"><b>R</b> − λ<b>I</b> = <span class="matrix" aria-label="R minus lambda I"><span>−λ</span><span>−1</span><span>1</span><span>−λ</span></span></p>
+<p class="math-line">det(<b>R</b> − λ<b>I</b>) = (−λ)(−λ) − (−1)(1) = λ² + 1</p>
+<p class="math-line">λ² + 1 = 0 <span class="arrow">⟹</span> λ² = −1 <span class="arrow">⟹</span> λ = ±<i>i</i></p>
+</div>
+<p><b>Why no real eigenvalues?</b> No real number squared gives −1. The solutions +<i>i</i> and −<i>i</i> are complex numbers, not real numbers. Therefore, this rotation has no real eigenvalues and no real eigenvectors.</p>
+</section></main>
+<script>
+(()=>{
+const c=document.getElementById('plane'),ctx=c.getContext('2d'),W=c.width,H=c.height,O={x:W*.48,y:H*.53},S=92;
+const vectors=[[2,1],[1,2],[2,-1],[-1,2],[1,0],[0,1],[-2,-1]];
+let idx=0,deg=0,playing=false,raf=0,last=0;
+const v=()=>vectors[idx],p=([x,y])=>[O.x+S*x,O.y-S*y];
+function line(a,b,col,w=2,dash=[]){ctx.beginPath();ctx.setLineDash(dash);ctx.moveTo(...a);ctx.lineTo(...b);ctx.strokeStyle=col;ctx.lineWidth=w;ctx.stroke();ctx.setLineDash([])}
+function arrow(a,b,col,label){line(a,b,col,4);let q=Math.atan2(b[1]-a[1],b[0]-a[0]),L=13;ctx.beginPath();ctx.moveTo(...b);ctx.lineTo(b[0]-L*Math.cos(q-.48),b[1]-L*Math.sin(q-.48));ctx.lineTo(b[0]-L*Math.cos(q+.48),b[1]-L*Math.sin(q+.48));ctx.closePath();ctx.fillStyle=col;ctx.fill();ctx.font='bold 16px system-ui';ctx.fillText(label,b[0]+8,b[1]-9)}
+function draw(){
+ctx.clearRect(0,0,W,H);
+for(let n=-4;n<=4;n++){line(p([n,-3]),p([n,3]),'#e5ebf1',1);line(p([-4,n]),p([4,n]),'#e5ebf1',1)}
+line(p([-4,0]),p([4,0]),'#8997a8',1.5);line(p([0,-3]),p([0,3]),'#8997a8',1.5);
+let [x,y]=v(),r=Math.hypot(x,y),a=Math.atan2(y,x),rad=deg*Math.PI/180;
+let rot=[x*Math.cos(rad)-y*Math.sin(rad),x*Math.sin(rad)+y*Math.cos(rad)],u=[x/r,y/r];
+line(p(u.map(z=>-3.2*z)),p(u.map(z=>3.2*z)),'#2878cf',2.5,[8,6]);
+let origin=p([0,0]);arrow(origin,p(v()),'#2878cf','v');if(deg>.5)arrow(origin,p(rot),'#e58b27','Rv');
+ctx.beginPath();ctx.arc(O.x,O.y,S*.78,-a,-a-rad,true);ctx.strokeStyle='#16865d';ctx.lineWidth=4;ctx.stroke();
+let mid=a+rad/2,arc=[O.x+S*.78*Math.cos(mid),O.y-S*.78*Math.sin(mid)];ctx.fillStyle='#16865d';ctx.font='bold 14px system-ui';ctx.fillText('90°',arc[0]+8,arc[1]-8);
+ctx.fillStyle='#334155';ctx.font='14px system-ui';ctx.fillText('Origin',O.x+9,O.y+20);ctx.fillStyle='#64748b';ctx.font='13px system-ui';
+ctx.fillText(`Original v = (${x}, ${y})`,18,25);ctx.fillText(`Rotated Rv = (${rot[0].toFixed(2)}, ${rot[1].toFixed(2)})`,18,45);
+ctx.fillText(deg>=89.5?'The rotated vector is perpendicular to its original direction':'Move the slider to complete the 90° turn',18,H-18);
+}
+function update(){document.getElementById('pct').textContent=Math.round(deg)+'°';document.getElementById('progress').value=Math.round(deg);document.getElementById('status').textContent=deg<1?'Start with a non-zero vector. Its span is the complete line through the origin and its tip.':deg<89?'The vector is turning. Its length stays the same, but its direction changes.':'After 90°, the rotated vector is perpendicular to the original vector. It lies on a different line, so it is not a scalar multiple of the original vector.';draw()}
+function stop(){playing=false;cancelAnimationFrame(raf);document.getElementById('play').textContent='▶ Rotate vector'}
+function tick(ts){if(!playing)return;if(!last)last=ts;deg=Math.min(90,deg+(ts-last)*90/1700);last=ts;update();if(deg>=90){stop();return}raf=requestAnimationFrame(tick)}
+document.getElementById('play').onclick=()=>{stop();if(deg>=90)deg=0;playing=true;last=0;document.getElementById('play').textContent='Rotating…';raf=requestAnimationFrame(tick)};
+document.getElementById('reset').onclick=()=>{stop();deg=0;update()};
+document.getElementById('next').onclick=()=>{stop();idx=(idx+1)%vectors.length;deg=0;update()};
+document.getElementById('progress').oninput=e=>{stop();deg=+e.target.value;update()};
+update();
+})();
+</script></body></html>

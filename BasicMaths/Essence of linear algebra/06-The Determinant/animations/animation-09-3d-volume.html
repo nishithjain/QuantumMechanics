@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The determinant in 3D · From cube to volume</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101922;color:#eef4fa;font:16px/1.55 Inter,system-ui,sans-serif}
+main{max-width:1120px;margin:auto;padding:clamp(14px,4vw,46px)}
+h1{font-size:clamp(30px,5vw,50px);line-height:1.08;letter-spacing:-.045em;margin:0}
+h2{margin:0 0 8px;font-size:20px}
+p{color:#bed0df;margin:.45rem 0}
+.eyebrow{color:#80e0cc;font-size:14px;font-weight:700;margin-bottom:.6rem}
+.layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(0,1fr);gap:14px}
+section,aside{border:1px solid #3c5061;background:#192734;border-radius:16px;padding:15px}
+.examples,.buttons{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}
+button{border:1px solid #60768a;border-radius:9px;background:#243747;color:#f4f8fb;font:inherit;padding:7px 11px;cursor:pointer}
+button[aria-pressed="true"]{background:#b8eddd;color:#162731;border-color:#b8eddd;font-weight:700}
+#play{background:#ffe097;color:#162731;border-color:#ffe097;font-weight:700}
+:focus-visible{outline:3px solid #ffe097;outline-offset:3px}
+canvas{display:block;width:100%;height:auto;background:#101922;border-radius:10px;touch-action:none;cursor:grab}
+canvas:active{cursor:grabbing}
+input{display:block;width:100%;accent-color:#ffe097}
+label,.caption{font-size:14px;color:#bed0df}
+.caption{margin:9px 0 0}
+.metric{display:grid;grid-template-columns:1fr auto;gap:5px 10px;margin:14px 0}
+dt,dd{margin:0}dd{font-weight:750;text-align:right;font-variant-numeric:tabular-nums}
+#volume{color:#ffe097;font-size:22px;line-height:1.1}
+.rule,.columns{border-top:1px solid #405465;padding-top:9px}
+.columns{display:grid;gap:4px;margin-top:12px;font-size:15px}
+.x{color:#ffcb7b}.y{color:#7de5d0}.z{color:#d9b6ff}
+#formula{color:#f1f5fa;font-weight:650}
+@media(max-width:780px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<p class="eyebrow">Essence of Linear Algebra · Determinants</p>
+<h1>What happens to a cube?</h1>
+<p>Start with a 1 × 1 × 1 cube. Choose an example and watch what happens to the space inside it.</p>
+
+<div class="examples" role="group" aria-label="Transformation example">
+  <button type="button" data-example="box" aria-pressed="true">Slanted box</button>
+  <button type="button" data-example="plane" aria-pressed="false">Flatten to a plane</button>
+  <button type="button" data-example="line" aria-pressed="false">Squeeze to a line</button>
+  <button type="button" data-example="point" aria-pressed="false">Shrink to a point</button>
+</div>
+
+<div class="layout">
+<section aria-label="Interactive 3D animation">
+  <canvas id="scene" width="720" height="480" tabindex="0" aria-label="Rotatable 3D view. Use the arrow keys to rotate.">The transformed edge coordinates and volume are shown beside the view.</canvas>
+  <p class="caption">Drag to rotate, or focus the view and use the arrow keys. The dashed outline is the original cube.</p>
+  <div class="buttons">
+    <button type="button" id="play">Play transformation</button>
+    <button type="button" id="start">Show original</button>
+    <button type="button" id="end">Show result</button>
+    <button type="button" id="view">Reset view</button>
+  </div>
+  <label for="seek">Transformation progress <output for="seek" id="percent">0%</output></label>
+  <input type="range" id="seek" min="0" max="100" value="0">
+</section>
+<aside>
+  <h2 id="example-title"></h2>
+  <p id="example-story"></p>
+  <dl class="metric">
+    <dt>3D volume</dt><dd id="volume">1</dd>
+    <dt>Determinant</dt><dd id="det">1</dd>
+    <dt>Independent directions</dt><dd id="rank">3</dd>
+  </dl>
+  <p id="formula"></p>
+  <p id="explain" class="rule"></p>
+  <div class="columns" aria-label="Current matrix columns">
+    <strong>Where the three basis vectors go</strong>
+    <span><b class="x">î</b> → <span id="edge-x"></span></span>
+    <span><b class="y">ĵ</b> → <span id="edge-y"></span></span>
+    <span><b class="z">k̂</b> → <span id="edge-z"></span></span>
+  </div>
+  <p class="caption">These three edges are the matrix columns. The magnitude of the determinant gives the volume of the transformed unit cube.</p>
+</aside>
+</div>
+</main>
+<script>
+const examples = {
+  box: {
+    title: 'A slanted box',
+    story: 'Imagine a stack of square tiles. The base stretches, the stack gets taller, and the layers slide sideways to slant the sides.',
+    edges: [[2, 0, 0], [0, 1, 0], [0.8, 0.35, 2]],
+    dimension: 3,
+    result: 'The base has area 2 and the perpendicular height is 2. The slanted side is longer than the height, so use the vertical rise of 2. The volume is 4.'
+  },
+  plane: {
+    title: 'A flat shape',
+    story: 'Imagine pressing the top of a cardboard box down onto the floor while sliding it sideways.',
+    edges: [[1, 0, 0], [0, 1, 0], [1, 1, 0]],
+    dimension: 2,
+    result: 'At the end, k̂ lands along the diagonal in the base plane. Its image equals the image of î plus the image of ĵ. There are two independent directions and zero height.'
+  },
+  line: {
+    title: 'A line segment',
+    story: 'Imagine squeezing a box from above and from both sides. Only its length survives.',
+    edges: [[1, 0, 0], [0, 0, 0], [0, 0, 0]],
+    dimension: 1,
+    result: 'ĵ and k̂ both become zero vectors. Only î supplies a direction. With zero width and height, the segment has zero volume.'
+  },
+  point: {
+    title: 'A single point',
+    story: 'Imagine shrinking the box in all three directions until every corner meets at the origin.',
+    edges: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+    dimension: 0,
+    result: 'All three basis vectors become zero vectors. The image has zero independent directions and zero volume.'
+  }
+};
+const basis = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+const colors = ['#ffcb7b', '#7de5d0', '#d9b6ff'];
+const labels = ['î', 'ĵ', 'k̂'];
+const faces = [[0,1,3,2],[4,5,7,6],[0,1,5,4],[2,3,7,6],[0,2,6,4],[1,3,7,5]];
+const fills = ['#346b6b','#519f90','#36657a','#397284','#3b8281','#2d576d'];
+const byId = id => document.getElementById(id);
+const canvas = byId('scene');
+const ctx = canvas.getContext('2d');
+const slider = byId('seek');
+const play = byId('play');
+const format = n => n !== 0 && Math.abs(n) < .001 ? n.toExponential(1) : String(Number(n.toFixed(3)));
+const defaultView = { yaw: 0.62, pitch: 0.52 };
+let view = {...defaultView};
+let example = examples.box;
+let progress = 0;
+let frame = null;
+let drag = null;
+
+function corners(edges) {
+  return Array.from({length: 8}, (_, index) => basis.map((_, axis) =>
+    edges.reduce((sum, edge, column) => sum + ((index >> column) & 1) * edge[axis], 0)));
+}
+
+function project([x, y, z]) {
+  x -= 0.8;
+  y -= 0.65;
+  z -= 0.7;
+  const {yaw, pitch} = view;
+  const horizontal = x * Math.cos(yaw) - y * Math.sin(yaw);
+  const depth = x * Math.sin(yaw) + y * Math.cos(yaw);
+  return {
+    x: 360 + 88 * horizontal,
+    y: 246 + 88 * (depth * Math.sin(pitch) - z * Math.cos(pitch)),
+    depth: depth * Math.cos(pitch) + z * Math.sin(pitch)
+  };
+}
+
+function path(points, stroke, weight, fill, closed = false) {
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, points[0].y);
+  for (const point of points.slice(1)) ctx.lineTo(point.x, point.y);
+  if (closed) ctx.closePath();
+  if (fill) {
+    ctx.fillStyle = fill;
+    ctx.fill();
+  }
+  if (stroke) {
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = weight;
+    ctx.stroke();
+  }
+}
+
+function arrow(from, to, color) {
+  const angle = Math.atan2(to.y - from.y, to.x - from.x);
+  const length = Math.min(13, Math.hypot(to.x - from.x, to.y - from.y));
+  path([from, to], color, 4);
+  const wings = [-0.48, 0.48].map(offset => ({
+    x: to.x - length * Math.cos(angle + offset),
+    y: to.y - length * Math.sin(angle + offset)
+  }));
+  path([to, ...wings], null, 0, color, true);
+}
+
+function render(edges, dimension) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const origin = project([0, 0, 0]);
+  for (let i = -1; i <= 3; i++) {
+    path([project([i,-1,0]), project([i,3,0])], '#2a3d4f', 1);
+    path([project([-1,i,0]), project([3,i,0])], '#2a3d4f', 1);
+  }
+  ctx.font = '16px system-ui';
+  for (const [name, tip] of [['x',[3.35,0,0]], ['y',[0,3.35,0]], ['z',[0,0,2.45]]]) {
+    const end = project(tip);
+    path([origin, end], '#657b90', 1.5);
+    ctx.fillStyle = '#b7cadd';
+    ctx.fillText(name, end.x + 5, end.y - 4);
+  }
+  const points = corners(edges).map(project);
+  if (dimension >= 2) {
+    const surfaces = faces.map((indices, face) => {
+      const vertices = indices.map(index => points[index]);
+      return {vertices, face, depth: vertices.reduce((sum, point) => sum + point.depth, 0) / 4};
+    });
+    surfaces.sort((a, b) => a.depth - b.depth);
+    for (const {vertices, face} of surfaces) {
+      path(vertices, '#89cbbb', 1.4, dimension === 2 ? '#3c8880' : fills[face], true);
+    }
+  } else if (dimension === 1) {
+    path([points[0], points[1]], '#7de5d0', 7);
+  } else {
+    ctx.fillStyle = '#ffe097';
+    ctx.beginPath();
+    ctx.arc(origin.x, origin.y, 7, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+  if (example === examples.box && progress > 0.05) {
+    const [x, y, z] = edges[2];
+    const outerX = edges[0][0] + x;
+    const top = project([outerX, y, z]);
+    const floor = project([outerX, y, 0]);
+    ctx.setLineDash([4, 3]);
+    path([top, floor], '#ffe097', 2);
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#ffe097';
+    ctx.font = 'bold 16px system-ui';
+    ctx.fillText('height ' + format(z), (top.x + floor.x) / 2 + 8, (top.y + floor.y) / 2);
+  }
+  const original = corners(basis).map(project);
+  ctx.setLineDash([5, 5]);
+  for (let index = 0; index < 8; index++) {
+    for (const bit of [1, 2, 4]) {
+      if (!(index & bit)) path([original[index], original[index | bit]], '#c4d0dc', 1.1);
+    }
+  }
+  ctx.setLineDash([]);
+  edges.forEach((edge, index) => {
+    const tip = project(edge);
+    if (Math.hypot(tip.x - origin.x, tip.y - origin.y) < 9) return;
+    arrow(origin, tip, colors[index]);
+    ctx.font = 'bold 21px system-ui';
+    ctx.fillStyle = colors[index];
+    ctx.fillText(labels[index], tip.x + 7, tip.y - 8);
+  });
+}
+
+function draw(value) {
+  progress = value;
+  const edges = basis.map((edge, column) =>
+    edge.map((component, axis) => component + (example.edges[column][axis] - component) * value));
+  // These four examples have upper triangular matrices throughout the animation.
+  const [baseLength, baseWidth, height] = edges.map((edge, axis) => edge[axis]);
+  const baseArea = baseLength * baseWidth;
+  const det = baseArea * height;
+  const dimension = value === 1 ? example.dimension : 3;
+  render(edges, dimension);
+  slider.value = Math.round(value * 100);
+  byId('percent').textContent = slider.value + '%';
+  byId('volume').textContent = format(Math.abs(det));
+  byId('det').textContent = format(det);
+  byId('rank').textContent = dimension;
+  byId('formula').textContent = 'Base area × perpendicular height = ' + format(baseArea) + ' × ' + format(height);
+  byId('explain').textContent = value === 0 ?
+    'The original cube has a base of area 1 and a height of 1, so it fills 1 cubic unit.' :
+    value === 1 ? example.result :
+    example === examples.box ? 'Watch the gold height marker. Sliding the layers sideways changes the shape while the current volume is still base area × height.' :
+    'Watch the volume shrink. At the endpoint, the matrix columns lose independent directions.';
+  ['edge-x','edge-y','edge-z'].forEach((id, index) => {
+    byId(id).textContent = '(' + edges[index].map(format).join(', ') + ')';
+  });
+}
+
+function stop() {
+  if (frame !== null) cancelAnimationFrame(frame);
+  frame = null;
+  play.textContent = progress === 1 ? 'Replay transformation' : progress === 0 ? 'Play transformation' : 'Resume';
+}
+
+function seek(value) {
+  draw(value);
+  stop();
+}
+
+document.querySelectorAll('[data-example]').forEach(button => {
+  button.addEventListener('click', () => {
+    document.querySelector('[data-example][aria-pressed="true"]').setAttribute('aria-pressed','false');
+    button.setAttribute('aria-pressed','true');
+    example = examples[button.dataset.example];
+    byId('example-title').textContent = example.title;
+    byId('example-story').textContent = example.story;
+    seek(0);
+  });
+});
+
+play.addEventListener('click', () => {
+  if (frame !== null) {
+    stop();
+    return;
+  }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    seek(1);
+    return;
+  }
+  if (progress === 1) draw(0);
+  const initial = progress;
+  let start;
+  play.textContent = 'Pause';
+  function animate(now) {
+    start ??= now;
+    draw(Math.min(1, initial + (now - start) / 4200));
+    if (progress === 1) stop();
+    else frame = requestAnimationFrame(animate);
+  }
+  frame = requestAnimationFrame(animate);
+});
+slider.addEventListener('input', () => seek(Number(slider.value) / 100));
+byId('start').addEventListener('click', () => seek(0));
+byId('end').addEventListener('click', () => seek(1));
+byId('view').addEventListener('click', () => { view = {...defaultView}; draw(progress); });
+
+function rotate(yaw, pitch) {
+  view.yaw += yaw;
+  view.pitch = Math.max(-1.48, Math.min(1.48, view.pitch + pitch));
+  draw(progress);
+}
+canvas.addEventListener('pointerdown', event => {
+  if (!event.isPrimary || event.button !== 0) return;
+  canvas.setPointerCapture(event.pointerId);
+  drag = event;
+});
+canvas.addEventListener('pointermove', event => {
+  if (drag?.pointerId !== event.pointerId) return;
+  rotate((event.clientX - drag.clientX) * .012, (event.clientY - drag.clientY) * .012);
+  drag = event;
+});
+canvas.addEventListener('lostpointercapture', () => { drag = null; });
+canvas.addEventListener('keydown', event => {
+  const steps = {ArrowLeft:[-.12,0], ArrowRight:[.12,0], ArrowUp:[0,.12], ArrowDown:[0,-.12]};
+  if (!Object.hasOwn(steps, event.key)) return;
+  event.preventDefault();
+  rotate(...steps[event.key]);
+});
+byId('example-title').textContent = example.title;
+byId('example-story').textContent = example.story;
+draw(0);
+</script>
+</body>
+</html>

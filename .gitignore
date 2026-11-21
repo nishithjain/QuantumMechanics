@@ -20,7 +20,7 @@
 *.ogv
 *.mp3
 
-# Other video/recording formats
+# Other video archive formats
 *.dav
 *.asf
 *.rm

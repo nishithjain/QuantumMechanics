@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quantum X gate · Coordinate swap</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Inter, "Segoe UI", system-ui, sans-serif;
+      color: #162337;
+      background: #f4f5f2;
+      --muted: #505e6e;
+      --border: #d9e1e2;
+      --math: "STIX Two Text", Cambria, Georgia, serif;
+      --canvas: #111e33;
+      --original: #c4c9ef;
+      --moving: #72edbf;
+      --grid: #79a6e0;
+      --diagonal: #f3c97c;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, summary:focus-visible {
+      outline: 3px solid #1c8d73;
+      outline-offset: 3px;
+    }
+
+    main {
+      width: min(100% - clamp(26px, 7vw, 88px), 1140px);
+      margin: 0 auto;
+      padding: clamp(24px, 5vw, 56px) 0 36px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      font-size: clamp(2.25rem, 5vw, 3.65rem);
+      font-weight: 750;
+      line-height: 1.04;
+      letter-spacing: -.055em;
+    }
+
+    .intro p {
+      margin-top: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .math { font-family: var(--math); }
+    var { font-family: var(--math); }
+    .nowrap { white-space: nowrap; }
+
+    .selectors {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px 28px;
+      flex-wrap: wrap;
+      margin: 26px 0 16px;
+    }
+
+    .selector-label {
+      margin-bottom: 8px;
+      font-weight: 650;
+      font-size: .82rem;
+      color: var(--muted);
+    }
+
+    .choices { display: flex; gap: 7px; flex-wrap: wrap; }
+    .choice {
+      min-height: 44px;
+      padding: 8px 13px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      color: #26364a;
+      background: #fff;
+      font-weight: 620;
+      font-size: .86rem;
+    }
+
+    .choice:hover { border-color: #849a9c; }
+    .choice[aria-pressed="true"] {
+      color: #12493c;
+      border-color: #39836e;
+      background: #e1f3eb;
+    }
+
+    .choice .math { font-size: .99rem; }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+      align-items: start;
+      gap: 16px;
+    }
+
+    .diagram {
+      background: var(--canvas);
+      color: #f1f5ff;
+      border: 1px solid #223550;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .diagram h2 {
+      padding: 17px 19px 6px;
+      font-size: 1.04rem;
+      font-weight: 650;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: clamp(280px, 61vw, 412px);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 17px;
+      padding: 7px 19px 15px;
+      margin: 0;
+      list-style: none;
+      color: #d8e0ef;
+      font-size: .78rem;
+    }
+
+    .legend li { display: flex; align-items: center; gap: 6px; }
+    .swatch {
+      width: 17px;
+      border-top: 2px solid;
+      border-radius: 1px;
+    }
+
+    .swatch.original { border-style: dashed; border-width: 2px 0 0; color: var(--original); }
+    .swatch.moving { color: var(--moving); }
+    .swatch.dotted { border-style: dotted; border-width: 2px 0 0; color: #a6b5cd; }
+    .swatch.grid { color: var(--grid); }
+
+    .playback {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 18px 14px;
+      border-top: 1px solid #2b3c56;
+      background: #17263c;
+    }
+
+    .actions { display: flex; gap: 6px; }
+    .action {
+      min-height: 44px;
+      padding: 7px 12px;
+      border: 1px solid #475a73;
+      border-radius: 8px;
+      background: transparent;
+      color: #f3f7ff;
+      font-size: .85rem;
+      font-weight: 650;
+    }
+
+    .action:hover { background: #263951; }
+    .action.play {
+      min-width: 73px;
+      background: var(--moving);
+      color: #103b32;
+      border-color: var(--moving);
+    }
+
+    .action.play:hover { background: #9af4d3; }
+    .diagram :focus-visible { outline-color: #f3c97c; }
+    .timeline { flex: 1; min-width: 110px; }
+    .timeline-heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      color: #d8e0ef;
+      font-size: .78rem;
+    }
+
+    #progress-value { font-variant-numeric: tabular-nums; }
+    input[type="range"] {
+      display: block;
+      width: 100%;
+      height: 24px;
+      margin: 0;
+      accent-color: var(--moving);
+      cursor: ew-resize;
+    }
+
+    .card {
+      padding: 20px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .card h2 { font-size: 1.06rem; font-weight: 700; }
+    .rule {
+      margin-top: 9px;
+      color: #3b5166;
+      font-size: 1.13rem;
+    }
+
+    .calculation {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: clamp(8px, 1.2vw, 15px);
+      margin-top: 16px;
+      padding: 17px 8px 13px;
+      border-radius: 11px;
+      background: #f1f5f7;
+    }
+
+    .operand { display: grid; justify-items: center; gap: 8px; }
+    .matrix {
+      position: relative;
+      display: inline-grid;
+      grid-template-columns: repeat(2, minmax(1ch, auto));
+      gap: 1px 11px;
+      align-self: start;
+      justify-items: center;
+      padding: 1px 9px;
+      font: 1.45rem/1.12 var(--math);
+      font-variant-numeric: tabular-nums;
+      vertical-align: middle;
+    }
+
+    .matrix.column { grid-template-columns: minmax(1.65ch, auto); }
+    .matrix::before, .matrix::after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      content: "";
+      border-block: 1.5px solid;
+    }
+
+    .matrix::before { left: 0; border-left: 1.5px solid; }
+    .matrix::after { right: 0; border-right: 1.5px solid; }
+    .operand small { color: var(--muted); font-size: .73rem; }
+    .input-vector { color: #4f4e91; }
+    .output-vector { color: #185948; }
+    .equals { padding-top: 11px; font: 1.35rem var(--math); }
+
+    .insight {
+      margin-top: 18px;
+      padding-left: 12px;
+      border-left: 3px solid #39836e;
+    }
+
+    .insight h3 { font-size: .98rem; }
+    .insight p, .exercise p {
+      margin-top: 5px;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: .89rem;
+    }
+
+    .output-note {
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: .79rem;
+      line-height: 1.45;
+    }
+
+    .exercise {
+      margin-top: 12px;
+      padding: 4px 17px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .exercise summary {
+      padding: 13px 0;
+      cursor: pointer;
+      font-size: .89rem;
+      font-weight: 650;
+    }
+
+    .exercise-body { padding: 0 0 13px; }
+    .exercise-formula { display: flex; align-items: center; gap: 8px; margin: 2px 0 10px; }
+    .exercise-formula .matrix { font-size: 1.2rem; }
+
+    @media (max-width: 780px) {
+      .workspace { grid-template-columns: 1fr; }
+      .selectors { justify-content: flex-start; }
+    }
+
+    @media (max-width: 410px) {
+      .choice { padding-inline: 10px; }
+      .playback { padding-inline: 12px; gap: 10px; }
+      .action { padding-inline: 9px; }
+      .diagram h2, .legend { padding-inline: 13px; }
+      .legend { column-gap: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="intro">
+      <h1>Quantum X gate</h1>
+      <p>On the real coordinate plane, swapping <var>x</var> and <var>y</var> reflects the arrow across <var class="nowrap">y = x</var>.</p>
+    </header>
+
+    <div class="selectors">
+      <div role="group" aria-labelledby="example-label">
+        <h2 class="selector-label" id="example-label">Choose a vector</h2>
+        <div class="choices">
+          <button class="choice" type="button" data-example="swap" aria-pressed="true">Swap <span class="math">(3, 1)</span></button>
+          <button class="choice" type="button" data-example="fixed" aria-pressed="false">Fixed <span class="math">(1, 1)</span></button>
+          <button class="choice" type="button" data-example="reverse" aria-pressed="false">Reverse <span class="math">(1, −1)</span></button>
+          <button class="choice" type="button" data-example="ket0" aria-pressed="false" aria-label="Ket zero"><span class="math">|0⟩</span></button>
+          <button class="choice" type="button" data-example="ket1" aria-pressed="false" aria-label="Ket one"><span class="math">|1⟩</span></button>
+        </div>
+      </div>
+      <div role="group" aria-labelledby="gate-label">
+        <h2 class="selector-label" id="gate-label">Choose a matrix</h2>
+        <div class="choices">
+          <button class="choice" type="button" data-gate="x" aria-pressed="true">X gate</button>
+          <button class="choice" type="button" data-gate="identity" aria-pressed="false">Identity</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="workspace">
+      <section class="diagram" aria-labelledby="plot-title">
+        <h2 id="plot-title">Reflection across <var>y = x</var></h2>
+        <canvas id="plane" role="img" aria-label="Coordinate plane with the vector (3, 1) and its reflection (1, 3).">
+          The matrix action beside the plot shows the input and output vectors.
+        </canvas>
+        <ul class="legend" aria-label="Plot legend">
+          <li><span class="swatch original" aria-hidden="true"></span>Original arrow</li>
+          <li><span class="swatch moving" aria-hidden="true"></span>Animated arrow</li>
+          <li><span class="swatch dotted" aria-hidden="true"></span>Original grid</li>
+          <li><span class="swatch grid" aria-hidden="true"></span>Animated grid</li>
+        </ul>
+        <div class="playback">
+          <div class="actions">
+            <button class="action play" id="play" type="button">Play</button>
+            <button class="action" id="reset" type="button">Reset</button>
+          </div>
+          <div class="timeline">
+            <div class="timeline-heading">
+              <label for="progress">Animation</label>
+              <span id="progress-value" aria-hidden="true">0%</span>
+            </div>
+            <input type="range" id="progress" min="0" max="100" step="1" value="0" aria-valuetext="0%, input vector" aria-describedby="output-note">
+          </div>
+        </div>
+      </section>
+
+      <div>
+        <section class="card" aria-labelledby="calculation-title">
+          <h2 id="calculation-title">Matrix action</h2>
+          <p id="rule" class="rule math">X(a, b)ᵀ = (b, a)ᵀ</p>
+          <div class="calculation" id="calculation" role="img" aria-label="X times column vector (3, 1) equals column vector (1, 3).">
+            <div class="operand" aria-hidden="true">
+              <span class="matrix" id="gate-matrix"><span>0</span><span>1</span><span>1</span><span>0</span></span>
+              <small id="matrix-label">Matrix X</small>
+            </div>
+            <div class="operand" aria-hidden="true">
+              <span class="matrix column input-vector" id="input-vector"><span>3</span><span>1</span></span>
+              <small>Input</small>
+            </div>
+            <span class="equals" aria-hidden="true">=</span>
+            <div class="operand" aria-hidden="true">
+              <span class="matrix column output-vector" id="output-vector"><span>1</span><span>3</span></span>
+              <small>Output</small>
+            </div>
+          </div>
+          <div class="insight" aria-live="polite" aria-atomic="true">
+            <h3 id="insight-title">The coordinates swap</h3>
+            <p id="insight-text">The top row of <var>X</var> picks the second coordinate. The bottom row picks the first. The arrow ends on a different line through the origin.</p>
+          </div>
+          <p class="output-note" id="output-note">At 100%, the animated arrow shows the gate output.</p>
+        </section>
+        <details class="exercise">
+          <summary>Try the Hadamard matrix</summary>
+          <div class="exercise-body">
+            <div class="exercise-formula" role="img" aria-label="H equals one over square root of two times the matrix with rows (1, 1) and (1, negative 1).">
+              <span class="math" aria-hidden="true">H = 1/√2</span>
+              <span class="matrix" aria-hidden="true"><span>1</span><span>1</span><span>1</span><span>−1</span></span>
+            </div>
+            <p>Apply <var>H</var> to <span class="math">(1, 1)ᵀ</span>. Does the result lie on the same line through the origin?</p>
+          </div>
+        </details>
+      </div>
+    </div>
+    <noscript><p>Enable JavaScript to play and scrub through the animation.</p></noscript>
+  </main>
+
+  <script>
+    "use strict";
+
+    const examples = {
+      swap: {
+        vector: [3, 1],
+        title: "The coordinates swap",
+        detail: "The top row of X picks the second coordinate. The bottom row picks the first. The arrow ends on a different line through the origin."
+      },
+      fixed: {
+        vector: [1, 1],
+        title: "The arrow stays fixed · λ = +1",
+        detail: "Both coordinates are equal. The arrow lies on y = x, so reflecting it gives exactly the same arrow. Xv = +1 · v."
+      },
+      reverse: {
+        vector: [1, -1],
+        title: "The arrow reverses · λ = −1",
+        detail: "The output (−1, 1) is −1 times the input (1, −1). Both arrows lie on y = −x. In the animation, the arrow passes through the origin as it reverses."
+      },
+      ket0: {
+        vector: [1, 0],
+        title: "X|0⟩ = |1⟩",
+        detail: "|0⟩ is the first basis vector, (1, 0)ᵀ. Swapping the entries gives the second basis vector, (0, 1)ᵀ, which is |1⟩."
+      },
+      ket1: {
+        vector: [0, 1],
+        title: "X|1⟩ = |0⟩",
+        detail: "|1⟩ is the second basis vector, (0, 1)ᵀ. Swapping the entries gives the first basis vector, (1, 0)ᵀ, which is |0⟩."
+      }
+    };
+
+    const gates = {
+      x: { name: "X", matrix: [[0, 1], [1, 0]], rule: "X(a, b)ᵀ = (b, a)ᵀ" },
+      identity: { name: "I", matrix: [[1, 0], [0, 1]], rule: "I(a, b)ᵀ = (a, b)ᵀ" }
+    };
+
+    const state = { gate: "x", example: "swap", t: 0, frame: null, startTime: 0 };
+    const duration = 2600;
+    const byId = id => document.getElementById(id);
+    const plane = byId("plane");
+    const ctx = plane.getContext("2d");
+    const play = byId("play");
+    const progress = byId("progress");
+    const progressValue = byId("progress-value");
+    const color = {
+      axis: "#96a9c4",
+      fixedGrid: "#627897",
+      grid: "rgba(110, 169, 244, .42)",
+      gridCell: "rgba(96, 167, 255, .23)",
+      gridCellEdge: "#79a6e0",
+      original: "#c4c9ef",
+      moving: "#72edbf",
+      reflection: "#f3c97c",
+      perpendicular: "#aab0e1",
+      labelBackground: "#111e33"
+    };
+
+    const formatNumber = value => String(value).replace("-", "−");
+    const pair = vector => "(" + vector.map(formatNumber).join(", ") + ")";
+    const project = (matrix, [x, y]) => matrix.map(([a, b]) => a * x + b * y);
+    const mix = (from, to, t) => from.map((value, index) => value + (to[index] - value) * t);
+
+    function drawLine(start, end, stroke, width = 1, dash = []) {
+      ctx.beginPath();
+      ctx.moveTo(...start);
+      ctx.lineTo(...end);
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = width;
+      ctx.setLineDash(dash);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function dot([x, y], radius, stroke, fill) {
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      if (fill) {
+        ctx.fillStyle = fill;
+        ctx.fill();
+      }
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = 1.6;
+      ctx.stroke();
+    }
+
+    function arrow(start, end, stroke, isOriginal) {
+      const [x, y] = end;
+      const dx = x - start[0];
+      const dy = y - start[1];
+      const length = Math.hypot(dx, dy);
+      if (length < 3) {
+        dot(end, 4, stroke, color.labelBackground);
+        return;
+      }
+      const angle = Math.atan2(dy, dx);
+      const head = Math.min(13, length * .52);
+      const base = [x - head * Math.cos(angle), y - head * Math.sin(angle)];
+      const wingX = head * .42 * Math.sin(angle);
+      const wingY = head * .42 * Math.cos(angle);
+      drawLine(start, base, stroke, isOriginal ? 2.4 : 3.4, isOriginal ? [4, 4] : []);
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(base[0] + wingX, base[1] - wingY);
+      ctx.lineTo(base[0] - wingX, base[1] + wingY);
+      ctx.closePath();
+      ctx.fillStyle = stroke;
+      ctx.fill();
+    }
+
+    function label(text, [x, y], fill, width, height, offsetY = -13) {
+      ctx.font = '600 13px Inter, "Segoe UI", system-ui, sans-serif';
+      ctx.textAlign = "left";
+      ctx.textBaseline = "middle";
+      const textWidth = ctx.measureText(text).width;
+      const left = x + textWidth + 22 > width ? x - textWidth - 11 : x + 11;
+      const middle = Math.max(15, Math.min(height - 15, y + offsetY));
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = color.labelBackground;
+      ctx.lineJoin = "round";
+      ctx.strokeText(text, left, middle);
+      ctx.fillStyle = fill;
+      ctx.fillText(text, left, middle);
+    }
+
+    function drawPlane() {
+      const { width, height } = plane.getBoundingClientRect();
+      if (!width || !height) return;
+      const density = Math.min(window.devicePixelRatio || 1, 2);
+      const bitmapWidth = Math.round(width * density);
+      const bitmapHeight = Math.round(height * density);
+      if (plane.width !== bitmapWidth || plane.height !== bitmapHeight) {
+        plane.width = bitmapWidth;
+        plane.height = bitmapHeight;
+      }
+      ctx.setTransform(density, 0, 0, density, 0, 0);
+      ctx.clearRect(0, 0, width, height);
+      ctx.lineCap = "round";
+
+      const unit = Math.min(width - 40, height - 26) / 8.5;
+      const center = [width / 2, height / 2];
+      const point = ([x, y]) => [center[0] + x * unit, center[1] - y * unit];
+      const { matrix, name } = gates[state.gate];
+      const source = examples[state.example].vector;
+      const destination = project(matrix, source);
+      const atProgress = vector => mix(vector, project(matrix, vector), state.t);
+      const animatedPoint = vector => point(atProgress(vector));
+      const sameVector = source.every((value, index) => value === destination[index]);
+      const isReflection = state.gate === "x";
+      const viewX = (width / 2 - 12) / unit;
+      const viewY = (height / 2 - 8) / unit;
+      const diagonalExtent = Math.min(viewX, viewY);
+
+      for (let x = -Math.floor(viewX); x <= viewX; x++) {
+        drawLine(point([x, -viewY]), point([x, viewY]), color.fixedGrid, 1, [1, 5]);
+      }
+      for (let y = -Math.floor(viewY); y <= viewY; y++) {
+        drawLine(point([-viewX, y]), point([viewX, y]), color.fixedGrid, 1, [1, 5]);
+      }
+
+      ctx.beginPath();
+      for (let index = -4; index <= 4; index++) {
+        ctx.moveTo(...animatedPoint([index, -4]));
+        ctx.lineTo(...animatedPoint([index, 4]));
+        ctx.moveTo(...animatedPoint([-4, index]));
+        ctx.lineTo(...animatedPoint([4, index]));
+      }
+      ctx.strokeStyle = color.grid;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Trace one square so the motion remains visible when the grids align again.
+      ctx.beginPath();
+      ctx.moveTo(...animatedPoint([-3, -1]));
+      ctx.lineTo(...animatedPoint([-2, -1]));
+      ctx.lineTo(...animatedPoint([-2, 0]));
+      ctx.lineTo(...animatedPoint([-3, 0]));
+      ctx.closePath();
+      ctx.fillStyle = color.gridCell;
+      ctx.fill();
+      ctx.strokeStyle = color.gridCellEdge;
+      ctx.stroke();
+
+      if (isReflection) {
+        drawLine(point([-diagonalExtent, -diagonalExtent]), point([diagonalExtent, diagonalExtent]), color.reflection, 1.6, [6, 5]);
+        const guideLabel = .95 - diagonalExtent;
+        label("y = x", point([guideLabel, guideLabel]), color.reflection, width, height, 11);
+      }
+      if (isReflection && state.example === "reverse") {
+        drawLine(point([-diagonalExtent, diagonalExtent]), point([diagonalExtent, -diagonalExtent]), color.perpendicular, 1.2, [4, 5]);
+        label("y = −x", point([diagonalExtent - 1.1, 1.1 - diagonalExtent]), color.perpendicular, width, height, 15);
+      }
+
+      drawLine(point([-viewX, 0]), point([viewX, 0]), color.axis, 1.2);
+      drawLine(point([0, -viewY]), point([0, viewY]), color.axis, 1.2);
+      ctx.font = '11px Inter, "Segoe UI", system-ui, sans-serif';
+      ctx.fillStyle = color.axis;
+      ctx.textBaseline = "top";
+      ctx.textAlign = "center";
+      for (let index = -3; index <= 3; index++) {
+        if (index === 0) continue;
+        const tick = formatNumber(index);
+        const [x] = point([index, 0]);
+        const [, y] = point([0, index]);
+        ctx.fillText(tick, x, center[1] + 7);
+        ctx.textAlign = "right";
+        ctx.fillText(tick, center[0] - 7, y - 7);
+        ctx.textAlign = "center";
+      }
+      ctx.fillText("0", center[0] - 9, center[1] + 7);
+      ctx.fillText("x", width - 15, center[1] - 17);
+      ctx.fillText("y", center[0] + 10, 6);
+
+      if (!sameVector) {
+        arrow(center, point(source), color.original, true);
+        if (state.t < 1) dot(point(destination), 4.5, color.moving, color.labelBackground);
+      }
+      arrow(center, animatedPoint(source), color.moving, false);
+
+      if (sameVector) {
+        label("v = " + name + "v  " + pair(source), point(source), color.moving, width, height, -16);
+      } else {
+        label("v  " + pair(source), point(source), state.t === 0 ? color.moving : color.original, width, height);
+        label(name + "v  " + pair(destination), point(destination), color.moving, width, height);
+      }
+    }
+
+    function readout() {
+      const percent = Math.round(state.t * 100);
+      progress.value = percent;
+      progressValue.textContent = percent + "%";
+      let position = percent + "%";
+      if (percent === 0) position += ", input vector";
+      if (percent === 100) position += ", gate output";
+      progress.setAttribute("aria-valuetext", position);
+      play.textContent = state.frame !== null ? "Pause" : state.t === 1 ? "Replay" : "Play";
+      drawPlane();
+    }
+
+    function setEntries(id, entries) {
+      const children = byId(id).children;
+      entries.forEach((value, index) => {
+        children[index].textContent = formatNumber(value);
+      });
+    }
+
+    function updateSelection() {
+      const gate = gates[state.gate];
+      const example = examples[state.example];
+      const destination = project(gate.matrix, example.vector);
+      const isIdentity = state.gate === "identity";
+      byId("plot-title").innerHTML = isIdentity ? "Identity on the coordinate plane" : "Reflection across <var>y = x</var>";
+      plane.setAttribute("aria-label", "Coordinate plane. Input " + pair(example.vector) + ". Output " + pair(destination) + ".");
+      byId("rule").textContent = gate.rule;
+      byId("matrix-label").textContent = "Matrix " + gate.name;
+      setEntries("gate-matrix", gate.matrix.flat());
+      setEntries("input-vector", example.vector);
+      setEntries("output-vector", destination);
+      byId("calculation").setAttribute("aria-label", gate.name + " times column vector " + pair(example.vector) + " equals column vector " + pair(destination) + ".");
+      byId("insight-title").textContent = isIdentity ? "Every nonzero vector stays fixed · λ = +1" : example.title;
+      byId("insight-text").textContent = isIdentity ? "I keeps both coordinates in their original positions. Since Iv = v, every nonzero vector is an eigenvector of I." : example.detail;
+    }
+
+    function pause() {
+      if (state.frame !== null) {
+        cancelAnimationFrame(state.frame);
+        state.frame = null;
+      }
+    }
+
+    function advance(now) {
+      state.t = Math.max(0, Math.min(1, (now - state.startTime) / duration));
+      state.frame = state.t < 1 ? requestAnimationFrame(advance) : null;
+      readout();
+    }
+
+    function reset() {
+      pause();
+      state.t = 0;
+      readout();
+    }
+
+    play.addEventListener("click", () => {
+      if (state.frame !== null) {
+        pause();
+      } else if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        state.t = state.t === 1 ? 0 : 1;
+      } else {
+        if (state.t === 1) state.t = 0;
+        state.startTime = performance.now() - state.t * duration;
+        state.frame = requestAnimationFrame(advance);
+      }
+      readout();
+    });
+
+    byId("reset").addEventListener("click", reset);
+    progress.addEventListener("input", () => {
+      pause();
+      state.t = Number(progress.value) / 100;
+      readout();
+    });
+
+    for (const key of ["example", "gate"]) {
+      const buttons = [...document.querySelectorAll("[data-" + key + "]")];
+      for (const button of buttons) {
+        button.addEventListener("click", () => {
+          state[key] = button.dataset[key];
+          for (const option of buttons) {
+            option.setAttribute("aria-pressed", option === button);
+          }
+          updateSelection();
+          reset();
+        });
+      }
+    }
+
+    updateSelection();
+    readout();
+    new ResizeObserver(drawPlane).observe(plane);
+  </script>
+</body>
+</html>

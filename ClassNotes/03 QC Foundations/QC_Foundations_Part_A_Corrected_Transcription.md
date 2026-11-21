@@ -4,7 +4,7 @@
 **Date:** 24 October 2026  
 **Sources:** `01 QC Foundations Part A.txt` (lecture transcription) and `01 QC Foundations Part A.pdf` (corresponding slides).
 
-> **Editorial approach:** This is a lightly edited **transcription**, not rewritten study notes. Clear speech-to-text errors, spelling, punctuation, and slide-verifiable terminology have been corrected. Spoken repetitions, informal analogies, and classroom discussion are retained. Mathematical claims that may be imprecise in the spoken lecture have not been silently rewritten into new explanations. The slide deck includes content after the supplied recording ends; that content is not presented as spoken dialogue here. Where audio wording is unclear and cannot be established from the slides, verify against the original recording.
+> **Editorial approach:** This is a lightly edited **transcription**, not rewritten study notes. Clear speech-to-text errors, spelling, punctuation, and slide-verifiable terminology have been corrected. Spoken repetitions, informal analogies, and classroom discussion are retained. Mathematical claims that may be imprecise in the spoken lecture have not been silently rewritten into new explanations. The slide deck includes content after the supplied transcript ends; that content is not presented as spoken dialogue here. Where audio wording is unclear and cannot be established from the slides, verify against the original lecture audio.
 
 ## Opening and connection to the previous lecture
 
@@ -83,7 +83,7 @@ So if you look at the spinning coin,  so you have a very simple coin. So it is s
 
 So that's the important thing that you have to remember up here. You start off in a classical state. You go up here, you don't know whether it is head or tail. And then when you come down again, you're back again to classic. OK, so what we say is that this coin is when it is spinning, it is you don't know whether it is heads or tails. So therefore you say it is in a superposition state.
 
-OK, but it is really not at two places because the coin has two faces. So now if you had a very, very small,  very, very fast camera recording what is happening, you would see it every instant of time. one of the faces would actually be up, correct? So this is very important.  you,  because you don't know where it is, so we say it is in a superposition state. Okay. So this is like a compass. Okay.
+OK, but it is really not at two places because the coin has two faces. So now if you had a very, very small,  very, very fast camera capturing what is happening, you would see it every instant of time. one of the faces would actually be up, correct? So this is very important.  you,  because you don't know where it is, so we say it is in a superposition state. Okay. So this is like a compass. Okay.
 
 It can point in any direction,  but its space is infinite along that circle. But we are probably concerned more with the North Pole, where the North is or in the South. So we actually That's the two faces of the coin. So we need only two states for quantum computing. Polarization is the simplest one to explain. So that's the motion of this, not the motion of the cell, the description.
 

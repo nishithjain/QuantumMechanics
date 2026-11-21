@@ -6,11 +6,12 @@ Start with [the complete Markdown notes](notes/lecture-notes.md). They follow th
 
 Open each `.html` file directly in Chrome, Edge or Firefox. They are standalone: no installation, internet, external scripts or server is needed.
 
-1. [Matrix eigenvectors](animations/animation-01.html)
-2. [Parity oracle using CNOTs](animations/animation-02.html)
-3. [Phase kickback](animations/animation-03.html)
-4. [Hadamard sign explorer](animations/animation-04.html)
-5. [Deutsch algorithm](animations/animation-05.html)
+1. [First matrix eigenvectors](animations/first-matrix-eigenvectors.html) (§3.2; older step-through: [animation-01](animations/animation-01.html))
+2. [Y gate quiz](animations/y-gate-quiz.html) (§4.6)
+3. [Parity oracle using CNOTs](animations/animation-02.html)
+4. [Phase kickback](animations/animation-03.html)
+5. [Hadamard sign explorer](animations/animation-04.html)
+6. [Deutsch algorithm](animations/animation-05.html)
 
 Images are stored in `images/` and referenced by relative paths from `notes/`. Some Markdown renderers show the animation links but do not embed interactive HTML; click the links to open in a browser.
 
