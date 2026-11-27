@@ -1,8 +1,6 @@
 # Quantum Mechanics — study notes
 
-This repository contains **lecture notes and assets only** (images, animations, and related files).
-
-Excluded from the main course repo: transcripts (`.txt` / transcript markdown), PDFs, and tooling scripts.
+This repository contains **lecture notes and assets only** (images, animations, and related files
 
 ## Layout
 
