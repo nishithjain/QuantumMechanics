@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 570" width="540" height="570" font-family="Arial, Helvetica, sans-serif">
+<defs><marker id="mB" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#1f5fbf"/></marker><marker id="mR" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#d62828"/></marker><marker id="mK" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#333"/></marker><marker id="mG" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2e8b2e"/></marker></defs>
+<rect width="540" height="570" fill="#ffffff"/>
+<text x="270.0" y="26" font-size="16" font-weight="bold" text-anchor="middle" fill="#222">Why z<tspan dy="-6" font-size="11">10</tspan><tspan dy="6"> = 1: each multiplication by z turns 36&#176;</tspan></text>
+<line x1="75" y1="285" x2="465" y2="285" stroke="#bbb" stroke-width="1"/><line x1="270" y1="480" x2="270" y2="90" stroke="#bbb" stroke-width="1"/><circle cx="270" cy="285" r="165" fill="none" stroke="#444" stroke-width="1.8"/>
+<path d="M408.0,268.1 A139,139 0 0 0 391.6,217.6" fill="none" stroke="#1f5fbf" stroke-width="2.2" marker-end="url(#mB)"/>
+<path d="M371.7,190.2 A139,139 0 0 0 328.7,159.0" fill="none" stroke="#1f5fbf" stroke-width="2.2" marker-end="url(#mB)"/>
+<path d="M296.5,148.6 A139,139 0 0 0 243.5,148.6" fill="none" stroke="#1f5fbf" stroke-width="2.2" marker-end="url(#mB)"/>
+<path d="M211.3,159.0 A139,139 0 0 0 168.3,190.2" fill="none" stroke="#1f5fbf" stroke-width="2.2" marker-end="url(#mB)"/>
+<path d="M148.4,217.6 A139,139 0 0 0 132.0,268.1" fill="none" stroke="#1f5fbf" stroke-width="2.2" marker-end="url(#mB)"/>
+<path d="M132.0,301.9 A139,139 0 0 0 148.4,352.4" fill="none" stroke="#1f5fbf" stroke-width="2.2" marker-end="url(#mB)"/>
+<path d="M168.3,379.8 A139,139 0 0 0 211.3,411.0" fill="none" stroke="#1f5fbf" stroke-width="2.2" marker-end="url(#mB)"/>
+<path d="M243.5,421.4 A139,139 0 0 0 296.5,421.4" fill="none" stroke="#1f5fbf" stroke-width="2.2" marker-end="url(#mB)"/>
+<path d="M328.7,411.0 A139,139 0 0 0 371.7,379.8" fill="none" stroke="#1f5fbf" stroke-width="2.2" marker-end="url(#mB)"/>
+<path d="M391.6,352.4 A139,139 0 0 0 408.0,301.9" fill="none" stroke="#1f5fbf" stroke-width="2.2" marker-end="url(#mB)"/>
+<circle cx="403.5" cy="188.0" r="6" fill="#d62828"/>
+<text x="416.4" y="182.6" font-size="12" fill="#d62828" text-anchor="start" font-weight="bold">z (36&#176;)</text>
+<circle cx="321.0" cy="128.1" r="5" fill="#1f5fbf"/>
+<text x="325.9" y="110.9" font-size="12" fill="#1f5fbf" text-anchor="start">z<tspan dy="-5" font-size="9">2</tspan><tspan dy="5"> (72&#176;)</tspan></text>
+<circle cx="219.0" cy="128.1" r="5" fill="#1f5fbf"/>
+<text x="214.1" y="110.9" font-size="12" fill="#1f5fbf" text-anchor="end">z<tspan dy="-5" font-size="9">3</tspan><tspan dy="5"> (108&#176;)</tspan></text>
+<circle cx="136.5" cy="188.0" r="5" fill="#1f5fbf"/>
+<text x="123.6" y="182.6" font-size="12" fill="#1f5fbf" text-anchor="end">z<tspan dy="-5" font-size="9">4</tspan><tspan dy="5"> (144&#176;)</tspan></text>
+<circle cx="105.0" cy="285.0" r="5" fill="#1f5fbf"/>
+<text x="89.0" y="289.0" font-size="12" fill="#1f5fbf" text-anchor="end">z<tspan dy="-5" font-size="9">5</tspan><tspan dy="5"> (180&#176;)</tspan></text>
+<circle cx="136.5" cy="382.0" r="5" fill="#1f5fbf"/>
+<text x="123.6" y="395.4" font-size="12" fill="#1f5fbf" text-anchor="end">z<tspan dy="-5" font-size="9">6</tspan><tspan dy="5"> (216&#176;)</tspan></text>
+<circle cx="219.0" cy="441.9" r="5" fill="#1f5fbf"/>
+<text x="214.1" y="467.1" font-size="12" fill="#1f5fbf" text-anchor="end">z<tspan dy="-5" font-size="9">7</tspan><tspan dy="5"> (252&#176;)</tspan></text>
+<circle cx="321.0" cy="441.9" r="5" fill="#1f5fbf"/>
+<text x="325.9" y="467.1" font-size="12" fill="#1f5fbf" text-anchor="start">z<tspan dy="-5" font-size="9">8</tspan><tspan dy="5"> (288&#176;)</tspan></text>
+<circle cx="403.5" cy="382.0" r="5" fill="#1f5fbf"/>
+<text x="416.4" y="395.4" font-size="12" fill="#1f5fbf" text-anchor="start">z<tspan dy="-5" font-size="9">9</tspan><tspan dy="5"> (324&#176;)</tspan></text>
+<circle cx="435.0" cy="285.0" r="6" fill="#e68a00"/>
+<text x="451.0" y="289.0" font-size="12" fill="#e68a00" text-anchor="start" font-weight="bold">1 = z<tspan dy="-5" font-size="9">10</tspan></text>
+<text x="270" y="281" font-size="13" font-weight="bold" text-anchor="middle" fill="#222">Start at 1,</text>
+<text x="270" y="299" font-size="13" font-weight="bold" text-anchor="middle" fill="#222">turn 36&#176; ten times</text>
+<text x="270" y="500" font-size="13" text-anchor="middle" fill="#222">Length: 1 &#215; 1 &#215; ... = 1 (never changes). Angle: 36&#176; + 36&#176; + ... (10 times) = 10 &#215; 36&#176; = 360&#176;.</text>
+<text x="270" y="520" font-size="13" text-anchor="middle" fill="#222">A full turn of 360&#176; brings you back to the point 1, so z<tspan dy="-5" font-size="9">10</tspan><tspan dy="5"> = 1.</tspan></text>
+<text x="270" y="540" font-size="13" text-anchor="middle" fill="#222">The same works for every one of the 10 points on the previous picture.</text>
+</svg>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Understanding Shear Transformation</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #253047;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 850px;
+    margin: auto;
+    background: white;
+    padding: 24px;
+    border-radius: 14px;
+    box-shadow: 0 3px 15px #0001;
+  }
+
+  h2 { color: #243d68; }
+
+  canvas {
+    width: 100%;
+    max-width: 700px;
+    background: #fbfcff;
+    border: 1px solid #dce2ed;
+    border-radius: 10px;
+  }
+
+  .controls { margin: 20px; }
+
+  button {
+    padding: 11px 20px;
+    margin: 5px;
+    border: 0;
+    border-radius: 7px;
+    background: #315da8;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+  }
+
+  button:hover { background: #24477f; }
+
+  input { width: 80%; }
+
+  .explanation {
+    background: #edf4ff;
+    padding: 16px;
+    border-radius: 9px;
+    margin-top: 15px;
+    text-align: left;
+    line-height: 1.7;
+  }
+
+  .formula {
+    font-size: 19px;
+    font-weight: bold;
+    text-align: center;
+    margin: 15px;
+  }
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h2>Shear Transformation: Shape Changes, Area Stays!</h2>
+
+<p>
+Watch how a unit square becomes a parallelogram
+without changing its area.
+</p>
+
+<div class="formula">
+A = [ 1  1 ]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[ 0  1 ]
+</div>
+
+<canvas id="canvas" width="700" height="440"></canvas>
+
+<div class="controls">
+  <button type="button" id="btnAnimate">▶ Animate Shear</button>
+  <button type="button" id="btnReset">↺ Reset</button>
+  <br><br>
+  <label>Shear amount: <span id="amount">0.00</span></label>
+  <br>
+  <input type="range" id="slider"
+         min="0" max="1" step="0.01" value="0">
+</div>
+
+<div class="explanation">
+  <h3 id="stage">Stage 1: Original Unit Square</h3>
+  <p id="description">
+    We begin with a square of width 1 and height 1.
+    Its area is 1 × 1 = 1.
+  </p>
+  <p class="formula" id="area">
+    Area = 1 × 1 = 1
+  </p>
+</div>
+
+</div>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+const slider = document.getElementById("slider");
+const btnAnimate = document.getElementById("btnAnimate");
+const btnReset = document.getElementById("btnReset");
+
+let animationFrame = null;
+
+const origin = { x: 180, y: 340 };
+const scale = 145;
+
+function point(x, y, shear) {
+  return {
+    x: origin.x + (x + shear * y) * scale,
+    y: origin.y - y * scale
+  };
+}
+
+function line(a, b, color, width = 2, dash = []) {
+  ctx.beginPath();
+  ctx.setLineDash(dash);
+  ctx.moveTo(a.x, a.y);
+  ctx.lineTo(b.x, b.y);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function text(str, x, y, color = "#26364f", size = 15) {
+  ctx.fillStyle = color;
+  ctx.font = `bold ${size}px Arial`;
+  ctx.fillText(str, x, y);
+}
+
+function draw(s) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.strokeStyle = "#e6eaf1";
+  ctx.lineWidth = 1;
+
+  for (let i = 0; i <= 3; i++) {
+    let p = point(i, 0, s);
+    line({x:p.x, y:30}, {x:p.x, y:380}, "#e9edf3", 1);
+  }
+
+  for (let i = 0; i <= 2; i++) {
+    let p = point(0, i, s);
+    line({x:80, y:p.y}, {x:600, y:p.y}, "#e9edf3", 1);
+  }
+
+  line({x:90,y:340},{x:620,y:340},"#68758b",2);
+  line({x:180,y:385},{x:180,y:35},"#68758b",2);
+
+  let A = point(0,0,s);
+  let B = point(1,0,s);
+  let C = point(1,1,s);
+  let D = point(0,1,s);
+
+  ctx.beginPath();
+  ctx.moveTo(A.x,A.y);
+  ctx.lineTo(B.x,B.y);
+  ctx.lineTo(C.x,C.y);
+  ctx.lineTo(D.x,D.y);
+  ctx.closePath();
+
+  ctx.fillStyle = "rgba(49,120,220,0.17)";
+  ctx.fill();
+
+  ctx.strokeStyle = "#3178dc";
+  ctx.lineWidth = 3;
+  ctx.stroke();
+
+  line(A,B,"#16834a",5);
+  line(B,C,"#d97706",4);
+  line(D,C,"#3178dc",3);
+
+  let H = {x:C.x, y:B.y};
+  line(D,H,"#d97706",2,[6,5]);
+  line(C,H,"#16834a",2,[6,5]);
+
+  ctx.strokeStyle = "#16834a";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(H.x-12,H.y-12,12,12);
+
+  text("i = (1,0)", 215, 365, "#16834a");
+  text("j' = (1,1)", D.x+10, D.y-12, "#3178dc");
+  text("Base = 1", 215, 325, "#16834a");
+  text("Height = 1", H.x+12, H.y+27, "#16834a",13);
+
+  text("Slanted side ≠ height", 415, 125, "#d97706",14);
+  text("A",A.x-18,A.y+20);
+  text("B",B.x-10,B.y+22);
+  text("C",C.x+10,C.y-10);
+  text("D",D.x-20,D.y-10);
+
+  text("Shear amount: " + s.toFixed(2), 430, 225);
+  text("det(A) = 1", 430, 255, "#16834a",20);
+  text("Area = 1 × 1 = 1", 430, 285, "#16834a",18);
+
+  document.getElementById("amount").textContent = s.toFixed(2);
+
+  if (s < 0.05) {
+    document.getElementById("stage").textContent =
+      "Stage 1: Original Unit Square";
+    document.getElementById("description").textContent =
+      "The original square has a base of 1 and a perpendicular height of 1.";
+  } else if (s < 0.95) {
+    document.getElementById("stage").textContent =
+      "Stage 2: Applying the Shear";
+    document.getElementById("description").textContent =
+      "The top edge slides horizontally. The bottom remains fixed. Watch the square gradually become a parallelogram.";
+  } else {
+    document.getElementById("stage").textContent =
+      "Stage 3: Area Is Preserved!";
+    document.getElementById("description").textContent =
+      "The parallelogram is slanted, but its perpendicular height is still 1. The base is also 1. Therefore its area remains 1.";
+  }
+}
+
+function updateSlider(value) {
+  draw(Number(value));
+}
+
+function playShearAnimation() {
+  if (animationFrame) cancelAnimationFrame(animationFrame);
+
+  const duration = 2200;
+  const start = performance.now();
+
+  function step(now) {
+    const t = Math.min((now - start) / duration, 1);
+    slider.value = t;
+    draw(t);
+
+    if (t < 1) {
+      animationFrame = requestAnimationFrame(step);
+    } else {
+      animationFrame = null;
+    }
+  }
+
+  animationFrame = requestAnimationFrame(step);
+}
+
+function resetShear() {
+  if (animationFrame) cancelAnimationFrame(animationFrame);
+  animationFrame = null;
+  slider.value = 0;
+  draw(0);
+}
+
+btnAnimate.addEventListener("click", playShearAnimation);
+btnReset.addEventListener("click", resetShear);
+slider.addEventListener("input", (e) => {
+  if (animationFrame) cancelAnimationFrame(animationFrame);
+  animationFrame = null;
+  updateSlider(e.target.value);
+});
+
+draw(0);
+</script>
+</body>
+</html>

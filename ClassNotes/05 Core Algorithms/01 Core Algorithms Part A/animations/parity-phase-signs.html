@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Parity phase signs — +1 and −1 on amplitudes</title>
+  <link rel="stylesheet" href="embed-frame.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+      color: #1f2937;
+      padding: 8px 10px 8px;
+      line-height: 1.5;
+    }
+    .card {
+      max-width: 640px;
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 12px 14px 14px;
+      box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
+    }
+    .card h2 {
+      display: none;
+    }
+    .panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    @media (max-width: 300px) {
+      .panels { grid-template-columns: 1fr; }
+    }
+    .panel {
+      border-radius: 14px;
+      padding: 14px 10px 12px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .panel .value {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .panel .label {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #374151;
+    }
+    .positive {
+      background: #e8f5e9;
+    }
+    .positive .value {
+      color: #2e7d32;
+    }
+    .negative {
+      background: #ffebee;
+    }
+    .negative .value {
+      color: #c62828;
+    }
+    .caption {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #374151;
+      padding: 0;
+      margin: 0;
+    }
+    .caption strong {
+      font-weight: 600;
+      color: #111827;
+    }
+  </style>
+</head>
+<body>
+  <article class="card" aria-labelledby="title">
+    <h2 id="title">What does this accomplish?</h2>
+    <div class="panels">
+      <section class="panel positive" aria-label="Positive amplitude sign">
+        <span class="value">+1</span>
+        <span class="label">Positive sign</span>
+      </section>
+      <section class="panel negative" aria-label="Negative amplitude sign">
+        <span class="value">−1</span>
+        <span class="label">Negative sign</span>
+      </section>
+    </div>
+    <p class="caption">
+      These signs are <strong>not</strong> ordinary measurement results. They are changes to the
+      <strong>quantum amplitudes</strong>. Later, quantum interference can make some answers more likely
+      and others less likely.
+    </p>
+  </article>
+<script src="embed-fit.js"></script>
+</body>
+</html>

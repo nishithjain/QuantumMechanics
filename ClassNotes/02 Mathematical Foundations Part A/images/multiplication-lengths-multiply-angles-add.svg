@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 450" width="460" height="450" font-family="Arial, Helvetica, sans-serif">
+  <title>Multiplying 2e^(i pi/10) by 4e^(i pi/2): lengths multiply to 8, angles add to 3 pi/5</title>
+  <defs>
+    <marker id="axM" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 z" fill="#222"/></marker>
+    <marker id="zM" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L14,7 L0,14 z" fill="#1f5fbf"/></marker>
+    <marker id="wM" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L14,7 L0,14 z" fill="#d62828"/></marker>
+    <marker id="pM" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L14,7 L0,14 z" fill="#2e8b2e"/></marker>
+  </defs>
+  <rect x="0" y="0" width="460" height="450" fill="#ffffff"/>
+  <text x="230.0" y="18.0" font-size="14" font-weight="bold" fill="#222" text-anchor="middle">Multiplying complex numbers: lengths multiply, angles add</text>
+  <line x1="40" y1="330" x2="440" y2="330" stroke="#222" stroke-width="2" marker-end="url(#axM)"/>
+  <line x1="150" y1="352" x2="150" y2="60" stroke="#222" stroke-width="2" marker-end="url(#axM)"/>
+  <text x="438.0" y="350.0" font-size="12" font-weight="normal" fill="#222" text-anchor="end">Real axis</text>
+  <text x="158.0" y="70.0" font-size="12" font-weight="normal" fill="#222" text-anchor="start">Imaginary axis</text>
+  <path d="M 220.0,330.0 A 70 70 0 0 0 216.6,308.4" fill="none" stroke="#1f5fbf" stroke-width="2.5"/>
+  <path d="M 195.0,330.0 A 45 45 0 0 0 150.0,285.0" fill="none" stroke="#d62828" stroke-width="2.5"/>
+  <path d="M 250.0,330.0 A 100 100 0 0 0 119.1,234.9" fill="none" stroke="#2e8b2e" stroke-width="2.5" stroke-dasharray="7,4"/>
+  <line x1="150" y1="330" x2="207.1" y2="311.5" stroke="#1f5fbf" stroke-width="4" marker-end="url(#zM)"/>
+  <line x1="150" y1="330" x2="150.0" y2="210.0" stroke="#d62828" stroke-width="4" marker-end="url(#wM)"/>
+  <line x1="150" y1="330" x2="75.8" y2="101.7" stroke="#2e8b2e" stroke-width="5" marker-end="url(#pM)"/>
+  <circle cx="150" cy="330" r="4" fill="#222"/>
+  <text x="215.1" y="297.5" font-size="14" font-weight="bold" fill="#1f5fbf">z = 2e<tspan dy="-6" font-size="10">i&#960;/10</tspan></text>
+  <text x="215.1" y="310.5" font-size="11" font-weight="normal" fill="#1f5fbf" text-anchor="start">length 2, angle 18&#176;</text>
+  <text x="160.0" y="212.0" font-size="14" font-weight="bold" fill="#d62828">w = 4e<tspan dy="-6" font-size="10">i&#960;/2</tspan></text>
+  <text x="160.0" y="227.0" font-size="11" font-weight="normal" fill="#d62828" text-anchor="start">length 4, angle 90&#176;</text>
+  <text x="87.8" y="105.7" font-size="14" font-weight="bold" fill="#2e8b2e">zw = 8e<tspan dy="-6" font-size="10">i3&#960;/5</tspan></text>
+  <text x="87.8" y="121.7" font-size="11" font-weight="normal" fill="#2e8b2e" text-anchor="start">length 8, angle 108&#176;</text>
+  <text x="230.0" y="376.0" font-size="13" font-weight="bold" fill="#222" text-anchor="middle">New length: 2 &#215; 4 = 8</text>
+  <text x="230.0" y="396.0" font-size="13" font-weight="bold" fill="#222" text-anchor="middle">New angle: &#960;/10 + &#960;/2 = &#960;/10 + 5&#960;/10 = 6&#960;/10 = 3&#960;/5</text>
+  <text x="230.0" y="416.0" font-size="11" font-weight="normal" fill="#666" text-anchor="middle">(scale: 1 unit = 30 pixels, so the length 8 arrow is 240 pixels long)</text>
+  <text x="230" y="436" font-size="12" fill="#222" text-anchor="middle"><tspan fill="#1f5fbf" font-weight="bold">&#952;</tspan><tspan dy="4" font-size="9" fill="#1f5fbf">1</tspan><tspan dy="-4" fill="#1f5fbf"> = &#960;/10 = 18&#176;</tspan><tspan>     </tspan><tspan fill="#d62828" font-weight="bold">&#952;</tspan><tspan dy="4" font-size="9" fill="#d62828">2</tspan><tspan dy="-4" fill="#d62828"> = &#960;/2 = 90&#176;</tspan><tspan>     </tspan><tspan fill="#2e8b2e" font-weight="bold">&#952;</tspan><tspan dy="4" font-size="9" fill="#2e8b2e">1</tspan><tspan dy="-4" fill="#2e8b2e" font-weight="bold"> + &#952;</tspan><tspan dy="4" font-size="9" fill="#2e8b2e">2</tspan><tspan dy="-4" fill="#2e8b2e"> = 3&#960;/5 = 108&#176;</tspan></text>
+</svg>

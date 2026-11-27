@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oracle f(x)=1</title>
+<link rel="stylesheet" href="oracle-one-bit-card-styles.css">
+</head>
+<body>
+<div class="card">
+  <h3>Example B — f(x) = 1</h3>
+  <div class="meaning">The function always returns 1</div>
+  <div class="circuit">
+    <svg viewBox="0 0 340 115" role="img" aria-label="X gate on target wire">
+      <text class="wire-label" x="28" y="35">x</text>
+      <text class="wire-label" x="28" y="78">y</text>
+      <line class="wire" x1="55" y1="35" x2="315" y2="35"/>
+      <line class="wire" x1="55" y1="78" x2="315" y2="78"/>
+      <rect class="gate" x="150" y="55" width="48" height="46"/>
+      <text class="gate-text" x="174" y="78">X</text>
+    </svg>
+    <div class="circuit-caption">Flip y — X gate</div>
+  </div>
+  <div class="explanation">
+    <strong>What happens?</strong><br>
+    The function always returns 1. XOR with 1 flips the target bit. The X gate performs this flip.
+  </div>
+  <div class="formula">y ⊕ 1 = NOT(y)</div>
+</div>
+<script src="embed-fit.js"></script>
+</body>
+</html>

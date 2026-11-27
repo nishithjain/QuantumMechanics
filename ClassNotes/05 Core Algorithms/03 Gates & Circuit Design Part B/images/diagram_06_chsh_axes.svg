@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="470" viewBox="0 0 1040 470" role="img" aria-labelledby="title desc"><title id="title">CHSH measurement directions</title><desc id="desc">Axes for Alice A0 0 degrees A1 45 degrees, Bob B0 +22.5 degrees and B1 -22.5 degrees</desc>
+<rect width="1040" height="470" fill="#f7f9fc"/>
+<text x="38" y="44" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="25" fill="#6755dd" font-weight="700" >CHSH: MEASUREMENT ANGLES IN THE REAL-AMPLITUDE PLANE</text>
+<circle cx="360" cy="248" r="157" fill="#fff" stroke="#d0d9e5" stroke-width="2"/>
+<line x1="180" y1="248" x2="540" y2="248" stroke="#e3e9f1" stroke-width="2" stroke-linecap="round"/>
+<line x1="360" y1="76" x2="360" y2="420" stroke="#e3e9f1" stroke-width="2" stroke-linecap="round"/>
+<line x1="360" y1="248" x2="517.0" y2="248.0" stroke="#087f77" stroke-width="4" stroke-linecap="round"/>
+<polygon points="517.0,248.0 506.61,254.00 506.61,242.00" fill="#087f77"/>
+<text x="532.0" y="235.0" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#087f77" font-weight="700" >A₀: 0°</text>
+<line x1="360" y1="248" x2="471.01576464628795" y2="136.98423535371205" stroke="#087f77" stroke-width="4" stroke-linecap="round"/>
+<polygon points="471.01576464628795,136.98423535371205 467.91,148.58 459.42,140.09" fill="#087f77"/>
+<text x="486.01576464628795" y="124.98423535371205" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#087f77" font-weight="700" >A₁: 45°</text>
+<line x1="360" y1="248" x2="505.049086604272" y2="187.9187011186809" stroke="#bf651a" stroke-width="4" stroke-linecap="round"/>
+<polygon points="505.049086604272,187.9187011186809 497.74,197.44 493.15,186.35" fill="#bf651a"/>
+<text x="520.049086604272" y="178.9187011186809" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#bf651a" font-weight="700" >B₀: +22.5°</text>
+<line x1="360" y1="248" x2="505.049086604272" y2="308.08129888131907" stroke="#bf651a" stroke-width="4" stroke-linecap="round"/>
+<polygon points="505.049086604272,308.08129888131907 493.15,309.65 497.74,298.56" fill="#bf651a"/>
+<text x="520.049086604272" y="330.08129888131907" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#bf651a" font-weight="700" >B₁: −22.5°</text>
+<circle cx="360" cy="248" r="7" fill="#fff" stroke="#172238" stroke-width="2"/>
+<rect x="670" y="112" width="328" height="260" rx="14" fill="#fff" stroke="#dce3ec" stroke-width="1.6"/>
+<text x="696" y="153" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#6755dd" font-weight="700" >Input pair → axis gap</text>
+<text x="693" y="201" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#172238" font-weight="400" >00:  |A₀ − B₀| = 22.5°</text>
+<text x="693" y="241" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#172238" font-weight="400" >01:  |A₀ − B₁| = 22.5°</text>
+<text x="693" y="281" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#172238" font-weight="400" >10:  |A₁ − B₀| = 22.5°</text>
+<text x="693" y="321" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#172238" font-weight="400" >11:  |A₁ − B₁| = 67.5°</text>
+<text x="50" y="445" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#6b7280" font-weight="400" >Three small gaps favor matching bits; one larger gap favors different bits.</text>
+</svg>

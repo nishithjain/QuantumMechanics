@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 430" width="620" height="430" font-family="Arial, Helvetica, sans-serif"><defs><marker id="m444" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#444"/></marker><marker id="m1f5fbf" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#1f5fbf"/></marker><marker id="m2e8b2e" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#2e8b2e"/></marker><marker id="md62828" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#d62828"/></marker></defs><rect width="620" height="430" fill="#ffffff"/>
+<text x="310.0" y="24.0" font-size="16" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">Multiplying: lengths multiply, angles add</text>
+<line x1="36.0" y1="370.0" x2="588.0" y2="370.0" stroke="#444" stroke-width="1.5" marker-end="url(#m444)"/>
+<line x1="60.0" y1="402.0" x2="60.0" y2="34.0" stroke="#444" stroke-width="1.5" marker-end="url(#m444)"/>
+<text x="586.0" y="386.0" font-size="13" fill="#444" text-anchor="end">Re</text>
+<text x="68.0" y="44.0" font-size="13" fill="#444" text-anchor="start">Im</text>
+<path d="M300.0,370.0 A240.0,240.0 0 0 0 60.0,130.0" fill="none" stroke="#777777" stroke-width="1.2" stroke-dasharray="5,4"/>
+<line x1="60.0" y1="370.0" x2="210.4" y2="315.3" stroke="#1f5fbf" stroke-width="3.5" marker-end="url(#m1f5fbf)"/>
+<line x1="60.0" y1="370.0" x2="120.0" y2="266.1" stroke="#2e8b2e" stroke-width="3.5" marker-end="url(#m2e8b2e)"/>
+<line x1="60.0" y1="370.0" x2="101.7" y2="133.6" stroke="#d62828" stroke-width="4" marker-end="url(#md62828)"/>
+<circle cx="60.0" cy="370.0" r="4" fill="#222222"/>
+<path d="M112.0,370.0 A52,52 0 0 0 108.9,352.2" fill="none" stroke="#1f5fbf" stroke-width="2" marker-end="url(#m1f5fbf)"/>
+<path d="M138.0,370.0 A78,78 0 0 0 99.0,302.5" fill="none" stroke="#2e8b2e" stroke-width="2" marker-end="url(#m2e8b2e)"/>
+<path d="M260.0,370.0 A200,200 0 0 0 94.7,173.0" fill="none" stroke="#d62828" stroke-width="2.5" marker-end="url(#md62828)"/>
+<text x="134.9" y="361.8" font-size="14" fill="#1f5fbf" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">&#952;&#8321;</text>
+<text x="145.2" y="315.2" font-size="14" fill="#2e8b2e" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">&#952;&#8322;</text>
+<text x="217.1" y="236.2" font-size="14" fill="#d62828" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">&#952;&#8321;+&#952;&#8322;</text>
+<text x="218.4" y="319.3" font-size="15" fill="#1f5fbf" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">z&#8321;</text>
+<text x="128.0" y="262.1" font-size="15" fill="#2e8b2e" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">z&#8322;</text>
+<text x="330.0" y="62.0" font-size="13" fill="#1f5fbf" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">z&#8321;:  length 2,  angle 20&#176;</text>
+<text x="330.0" y="82.0" font-size="13" fill="#2e8b2e" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">z&#8322;:  length 1.5,  angle 60&#176;</text>
+<text x="120.0" y="62.0" font-size="16" fill="#d62828" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">z&#8321;z&#8322;</text>
+<text x="120.0" y="82.0" font-size="13" fill="#d62828" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">length r&#8321;r&#8322; = 2 &#215; 1.5 = 3</text>
+<text x="120.0" y="100.0" font-size="13" fill="#d62828" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">angle &#952;&#8321;+&#952;&#8322; = 20&#176; + 60&#176; = 80&#176;</text>
+<text x="310.0" y="412.0" font-size="12" fill="#777777" text-anchor="middle" font-style="italic">No brackets expanded: read the two lengths and angles, multiply the lengths, add the angles.</text>
+</svg>

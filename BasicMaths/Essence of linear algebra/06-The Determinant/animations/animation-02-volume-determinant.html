@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3D volume and determinant</title>
+<style>
+body{font-family:system-ui,Segoe UI,sans-serif;max-width:960px;margin:24px auto;padding:0 16px;background:#f5f8fc;color:#17243a}
+.card{background:#fff;border:1px solid #d7e1ef;border-radius:14px;padding:16px;margin:14px 0}
+canvas{width:100%;height:390px;background:#fbfdff;border-radius:10px}
+label{display:block;margin:12px 0}input{width:100%;accent-color:#17569b}
+button{padding:9px 14px;border:0;border-radius:8px;background:#174f91;color:white;margin:4px;cursor:pointer}
+button.alt{background:#e5edf7;color:#18304e}.math{font-family:ui-monospace,Consolas,monospace;background:#f0f4fa;padding:10px;border-radius:8px}
+.metric{font-size:1.15rem;font-weight:700}
+</style></head><body>
+<h1>From a unit cube to a parallelepiped</h1>
+<p>In 3D, the determinant measures volume scaling. This model uses an easy-to-read family of transformations: stretch each coordinate direction, with an optional shear. The resulting parallelepiped's volume magnitude is the absolute determinant.</p>
+<div class="card">
+<label>x scale (a): <b id="av">1</b><input id="a" type="range" min="-2" max="2" step=".1" value="1"></label>
+<label>y scale (d): <b id="dv">1</b><input id="d" type="range" min="-2" max="2" step=".1" value="1"></label>
+<label>z scale (f): <b id="fv">1</b><input id="f" type="range" min="-2" max="2" step=".1" value="1"></label>
+<label>Shear amount (s): <b id="sv">0.5</b><input id="s" type="range" min="-1.5" max="1.5" step=".1" value=".5"></label>
+<p class="math" id="matrix"></p><p class="metric" id="det"></p><p id="meaning"></p>
+<canvas id="cube" width="900" height="390"></canvas>
+<button id="play">Play</button><button class="alt" id="pause">Pause</button><button class="alt" id="step">Step</button><button class="alt" id="reset">Reset</button><button class="alt" id="flat">Collapse to plane</button><button class="alt" id="flip">Flip orientation</button>
+</div>
+<div class="card"><b>Notice</b><ul><li>A unit cube starts with volume 1.</li><li>Shearing slants the cube but does not necessarily change its volume.</li><li>If any scale factor becomes zero in this model, the solid becomes flat and its volume becomes zero.</li><li>A negative product of the three scale factors reverses orientation.</li></ul></div>
+<script>
+const $=id=>document.getElementById(id),ids=['a','d','f','s'];let playing=false,raf=0,last=0,t=0;
+function draw(){
+ let a=+$('a').value,d=+$('d').value,f=+$('f').value,s=+$('s').value;
+ ids.forEach(id=>$(id+'v').textContent=(+$(id).value).toFixed(1));
+ // Matrix [[a,s,0],[0,d,0],[0,0,f]]; determinant a*d*f.
+ let det=a*d*f;
+ $('matrix').textContent=`A = [[${a.toFixed(1)}, ${s.toFixed(1)}, 0], [0, ${d.toFixed(1)}, 0], [0, 0, ${f.toFixed(1)}]]`;
+ $('det').textContent=`det(A) = a × d × f = ${det.toFixed(2)}  |  Volume scale = ${Math.abs(det).toFixed(2)}×`;
+ $('meaning').textContent=Math.abs(det)<.015?'Zero volume: the cube has collapsed into a plane, line, or point.':det<0?'Orientation is reversed (negative determinant); physical volume remains positive.':'Orientation is preserved (positive determinant).';
+ const cv=$('cube'),g=cv.getContext('2d');g.clearRect(0,0,900,390);
+ const O={x:420,y:280},sc=115;
+ // Apply matrix to cube vertices. Projection: x right, y diagonal right/up, z up.
+ function proj(v){let [x,y,z]=v;return {x:O.x+(x-y*.52)*sc,y:O.y-(z+y*.30)*sc}}
+ function transform(x,y,z){return [a*x+s*y,d*y,f*z]}
+ const verts=[];for(let z=0;z<=1;z++)for(let y=0;y<=1;y++)for(let x=0;x<=1;x++)verts.push(proj(transform(x,y,z)));
+ const idx=(x,y,z)=>z*4+y*2+x;
+ const faces=[[0,1,3,2],[4,5,7,6],[0,1,5,4],[2,3,7,6],[0,2,6,4],[1,3,7,5]];
+ faces.forEach((face,i)=>{g.beginPath();face.forEach((n,j)=>{let p=verts[n];j?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y)});g.closePath();g.fillStyle=i%2?'rgba(46,142,194,.12)':'rgba(227,91,143,.18)';g.fill();g.strokeStyle='#52718e';g.lineWidth=2;g.stroke()});
+ // draw edges more strongly
+ let edges=[[0,1],[0,2],[0,4],[1,3],[1,5],[2,3],[2,6],[3,7],[4,5],[4,6],[5,7],[6,7]];
+ g.strokeStyle='#245a91';g.lineWidth=3;edges.forEach(([i,j])=>{g.beginPath();g.moveTo(verts[i].x,verts[i].y);g.lineTo(verts[j].x,verts[j].y);g.stroke()});
+ g.fillStyle='#17243a';g.font='bold 18px system-ui';g.fillText('Transformed unit cube',20,30);
+ g.font='15px system-ui';g.fillText(`Original volume = 1   →   New volume = ${Math.abs(det).toFixed(2)}`,20,56);
+ g.fillStyle='#2563eb';g.fillText('x edge',verts[1].x+7,verts[1].y);
+ g.fillStyle='#0f9d78';g.fillText('y edge',verts[2].x+7,verts[2].y);
+ g.fillStyle='#d97706';g.fillText('z edge',verts[4].x+7,verts[4].y);
+}
+ids.forEach(id=>$(id).addEventListener('input',()=>{stop();draw()}));
+function set(v){ids.forEach((id,i)=>$(id).value=v[i]);draw()}
+function stop(){playing=false;last=0;cancelAnimationFrame(raf)}
+$('pause').onclick=stop;$('reset').onclick=()=>{stop();set([1,1,1,.5])};
+$('flat').onclick=()=>{stop();set([1,1,0,.5])};$('flip').onclick=()=>{stop();set([-1,1,1,.5])};
+$('step').onclick=()=>{stop();t=(t+.1)%1;set([1,1,1-2*t,.5])};
+$('play').onclick=()=>{stop();playing=true;t=0;function tick(ts){if(!playing)return;if(!last)last=ts;t=Math.min(1,t+(ts-last)/2400);last=ts;set([1,1,1-2*t,.5]);if(t<1)raf=requestAnimationFrame(tick);else stop()}raf=requestAnimationFrame(tick)};
+draw();
+</script></body></html>

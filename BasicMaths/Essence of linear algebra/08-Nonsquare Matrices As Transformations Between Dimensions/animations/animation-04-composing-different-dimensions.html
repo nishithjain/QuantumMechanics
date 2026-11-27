@@ -1,0 +1,62 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Composition: 2D → 3D → 2D</title><style>
+:root{font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#20364A;background:#F0F5FA}
+body{margin:0;padding:24px 12px}main{max-width:1100px;margin:auto;background:#fff;padding:25px;border-radius:18px;box-shadow:0 12px 36px #20364A16}
+h1{font-size:clamp(21px,3vw,30px);margin:0 0 8px}p{line-height:1.6;margin:8px 0 14px;color:#4A5E70}.eyebrow{color:#127B7A;font-weight:800;font-size:13px;letter-spacing:.08em}
+canvas{display:block;width:100%;height:auto;border-radius:10px;border:1px solid #d7e5ef;background:white}
+.controls{display:flex;gap:9px;flex-wrap:wrap;padding:16px 0 6px}button{background:#176CA8;color:white;border:0;padding:11px 20px;border-radius:9px;font-size:15px;font-weight:700;cursor:pointer}button.secondary{background:#ECF2F6;color:#243C55}button:disabled{opacity:.45;cursor:default}
+.sliders{display:flex;flex-wrap:wrap;gap:14px;padding:14px 0}.slider{background:#F6FAFC;padding:12px 16px;border-radius:10px;min-width:190px;flex:1}.slider label{display:flex;justify-content:space-between;font-size:14px;font-weight:700}.slider input{width:100%;margin-top:9px;accent-color:#2374B7}
+.explain{background:#F5F9FC;border-left:4px solid #2387A8;padding:15px 18px;border-radius:8px;line-height:1.6}.explain strong{display:block;margin-bottom:5px}.math{color:#155C8F;font-weight:700;white-space:normal}
+.small{font-size:13px;color:#65798C;margin-top:14px}@media(max-width:520px){main{padding:14px}body{padding:7px}button{padding:10px 13px}.sliders{gap:7px}}
+</style></head><body><main>
+<div class="eyebrow">ESSENCE OF LINEAR ALGEBRA · CHAPTER 08</div><h1>Composition: 2D → 3D → 2D</h1><p>Optional exploration inspired by the lecturer’s final challenge. The dimensions must match at each intermediate step.</p>
+<canvas id="scene" width="1050" height="480" role="img" aria-label="Interactive mathematical illustration"></canvas>
+<div class="sliders"><div class="slider"><label for="x">Input x<span id="xValue">1</span></label><input id="x" type="range" min="-2" max="2" step="1" value="1" /></div><div class="slider"><label for="y">Input y<span id="yValue">1</span></label><input id="y" type="range" min="-2" max="2" step="1" value="1" /></div></div><div class="controls"><button id="playBtn">▶ Play</button><button id="pauseBtn" class="secondary" disabled>⏸ Pause</button><button id="stepBtn" class="secondary">→ Step</button><button id="resetBtn" class="secondary">↺ Reset</button></div>
+<div class="explain"><strong id="stageNum"></strong><span id="stageText"></span><p class="math" id="formula"></p></div>
+<p class="small">This composition is an additional worked example based on the lecture’s closing invitation to experiment. The output view automatically zooms to fit large coordinates. · Entirely offline: no network or external JavaScript required.</p>
+</main><script>window.STAGES=["Choose a 2D input vector v.", "Apply the lecture’s 3 × 2 matrix A. The result Av has three coordinates.", "Apply the video’s 2 × 3 matrix B to Av. The final result has two coordinates again.", "The combined matrix BA is 2 × 2. Its action agrees with applying A and then B."];
+
+const A=[[2,0],[-1,1],[-2,1]],B=[[3,1,4],[1,5,9]],BA=[[-3,5],[-21,14]];
+function render(){panel(10,18,325,425,'1. INPUT  R²');panel(362,18,325,425,'2. INTERMEDIATE  R³');panel(713,18,325,425,'3. OUTPUT  R²');
+ const o1=[173,245],o2=[525,255],o3=[880,250],p=[val('x'),val('y')],mid=img3(A,p),out=img2(B,mid);
+ const s3=stage>=2?Math.min(17,150/Math.max(9,Math.abs(out[0]),Math.abs(out[1]))):17;
+ grid2(o1,28,5);axes3(o2,24,4);grid2(o3,s3,9);
+ arrow(o1,p2(o1,28,p),COL.purple,3.7);dot(p2(o1,28,p),COL.purple,4);
+ if(stage>=1){arrow(o2,p3(o2,24,mid),COL.teal,3.7);dot(p3(o2,24,mid),COL.teal,4);text('A v = ('+mid.join(',')+')',[372,401],COL.teal,14);}
+ if(stage>=2){arrow(o3,p2(o3,s3,out),COL.purple,3.7);dot(p2(o3,s3,out),COL.purple,5);text('B (A v) = ('+out.join(',')+')',[726,401],COL.purple,14);}
+ if(stage>=3){text('BA = [ -3  5 ; -21  14 ]',[376,90],COL.purple,14,'left',true);text('BA v = B (A v)',[725,90],COL.purple,14,'left',true);}
+ text('v = ('+p.join(',')+')',[27,407],COL.purple,14);
+ updateStatus(`A: 2D→3D;  B: 3D→2D.   For v=(${p.join(',')}), Av=(${mid.join(',')}), BAv=(${out.join(',')}).`);
+}
+
+
+'use strict';
+const C = document.getElementById('scene'), cx = C.getContext('2d');
+const COL={blue:'#2675B9',orange:'#DC731B',teal:'#169C83',purple:'#8D52B5',dark:'#29374A',grid:'#E0EAF0',light:'#D3E3EE'};
+const W=1050,H=480; let stage=0,timer=null;
+const stages=window.STAGES;
+function resize(){ const ratio=window.devicePixelRatio||1;C.width=W*ratio; C.height=H*ratio;cx.setTransform(ratio,0,0,ratio,0,0);draw(); }
+function clear(){cx.clearRect(0,0,W,H);cx.fillStyle='white';cx.fillRect(0,0,W,H);}
+function line(a,b,c=COL.grid,lw=1,dash=[]){cx.save();cx.strokeStyle=c;cx.lineWidth=lw;cx.setLineDash(dash);cx.beginPath();cx.moveTo(...a);cx.lineTo(...b);cx.stroke();cx.restore();}
+function dot(p,c=COL.purple,r=5){cx.beginPath();cx.arc(...p,r,0,Math.PI*2);cx.fillStyle=c;cx.fill();}
+function text(t,p,c=COL.dark,size=14,align='left',bold=false){cx.font=(bold?'700 ':'')+size+'px system-ui,sans-serif';cx.fillStyle=c;cx.textAlign=align;cx.fillText(t,...p);}
+function arrow(a,b,c=COL.blue,lw=3){line(a,b,c,lw);const ang=Math.atan2(b[1]-a[1],b[0]-a[0]);const L=12;cx.fillStyle=c;cx.beginPath();cx.moveTo(...b);cx.lineTo(b[0]-L*Math.cos(ang-.44),b[1]-L*Math.sin(ang-.44));cx.lineTo(b[0]-L*Math.cos(ang+.44),b[1]-L*Math.sin(ang+.44));cx.closePath();cx.fill();}
+function panel(x,y,w,h,label){cx.fillStyle='#F8FBFE';cx.fillRect(x,y,w,h);cx.strokeStyle=COL.light;cx.lineWidth=1;cx.strokeRect(x,y,w,h);text(label,[x+15,y+27],COL.dark,15,'left',true)}
+function p2(o,s,v){return [o[0]+s*v[0],o[1]-s*v[1]];}
+function p3(o,s,v){return [o[0]+s*(.9*v[0]-.55*v[1]),o[1]-s*(.33*v[0]+.23*v[1]+.95*v[2])];}
+function grid2(o,s,ran=5){for(let k=-ran;k<=ran;k++){line(p2(o,s,[k,-ran]),p2(o,s,[k,ran]),COL.grid,1);line(p2(o,s,[-ran,k]),p2(o,s,[ran,k]),COL.grid,1);}line(p2(o,s,[-ran,0]),p2(o,s,[ran,0]),'#93A8B5',1.4);line(p2(o,s,[0,-ran]),p2(o,s,[0,ran]),'#93A8B5',1.4);dot(o,COL.dark,2)}
+function axes3(o,s,ran=3){let ca=['#9AB8CA','#AAC2B3','#A5A8CD'];for(let j=0;j<3;j++){let a=[0,0,0],b=[0,0,0];a[j]=-ran;b[j]=ran;line(p3(o,s,a),p3(o,s,b),ca[j],1.5);}dot(o,COL.dark,2)}
+function img3(A,v){return [A[0][0]*v[0]+A[0][1]*v[1],A[1][0]*v[0]+A[1][1]*v[1],A[2][0]*v[0]+A[2][1]*v[1]];}
+function img2(B,v){return [B[0][0]*v[0]+B[0][1]*v[1]+B[0][2]*v[2],B[1][0]*v[0]+B[1][1]*v[1]+B[1][2]*v[2]];}
+function val(id){return Number(document.getElementById(id).value)}
+function updateLabels(){for(const el of document.querySelectorAll('input[type="range"]'))document.getElementById(el.id+'Value').textContent=el.value;}
+function updateStatus(extra){document.getElementById('stageNum').textContent=`Step ${stage+1} / ${stages.length}`; document.getElementById('stageText').textContent=stages[stage];document.getElementById('formula').textContent=extra||'';}
+function pause(){if(timer)clearInterval(timer);timer=null;document.getElementById('playBtn').disabled=false;document.getElementById('pauseBtn').disabled=true;}
+function next(){stage=(stage+1)%stages.length;draw();}
+document.getElementById('playBtn').addEventListener('click',()=>{if(timer)return;document.getElementById('playBtn').disabled=true;document.getElementById('pauseBtn').disabled=false;timer=setInterval(next,1700);});
+document.getElementById('pauseBtn').addEventListener('click',pause);
+document.getElementById('stepBtn').addEventListener('click',()=>{pause();next()});
+document.getElementById('resetBtn').addEventListener('click',()=>{pause();stage=0;draw()});
+for(const el of document.querySelectorAll('input[type="range"]'))el.addEventListener('input',()=>{updateLabels();draw()});
+function draw(){clear();render();updateLabels();}
+resize();
+</script></body></html>

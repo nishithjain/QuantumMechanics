@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Animated vector directions</title>
+  <style>
+    :root {
+      font-family: system-ui, Segoe UI, Arial, sans-serif;
+      color: #172033;
+    }
+    body {
+      margin: 0;
+      padding: 22px;
+      background: #f4f7fb;
+    }
+    .wrap {
+      max-width: 850px;
+      margin: auto;
+    }
+    h1 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      margin: 0 0 6px;
+    }
+    .sub {
+      color: #64748b;
+      margin: 0 0 18px;
+    }
+    .panel {
+      background: white;
+      border: 1px solid #dbe3ef;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 8px 24px #1720330a;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    button {
+      border: 1px solid #cbd5e1;
+      background: white;
+      border-radius: 999px;
+      padding: 9px 15px;
+      font: inherit;
+      cursor: pointer;
+    }
+    button[aria-pressed="true"] {
+      background: #eaf1ff;
+      border-color: #7aa5ff;
+      color: #1746a2;
+      font-weight: 700;
+    }
+    svg {
+      width: 100%;
+      height: auto;
+      border: 1px solid #edf1f7;
+      border-radius: 14px;
+      background: linear-gradient(white, #fbfdff);
+      display: block;
+    }
+    .grid { stroke: #edf1f7; }
+    .axis { stroke: #cbd5e1; stroke-width: 1.5; }
+    .a, .b {
+      stroke-width: 3.25;
+      stroke-linecap: butt;
+      fill: none;
+    }
+    .a { stroke: #2563eb; }
+    .b { stroke: #ea580c; transition: d 1s ease; }
+    .label { font-size: 16px; font-weight: 700; }
+    .small { font-size: 14px; fill: #64748b; }
+    .arc {
+      stroke: #7c3aed;
+      stroke-width: 2.5;
+      fill: none;
+      stroke-dasharray: 5 4;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .metric {
+      background: #f8fafc;
+      border: 1px solid #dbe3ef;
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .metric strong { display: block; font-size: 1.05rem; }
+    .metric span { color: #64748b; font-size: 0.9rem; }
+    .explain { min-height: 3em; margin: 14px 2px 0; }
+    .legend {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: #64748b;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+    .swatch {
+      display: inline-block;
+      width: 20px;
+      height: 4px;
+      border-radius: 4px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    @media (max-width: 560px) {
+      body { padding: 10px; }
+      .panel { padding: 12px; }
+      .metrics { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>How the angle between vectors changes the dot product</h1>
+    <p class="sub">Choose a relationship. Vector A stays fixed while vector B moves.</p>
+    <section class="panel">
+      <div class="tabs" role="group" aria-label="Vector relationship">
+        <button type="button" data-mode="same" aria-pressed="true">Same direction</button>
+        <button type="button" data-mode="acute" aria-pressed="false">Acute angle</button>
+        <button type="button" data-mode="perpendicular" aria-pressed="false">Perpendicular</button>
+        <button type="button" data-mode="opposite" aria-pressed="false">Opposite directions</button>
+      </div>
+      <svg viewBox="0 0 760 360" role="img" aria-label="Animated vectors A and B showing their angle">
+        <defs>
+          <marker id="blueArrow" markerWidth="20" markerHeight="14" refX="18" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+            <path d="M0 1 L18 7 L0 13 Z" fill="#2563eb"/>
+          </marker>
+          <marker id="orangeArrow" markerWidth="20" markerHeight="14" refX="18" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+            <path d="M0 1 L18 7 L0 13 Z" fill="#ea580c"/>
+          </marker>
+        </defs>
+        <g class="grid">
+          <path d="M70 60 H700 M70 120 H700 M70 180 H700 M70 240 H700 M70 300 H700"/>
+          <path d="M130 35 V325 M190 35 V325 M250 35 V325 M310 35 V325 M370 35 V325 M430 35 V325 M490 35 V325 M550 35 V325 M610 35 V325 M670 35 V325"/>
+        </g>
+        <path class="axis" d="M70 180 H700 M380 35 V325"/>
+        <circle cx="380" cy="180" r="5" fill="#172033"/>
+        <path id="vecA" class="a" d="M380 180 L515 180" marker-end="url(#blueArrow)"/>
+        <path id="vecB" class="b" d="M380 180 L515 180" marker-end="url(#orangeArrow)"/>
+        <path id="arc" class="arc" d=""/>
+        <text id="labelA" class="label" x="522" y="174" fill="#2563eb">A</text>
+        <text id="labelB" class="label" x="522" y="205" fill="#ea580c">B</text>
+        <text id="angleLabel" class="small" x="392" y="168">θ = 0°</text>
+        <text class="small" x="690" y="192">x</text>
+        <text class="small" x="392" y="48">y</text>
+        <text class="small" x="392" y="198">Origin</text>
+      </svg>
+      <div class="legend">
+        <span><i class="swatch" style="background:#2563eb"></i>Vector A</span>
+        <span><i class="swatch" style="background:#ea580c"></i>Vector B</span>
+        <span><i class="swatch" style="background:#7c3aed"></i>Angle θ</span>
+      </div>
+      <div class="metrics">
+        <div class="metric"><strong id="angle">0°</strong><span>Angle between A and B</span></div>
+        <div class="metric"><strong id="cos">+1</strong><span>cos(θ)</span></div>
+        <div class="metric"><strong id="sign">Positive</strong><span>Sign of A · B</span></div>
+      </div>
+      <p id="explanation" class="explain" aria-live="polite">
+        The vectors point in the same direction. B is drawn just above A so both arrows stay visible. Their dot product is positive and largest for these fixed vector lengths.
+      </p>
+    </section>
+  </main>
+  <script>
+    const OX = 380;
+    const OY = 180;
+    const LEN = 135;
+
+    const states = {
+      same: {
+        end: [OX + LEN, OY],
+        angle: 0,
+        cos: "+1",
+        sign: "Positive",
+        arc: "",
+        angleLabel: [OX + 16, OY - 28],
+        message:
+          "The vectors point in the same direction. B is drawn just above A so both arrows stay visible. Their dot product is positive and largest for these fixed vector lengths.",
+      },
+      acute: {
+        end: [OX + LEN * Math.SQRT1_2, OY - LEN * Math.SQRT1_2],
+        angle: 45,
+        cos: "≈ +0.71",
+        sign: "Positive",
+        arc: `M ${OX + 48} ${OY} A 48 48 0 0 0 ${OX + 48 * Math.SQRT1_2} ${OY - 48 * Math.SQRT1_2}`,
+        angleLabel: [OX + 78, OY - 22],
+        message:
+          "The angle is acute (45°). The vectors partly agree, so the dot product is positive, but smaller than when they point the same way. cos 45° is about 0.71.",
+      },
+      perpendicular: {
+        end: [OX, OY - LEN],
+        angle: 90,
+        cos: "0",
+        sign: "Zero",
+        arc: `M ${OX + 45} ${OY} A 45 45 0 0 0 ${OX} ${OY - 45}`,
+        angleLabel: [OX + 18, OY - 52],
+        message:
+          "The vectors meet at 90°. Neither has a component along the other, so their dot product is zero.",
+      },
+      opposite: {
+        end: [OX - LEN, OY],
+        angle: 180,
+        cos: "−1",
+        sign: "Negative",
+        arc: `M ${OX + 45} ${OY} A 45 45 0 0 1 ${OX - 45} ${OY}`,
+        angleLabel: [OX - 8, OY + 62],
+        message:
+          "The vectors point in opposite directions. Their dot product is negative and smallest for these fixed vector lengths.",
+      },
+    };
+
+    function placeLabel(el, x, y, mode) {
+      const dx = x - OX;
+      const dy = y - OY;
+      const mag = Math.hypot(dx, dy) || 1;
+      let lx = x + (dx / mag) * 14;
+      let ly = y + (dy / mag) * 14 + 5;
+      if (mode === "same") {
+        lx = x + 12;
+        ly = y - 4;
+      }
+      el.setAttribute("x", lx);
+      el.setAttribute("y", ly);
+    }
+
+    function choose(mode) {
+      const s = states[mode];
+      const y0 = mode === "same" ? OY - 12 : OY;
+      const y1 = mode === "same" ? s.end[1] - 12 : s.end[1];
+      document.getElementById("vecB").setAttribute("d", `M ${OX} ${y0} L ${s.end[0]} ${y1}`);
+      placeLabel(document.getElementById("labelB"), s.end[0], y1, mode);
+      document.getElementById("arc").setAttribute("d", s.arc);
+      document.getElementById("angleLabel").textContent = `θ = ${s.angle}°`;
+      document.getElementById("angleLabel").setAttribute("x", s.angleLabel[0]);
+      document.getElementById("angleLabel").setAttribute("y", s.angleLabel[1]);
+      document.getElementById("angle").textContent = `${s.angle}°`;
+      document.getElementById("cos").textContent = s.cos;
+      document.getElementById("sign").textContent = s.sign;
+      document.getElementById("explanation").textContent = s.message;
+      document.querySelectorAll("button[data-mode]").forEach((b) =>
+        b.setAttribute("aria-pressed", String(b.dataset.mode === mode))
+      );
+    }
+
+    document.querySelectorAll("button[data-mode]").forEach((b) =>
+      b.addEventListener("click", () => choose(b.dataset.mode))
+    );
+    choose("same");
+  </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Determinant as Area Scale</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101923;color:#e6edf4;font:16px/1.55 Inter,system-ui,sans-serif}
+main{max-width:960px;margin:auto;padding:clamp(18px,5vw,55px)}
+h1{font-size:clamp(30px,5vw,52px);line-height:1.1;letter-spacing:-.04em;margin:0}
+h2{font-size:16px;margin:0 0 .6rem}
+p{margin:.65rem 0;color:#b8c8d7}
+.layout{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-top:24px}
+section,aside{min-width:0;border:1px solid #344658;border-radius:16px;background:#172433;padding:16px}
+canvas{display:block;width:100%;height:auto;background:#101923;border-radius:9px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+button{border:1px solid #63798e;background:#26394c;color:#f1f7fb;border-radius:8px;padding:8px 13px;font:inherit;cursor:pointer}
+#play{background:#ffe095;color:#172433;border-color:#ffe095;font-weight:700}
+input{width:100%;accent-color:#ffe095}
+label{display:block;font-size:14px;color:#d3dee8}
+.matrix{display:inline-grid;grid-template-columns:repeat(2,1.5em);border-inline:2px solid;border-radius:5px;text-align:center;vertical-align:middle;margin-left:.4rem}
+.x{color:#ffc36d}.y{color:#70e2cf}
+dl{display:grid;grid-template-columns:1fr auto;gap:5px 10px;margin:15px 0;font-variant-numeric:tabular-nums}
+dd{margin:0}
+.area{border-top:1px solid #425568;padding-top:10px;color:#ffe095;font-weight:700}
+@media(max-width:700px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>Determinant as area scale</h1>
+<p>Watch a unit square stretch into a rectangle under the matrix <strong>A</strong>.</p>
+<div class="layout">
+<section aria-label="Transformation animation">
+<canvas id="plot" width="600" height="420" role="img" aria-label="Coordinate grid with the original unit square and its stretched image.">The live width and height are shown beside the graph.</canvas>
+<div class="controls">
+<button id="play" type="button">Play stretch</button>
+<button id="reset" type="button">Reset</button>
+<button id="finish" type="button">Show final</button>
+</div>
+<label for="progress">Stretch progress <output id="percent" for="progress">0%</output></label>
+<input id="progress" type="range" min="0" max="100" value="0">
+<p>The dashed outline marks the original unit square.</p>
+</section>
+<aside>
+<h2>Where the basis vectors go</h2>
+<div aria-label="A equals a diagonal matrix with entries 3 and 2">A = <span class="matrix" aria-hidden="true"><span class="x">3</span><span class="y">0</span><span class="x">0</span><span class="y">2</span></span></div>
+<p><strong class="x">First column</strong><br>î goes from (1, 0) to (3, 0).</p>
+<p><strong class="y">Second column</strong><br>ĵ goes from (0, 1) to (0, 2).</p>
+<h2>Measurements during the stretch</h2>
+<dl>
+<dt>Width</dt><dd id="width">1</dd>
+<dt>Height</dt><dd id="height">1</dd>
+<dt>Area</dt><dd id="area">1 × 1 = 1</dd>
+</dl>
+<p class="area">Final area scale = 6 ÷ 1 = 6</p>
+<p>The x direction stretches by 3 and the y direction by 2. Each original unit square covers 6 square units after the transformation, so <strong>det(A) = 6</strong>.</p>
+</aside>
+</div>
+</main>
+<script>
+const byId = id => document.getElementById(id);
+const canvas = byId('plot');
+const ctx = canvas.getContext('2d');
+const slider = byId('progress');
+const play = byId('play');
+const origin = { x: 100, y: 340 };
+const unit = 105;
+let progress = 0;
+let frame = null;
+
+function line(x1, y1, x2, y2, color, weight = 1) {
+  ctx.beginPath();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = weight;
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+}
+
+function arrow(x, y, color) {
+  line(origin.x, origin.y, x, y, color, 5);
+  const angle = Math.atan2(y - origin.y, x - origin.x);
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  for (const offset of [-0.5, 0.5]) {
+    ctx.lineTo(x - 15 * Math.cos(angle + offset), y - 15 * Math.sin(angle + offset));
+  }
+  ctx.closePath();
+  ctx.fill();
+}
+
+function draw(value) {
+  progress = value;
+  const width = 1 + 2 * value;
+  const height = 1 + value;
+  const right = origin.x + width * unit;
+  const top = origin.y - height * unit;
+  const format = n => Number(n.toFixed(2)).toString();
+  slider.value = Math.round(value * 100);
+  byId('percent').textContent = slider.value + '%';
+  byId('width').textContent = format(width);
+  byId('height').textContent = format(height);
+  byId('area').textContent = format(width) + ' × ' + format(height) + ' = ' + format(width * height);
+  canvas.setAttribute('aria-label', 'Stretched shape measures ' + format(width) + ' units wide and ' + format(height) + ' units high.');
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#6b5633';
+  ctx.fillRect(origin.x, top, width * unit, height * unit);
+  ctx.font = '20px system-ui';
+  for (let i = 1; i <= 4; i++) {
+    const x = origin.x + i * unit;
+    line(x, 55, x, 352, '#35495c');
+    ctx.fillStyle = '#b9c9d9';
+    ctx.fillText(i, x - 6, 369);
+  }
+  for (let i = 1; i <= 2; i++) {
+    const y = origin.y - i * unit;
+    line(87, y, 548, y, '#35495c');
+    ctx.fillStyle = '#b9c9d9';
+    ctx.fillText(i, 70, y + 7);
+  }
+  line(78, origin.y, 548, origin.y, '#9aafc3', 2);
+  line(origin.x, 55, origin.x, 352, '#9aafc3', 2);
+  ctx.fillStyle = '#b9c9d9';
+  ctx.fillText('x', 558, 347);
+  ctx.fillText('y', 94, 42);
+  ctx.fillText('0', 76, 368);
+
+  ctx.strokeStyle = '#ffe095';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(origin.x, top, width * unit, height * unit);
+  ctx.setLineDash([6, 5]);
+  ctx.strokeStyle = '#f1f7fb';
+  ctx.strokeRect(origin.x, origin.y - unit, unit, unit);
+  ctx.setLineDash([]);
+
+  arrow(right, origin.y, '#ffc36d');
+  arrow(origin.x, top, '#70e2cf');
+  ctx.font = 'bold 23px system-ui';
+  ctx.fillStyle = '#ffc36d';
+  ctx.fillText('î', right - 9, origin.y + 60);
+  ctx.fillStyle = '#70e2cf';
+  ctx.fillText('ĵ', origin.x - 62, top + 7);
+}
+
+function stop() {
+  if (frame !== null) cancelAnimationFrame(frame);
+  frame = null;
+  play.textContent = progress === 1 ? 'Replay stretch' : progress === 0 ? 'Play stretch' : 'Resume';
+}
+
+play.addEventListener('click', () => {
+  if (frame !== null) {
+    stop();
+    return;
+  }
+  if (progress === 1) draw(0);
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    draw(1);
+    stop();
+    return;
+  }
+  const initial = progress;
+  let start;
+  play.textContent = 'Pause';
+  function animate(now) {
+    start ??= now;
+    draw(Math.min(1, initial + (now - start) / 3600));
+    if (progress === 1) stop();
+    else frame = requestAnimationFrame(animate);
+  }
+  frame = requestAnimationFrame(animate);
+});
+
+function seek(value) {
+  draw(value);
+  stop();
+}
+
+slider.addEventListener('input', () => seek(Number(slider.value) / 100));
+byId('reset').addEventListener('click', () => seek(0));
+byId('finish').addEventListener('click', () => seek(1));
+draw(0);
+</script>
+</body>
+</html>

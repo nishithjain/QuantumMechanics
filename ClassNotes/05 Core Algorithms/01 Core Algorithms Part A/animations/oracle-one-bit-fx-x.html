@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oracle f(x)=x — CNOT</title>
+<link rel="stylesheet" href="oracle-one-bit-card-styles.css">
+</head>
+<body>
+<div class="card">
+  <h3>Example C — f(x) = x</h3>
+  <div class="meaning">The function returns the input bit</div>
+  <div class="circuit">
+    <svg viewBox="0 0 340 115" role="img" aria-label="CNOT gate from x to y">
+      <text class="wire-label" x="28" y="35">x</text>
+      <text class="wire-label" x="28" y="78">y</text>
+      <line class="wire" x1="55" y1="35" x2="315" y2="35"/>
+      <line class="wire" x1="55" y1="78" x2="315" y2="78"/>
+      <line class="wire" x1="174" y1="35" x2="174" y2="78"/>
+      <circle class="control" cx="174" cy="35" r="6"/>
+      <circle class="plus-circle" cx="174" cy="78" r="12"/>
+      <line class="wire" x1="174" y1="69" x2="174" y2="87"/>
+      <line class="wire" x1="165" y1="78" x2="183" y2="78"/>
+    </svg>
+    <div class="circuit-caption">CNOT — x controls y</div>
+  </div>
+  <div class="explanation">
+    <strong>What happens?</strong><br>
+    The input x controls the target y. If x = 0, y stays the same. If x = 1, y flips.
+  </div>
+  <div class="formula">y → y ⊕ x</div>
+</div>
+<script src="embed-fit.js"></script>
+</body>
+</html>

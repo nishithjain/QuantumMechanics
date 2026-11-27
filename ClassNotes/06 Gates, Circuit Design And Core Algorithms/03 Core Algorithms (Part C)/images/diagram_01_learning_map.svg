@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="From hidden repetition to a useful measurement">
+<rect width="960" height="540" fill="#fcfdff"/>
+<defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#087f8c"/></marker></defs>
+<text x="34" y="47" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#172554">From hidden repetition to a useful measurement</text>
+<text x="36" y="77" font-family="Arial, sans-serif" font-size="15" fill="#4b647d">The professor’s path: phases → new basis → Fourier interference → period clues</text>
+<path d="M34 89H925" stroke="#d5e1ee" stroke-width="1.5"/>
+<rect x="28" y="166" width="175" height="145" rx="12" fill="#edf7f6" stroke="#d5e1ee" stroke-width="1.2"/>
+<text x="115" y="211" font-family="Arial, sans-serif" text-anchor="middle" font-size="17" font-weight="700" fill="#172554">1. Complex phases</text>
+<text x="115" y="249" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">N-th roots of unity</text>
+<line x1="205" y1="240" x2="216" y2="240" stroke="#087f8c" stroke-width="2" marker-end="url(#a)" />
+<rect x="218" y="166" width="175" height="145" rx="12" fill="#f3effb" stroke="#d5e1ee" stroke-width="1.2"/>
+<text x="305" y="211" font-family="Arial, sans-serif" text-anchor="middle" font-size="17" font-weight="700" fill="#172554">2. Fourier waves</text>
+<text x="305" y="249" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">omega^(gamma × x)</text>
+<line x1="395" y1="240" x2="406" y2="240" stroke="#087f8c" stroke-width="2" marker-end="url(#a)" />
+<rect x="408" y="166" width="175" height="145" rx="12" fill="#edf7f6" stroke="#d5e1ee" stroke-width="1.2"/>
+<text x="495" y="211" font-family="Arial, sans-serif" text-anchor="middle" font-size="17" font-weight="700" fill="#172554">3. Fourier matrix</text>
+<text x="495" y="249" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">F_N mixes amplitudes</text>
+<line x1="585" y1="240" x2="596" y2="240" stroke="#087f8c" stroke-width="2" marker-end="url(#a)" />
+<rect x="598" y="166" width="175" height="145" rx="12" fill="#f3effb" stroke="#d5e1ee" stroke-width="1.2"/>
+<text x="685" y="211" font-family="Arial, sans-serif" text-anchor="middle" font-size="17" font-weight="700" fill="#172554">4. Interference</text>
+<text x="685" y="249" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">Some labels cancel</text>
+<line x1="775" y1="240" x2="786" y2="240" stroke="#087f8c" stroke-width="2" marker-end="url(#a)" />
+<rect x="788" y="166" width="175" height="145" rx="12" fill="#edf7f6" stroke="#d5e1ee" stroke-width="1.2"/>
+<text x="875" y="211" font-family="Arial, sans-serif" text-anchor="middle" font-size="17" font-weight="700" fill="#172554">5. Hidden period</text>
+<text x="875" y="249" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">Measurement reveals spacing</text>
+<rect x="50" y="370" width="860" height="88" rx="12" fill="#fff4e6" stroke="#d5e1ee" stroke-width="1.2"/>
+<text x="480" y="407" font-family="Arial, sans-serif" text-anchor="middle" font-size="19" font-weight="700" fill="#d26a20">Key distinction</text>
+<text x="480" y="436" font-family="Arial, sans-serif" text-anchor="middle" font-size="17" font-weight="400" fill="#172554">Changing a state’s basis description (F†) differs from applying the physical QFT gate (F).</text>
+</svg>

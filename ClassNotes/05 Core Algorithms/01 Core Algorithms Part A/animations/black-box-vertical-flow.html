@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Black box — x in, f(x) out</title>
+  <link rel="stylesheet" href="embed-frame.css">
+</head>
+<body style="background:#f4f6fc;">
+<div class="blackbox">
+<style>
+.blackbox {
+  font-family: Arial, sans-serif;
+  background: #f4f6fc;
+  border: 1px solid #dce2ee;
+  border-radius: 14px;
+  padding: 14px 12px 16px;
+  text-align: center;
+  color: #25304a;
+  max-width: 620px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.blackbox .label {
+  font-size: 12px;
+  color: #66738c;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+}
+.blackbox .value {
+  font-size: 27px;
+  font-weight: bold;
+  margin-top: 6px;
+}
+.blackbox .arrow {
+  font-size: 27px;
+  color: #73809a;
+  margin: 8px;
+}
+.blackbox .machine {
+  max-width: 290px;
+  margin: auto;
+  padding: 22px 15px;
+  background: #303b99;
+  color: white;
+  border: 2px solid #202b75;
+  border-radius: 13px;
+  box-shadow: 0 6px 15px rgba(48, 59, 153, 0.19);
+}
+.blackbox .machine-icon {
+  font-size: 32px;
+}
+.blackbox .machine-title {
+  font-size: 19px;
+  font-weight: bold;
+  margin: 9px 0;
+}
+.blackbox .function {
+  font-size: 25px;
+  color: #dce3ff;
+  font-weight: bold;
+}
+.blackbox .hidden {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed #aab5ee;
+  font-size: 12px;
+  color: #dce3ff;
+}
+.blackbox .input-box {
+  display: inline-block;
+  background: #e4edff;
+  border: 1px solid #a9c1f6;
+  padding: 10px 35px;
+  border-radius: 9px;
+}
+.blackbox .output-box {
+  display: inline-block;
+  background: #e2f5e9;
+  border: 1px solid #9bd2ad;
+  padding: 10px 35px;
+  border-radius: 9px;
+}
+.blackbox .caption {
+  margin-top: 10px;
+  background: white;
+  border-radius: 9px;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #59657b;
+  text-align: left;
+}
+.blackbox .machine {
+  padding: 16px 12px;
+}
+.blackbox .arrow {
+  margin: 4px 0;
+}
+</style>
+
+<div class="label">INPUT</div>
+<div class="input-box">
+  <div class="value">x</div>
+</div>
+
+<div class="arrow" aria-hidden="true">↓</div>
+
+<div class="machine">
+  <div class="machine-icon" aria-hidden="true">🔒</div>
+  <div class="machine-title">BLACK BOX</div>
+  <div class="function">f(x)</div>
+  <div class="hidden">? &nbsp; Internal working is hidden &nbsp; ?</div>
+</div>
+
+<div class="arrow" aria-hidden="true">↓</div>
+
+<div class="label">OUTPUT</div>
+<div class="output-box">
+  <div class="value">f(x)</div>
+</div>
+
+<div class="caption embed-hide">
+  <b>How it works:</b> Give the black box an input x. It calculates the function f(x) and returns
+  the output. We can use the function without knowing its internal implementation.
+</div>
+</div>
+<script src="embed-fit.js"></script>
+</body>
+</html>

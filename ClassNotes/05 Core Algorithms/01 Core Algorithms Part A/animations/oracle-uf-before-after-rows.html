@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>U_f — before and after on x and y registers</title>
+  <link rel="stylesheet" href="embed-frame.css">
+</head>
+<body style="background:#f4f6fc;">
+<div class="uf-flow">
+<style>
+.uf-flow {
+  font-family: Arial, sans-serif;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 10px 12px 12px;
+  background: #f4f6fc;
+  border: 1px solid #dce2ee;
+  border-radius: 14px;
+  color: #26324a;
+  box-sizing: border-box;
+}
+.uf-flow * { box-sizing: border-box; }
+.uf-flow .headers,
+.uf-flow .flow-row {
+  display: grid;
+  grid-template-columns: 1fr 48px 1.15fr 48px 1fr;
+  gap: 8px;
+  align-items: center;
+}
+.uf-flow .headers { margin-bottom: 12px; }
+.uf-flow .heading {
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 12px 5px;
+  background: #e7eaf3;
+  border-radius: 8px;
+}
+.uf-flow .heading.oracle {
+  background: #303b99;
+  color: white;
+}
+.uf-flow .flow-row { margin: 8px 0; }
+.uf-flow .cell {
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 6px;
+  border-radius: 10px;
+  border: 1px solid;
+}
+.uf-flow .input {
+  background: #e8efff;
+  border-color: #a9c1f5;
+}
+.uf-flow .target {
+  background: #e5f5ea;
+  border-color: #a3d5b2;
+}
+.uf-flow .oracle-cell {
+  background: #eef0ff;
+  border-color: #b8bdf0;
+}
+.uf-flow .symbol {
+  font-size: 22px;
+  font-weight: bold;
+}
+.uf-flow .description {
+  font-size: 12px;
+  margin-top: 5px;
+  color: #5f6b82;
+}
+.uf-flow .arrow {
+  text-align: center;
+  font-size: 27px;
+  font-weight: bold;
+  color: #687796;
+}
+.uf-flow .result {
+  font-size: 20px;
+  font-weight: bold;
+}
+.uf-flow .equation {
+  text-align: center;
+  margin-top: 12px;
+  padding: 10px 8px;
+  background: white;
+  border: 1px solid #dce2ee;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.uf-flow .note {
+  text-align: center;
+  font-size: 12px;
+  color: #657189;
+  margin-top: 12px;
+  line-height: 1.5;
+}
+@media (max-width: 600px) {
+  .uf-flow { padding: 12px 6px; }
+  .uf-flow .headers,
+  .uf-flow .flow-row {
+    grid-template-columns: 1fr 20px 1.1fr 20px 1fr;
+    gap: 3px;
+  }
+  .uf-flow .heading { font-size: 10px; }
+  .uf-flow .cell { min-height: 82px; padding: 6px 2px; }
+  .uf-flow .symbol { font-size: 17px; }
+  .uf-flow .description { font-size: 10px; }
+  .uf-flow .arrow { font-size: 19px; }
+  .uf-flow .result { font-size: 15px; }
+}
+</style>
+
+<div class="headers">
+  <div class="heading">Before U<sub>f</sub></div>
+  <div></div>
+  <div class="heading oracle">U<sub>f</sub></div>
+  <div></div>
+  <div class="heading">After U<sub>f</sub></div>
+</div>
+
+<div class="flow-row">
+  <div class="cell input">
+    <div class="symbol">x</div>
+    <div class="description">Input register</div>
+  </div>
+  <div class="arrow" aria-hidden="true">→</div>
+  <div class="cell oracle-cell">
+    <div class="symbol">f(x)</div>
+    <div class="description">Calculates the function</div>
+  </div>
+  <div class="arrow" aria-hidden="true">→</div>
+  <div class="cell input">
+    <div class="symbol">x</div>
+    <div class="description">Input unchanged</div>
+  </div>
+</div>
+
+<div class="flow-row">
+  <div class="cell target">
+    <div class="symbol">y</div>
+    <div class="description">Target register</div>
+  </div>
+  <div class="arrow" aria-hidden="true">→</div>
+  <div class="cell oracle-cell">
+    <div class="symbol">y ⊕ f(x)</div>
+    <div class="description">XORs f(x) into y</div>
+  </div>
+  <div class="arrow" aria-hidden="true">→</div>
+  <div class="cell target">
+    <div class="result">y ⊕ f(x)</div>
+    <div class="description">Target updated</div>
+  </div>
+</div>
+
+<div class="equation embed-hide">U<sub>f</sub> |x⟩|y⟩ = |x⟩|y ⊕ f(x)⟩</div>
+
+<div class="note embed-hide">
+  The input register x remains unchanged. Only the target register y is updated by XORing
+  the function result f(x) into it.
+</div>
+</div>
+<script src="embed-fit.js"></script>
+</body>
+</html>

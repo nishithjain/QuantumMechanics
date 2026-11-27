@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eigenvectors · First matrix example</title>
+  <link rel="stylesheet" href="embed-frame.css">
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Inter, "Segoe UI", system-ui, sans-serif;
+      color: #18263a;
+      background: #f4f5f1;
+      --muted: #515e6d;
+      --border: #d7e0df;
+      --math: "STIX Two Text", Cambria, Georgia, serif;
+      --plot: #111e33;
+      --input: #c8ccf4;
+      --arrow: #75edbb;
+      --grid: #82b0ee;
+    }
+
+    * { box-sizing: border-box; }
+    body { padding: 8px 10px 10px; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible {
+      outline: 3px solid #258570;
+      outline-offset: 3px;
+    }
+
+    main {
+      width: min(1140px, calc(100% - 20px));
+      margin: 0 auto;
+      padding: 4px 0 8px;
+    }
+    h1 { display: none; }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      font-size: clamp(2.15rem, 5vw, 3.55rem);
+      font-weight: 730;
+      letter-spacing: -.051em;
+      line-height: 1.05;
+    }
+
+    .intro p {
+      margin-top: 4px;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.95rem;
+    }
+
+    .math, var { font-family: var(--math); }
+
+    .examples {
+      min-width: 0;
+      margin: 10px 0 10px;
+      padding: 0;
+      border: 0;
+    }
+
+    .examples legend {
+      padding: 0;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: .83rem;
+      font-weight: 650;
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .choice {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      column-gap: 8px;
+      min-height: 46px;
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #fff;
+      color: #253650;
+      text-align: left;
+      font-size: .84rem;
+      font-weight: 620;
+    }
+
+    .choice .math { font-size: 1.07rem; white-space: nowrap; }
+    .choice:hover { border-color: #79928d; }
+    .choice[aria-pressed="true"] {
+      color: #164c3e;
+      border-color: #39856f;
+      background: #e2f3ea;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.68fr) minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+    }
+
+    .diagram {
+      overflow: hidden;
+      background: var(--plot);
+      color: #edf3fd;
+      border: 1px solid #283a52;
+      border-radius: 15px;
+    }
+
+    .diagram h2 {
+      padding: 17px 18px 0;
+      font-size: 1.04rem;
+      font-weight: 650;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 400px;
+      aspect-ratio: 4 / 3;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px 15px;
+      margin: 0;
+      padding: 1px 18px 14px;
+      list-style: none;
+      color: #d7e0f0;
+      font-size: .78rem;
+    }
+
+    .legend li { display: flex; gap: 6px; align-items: center; }
+    .swatch { width: 16px; border-top: 2px solid; }
+    .input-swatch { border-top-style: dashed; color: var(--input); }
+    .arrow-swatch { color: var(--arrow); }
+    .reference-swatch { border-top-style: dotted; color: #a0b1ca; }
+    .grid-swatch { color: var(--grid); }
+
+    .playback {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 9px 12px;
+      padding: 12px 18px 14px;
+      border-top: 1px solid #2c3e58;
+      background: #17263c;
+    }
+
+    .actions { display: flex; gap: 6px; }
+    .action {
+      min-height: 44px;
+      padding: 7px 11px;
+      border: 1px solid #4c607e;
+      border-radius: 8px;
+      color: #eef3fc;
+      background: transparent;
+      font-size: .84rem;
+      font-weight: 650;
+    }
+
+    .action:hover { background: #263951; }
+    .action.play {
+      min-width: 72px;
+      color: #133b31;
+      background: var(--arrow);
+      border-color: var(--arrow);
+    }
+
+    .action.play:hover { background: #a1f4d3; }
+    .diagram :focus-visible { outline-color: #f0c879; }
+    .timeline { flex: 1; min-width: 106px; }
+    .timeline-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+      color: #d7e0f0;
+      font-size: .8rem;
+    }
+
+    #progress-value { font-variant-numeric: tabular-nums; }
+    input[type="range"] {
+      display: block;
+      width: 100%;
+      height: 24px;
+      margin: 0;
+      accent-color: var(--arrow);
+      cursor: ew-resize;
+    }
+
+    .calculation {
+      min-width: 0;
+      padding: 12px 14px 14px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+    }
+
+    .calculation h2 { font-size: 1.06rem; font-weight: 700; }
+    .equation {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: clamp(8px, 1.3vw, 15px);
+      margin: 13px 0 12px;
+      padding: 15px 7px 12px;
+      border-radius: 10px;
+      background: #f1f5f6;
+    }
+
+    .operand { display: grid; justify-items: center; gap: 7px; }
+    .matrix {
+      position: relative;
+      display: inline-grid;
+      grid-template-columns: repeat(2, minmax(1ch, auto));
+      gap: 1px 10px;
+      justify-items: center;
+      padding: 1px 9px;
+      font: 1.45rem/1.12 var(--math);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .matrix.column { grid-template-columns: minmax(1.65ch, auto); }
+    .matrix::before, .matrix::after {
+      position: absolute;
+      inset-block: 0;
+      width: 5px;
+      content: "";
+      border-block: 1.5px solid;
+    }
+
+    .matrix::before { left: 0; border-left: 1.5px solid; }
+    .matrix::after { right: 0; border-right: 1.5px solid; }
+    .operand small { color: var(--muted); font-size: .74rem; }
+    .input-column { color: #515096; }
+    .output-column { color: #185947; }
+    .equals { padding-top: 11px; font: 1.35rem var(--math); }
+
+    .rows {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: baseline;
+      gap: 6px 12px;
+      margin: 0;
+    }
+
+    .rows dt { color: var(--muted); font-size: .8rem; }
+    .rows dd { margin: 0; font: 1.03rem/1.45 var(--math); }
+
+    .insight {
+      margin-top: 18px;
+      padding: 0 0 0 12px;
+      border-left: 3px solid #3a8b72;
+    }
+
+    .insight h3 { font-size: 1rem; }
+    .insight p {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.5;
+    }
+
+    .output-note {
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: .79rem;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 800px) {
+      .workspace { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    @media (max-width: 630px) {
+      .choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 410px) {
+      .diagram h2, .legend, .playback { padding-inline: 12px; }
+      .choice { padding-inline: 9px; }
+      .legend { column-gap: 11px; }
+      .action { padding-inline: 9px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="intro">
+      <h1>A first matrix example</h1>
+      <p>Apply <var>A</var> and see which arrows stay on their original line through the origin.</p>
+    </header>
+
+    <fieldset class="examples">
+      <legend>Choose an input vector</legend>
+      <div class="choices">
+        <button class="choice" type="button" data-case="stretch" aria-pressed="true"><span class="math">(1, 1)</span> Stretches</button>
+        <button class="choice" type="button" data-case="turn" aria-pressed="false"><span class="math">(1, 0)</span> Turns</button>
+        <button class="choice" type="button" data-case="fixed" aria-pressed="false"><span class="math">(1, −1)</span> Stays fixed</button>
+        <button class="choice" type="button" data-case="multiple" aria-pressed="false"><span class="math">(2, 2)</span> Doubled input</button>
+      </div>
+    </fieldset>
+
+    <div class="workspace">
+      <section class="diagram" aria-labelledby="plot-heading">
+        <h2 id="plot-heading">Coordinate plane</h2>
+        <canvas id="plane" role="img" aria-label="The arrow from the origin to (1, 1) grows to (3, 3) along the same line.">
+          The matrix calculation gives the input and output coordinates.
+        </canvas>
+        <ul class="legend" aria-label="Plot legend">
+          <li><span class="swatch input-swatch" aria-hidden="true"></span>Input arrow</li>
+          <li><span class="swatch arrow-swatch" aria-hidden="true"></span>Animated arrow</li>
+          <li><span class="swatch reference-swatch" aria-hidden="true"></span>Original grid</li>
+          <li><span class="swatch grid-swatch" aria-hidden="true"></span>Moving grid</li>
+        </ul>
+        <div class="playback">
+          <div class="actions">
+            <button class="action play" id="play" type="button">Play</button>
+            <button class="action" id="reset" type="button">Reset</button>
+          </div>
+          <div class="timeline">
+            <div class="timeline-label">
+              <label for="progress">Animation</label>
+              <span id="progress-value" aria-hidden="true">0%</span>
+            </div>
+            <input id="progress" type="range" min="0" max="100" step="1" value="0"
+              aria-valuetext="0%, input vector" aria-describedby="output-note">
+          </div>
+        </div>
+      </section>
+
+      <section class="calculation" aria-labelledby="calculation-heading">
+        <h2 id="calculation-heading">Multiply the matrix by the vector</h2>
+        <div class="equation" id="equation" role="img"
+          aria-label="Matrix A times the column (1, 1) equals the column (3, 3).">
+          <div class="operand" aria-hidden="true">
+            <span class="matrix"><span>2</span><span>1</span><span>1</span><span>2</span></span>
+            <small>Matrix <var>A</var></small>
+          </div>
+          <div class="operand" aria-hidden="true">
+            <span class="matrix column input-column" id="input-column"><span>1</span><span>1</span></span>
+            <small>Input</small>
+          </div>
+          <span class="equals" aria-hidden="true">=</span>
+          <div class="operand" aria-hidden="true">
+            <span class="matrix column output-column" id="output-column"><span>3</span><span>3</span></span>
+            <small>Output</small>
+          </div>
+        </div>
+        <dl class="rows" aria-label="Row calculations">
+          <dt>Top row</dt><dd id="row-one">2 × 1 + 1 × 1 = 3</dd>
+          <dt>Bottom row</dt><dd id="row-two">1 × 1 + 2 × 1 = 3</dd>
+        </dl>
+        <div class="insight" role="status" aria-live="polite" aria-atomic="true">
+          <h3 id="insight-title">Eigenvalue λ = 3</h3>
+          <p id="insight-text">The output (3, 3) is three times the input (1, 1). The arrow grows along the line y = x.</p>
+        </div>
+        <p class="output-note" id="output-note">At 100%, the animated arrow reaches the output of <var>A</var>.</p>
+      </section>
+    </div>
+    <noscript><p>Enable JavaScript to play the animation and choose a vector.</p></noscript>
+  </main>
+
+  <script>
+    "use strict";
+
+    const matrix = [[2, 1], [1, 2]];
+    const examples = {
+      stretch: {
+        vector: [1, 1],
+        title: "Eigenvalue λ = 3",
+        detail: "The output (3, 3) is three times the input (1, 1). The arrow grows along the line y = x."
+      },
+      turn: {
+        vector: [1, 0],
+        title: "The arrow changes direction",
+        detail: "Multiplying (1, 0) by any number keeps its second entry at 0. The output (2, 1) has a second entry of 1, so this vector fails the eigenvector test."
+      },
+      fixed: {
+        vector: [1, -1],
+        title: "Eigenvalue λ = 1",
+        detail: "The output equals the input (1, −1). The grid moves while the arrow stays fixed on the line y = −x."
+      },
+      multiple: {
+        vector: [2, 2],
+        title: "Same eigenvalue λ = 3",
+        detail: "Doubling (1, 1) doubles its output to (6, 6). Every nonzero multiple of an eigenvector has the same eigenvalue."
+      }
+    };
+
+    const state = { example: "stretch", progress: 0, frame: null, start: 0 };
+    const duration = 2400;
+    const byId = id => document.getElementById(id);
+    const canvas = byId("plane");
+    const ctx = canvas.getContext("2d");
+    const play = byId("play");
+    const slider = byId("progress");
+    const progressValue = byId("progress-value");
+    const colors = {
+      reference: "#637795",
+      grid: "rgba(120, 172, 242, .46)",
+      cell: "rgba(112, 174, 255, .19)",
+      cellEdge: "#82b0ee",
+      axis: "#9bacc4",
+      guide: "rgba(199, 206, 246, .59)",
+      input: "#c8ccf4",
+      arrow: "#75edbb",
+      background: "#111e33"
+    };
+
+    const multiply = ([x, y]) => matrix.map(([a, b]) => a * x + b * y);
+    const number = value => String(value).replace("-", "−");
+    const pair = values => "(" + values.map(number).join(", ") + ")";
+    const term = value => value < 0 ? "(" + number(value) + ")" : number(value);
+
+    function atProgress(vector) {
+      const result = multiply(vector);
+      return vector.map((value, index) => value + state.progress * (result[index] - value));
+    }
+
+    function line(start, end, stroke, width = 1, dash = []) {
+      ctx.beginPath();
+      ctx.moveTo(...start);
+      ctx.lineTo(...end);
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = width;
+      ctx.setLineDash(dash);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function arrow(start, end, stroke, shaftWidth, dash = []) {
+      const angle = Math.atan2(end[1] - start[1], end[0] - start[0]);
+      const length = Math.hypot(end[0] - start[0], end[1] - start[1]);
+      const head = Math.min(12, length * .53);
+      const base = [end[0] - head * Math.cos(angle), end[1] - head * Math.sin(angle)];
+      const wingX = head * .48 * Math.sin(angle);
+      const wingY = head * .48 * Math.cos(angle);
+      line(start, base, stroke, shaftWidth, dash);
+      ctx.beginPath();
+      ctx.moveTo(...end);
+      ctx.lineTo(base[0] + wingX, base[1] - wingY);
+      ctx.lineTo(base[0] - wingX, base[1] + wingY);
+      ctx.closePath();
+      ctx.fillStyle = stroke;
+      ctx.fill();
+    }
+
+    function endpoint([x, y], stroke) {
+      ctx.beginPath();
+      ctx.arc(x, y, 4.2, 0, Math.PI * 2);
+      ctx.fillStyle = colors.background;
+      ctx.fill();
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = 1.65;
+      ctx.stroke();
+    }
+
+    function drawAxes(point, center, extentX, extentY, width) {
+      line(point([-extentX, 0]), point([extentX, 0]), colors.axis, 1.1);
+      line(point([0, -extentY]), point([0, extentY]), colors.axis, 1.1);
+      ctx.fillStyle = colors.axis;
+      ctx.font = "12px Inter, sans-serif";
+      ctx.textBaseline = "middle";
+      for (const tick of [-6, -4, -2, 2, 4, 6]) {
+        ctx.textAlign = "center";
+        ctx.fillText(number(tick), point([tick, 0])[0], center[1] + 11);
+        ctx.textAlign = "right";
+        ctx.fillText(number(tick), center[0] - 7, point([0, tick])[1]);
+      }
+      ctx.textAlign = "left";
+      ctx.fillText("x", width - 17, center[1] - 10);
+      ctx.fillText("y", center[0] + 7, 11);
+      ctx.fillText("0", center[0] - 13, center[1] + 12);
+    }
+
+    function drawGrid(point, extentX, extentY) {
+      for (let x = -Math.floor(extentX); x <= extentX; x++) {
+        line(point([x, -extentY]), point([x, extentY]), colors.reference, 1, [1, 5]);
+      }
+      for (let y = -Math.floor(extentY); y <= extentY; y++) {
+        line(point([-extentX, y]), point([extentX, y]), colors.reference, 1, [1, 5]);
+      }
+
+      const animatedPoint = vector => point(atProgress(vector));
+      ctx.beginPath();
+      for (let tick = -2; tick <= 2; tick++) {
+        ctx.moveTo(...animatedPoint([tick, -2]));
+        ctx.lineTo(...animatedPoint([tick, 2]));
+        ctx.moveTo(...animatedPoint([-2, tick]));
+        ctx.lineTo(...animatedPoint([2, tick]));
+      }
+      ctx.strokeStyle = colors.grid;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Follow one marked unit cell as the grid stretches.
+      ctx.beginPath();
+      ctx.moveTo(...animatedPoint([-2, -1]));
+      ctx.lineTo(...animatedPoint([-1, -1]));
+      ctx.lineTo(...animatedPoint([-1, 0]));
+      ctx.lineTo(...animatedPoint([-2, 0]));
+      ctx.closePath();
+      ctx.fillStyle = colors.cell;
+      ctx.fill();
+      ctx.strokeStyle = colors.cellEdge;
+      ctx.stroke();
+    }
+
+    function draw() {
+      const { width, height } = canvas.getBoundingClientRect();
+      if (width <= 40 || height <= 40) return;
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      const pixelWidth = Math.round(width * ratio);
+      const pixelHeight = Math.round(height * ratio);
+      if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+        canvas.width = pixelWidth;
+        canvas.height = pixelHeight;
+      }
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      ctx.clearRect(0, 0, width, height);
+      ctx.lineCap = "round";
+
+      const unit = Math.min(width - 40, height - 30) / 13.5;
+      const center = [width / 2, height / 2];
+      const point = ([x, y]) => [center[0] + x * unit, center[1] - y * unit];
+      const extentX = (width / 2 - 9) / unit;
+      const extentY = (height / 2 - 9) / unit;
+      const [x, y] = examples[state.example].vector;
+      const source = [x, y];
+      const target = multiply(source);
+      const same = source.every((value, index) => value === target[index]);
+
+      drawGrid(point, extentX, extentY);
+      drawAxes(point, center, extentX, extentY, width);
+      const guideScale = Math.min(extentX / Math.abs(x), y === 0 ? Infinity : extentY / Math.abs(y));
+      line(point([-guideScale * x, -guideScale * y]), point([guideScale * x, guideScale * y]), colors.guide, 1.4, [6, 5]);
+
+      if (!same) {
+        const sharesLine = x * target[1] === y * target[0];
+        arrow(center, point(source), colors.input, sharesLine ? 5.2 : 2.5, [3, 4]);
+        if (state.progress > .12 && sharesLine) endpoint(point(source), colors.input);
+      }
+      arrow(center, point(atProgress(source)), colors.arrow, 3.3);
+      if (!same && state.progress < .96) endpoint(point(target), colors.arrow);
+    }
+
+    function render() {
+      const percent = Math.round(state.progress * 100);
+      slider.value = percent;
+      progressValue.textContent = percent + "%";
+      const description = percent === 0 ? ", input vector" : percent === 100 ? ", output vector" : "";
+      slider.setAttribute("aria-valuetext", percent + "%" + description);
+      play.textContent = state.frame !== null ? "Pause" : state.progress === 1 ? "Replay" : "Play";
+      draw();
+      if (typeof fitEmbed === "function") fitEmbed();
+    }
+
+    function updateCalculation() {
+      const example = examples[state.example];
+      const source = example.vector;
+      const target = multiply(source);
+      byId("input-column").children[0].textContent = number(source[0]);
+      byId("input-column").children[1].textContent = number(source[1]);
+      byId("output-column").children[0].textContent = number(target[0]);
+      byId("output-column").children[1].textContent = number(target[1]);
+      const arithmetic = index => {
+        const [a, b] = matrix[index];
+        return a + " × " + term(source[0]) + " + " + b + " × " + term(source[1]) + " = " + number(target[index]);
+      };
+      byId("row-one").textContent = arithmetic(0);
+      byId("row-two").textContent = arithmetic(1);
+      byId("insight-title").textContent = example.title;
+      byId("insight-text").textContent = example.detail;
+      byId("equation").setAttribute("aria-label", "Matrix A with rows (2, 1) and (1, 2) times column " + pair(source) + " equals column " + pair(target) + ".");
+      canvas.setAttribute("aria-label", "Coordinate plane. Input " + pair(source) + ". Output " + pair(target) + ".");
+    }
+
+    function pause() {
+      if (state.frame !== null) {
+        cancelAnimationFrame(state.frame);
+        state.frame = null;
+      }
+    }
+
+    function reset() {
+      pause();
+      state.progress = 0;
+      render();
+    }
+
+    function animate(now) {
+      state.progress = Math.max(0, Math.min(1, (now - state.start) / duration));
+      state.frame = state.progress < 1 ? requestAnimationFrame(animate) : null;
+      render();
+    }
+
+    play.addEventListener("click", () => {
+      if (state.frame !== null) {
+        pause();
+      } else if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        state.progress = state.progress === 1 ? 0 : 1;
+      } else {
+        if (state.progress === 1) state.progress = 0;
+        state.start = performance.now() - state.progress * duration;
+        state.frame = requestAnimationFrame(animate);
+      }
+      render();
+    });
+
+    slider.addEventListener("input", () => {
+      pause();
+      state.progress = Number(slider.value) / 100;
+      render();
+    });
+    byId("reset").addEventListener("click", reset);
+
+    const buttons = [...document.querySelectorAll("[data-case]")];
+    for (const button of buttons) {
+      button.addEventListener("click", () => {
+        state.example = button.dataset.case;
+        for (const choice of buttons) choice.setAttribute("aria-pressed", choice === button);
+        updateCalculation();
+        reset();
+      });
+    }
+
+    updateCalculation();
+    render();
+    function fitEmbed() {
+      if (window.qmEmbedFitSchedule) window.qmEmbedFitSchedule();
+    }
+    new ResizeObserver(function () { draw(); fitEmbed(); }).observe(canvas);
+    fitEmbed();
+  </script>
+<script src="embed-fit.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dot product and projection explorer</title>
+<style>
+body{font-family:system-ui,Segoe UI,sans-serif;max-width:980px;margin:24px auto;padding:0 16px;background:#f5f8fc;color:#17243a}
+.card{background:#fff;border:1px solid #d7e1ef;border-radius:14px;padding:16px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+label{display:block;margin:10px 0}input{width:100%;accent-color:#17569b}
+canvas{width:100%;height:390px;background:#fbfdff;border-radius:10px}
+.metric{font-weight:700;font-size:1.12rem}.math{font-family:ui-monospace,Consolas,monospace;background:#f0f4fa;padding:10px;border-radius:8px}
+button{padding:9px 14px;border:0;border-radius:8px;background:#174f91;color:white;margin:4px;cursor:pointer}.alt{background:#e5edf7;color:#18304e}
+@media(max-width:650px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<h1>Explore the dot product geometrically</h1>
+<p>Move the vectors and watch the projection of <b>w</b> onto the direction of <b>v</b>. The dot product is the signed projection length multiplied by the length of v.</p>
+<div class="card">
+<div class="grid">
+<div>
+<label>v angle: <b id="av">25°</b><input id="a" type="range" min="-180" max="180" value="25"></label>
+<label>v length: <b id="lv">3</b><input id="l" type="range" min=".5" max="4" step=".1" value="3"></label>
+</div><div>
+<label>w angle: <b id="bv">70°</b><input id="b" type="range" min="-180" max="180" value="70"></label>
+<label>w length: <b id="mv">2.5</b><input id="m" type="range" min=".5" max="4" step=".1" value="2.5"></label>
+</div></div>
+<p class="math" id="formula"></p><p class="metric" id="result"></p><p id="interpret"></p>
+<canvas id="plot" width="900" height="390"></canvas>
+<button id="play">Animate angle</button><button class="alt" id="pause">Pause</button><button class="alt" id="same">Same direction</button><button class="alt" id="perp">Perpendicular</button><button class="alt" id="opposite">Opposite direction</button>
+</div>
+<div class="card"><b>Sign guide</b><ul><li>Positive: generally same direction.</li><li>Zero: perpendicular.</li><li>Negative: generally opposite direction.</li></ul></div>
+<script>
+const $=id=>document.getElementById(id);let timer=null,angle=70;
+function draw(){
+ let a=+$('a').value*Math.PI/180,b=+$('b').value*Math.PI/180,L=+$('l').value,M=+$('m').value;
+ $('av').textContent=$('a').value+'°';$('bv').textContent=$('b').value+'°';$('lv').textContent=L.toFixed(1);$('mv').textContent=M.toFixed(1);
+ let v=[L*Math.cos(a),L*Math.sin(a)],w=[M*Math.cos(b),M*Math.sin(b)],dot=v[0]*w[0]+v[1]*w[1],theta=Math.acos(Math.max(-1,Math.min(1,(v[0]*w[0]+v[1]*w[1])/(L*M))));
+ let proj=(w[0]*v[0]+w[1]*v[1])/(L*L),q=[proj*v[0],proj*v[1]],signed=proj*L;
+ $('formula').textContent=`v · w = |v| |w| cos θ = ${L.toFixed(2)} × ${M.toFixed(2)} × cos(${(theta*180/Math.PI).toFixed(1)}°)`;
+ $('result').textContent=`Dot product = ${dot.toFixed(3)}   |   signed projection length = ${signed.toFixed(3)}`;
+ $('interpret').textContent=Math.abs(dot)<.015?'The vectors are perpendicular: the projection is zero.':dot>0?'Positive: the projection points along v.':'Negative: the projection points opposite to v.';
+ let g=$('plot').getContext('2d'),O={x:450,y:205},s=70;g.clearRect(0,0,900,390);
+ g.strokeStyle='#cbd5e1';g.lineWidth=2;g.beginPath();g.moveTo(30,O.y);g.lineTo(870,O.y);g.moveTo(O.x,25);g.lineTo(O.x,370);g.stroke();
+ function P(x,y){return {x:O.x+x*s,y:O.y-y*s}}
+ function line(p,color,label,width=5){let z=P(...p);g.strokeStyle=color;g.fillStyle=color;g.lineWidth=width;g.beginPath();g.moveTo(O.x,O.y);g.lineTo(z.x,z.y);g.stroke();let ang=Math.atan2(z.y-O.y,z.x-O.x);g.beginPath();g.moveTo(z.x,z.y);g.lineTo(z.x-13*Math.cos(ang-.4),z.y-13*Math.sin(ang-.4));g.lineTo(z.x-13*Math.cos(ang+.4),z.y-13*Math.sin(ang+.4));g.closePath();g.fill();g.font='bold 18px system-ui';g.fillText(label,z.x+8,z.y-8)}
+ let vp=P(...v),wp=P(...w),qp=P(...q);
+ line(v,'#2563eb','v');line(w,'#16a34a','w');
+ g.setLineDash([7,6]);g.strokeStyle='#9333a8';g.lineWidth=3;g.beginPath();g.moveTo(wp.x,wp.y);g.lineTo(qp.x,qp.y);g.stroke();g.setLineDash([]);
+ g.strokeStyle='#9333a8';g.lineWidth=5;g.beginPath();g.moveTo(O.x,O.y);g.lineTo(qp.x,qp.y);g.stroke();
+ g.fillStyle='#9333a8';g.font='bold 16px system-ui';g.fillText('projection of w onto v',qp.x+8,qp.y+22);
+ g.fillStyle='#17243a';g.font='14px system-ui';g.fillText('Purple = signed projection; blue = v; green = w',18,25);
+}
+['a','b','l','m'].forEach(id=>$(id).addEventListener('input',draw));
+function stop(){if(timer){clearInterval(timer);timer=null}}
+$('pause').onclick=stop;$('same').onclick=()=>{stop();$('b').value=$('a').value;draw()};
+$('perp').onclick=()=>{stop();$('b').value=(+$('a').value+90+180)%360-180;draw()};
+$('opposite').onclick=()=>{stop();$('b').value=(+$('a').value+180+180)%360-180;draw()};
+$('play').onclick=()=>{stop();angle=+$('b').value;timer=setInterval(()=>{angle+=4;if(angle>180)angle=-180;$('b').value=angle;draw()},70)};
+draw();
+</script></body></html>

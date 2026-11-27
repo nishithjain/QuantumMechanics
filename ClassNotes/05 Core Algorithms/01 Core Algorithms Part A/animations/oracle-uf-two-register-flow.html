@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quantum oracle U_f — two registers before and after</title>
+  <link rel="stylesheet" href="embed-frame.css">
+</head>
+<body style="background:#f5f7fc;">
+<div class="oracle-flow">
+<style>
+.oracle-flow {
+  font-family: Arial, sans-serif;
+  background: #f5f7fc;
+  border: 1px solid #dce2ee;
+  border-radius: 16px;
+  padding: 14px 14px 16px;
+  color: #26324a;
+  max-width: 750px;
+  margin: 0 auto;
+}
+.oracle-flow * { box-sizing: border-box; }
+.oracle-flow .heading {
+  display: none;
+}
+.oracle-flow .columns {
+  display: grid;
+  grid-template-columns: 1fr 130px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+.oracle-flow .column-title {
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  color: #68758e;
+  margin-bottom: 12px;
+}
+.oracle-flow .register {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  min-height: 65px;
+  gap: 6px;
+}
+.oracle-flow .input-reg {
+  background: #e8efff;
+  border: 1px solid #a8c0fa;
+}
+.oracle-flow .target-reg {
+  background: #e8f6ed;
+  border: 1px solid #a0d5b1;
+}
+.oracle-flow .quantum {
+  font-size: 21px;
+  font-weight: bold;
+}
+.oracle-flow .description {
+  font-size: 11px;
+  color: #627087;
+  margin-top: 4px;
+}
+.oracle-flow .state {
+  font-size: 16px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+.oracle-flow .oracle {
+  background: #303b99;
+  color: white;
+  border-radius: 13px;
+  min-height: 140px;
+  padding: 14px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 5px 14px rgba(48, 59, 153, 0.17);
+}
+.oracle-flow .oracle .uf {
+  font-size: 29px;
+  font-weight: bold;
+  margin: 8px 0;
+}
+.oracle-flow .oracle small {
+  color: #dce3ff;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.oracle-flow .note {
+  font-size: 12px;
+  text-align: center;
+  padding: 10px 5px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+.oracle-flow .same {
+  color: #2755a5;
+  background: #e8efff;
+}
+.oracle-flow .changed {
+  color: #207442;
+  background: #e8f6ed;
+}
+.oracle-flow .equation {
+  margin-top: 19px;
+  padding: 15px 8px;
+  background: white;
+  border: 1px solid #e1e5ef;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 19px;
+  font-weight: bold;
+}
+.oracle-flow .explanation {
+  text-align: center;
+  color: #647087;
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+@media (max-width: 640px) {
+  .oracle-flow {
+    padding: 12px 10px 14px;
+  }
+  .oracle-flow .columns {
+    grid-template-columns: minmax(0, 1fr) 78px minmax(0, 1fr);
+    gap: 6px;
+  }
+  .oracle-flow .register {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px 8px;
+    min-height: 58px;
+    gap: 4px;
+  }
+  .oracle-flow .quantum { font-size: 17px; }
+  .oracle-flow .description { font-size: 10px; }
+  .oracle-flow .state { font-size: 14px; }
+  .oracle-flow .oracle {
+    min-height: 100px;
+    padding: 10px 6px;
+  }
+  .oracle-flow .oracle .uf { font-size: 22px; }
+  .oracle-flow .equation { font-size: 16px; padding: 12px 6px; margin-top: 12px; }
+  .oracle-flow .explanation { font-size: 11px; margin-top: 8px; }
+}
+</style>
+
+<div class="heading">How the quantum oracle transforms two registers</div>
+
+<div class="columns">
+  <div>
+    <div class="column-title">BEFORE</div>
+    <div class="register input-reg">
+      <div>
+        <div class="quantum">|x⟩</div>
+        <div class="description">Input register</div>
+      </div>
+      <div class="state">x</div>
+    </div>
+    <div class="register target-reg">
+      <div>
+        <div class="quantum">|y⟩</div>
+        <div class="description">Target register</div>
+      </div>
+      <div class="state">y</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="oracle" aria-label="Quantum oracle U_f">
+      <div style="font-size:25px" aria-hidden="true">⚙</div>
+      <div class="uf">U<sub>f</sub></div>
+      <small>Quantum oracle<br>Black box</small>
+    </div>
+  </div>
+
+  <div>
+    <div class="column-title">AFTER</div>
+    <div class="register input-reg">
+      <div>
+        <div class="quantum">|x⟩</div>
+        <div class="description">Input register</div>
+      </div>
+      <div class="state">x</div>
+    </div>
+    <div class="note same">Unchanged</div>
+    <div class="register target-reg" style="margin-top:12px">
+      <div>
+        <div class="quantum">|y ⊕ f(x)⟩</div>
+        <div class="description">Updated target</div>
+      </div>
+    </div>
+    <div class="note changed">Modified using XOR</div>
+  </div>
+</div>
+
+<div class="equation">U<sub>f</sub> |x⟩|y⟩ = |x⟩|y ⊕ f(x)⟩</div>
+
+<div class="explanation">
+  The original input is preserved. The oracle calculates f(x) and XORs its result into the target register.
+</div>
+</div>
+<script src="embed-fit.js"></script>
+</body>
+</html>

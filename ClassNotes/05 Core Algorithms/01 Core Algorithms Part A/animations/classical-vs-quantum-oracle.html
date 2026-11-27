@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classical function vs quantum oracle</title>
+<link rel="stylesheet" href="embed-frame.css">
+<style>
+* { box-sizing: border-box; }
+body {
+  padding: 8px 10px 8px;
+  font-family: Arial, sans-serif;
+  color: #26324a;
+}
+.container {
+  max-width: 850px;
+  margin: 0 auto;
+}
+.embed-only-title {
+  display: none;
+}
+.panel {
+  background: white;
+  border: 1px solid #dce2ee;
+  border-radius: 14px;
+  padding: 12px 12px 14px;
+  margin-bottom: 8px;
+}
+.panel:last-child {
+  margin-bottom: 0;
+}
+.panel-title {
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+.panel-subtitle {
+  font-size: 13px;
+  color: #6b7890;
+  margin-bottom: 10px;
+}
+.flow {
+  display: grid;
+  grid-template-columns: 1fr 45px 1.1fr 45px 1fr;
+  align-items: center;
+  gap: 5px;
+}
+.node {
+  min-height: 0;
+  padding: 10px 6px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 1px solid;
+}
+.node .symbol {
+  font-size: 22px;
+  font-weight: bold;
+}
+.node .caption {
+  font-size: 12px;
+  margin-top: 5px;
+  color: #64718a;
+}
+.input {
+  background: #e8efff;
+  border-color: #a9c1f5;
+}
+.output {
+  background: #e5f5ea;
+  border-color: #a3d5b2;
+}
+.machine {
+  background: #303b99;
+  border-color: #303b99;
+  color: white;
+}
+.machine .caption { color: #dce3ff; }
+.arrow {
+  text-align: center;
+  color: #71809a;
+  font-size: 27px;
+  font-weight: bold;
+}
+.note {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  background: #fff4e5;
+  border: 1px solid #f0d5a9;
+  color: #79501b;
+}
+.quantum-flow {
+  display: grid;
+  grid-template-columns: 1fr 45px 1.1fr 45px 1fr;
+  grid-template-rows: auto auto;
+  gap: 8px 5px;
+  align-items: center;
+}
+.register {
+  min-height: 0;
+  border-radius: 9px;
+  padding: 8px 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
+}
+.register .symbol {
+  font-size: 21px;
+  font-weight: bold;
+}
+.register .caption {
+  font-size: 11px;
+  color: #64718a;
+  margin-top: 4px;
+}
+.q-input {
+  background: #e8efff;
+  border-color: #a9c1f5;
+}
+.q-target {
+  background: #e5f5ea;
+  border-color: #a3d5b2;
+}
+.oracle {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  min-height: 0;
+  height: auto;
+  align-self: stretch;
+  background: #303b99;
+  border-radius: 12px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px;
+  border: 2px solid #242e80;
+}
+.oracle .symbol {
+  font-size: 25px;
+  font-weight: bold;
+}
+.oracle .caption {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #dce3ff;
+  margin-top: 8px;
+}
+.q-arrow {
+  text-align: center;
+  font-size: 25px;
+  color: #71809a;
+  font-weight: bold;
+}
+.q-before-x { grid-column: 1; grid-row: 1; }
+.q-before-y { grid-column: 1; grid-row: 2; }
+.q-after-x { grid-column: 5; grid-row: 1; }
+.q-after-y { grid-column: 5; grid-row: 2; }
+.q-arrow-left { grid-column: 2; grid-row: 1 / span 2; }
+.q-arrow-right { grid-column: 4; grid-row: 1 / span 2; }
+.quantum-note {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: #eef2ff;
+  border: 1px solid #cbd4fa;
+  border-radius: 9px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #303b99;
+}
+.key {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #64718a;
+}
+.key span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  display: inline-block;
+}
+@media (max-width: 680px) {
+  body { padding: 8px 8px 10px; }
+  .panel { padding: 12px 10px 14px; }
+  .panel-subtitle { margin-bottom: 12px; }
+  .note, .quantum-note { margin-top: 10px; font-size: 12px; line-height: 1.45; }
+  .key { margin-top: 8px; font-size: 11px; gap: 8px 12px; }
+  .flow, .quantum-flow {
+    grid-template-columns: minmax(0,1fr) 20px minmax(0,1.05fr) 20px minmax(0,1fr);
+    gap: 6px 2px;
+  }
+  .node, .register { padding: 8px 3px; min-height: 0; }
+  .node .symbol, .register .symbol { font-size: 15px; }
+  .node .caption, .register .caption { font-size: 9px; line-height: 1.2; }
+  .arrow, .q-arrow { font-size: 17px; }
+  .oracle { min-height: 118px; padding: 6px 4px; }
+  .oracle .symbol { font-size: 18px; }
+  .oracle .caption { font-size: 9px; margin-top: 4px; line-height: 1.35; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h2 class="embed-only-title">Classical function vs quantum oracle</h2>
+
+<div class="panel">
+  <div class="panel-title">1. Classical function</div>
+  <div class="panel-subtitle">Give the input x to the function and receive f(x).</div>
+  <div class="flow">
+    <div class="node input">
+      <div class="symbol">x</div>
+      <div class="caption">Input</div>
+    </div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="node machine">
+      <div class="symbol">f(x)</div>
+      <div class="caption">Function</div>
+    </div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="node output">
+      <div class="symbol">f(x)</div>
+      <div class="caption">Output</div>
+    </div>
+  </div>
+  <div class="note">
+    <strong>Important:</strong> The output contains the function value. The original input x is not
+    necessarily preserved as part of the output.
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-title">2. Quantum oracle — reversible</div>
+  <div class="panel-subtitle">Give the oracle two registers: input |x⟩ and target |y⟩.</div>
+  <div class="quantum-flow">
+    <div class="register q-input q-before-x">
+      <div class="symbol">|x⟩</div>
+      <div class="caption">Input register</div>
+    </div>
+    <div class="register q-target q-before-y">
+      <div class="symbol">|y⟩</div>
+      <div class="caption">Target register</div>
+    </div>
+    <div class="q-arrow q-arrow-left" aria-hidden="true">→</div>
+    <div class="oracle">
+      <div class="symbol">U<sub>f</sub></div>
+      <div class="caption">
+        Calculates f(x)<br>
+        Preserves x<br>
+        XORs result into y
+      </div>
+    </div>
+    <div class="q-arrow q-arrow-right" aria-hidden="true">→</div>
+    <div class="register q-input q-after-x">
+      <div class="symbol">|x⟩</div>
+      <div class="caption">Input unchanged</div>
+    </div>
+    <div class="register q-target q-after-y">
+      <div class="symbol">|y ⊕ f(x)⟩</div>
+      <div class="caption">Updated target</div>
+    </div>
+  </div>
+  <div class="quantum-note">
+    <strong>What is different?</strong><br>
+    The oracle keeps the original input |x⟩ unchanged. Instead of replacing x with f(x), it XORs f(x)
+    into the second register y.
+  </div>
+  <div class="key">
+    <span><i class="dot" style="background:#a9c1f5"></i> Input register — preserved</span>
+    <span><i class="dot" style="background:#a3d5b2"></i> Target register — updated</span>
+  </div>
+</div>
+
+</div>
+<script src="embed-fit.js"></script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dimensions Multiply — Quantum Computing</title>
+<style>
+  :root { --ink:#182238; --muted:#667085; --blue:#3156c9; --red:#d0443f; --teal:#087f78; --paper:#f6f8fc; --line:#dce3ef; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; background:linear-gradient(135deg,#eef2ff,#f8fafc 48%,#ecfeff); color:var(--ink); }
+  .wrap { max-width:1120px; margin:0 auto; padding:28px 20px 42px; }
+  header { background:#3436ad; color:white; padding:22px 28px; border-radius:18px; box-shadow:0 12px 30px #252a7730; }
+  header h1 { margin:0 0 6px; font-size:clamp(25px,4vw,38px); letter-spacing:-.7px; }
+  header p { margin:0; color:#e4e7ff; font-size:15px; }
+  .intro { display:grid; grid-template-columns:1.1fr .9fr; gap:16px; margin:18px 0; }
+  .card { background:#ffffffeb; border:1px solid var(--line); border-radius:16px; padding:20px; box-shadow:0 8px 22px #1d2b4d0b; }
+  .equation { font-family:Georgia,serif; font-size:clamp(21px,3vw,29px); text-align:center; padding:15px 8px; }
+  .small { color:var(--muted); font-size:14px; line-height:1.55; }
+  .highlight { color:var(--teal); font-weight:750; }
+  .stage { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  h2 { font-size:19px; margin:0 0 12px; }
+  .qubits { display:flex; flex-wrap:wrap; gap:9px; min-height:72px; align-items:center; }
+  .qbit { width:56px; height:56px; display:grid; place-items:center; border-radius:13px; background:#eef2ff; border:1px solid #cbd5ff; color:#283d9c; font-weight:800; opacity:0; transform:translateY(12px) scale(.88); animation:pop .42s forwards; }
+  @keyframes pop { to { opacity:1; transform:translateY(0) scale(1); } }
+  .count { font-size:clamp(27px,4vw,40px); font-weight:850; letter-spacing:-1px; margin:7px 0; }
+  .count.blue { color:var(--blue); } .count.red { color:var(--red); }
+  .basis { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:7px; margin-top:12px; }
+  .basis span { background:#f1f5f9; border:1px solid #e2e8f0; border-radius:8px; text-align:center; padding:8px 3px; font-family:Georgia,serif; animation:fade .35s both; }
+  @keyframes fade { from {opacity:0; transform:scale(.92)} to {opacity:1; transform:scale(1)} }
+  .controls { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin:16px 0; }
+  button { border:0; border-radius:10px; padding:11px 16px; background:#3436ad; color:white; font-weight:700; cursor:pointer; box-shadow:0 4px 12px #3436ad30; }
+  button.secondary { background:#e8edff; color:#293b9b; box-shadow:none; }
+  button:hover { filter:brightness(1.06); }
+  input[type=range] { accent-color:#3436ad; width:min(300px,55vw); }
+  .slider-label { font-weight:750; }
+  .table-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; margin-top:8px; font-size:14px; }
+  th,td { padding:11px 12px; border-bottom:1px solid var(--line); text-align:right; white-space:nowrap; }
+  th:first-child,td:first-child { text-align:left; }
+  th { color:#526078; background:#f7f9fd; }
+  .graph-card { margin-top:16px; }
+  canvas { width:100%; height:280px; display:block; }
+  .legend { display:flex; gap:18px; flex-wrap:wrap; font-size:13px; color:var(--muted); }
+  .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; }
+  .takeaway { margin-top:16px; background:#e8f7f4; border:1px solid #b7e5dc; border-radius:14px; padding:16px 18px; line-height:1.6; }
+  .step { min-height:45px; color:#44516a; line-height:1.55; }
+  .foot { margin-top:14px; color:#778196; font-size:12px; text-align:center; }
+  @media(max-width:760px){ .intro,.stage{grid-template-columns:1fr;} .basis{grid-template-columns:repeat(4,1fr);} canvas{height:230px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Dimensions Multiply</h1>
+    <p>Why an n-qubit quantum state needs 2ⁿ complex amplitudes</p>
+  </header>
+
+  <section class="intro">
+    <div class="card">
+      <h2>1. Tensor products multiply dimensions</h2>
+      <div class="equation">dim(ℂ<sup>m</sup> ⊗ ℂ<sup>n</sup>) = m × n</div>
+      <p class="small">A single qubit has two basis states, |0⟩ and |1⟩, so its state space is ℂ². Combining qubits means taking tensor products, so their dimensions multiply.</p>
+    </div>
+    <div class="card">
+      <h2>2. For n qubits</h2>
+      <div class="equation">(ℂ²)<sup>⊗ n</sup> = ℂ<sup>2ⁿ</sup></div>
+      <p class="small">Each extra qubit doubles the number of computational-basis states. A general state assigns one complex amplitude to each basis state.</p>
+    </div>
+  </section>
+
+  <div class="controls card">
+    <span class="slider-label">Number of qubits: <strong id="nLabel">4</strong></span>
+    <input id="nSlider" type="range" min="1" max="10" value="4">
+    <button id="playBtn">▶ Animate growth</button>
+    <button class="secondary" id="resetBtn">Reset</button>
+  </div>
+
+  <section class="stage">
+    <div class="card">
+      <h2>Separate qubits</h2>
+      <div class="qubits" id="qubits"></div>
+      <div class="count blue" id="separateCount">2 × 4 = 8</div>
+      <div class="small">Each qubit is described individually by two complex amplitudes: one for |0⟩ and one for |1⟩. For n separate qubits, that is <b>2n numbers</b>.</div>
+    </div>
+    <div class="card">
+      <h2>Complete, general n-qubit state</h2>
+      <div class="count red" id="generalCount">2⁴ = 16</div>
+      <div class="small">The combined system has one amplitude for every possible bit-string basis state. This general description also allows entangled states.</div>
+      <div class="basis" id="basis"></div>
+      <div class="small" id="basisNote">Showing all 16 computational-basis states.</div>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:16px">
+    <h2>What the table is comparing</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Qubits (n)</th><th>Separate description (2n)</th><th>General state (2ⁿ)</th></tr></thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+    <p class="small step" id="explanation">For 4 qubits: 4 × 2 = 8 numbers for the individual qubits, while 2⁴ = 16 amplitudes describe an arbitrary combined state.</p>
+  </section>
+
+  <section class="card graph-card">
+    <h2>Linear growth versus exponential growth</h2>
+    <div class="legend">
+      <span><i class="dot" style="background:#3156c9"></i>2n — separate qubits</span>
+      <span><i class="dot" style="background:#d0443f"></i>2ⁿ — general state</span>
+    </div>
+    <canvas id="chart" width="1000" height="300" aria-label="Graph comparing linear and exponential growth"></canvas>
+    <p class="small">The blue line grows steadily. The red curve doubles with every additional qubit and quickly becomes much larger.</p>
+  </section>
+
+  <div class="takeaway">
+    <b>Key idea:</b> <span class="highlight">2n</span> counts amplitudes when each qubit is described separately. <span style="color:#c03935;font-weight:800">2ⁿ</span> counts amplitudes needed for a general combined state, which may include entanglement.
+  </div>
+  <div class="foot">Interactive teaching animation · Change the slider or press “Animate growth”</div>
+</div>
+
+<script>
+const slider = document.getElementById('nSlider');
+const nLabel = document.getElementById('nLabel');
+const qubits = document.getElementById('qubits');
+const basis = document.getElementById('basis');
+const tableBody = document.getElementById('tableBody');
+const explanation = document.getElementById('explanation');
+const canvas = document.getElementById('chart');
+let timer = null;
+
+function fmt(x) {
+  if (x >= 1e12) return x.toExponential(2).replace('e+', ' × 10^');
+  return x.toLocaleString('en-US');
+}
+function render(n) {
+  n = Number(n);
+  nLabel.textContent = n;
+  document.getElementById('separateCount').textContent = `2 × ${n} = ${2*n}`;
+  document.getElementById('generalCount').textContent = `2^${n} = ${fmt(2**n)}`;
+
+  qubits.innerHTML = '';
+  for (let i=0;i<n;i++) {
+    const el = document.createElement('div');
+    el.className = 'qbit';
+    el.style.animationDelay = `${i*55}ms`;
+    el.innerHTML = `Q<sub>${i+1}</sub>`;
+    qubits.appendChild(el);
+  }
+
+  basis.innerHTML = '';
+  const show = Math.min(2**n, 32);
+  for (let i=0;i<show;i++) {
+    const el = document.createElement('span');
+    el.style.animationDelay = `${Math.min(i,15)*22}ms`;
+    el.textContent = '|' + i.toString(2).padStart(n,'0') + '⟩';
+    basis.appendChild(el);
+  }
+  document.getElementById('basisNote').textContent =
+    2**n > 32 ? `Showing 32 of ${fmt(2**n)} basis states.` : `Showing all ${2**n} computational-basis states.`;
+
+  const rows = [2,10,30,50];
+  tableBody.innerHTML = rows.map(v =>
+    `<tr ${v===n?'style="background:#eef2ff;font-weight:750"':''}><td>${v}</td><td>${fmt(2*v)}</td><td>${v===50?'≈ 1.13 × 10¹⁵':fmt(2**v)}</td></tr>`
+  ).join('');
+  explanation.textContent = `For ${n} qubit${n===1?'':'s'}: describing them individually uses 2 × ${n} = ${2*n} complex amplitudes. A general combined state uses 2^${n} = ${fmt(2**n)} amplitudes.`;
+  drawChart(n);
+}
+function drawChart(activeN) {
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0,0,w,h);
+  const left=70, right=30, top=22, bottom=48;
+  const pw=w-left-right, ph=h-top-bottom;
+  const maxN=10, maxY=1024;
+  const x=n=>left+(n-1)/(maxN-1)*pw;
+  const y=v=>top+ph-(v/maxY)*ph;
+  ctx.strokeStyle='#dce3ef'; ctx.lineWidth=1;
+  for(let v of [0,256,512,768,1024]){
+    ctx.beginPath(); ctx.moveTo(left,y(v)); ctx.lineTo(w-right,y(v)); ctx.stroke();
+    ctx.fillStyle='#667085'; ctx.font='13px system-ui'; ctx.textAlign='right';
+    ctx.fillText(v.toString(),left-10,y(v)+4);
+  }
+  ctx.strokeStyle='#8b96aa'; ctx.beginPath(); ctx.moveTo(left,top); ctx.lineTo(left,h-bottom); ctx.lineTo(w-right,h-bottom); ctx.stroke();
+  for(let n=1;n<=10;n++){
+    ctx.fillStyle='#667085'; ctx.textAlign='center'; ctx.fillText(n,x(n),h-bottom+23);
+  }
+  function line(fn,color,width){
+    ctx.beginPath(); ctx.strokeStyle=color; ctx.lineWidth=width;
+    for(let n=1;n<=maxN;n++){ n===1?ctx.moveTo(x(n),y(fn(n))):ctx.lineTo(x(n),y(fn(n))); }
+    ctx.stroke();
+  }
+  line(n=>2*n,'#3156c9',4);
+  line(n=>2**n,'#d0443f',4);
+  [[2*activeN,'#3156c9'],[2**activeN,'#d0443f']].forEach(([v,c])=>{
+    ctx.beginPath(); ctx.fillStyle=c; ctx.arc(x(activeN),y(v),7,0,Math.PI*2); ctx.fill();
+  });
+  ctx.fillStyle='#344054'; ctx.font='bold 14px system-ui'; ctx.textAlign='center';
+  ctx.fillText('Number of qubits (n)',left+pw/2,h-5);
+}
+slider.addEventListener('input',e=>{stop();render(e.target.value);});
+function stop(){ if(timer){clearInterval(timer);timer=null;} document.getElementById('playBtn').textContent='▶ Animate growth'; }
+document.getElementById('playBtn').addEventListener('click',()=>{
+  if(timer){stop();return;}
+  let n=1; slider.value=1; render(1);
+  document.getElementById('playBtn').textContent='Ⅱ Pause';
+  timer=setInterval(()=>{
+    n++; if(n>10){stop();return;}
+    slider.value=n; render(n);
+  },850);
+});
+document.getElementById('resetBtn').addEventListener('click',()=>{stop();slider.value=4;render(4);});
+render(4);
+</script>
+</body>
+</html>

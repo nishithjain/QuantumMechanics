@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 360" width="700" height="360" font-family="Arial, Helvetica, sans-serif"><defs><marker id="m444" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#444"/></marker><marker id="m2e8b2e" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#2e8b2e"/></marker><marker id="m1f5fbf" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#1f5fbf"/></marker><marker id="md62828" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#d62828"/></marker></defs><rect width="700" height="360" fill="#ffffff"/>
+<text x="350.0" y="24.0" font-size="16" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">Pythagoras for orthogonal vectors</text>
+<line x1="66.0" y1="333.2" x2="66.0" y2="82.4" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="110.0" y1="333.2" x2="110.0" y2="82.4" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="154.0" y1="333.2" x2="154.0" y2="82.4" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="198.0" y1="333.2" x2="198.0" y2="82.4" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="242.0" y1="333.2" x2="242.0" y2="82.4" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="286.0" y1="333.2" x2="286.0" y2="82.4" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="30.8" y1="320.0" x2="312.4" y2="320.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="30.8" y1="276.0" x2="312.4" y2="276.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="30.8" y1="232.0" x2="312.4" y2="232.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="30.8" y1="188.0" x2="312.4" y2="188.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="30.8" y1="144.0" x2="312.4" y2="144.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="30.8" y1="100.0" x2="312.4" y2="100.0" stroke="#e6e6e6" stroke-width="1"/>
+<line x1="30.8" y1="320.0" x2="312.4" y2="320.0" stroke="#444" stroke-width="1.5" marker-end="url(#m444)"/>
+<line x1="110.0" y1="333.2" x2="110.0" y2="82.4" stroke="#444" stroke-width="1.5" marker-end="url(#m444)"/>
+<line x1="66.0" y1="188.0" x2="198.0" y2="144.0" stroke="#777777" stroke-width="1.4" stroke-dasharray="5,4"/>
+<line x1="110.0" y1="320.0" x2="66.0" y2="188.0" stroke="#2e8b2e" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#m2e8b2e)"/>
+<line x1="110.0" y1="320.0" x2="242.0" y2="276.0" stroke="#1f5fbf" stroke-width="3" marker-end="url(#m1f5fbf)"/>
+<line x1="242.0" y1="276.0" x2="198.0" y2="144.0" stroke="#2e8b2e" stroke-width="3" marker-end="url(#m2e8b2e)"/>
+<line x1="110.0" y1="320.0" x2="198.0" y2="144.0" stroke="#d62828" stroke-width="3.5" marker-end="url(#md62828)"/>
+<path d="M231.6,279.5 L228.1,269.0 L238.5,265.6" fill="none" stroke="#555" stroke-width="1.2"/>
+<path d="M120.4,316.5 L117.0,306.1 L106.5,309.6" fill="none" stroke="#555" stroke-width="1.2"/>
+<text x="180.0" y="336.0" font-size="13" fill="#1f5fbf" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">u,  &#8214;u&#8214;&#178; = 10</text>
+<text x="234.4" y="219.6" font-size="13" fill="#2e8b2e" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">v,  &#8214;v&#8214;&#178; = 10</text>
+<text x="190.0" y="134.0" font-size="13" fill="#d62828" text-anchor="end" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">u + v,  &#8214;u + v&#8214;&#178; = 20</text>
+<text x="420.0" y="90.0" font-size="14" fill="#222222" text-anchor="start">If u &#8869; v, i.e. &#10216;u, v&#10217; = 0, then</text>
+<text x="420.0" y="120.0" font-size="17" fill="#222222" text-anchor="start" font-weight="bold">&#8214;u + v&#8214;&#178; = &#8214;u&#8214;&#178; + &#8214;v&#8214;&#178;</text>
+<text x="420.0" y="150.0" font-size="11.5" fill="#777777" text-anchor="start">Here: 3&#183;(&#8722;1) + 1&#183;3 = 0, so u &#8869; v, and 10 + 10 = 20  &#10003;</text>
+<rect x="408.0" y="178.0" width="270.0" height="130.0" rx="6" fill="#f4f7fc" stroke="#9ab" stroke-width="1.2"/>
+<text x="420.0" y="202.0" font-size="14" fill="#222222" text-anchor="start" font-weight="bold">Why it is true</text>
+<text x="420.0" y="224.0" font-size="12.5" fill="#222222" text-anchor="start">&#10216;u + v, u + v&#10217;</text>
+<text x="420.0" y="244.0" font-size="12.5" fill="#222222" text-anchor="start">= &#10216;u,u&#10217; + &#10216;u,v&#10217; + &#10216;v,u&#10217; + &#10216;v,v&#10217;</text>
+<text x="420.0" y="264.0" font-size="12.5" fill="#222222" text-anchor="start">= &#8214;u&#8214;&#178; + 0 + 0 + &#8214;v&#8214;&#178;</text>
+<text x="420.0" y="288.0" font-size="11.5" fill="#777777" text-anchor="start">(the two middle terms vanish: u &#8869; v)</text>
+</svg>

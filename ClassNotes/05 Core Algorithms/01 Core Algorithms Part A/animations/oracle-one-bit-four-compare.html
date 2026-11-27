@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compare four one-bit oracle functions</title>
+<link rel="stylesheet" href="embed-frame.css">
+<style>
+* { box-sizing: border-box; }
+body {
+  padding: 8px 10px 10px;
+  font-family: Arial, sans-serif;
+  color: #26324a;
+}
+.summary {
+  background: white;
+  border: 1px solid #dce2ee;
+  border-radius: 12px;
+  padding: 12px 12px 10px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.summary h3 { display: none; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { padding: 8px 6px; text-align: center; border-bottom: 1px solid #e7eaf1; }
+th { background: #f1f3fa; color: #485671; }
+tr:last-child td { border-bottom: none; }
+</style>
+</head>
+<body>
+<div class="summary">
+  <h3>Compare all four functions</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Function</th>
+        <th>f(0)</th>
+        <th>f(1)</th>
+        <th>Circuit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>f(x) = 0</td><td>0</td><td>0</td><td>Do nothing</td></tr>
+      <tr><td>f(x) = 1</td><td>1</td><td>1</td><td>X on y</td></tr>
+      <tr><td>f(x) = x</td><td>0</td><td>1</td><td>CNOT</td></tr>
+      <tr><td>f(x) = 1 ⊕ x</td><td>1</td><td>0</td><td>CNOT, then X</td></tr>
+    </tbody>
+  </table>
+</div>
+<script src="embed-fit.js"></script>
+</body>
+</html>

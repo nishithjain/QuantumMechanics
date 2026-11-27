@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cross product through duality — determinant calculator</title>
+<style>
+body{font-family:system-ui,Segoe UI,sans-serif;max-width:1000px;margin:24px auto;padding:0 16px;background:#f5f8fc;color:#17243a}
+.card{background:#fff;border:1px solid #d7e1ef;border-radius:14px;padding:16px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+label{display:block;margin:8px 0}input{width:100%;accent-color:#17569b}
+.math{font-family:ui-monospace,Consolas,monospace;background:#f0f4fa;padding:10px;border-radius:8px;overflow-wrap:anywhere}
+.metric{font-weight:700;font-size:1.08rem}
+button{padding:9px 14px;border:0;border-radius:8px;background:#174f91;color:white;margin:4px;cursor:pointer}.alt{background:#e5edf7;color:#18304e}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<h1>The cross product is the dual vector</h1>
+<p>Fix vectors <b>v</b> and <b>w</b>. The function T(r) = det[r v w] returns signed volume. Duality says there is a vector p such that T(r) = p · r. Watch both calculations agree.</p>
+<div class="card">
+<h3>Choose the fixed vectors v and w</h3>
+<div class="grid">
+<div><b>v</b><label>vₓ <input id="vx" type="range" min="-3" max="3" step=".5" value="1"><span id="vxv">1</span></label><label>vᵧ <input id="vy" type="range" min="-3" max="3" step=".5" value="0"><span id="vyv">0</span></label><label>v_z <input id="vz" type="range" min="-3" max="3" step=".5" value="0"><span id="vzv">0</span></label></div>
+<div><b>w</b><label>wₓ <input id="wx" type="range" min="-3" max="3" step=".5" value="0"><span id="wxv">0</span></label><label>wᵧ <input id="wy" type="range" min="-3" max="3" step=".5" value="1"><span id="wyv">1</span></label><label>w_z <input id="wz" type="range" min="-3" max="3" step=".5" value="0"><span id="wzv">0</span></label></div>
+<div><b>Variable input r</b><label>x <input id="rx" type="range" min="-3" max="3" step=".5" value="1"><span id="rxv">1</span></label><label>y <input id="ry" type="range" min="-3" max="3" step=".5" value="2"><span id="ryv">2</span></label><label>z <input id="rz" type="range" min="-3" max="3" step=".5" value="3"><span id="rzv">3</span></label></div>
+</div>
+<p class="math" id="pvec"></p><p class="math" id="det"></p><p class="math" id="dot"></p><p class="metric" id="match"></p>
+<button id="example">Unit x and y basis example</button><button class="alt" id="reset">Reset</button>
+</div>
+<div class="card"><b>What to notice</b><p>The determinant T(r) and the dot product p · r always give the same number. The vector p is the dual vector of T — and its coordinates are exactly those of v × w.</p></div>
+<script>
+const $=id=>document.getElementById(id);
+const ids=['vx','vy','vz','wx','wy','wz','rx','ry','rz'];
+function calc(){
+ let [vx,vy,vz,wx,wy,wz,x,y,z]=ids.map(id=>+$(id).value);
+ ids.forEach((id,i)=>$(id+'v').textContent=Number($(id).value).toFixed(1).replace(/\.0$/,''));
+ let p=[vy*wz-vz*wy,vz*wx-vx*wz,vx*wy-vy*wx];
+ let det=x*p[0]+y*p[1]+z*p[2],dot=p[0]*x+p[1]*y+p[2]*z;
+ const f=n=>n.toFixed(3);
+ $('pvec').textContent=`Dual vector p = v × w = (${p.map(f).join(', ')})`;
+ $('det').textContent=`T(r) = det[r v w] = ${f(det)}`;
+ $('dot').textContent=`p · r = ${f(p[0])}(${f(x)}) + ${f(p[1])}(${f(y)}) + ${f(p[2])}(${f(z)}) = ${f(dot)}`;
+ $('match').textContent=`Same result? ${Math.abs(det-dot)<1e-8?'YES — they match exactly.':'Check calculation.'}`;
+}
+ids.forEach(id=>$(id).addEventListener('input',calc));
+$('example').onclick=()=>{[1,0,0,0,1,0,1,2,3].forEach((v,i)=>$(ids[i]).value=v);calc()};
+$('reset').onclick=()=>{[1,0,0,0,1,0,1,2,3].forEach((v,i)=>$(ids[i]).value=v);calc()};
+calc();
+</script></body></html>

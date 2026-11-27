@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eigenvector on the diagonal</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101923;color:#edf4fa;font:16px/1.55 Inter,system-ui,sans-serif}
+main{max-width:1000px;margin:auto;padding:clamp(16px,4vw,44px)}
+h1{margin:0;font-size:clamp(28px,5vw,48px);line-height:1.08;letter-spacing:-.035em}
+h2{margin:0 0 8px;font-size:19px}
+p{margin:8px 0;color:#bfcfdf}
+.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:16px;margin-top:20px}
+section,aside{padding:15px;border:1px solid #3b5064;border-radius:14px;background:#192735}
+canvas{display:block;width:100%;max-height:420px;height:auto;background:#101923;border-radius:9px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+button{border:1px solid #627b90;border-radius:8px;background:#293d50;color:#f5f8fb;font:inherit;padding:7px 11px;cursor:pointer}
+#btnPlay{background:#ffdb94;color:#172735;font-weight:700;border-color:#ffdb94}
+label{display:block;margin-top:12px}
+input[type=range]{width:100%;accent-color:#ffdb94}
+output{font-variant-numeric:tabular-nums}
+.matrix{display:inline-grid;grid-template-columns:repeat(2,1.35em);text-align:center;border-inline:2px solid;border-radius:4px;vertical-align:middle;margin-left:.3em}
+.math{font-size:18px;color:#f1f5fa;font-variant-numeric:tabular-nums}
+.gold{color:#ffdb94}.mint{color:#83e2cb}
+hr{border:0;border-top:1px solid #405469;margin:15px 0}
+@media(max-width:700px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>Same diagonal, twice the length</h1>
+<p>Watch what the matrix does to the vector <strong>(−1, 1)</strong>.</p>
+<div class="layout">
+<section aria-label="Eigenvector animation">
+<canvas id="plot" width="520" height="520" role="img" aria-label="Coordinate grid showing the vector on the line y equals negative x."></canvas>
+<p><span class="mint">Dashed arrow</span> · starting vector &nbsp; <span class="gold">Solid arrow</span> · animated vector</p>
+<p class="small" style="font-size:.9rem;margin-top:6px">Light <strong>dashed</strong> grid = original plane. Solid grid = after the transformation moves with A.</p>
+<div class="controls">
+<button type="button" id="btnPlay">Play stretch</button>
+<button type="button" id="start">Show start</button>
+<button type="button" id="end">Show result</button>
+</div>
+<label for="progress">Stretch progress <output id="percent" for="progress">0%</output></label>
+<input type="range" id="progress" min="0" max="100" value="0">
+</section>
+<aside>
+<h2>The matrix and its effect</h2>
+<div class="math" aria-label="A equals the matrix with rows 3, 1 and 0, 2">A = <span class="matrix" aria-hidden="true"><span>3</span><span>1</span><span>0</span><span>2</span></span></div>
+<p>For an input (x, y), the matrix gives (3x + y, 2y).</p>
+<p class="math" id="calculation"></p>
+<p class="math" id="result"></p>
+<p>During the animation the arrow tip follows the diagonal. At the end, the vector points the same way and is <strong>twice as long</strong>.</p>
+<hr>
+<h2>Try another vector</h2>
+<label for="multiple">Start at <output id="multiple-value" for="multiple"></output> × (−1, 1)</label>
+<input type="range" id="multiple" min="-1.5" max="1.5" step="0.25" value="1">
+<p id="conclusion"></p>
+<p class="math">Current tip <strong class="gold" id="tip"></strong></p>
+</aside>
+</div>
+</main>
+<script>
+const byId = id => document.getElementById(id);
+const canvas = byId('plot');
+const ctx = canvas.getContext('2d');
+const progressInput = byId('progress');
+const multiple = byId('multiple');
+const btnPlay = byId('btnPlay');
+const center = 260;
+const scale = 65;
+let progress = 0;
+let frame = null;
+const fmt = n => String(Number(n.toFixed(2))).replace('-', '−');
+const pair = ([x, y]) => '(' + fmt(x) + ', ' + fmt(y) + ')';
+const screen = ([x, y]) => [center + x * scale, center - y * scale];
+const transform = (x, y, k) => [
+  (1 - k) * x + k * (3 * x + y),
+  (1 - k) * y + k * (2 * y)
+];
+
+function line(x1, y1, x2, y2, color, width = 1, dash = []) {
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
+  ctx.setLineDash(dash);
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function seg(a, b, color, width = 1, dash = []) {
+  const [x1, y1] = screen(a);
+  const [x2, y2] = screen(b);
+  line(x1, y1, x2, y2, color, width, dash);
+}
+
+function drawGrid(k, style) {
+  const {
+    color = '#304355',
+    width = 1,
+    dash = [],
+    axesColor = '#8299ac',
+    axesWidth = 1.5
+  } = style;
+  for (let n = -3; n <= 3; n++) {
+    seg(transform(n, -3.2, k), transform(n, 3.2, k), color, width, dash);
+    seg(transform(-3.2, n, k), transform(3.2, n, k), color, width, dash);
+  }
+  seg(transform(-3.2, 0, k), transform(3.2, 0, k), axesColor, axesWidth, dash);
+  seg(transform(0, -3.2, k), transform(0, 3.2, k), axesColor, axesWidth, dash);
+}
+
+function arrow(point, color, width, dashed = false) {
+  const [x, y] = screen(point);
+  const angle = Math.atan2(y - center, x - center);
+  const size = 13;
+  ctx.setLineDash(dashed ? [6, 5] : []);
+  line(center, center, x, y, color, width);
+  ctx.setLineDash([]);
+  for (const side of [-0.55, 0.55]) {
+    line(x, y, x - size * Math.cos(angle + side), y - size * Math.sin(angle + side), color, width);
+  }
+}
+
+function draw(value) {
+  progress = value;
+  const t = Number(multiple.value);
+  const input = [-t, t];
+  const [x, y] = input;
+  const output = [3 * x + y, 2 * y];
+  const current = transform(x, y, value);
+  progressInput.value = Math.round(value * 100);
+  byId('percent').textContent = progressInput.value + '%';
+  byId('multiple-value').textContent = fmt(t);
+  byId('tip').textContent = pair(current);
+  byId('calculation').textContent = 'A' + pair(input) + ' = (3 × ' + fmt(x) + ' + (' + fmt(y) + '), 2 × ' + fmt(y) + ')';
+  byId('result').textContent = '= ' + pair(output) + ' = 2' + pair(input);
+  byId('conclusion').textContent = t === 0 ?
+    'The zero vector stays at the origin. Eigenvectors must be nonzero.' :
+    'Every nonzero vector on this line has eigenvalue 2, including arrows on the opposite side of the origin.';
+  canvas.setAttribute('aria-label', 'Diagonal y equals negative x. Starting vector ' + pair(input) + '. Current tip ' + pair(current) + '.');
+
+  ctx.clearRect(0, 0, 520, 520);
+  ctx.font = '16px system-ui';
+  if (value > 0.02) {
+    drawGrid(0, {
+      color: '#3d5268',
+      width: 1,
+      dash: [5, 6],
+      axesColor: '#5a7085',
+      axesWidth: 1.2
+    });
+  }
+  const onGrid = value < 0.02;
+  drawGrid(value, {
+    color: onGrid ? '#304355' : '#4a6278',
+    width: onGrid ? 1 : 1.15,
+    dash: [],
+    axesColor: onGrid ? '#8299ac' : '#9ab0c4',
+    axesWidth: onGrid ? 1.5 : 1.8
+  });
+  seg(transform(-3, 3, value), transform(3, -3, value), '#a18bc3', 2);
+  ctx.fillStyle = '#cab6eb';
+  ctx.fillText(value > 0.02 ? 'Dashed = original · Solid = transformed' : 'y = −x', 58, 40);
+  ctx.fillStyle = '#bfcfdf';
+  ctx.fillText('x', 490, center + 5);
+  ctx.fillText('y', center - 4, 29);
+
+  if (t !== 0) {
+    arrow(current, '#ffdb94', 4);
+    arrow(input, '#83e2cb', 2, true);
+    const [tipX, tipY] = screen(current);
+    ctx.fillStyle = '#ffdb94';
+    ctx.font = 'bold 17px system-ui';
+    ctx.textAlign = t < 0 ? 'right' : 'left';
+    ctx.fillText(pair(current), tipX + (t < 0 ? -10 : 10), tipY - 10);
+    ctx.textAlign = 'left';
+  } else {
+    ctx.fillStyle = '#ffdb94';
+    ctx.beginPath();
+    ctx.arc(center, center, 5, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+}
+
+function stop() {
+  if (frame !== null) cancelAnimationFrame(frame);
+  frame = null;
+  btnPlay.textContent = progress === 1 ? 'Replay stretch' : progress === 0 ? 'Play stretch' : 'Resume';
+}
+
+function seek(value) {
+  draw(value);
+  stop();
+}
+
+btnPlay.addEventListener('click', () => {
+  if (frame !== null) {
+    stop();
+    return;
+  }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    seek(1);
+    return;
+  }
+  if (progress === 1) draw(0);
+  const initial = progress;
+  let start;
+  btnPlay.textContent = 'Pause';
+  function step(now) {
+    start ??= now;
+    draw(Math.min(1, initial + (now - start) / 2600));
+    if (progress === 1) stop();
+    else frame = requestAnimationFrame(step);
+  }
+  frame = requestAnimationFrame(step);
+});
+progressInput.addEventListener('input', () => seek(Number(progressInput.value) / 100));
+multiple.addEventListener('input', () => seek(0));
+byId('start').addEventListener('click', () => seek(0));
+byId('end').addEventListener('click', () => seek(1));
+draw(0);
+</script>
+</body>
+</html>

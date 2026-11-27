@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 400" width="660" height="400" font-family="Arial, Helvetica, sans-serif"><defs></defs><rect width="660" height="400" fill="#ffffff"/>
+<text x="330.0" y="24.0" font-size="16" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">Where the special values come from</text>
+<polygon points="60.0,290.0 200.0,290.0 60.0,150.0" fill="#e8f1ff" stroke="#1f5fbf" stroke-width="2.5"/>
+<path d="M72.0,290.0 L72.0,278.0 L60.0,278.0" fill="none" stroke="#555" stroke-width="1.2"/>
+<text x="130.0" y="312.0" font-size="15" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">1</text>
+<text x="44.0" y="225.0" font-size="15" fill="#222222" text-anchor="end" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">1</text>
+<text x="140.0" y="212.0" font-size="15" fill="#1f5fbf" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">&#8730;2</text>
+<text x="154.0" y="282.0" font-size="13" fill="#d62828" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">45&#176;</text>
+<text x="70.0" y="190.0" font-size="13" fill="#d62828" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">45&#176;</text>
+<text x="130.0" y="62.0" font-size="14" fill="#1f5fbf" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">Half of a square</text>
+<text x="130.0" y="80.0" font-size="12" fill="#777777" text-anchor="middle" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">(side 1, diagonal &#8730;2)</text>
+<text x="130.0" y="342.0" font-size="13" fill="#222222" text-anchor="middle" font-weight="bold">sin 45&#176; = 1/&#8730;2 = &#8730;2/2</text>
+<text x="130.0" y="362.0" font-size="13" fill="#222222" text-anchor="middle" font-weight="bold">cos 45&#176; = 1/&#8730;2 = &#8730;2/2</text>
+<polygon points="400.0,290.0 573.0,290.0 400.0,190.0" fill="#eaf6ea" stroke="#2e8b2e" stroke-width="2.5"/>
+<path d="M412.0,290.0 L412.0,278.0 L400.0,278.0" fill="none" stroke="#555" stroke-width="1.2"/>
+<text x="486.0" y="312.0" font-size="15" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">&#8730;3</text>
+<text x="384.0" y="245.0" font-size="15" fill="#222222" text-anchor="end" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">1</text>
+<text x="500.0" y="228.0" font-size="15" fill="#2e8b2e" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">2</text>
+<text x="511.0" y="282.0" font-size="13" fill="#d62828" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">30&#176;</text>
+<text x="408.0" y="226.0" font-size="13" fill="#d62828" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">60&#176;</text>
+<text x="486.0" y="62.0" font-size="14" fill="#2e8b2e" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">Half of an equilateral triangle</text>
+<text x="486.0" y="80.0" font-size="12" fill="#777777" text-anchor="middle" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">(side 2, cut down the middle: base 1, height &#8730;3)</text>
+<text x="486.0" y="342.0" font-size="13" fill="#222222" text-anchor="middle" font-weight="bold">sin 30&#176; = 1/2,   cos 30&#176; = &#8730;3/2</text>
+<text x="486.0" y="362.0" font-size="13" fill="#222222" text-anchor="middle" font-weight="bold">sin 60&#176; = &#8730;3/2,   cos 60&#176; = 1/2</text>
+</svg>

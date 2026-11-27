@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2D Matrix Transformation Animation</title>
+<style>
+  :root { color-scheme: light; --ink:#182230; --muted:#526174; --line:#d8e0e8; --blue:#2474d2; --orange:#e58b27; --green:#16865d; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:22px; font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif; color:var(--ink); background:#f4f7fb; }
+  main { max-width:1050px; margin:auto; }
+  h1 { margin:0 0 7px; font-size:clamp(1.35rem,3vw,2rem); }
+  .intro { color:var(--muted); margin:0 0 18px; line-height:1.55; }
+  .panel { background:white; border:1px solid var(--line); border-radius:15px; padding:16px; box-shadow:0 5px 18px #20334a0b; }
+  .layout { display:grid; grid-template-columns:minmax(0,1fr) 280px; gap:16px; align-items:start; }
+  canvas { width:100%; height:auto; display:block; border-radius:10px; background:#fbfdff; border:1px solid #e5ebf1; }
+  .controls { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  button { border:1px solid #cbd5e1; border-radius:9px; background:white; padding:9px 12px; font-weight:600; cursor:pointer; color:var(--ink); }
+  button.primary { background:#1f6fc7; color:white; border-color:#1f6fc7; }
+  button:focus-visible { outline:3px solid #91c4ff; outline-offset:2px; }
+  .side h2 { font-size:1.05rem; margin:0 0 10px; }
+  .matrix { display:inline-grid; grid-template-columns:repeat(2,30px); gap:7px 18px; padding:8px 16px; margin:5px 0 12px; position:relative; font-size:1.15rem; font-weight:700; }
+  .matrix:before,.matrix:after { content:""; position:absolute; top:0; bottom:0; width:7px; border-top:2px solid #344256; border-bottom:2px solid #344256; }
+  .matrix:before { left:0; border-left:2px solid #344256; }
+  .matrix:after { right:0; border-right:2px solid #344256; }
+  .equation { background:#f3f7fc; border-radius:10px; padding:11px; margin:10px 0; line-height:1.65; }
+  .key { display:flex; gap:8px; align-items:center; margin:8px 0; color:var(--muted); font-size:.93rem; }
+  .swatch { width:12px; height:12px; border-radius:50%; flex:none; }
+  .status { min-height:64px; color:#344256; line-height:1.55; margin-top:12px; }
+  .step { font-size:.82rem; color:#607086; text-transform:uppercase; letter-spacing:.06em; font-weight:700; }
+  .slider-wrap { margin-top:14px; }
+  input[type=range] { width:100%; accent-color:#1f6fc7; }
+  .small { font-size:.88rem; color:var(--muted); line-height:1.5; }
+  @media(max-width:760px) { body{padding:12px}.layout{grid-template-columns:1fr}.side{order:2} }
+</style>
+</head>
+<body>
+<main>
+  <h1>How a matrix transforms a 2D plane</h1>
+  <p class="intro">Watch the two standard basis vectors move. Their destinations become the columns of the matrix, and the whole grid follows the same transformation.</p>
+  <div class="layout">
+    <section class="panel">
+      <canvas id="plane" width="760" height="590" aria-label="Animated coordinate plane showing a matrix transformation"></canvas>
+      <div class="controls">
+        <button class="primary" id="play">▶ Show transformation</button>
+        <button id="reset">↺ Reset</button>
+        <button id="showI">Show î only</button>
+        <button id="showJ">Show ĵ only</button>
+        <button id="showBoth">Show both</button>
+      </div>
+      <div class="slider-wrap">
+        <label for="progress"><strong>Transformation progress:</strong> <span id="pct">0%</span></label>
+        <input id="progress" type="range" min="0" max="100" value="0">
+      </div>
+      <p class="small">Light dashed lines = original square grid behind the motion. Solid grid = current transformation. Blue = original î and ĵ. Orange = transformed î. Green = transformed ĵ. Purple = example vector.</p>
+    </section>
+    <aside class="panel side">
+      <div class="step" id="step">Step 1 · Original basis</div>
+      <h2>The matrix</h2>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <strong>A =</strong>
+        <div class="matrix" aria-label="matrix with rows 3 1 and 0 2"><span>3</span><span>1</span><span>0</span><span>2</span></div>
+      </div>
+      <div class="equation">
+        <strong>First column</strong><br>
+        Aî = A(1, 0) = (3, 0)<br>
+        <span class="small">The horizontal unit vector becomes three times as long.</span>
+      </div>
+      <div class="equation">
+        <strong>Second column</strong><br>
+        Aĵ = A(0, 1) = (1, 2)<br>
+        <span class="small">The vertical unit vector moves right by 1 and up by 2.</span>
+      </div>
+      <div class="key"><span class="swatch" style="background:#2474d2"></span>Original î and ĵ</div>
+      <div class="key"><span class="swatch" style="background:#e58b27"></span>Transformed î → (3, 0)</div>
+      <div class="key"><span class="swatch" style="background:#16865d"></span>Transformed ĵ → (1, 2)</div>
+      <div class="key"><span class="swatch" style="background:#8756c7"></span>Example vector → new tip</div>
+      <div class="status" id="status">Start with the ordinary x-y grid. The basis vectors are î = (1, 0) and ĵ = (0, 1).</div>
+      <p class="small"><strong>Try this:</strong> Press “Show transformation” and watch the square grid turn into a slanted grid. A vector such as (1, 1) becomes (4, 2), so its length and direction both change.</p>
+    </aside>
+  </div>
+</main>
+<script>
+(() => {
+ const canvas=document.getElementById('plane'), ctx=canvas.getContext('2d');
+ const W=canvas.width,H=canvas.height, origin={x:W*0.43,y:H*0.76}, scale=64;
+ const progress=document.getElementById('progress'), pct=document.getElementById('pct'), status=document.getElementById('status'), step=document.getElementById('step');
+ let t=0, playing=false, raf=0, last=0, showI=true, showJ=true;
+ const mix=(a,b,t)=>a+(b-a)*t;
+ function point(x,y,k=t){ return [origin.x+scale*(x*(1+2*k)+y*k), origin.y-scale*(x*0+y*(1+k*1))]; }
+ // Matrix interpolation: A(k) = (1-k)I + k[[3,1],[0,2]]
+ function transform(x,y,k){ return [mix(x,3*x+y,k), mix(y,2*y,k)]; }
+ function screen(x,y){return [origin.x+scale*x,origin.y-scale*y];}
+ function line(a,b,color,width=3,dash=[]){ctx.beginPath();ctx.setLineDash(dash);ctx.moveTo(...a);ctx.lineTo(...b);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();ctx.setLineDash([]);}
+ function arrow(a,b,color,label){ line(a,b,color,4); const ang=Math.atan2(b[1]-a[1],b[0]-a[0]), len=12; ctx.beginPath();ctx.moveTo(...b);ctx.lineTo(b[0]-len*Math.cos(ang-.45),b[1]-len*Math.sin(ang-.45));ctx.lineTo(b[0]-len*Math.cos(ang+.45),b[1]-len*Math.sin(ang+.45));ctx.closePath();ctx.fillStyle=color;ctx.fill();ctx.font='bold 17px system-ui';ctx.fillText(label,b[0]+8,b[1]-9);}
+ function drawGrid(k, style = {}){
+   const {
+     color = '#d3dce7',
+     width = 1,
+     dash = [],
+     axesColor = '#8795a6',
+     axesWidth = 1.6
+   } = style;
+   for(let n=-5;n<=7;n++){
+     let a=transform(n,-4,k),b=transform(n,5,k);
+     line(screen(...a),screen(...b),color,width,dash);
+     a=transform(-5,n,k);b=transform(7,n,k);
+     line(screen(...a),screen(...b),color,width,dash);
+   }
+   let xa=screen(...transform(-5,0,k)), xb=screen(...transform(7,0,k));
+   let ya=screen(...transform(0,-4,k)), yb=screen(...transform(0,5,k));
+   line(xa,xb,axesColor,axesWidth,dash);
+   line(ya,yb,axesColor,axesWidth,dash);
+ }
+ function drawOriginalGrid(){
+   drawGrid(0, {
+     color: '#b8d4f0',
+     width: 1,
+     dash: [5, 6],
+     axesColor: '#9eb8d4',
+     axesWidth: 1.2
+   });
+ }
+ function draw(){
+   ctx.clearRect(0,0,W,H);
+   if (t > 0.02) drawOriginalGrid();
+   const onGrid = t < 0.02;
+   drawGrid(t, {
+     color: onGrid ? '#c8d2de' : '#7c92ab',
+     width: onGrid ? 1 : 1.25,
+     dash: [],
+     axesColor: onGrid ? '#8795a6' : '#5e7389',
+     axesWidth: onGrid ? 1.6 : 2
+   });
+   const O=screen(0,0);
+   // Original unit vectors (faint reference)
+   arrow(O,screen(1,0),'#8bb8eb','î');
+   arrow(O,screen(0,1),'#8bb8eb','ĵ');
+   const vi=transform(1,0,t), vj=transform(0,1,t);
+   if(showI) arrow(O,screen(...vi),'#e58b27',t>.98?'Aî = (3, 0)':'Aî');
+   if(showJ) arrow(O,screen(...vj),'#16865d',t>.98?'Aĵ = (1, 2)':'Aĵ');
+   // General vector (1,1), with dashed original tip and animated transformed tip
+   const old=screen(1,1), now=screen(...transform(1,1,t));
+   line(O,old,'#9b83c7',2,[5,5]);
+   arrow(O,now,'#8756c7', 'v = (1, 1)');
+   ctx.beginPath();ctx.arc(old[0],old[1],5,0,Math.PI*2);ctx.fillStyle='#9b83c7';ctx.fill();
+   // labels and coordinate note
+   ctx.fillStyle='#334155';ctx.font='14px system-ui';ctx.fillText('Origin (0, 0)',O[0]+10,O[1]+22);
+   ctx.fillStyle='#64748b';ctx.font='13px system-ui';   ctx.fillText(t > 0.02 ? 'Dashed = original grid' : 'Original grid',18,24);
+   ctx.fillText(t > 0.02 ? 'Solid = transformed grid' : 'Grid after applying A',18,44);
+   const tv=transform(1,1,t);
+   ctx.fillStyle='#6e45a8';ctx.font='bold 14px system-ui';
+   ctx.fillText(`(1, 1) → (${tv[0].toFixed(1)}, ${tv[1].toFixed(1)})`,18,H-18);
+ }
+ function updateText(){
+   pct.textContent=Math.round(t*100)+'%'; progress.value=Math.round(t*100);
+   if(t<.01){step.textContent='Step 1 · Original basis';status.textContent='Start with the ordinary x-y grid. The basis vectors are î = (1, 0) and ĵ = (0, 1).';}
+   else if(t<.99){step.textContent='Step 2 · Applying the matrix';status.textContent='The basis vectors are moving toward their destinations. Every point on the grid is being transformed by the same rule.';}
+   else {step.textContent='Step 3 · Transformed basis';status.textContent='The horizontal basis vector lands at (3, 0), and the vertical basis vector lands at (1, 2). The example vector (1, 1) lands at (4, 2).';}
+ }
+ function setT(v){t=Math.max(0,Math.min(1,v));updateText();draw();}
+ function animate(ts){if(!playing)return;if(!last)last=ts;const dt=ts-last;last=ts;setT(Math.min(1,t+dt/2600));if(t>=1){playing=false;document.getElementById('play').textContent='▶ Replay transformation';return;}raf=requestAnimationFrame(animate);}
+ document.getElementById('play').addEventListener('click',()=>{cancelAnimationFrame(raf);if(t>=1)setT(0);playing=true;last=0;document.getElementById('play').textContent='Playing…';raf=requestAnimationFrame(animate);});
+ document.getElementById('reset').addEventListener('click',()=>{playing=false;cancelAnimationFrame(raf);document.getElementById('play').textContent='▶ Show transformation';setT(0);});
+ progress.addEventListener('input',e=>{playing=false;cancelAnimationFrame(raf);document.getElementById('play').textContent='▶ Show transformation';setT(Number(e.target.value)/100);});
+ document.getElementById('showI').addEventListener('click',()=>{showI=true;showJ=false;draw();});
+ document.getElementById('showJ').addEventListener('click',()=>{showI=false;showJ=true;draw();});
+ document.getElementById('showBoth').addEventListener('click',()=>{showI=true;showJ=true;draw();});
+ draw();updateText();
+})();
+</script>
+</body>
+</html>

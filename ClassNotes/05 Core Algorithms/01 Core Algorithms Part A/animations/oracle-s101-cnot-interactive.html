@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quantum Oracle — s = 101 (two CNOTs)</title>
+  <link rel="stylesheet" href="embed-frame.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", system-ui, Arial, sans-serif;
+      padding: 8px 10px 10px;
+      color: #20243a;
+      line-height: 1.45;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 14px 14px 16px;
+      border-radius: 14px;
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+    }
+    h2 {
+      display: none;
+    }
+    .lead {
+      margin: 0 0 10px;
+      color: #4a5568;
+      font-size: 0.92rem;
+    }
+    .formula {
+      text-align: center;
+      background: #f0f4ff;
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin-bottom: 10px;
+      font-size: 0.98rem;
+    }
+    .bits {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .bit {
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .bit button {
+      display: block;
+      width: 62px;
+      height: 52px;
+      margin-top: 6px;
+      font-size: 1.45rem;
+      font-weight: 700;
+      border: 2px solid #6475c9;
+      background: #eef0ff;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+    .bit button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+    .bit.ignored .hint { color: #888; font-weight: 500; }
+    .target button {
+      background: #e1f6e8;
+      border-color: #269b55;
+    }
+    .circuit-wrap {
+      margin: 10px 0;
+      padding: 10px 6px 6px;
+      background: #f7f8fc;
+      border-radius: 10px;
+    }
+    .circuit-wrap h3 {
+      margin: 0 0 8px 8px;
+      font-size: 0.95rem;
+    }
+  svg.circuit {
+      display: block;
+      width: 100%;
+      max-width: 520px;
+      height: auto;
+      margin: 0 auto;
+    }
+    .wire-base { stroke: #444; stroke-width: 2; }
+    .connector { stroke: #303c9b; stroke-width: 2; }
+    .control-dot { fill: #303c9b; }
+    .target-box { fill: #fff; stroke: #303c9b; stroke-width: 2; }
+    .inactive-gate { opacity: 0.28; }
+    .active-gate { opacity: 1; }
+    .gate-label {
+      font-size: 14px;
+      font-weight: 700;
+      fill: #303c9b;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+    .wire-label {
+      font-size: 13px;
+      font-weight: 700;
+      fill: #333;
+    }
+    .wire-val-box {
+      stroke-width: 2;
+    }
+    .wire-val-box.on {
+      fill: #e8f5e9;
+      stroke: #2e7d32;
+    }
+    .wire-val-box.off {
+      fill: #f0f2f8;
+      stroke: #8a94a8;
+    }
+    .wire-val-box.target.on {
+      fill: #dff5e8;
+      stroke: #1b7a43;
+    }
+    .wire-val-text {
+      font-size: 17px;
+      font-weight: 800;
+      fill: #1f2937;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+    .wire-val-caption {
+      font-size: 9px;
+      font-weight: 600;
+      fill: #6b7280;
+      text-anchor: middle;
+    }
+    .controls {
+      text-align: center;
+      margin: 8px 0;
+    }
+    button.action {
+      padding: 10px 16px;
+      border: 0;
+      border-radius: 8px;
+      background: #343eaa;
+      color: #fff;
+      cursor: pointer;
+      margin: 4px;
+      font-size: 0.95rem;
+    }
+    button.action:disabled {
+      background: #a8b0c4;
+      cursor: not-allowed;
+    }
+    button.reset { background: #687080; }
+    #explanation {
+      background: #edf4ff;
+      border-radius: 9px;
+      padding: 12px 14px;
+      margin-top: 10px;
+      font-size: 0.94rem;
+    }
+    .result {
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+      padding: 10px 8px 4px;
+      color: #1a3a6b;
+    }
+    .step-pill {
+      display: inline-block;
+      background: #dbe4ff;
+      color: #2d3f8f;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Quantum Oracle: s = 101</h2>
+    <p class="lead">
+      Mask <strong>s = 101</strong> means <em>use</em> bits x₁ and x₃; ignore x₂.
+      Oracle: target becomes <strong>y ⊕ f(x)</strong> with <strong>f(x) = x₁ ⊕ x₃</strong>.
+    </p>
+    <div class="formula">f(x) = x₁ ⊕ x₃ &nbsp;·&nbsp; built from two CNOTs on target y</div>
+
+    <div class="bits">
+      <div class="bit">
+        x₁
+        <button type="button" id="x1" aria-label="Toggle x1">1</button>
+      </div>
+      <div class="bit ignored">
+        x₂ <span class="hint">(ignored)</span>
+        <button type="button" id="x2" aria-label="Toggle x2">1</button>
+      </div>
+      <div class="bit">
+        x₃
+        <button type="button" id="x3" aria-label="Toggle x3">0</button>
+      </div>
+      <div class="bit target">
+        Target y
+        <button type="button" id="y" aria-label="Toggle target y">0</button>
+      </div>
+    </div>
+
+    <div class="circuit-wrap">
+      <h3>Circuit (two CNOTs on the same target)</h3>
+      <svg class="circuit" viewBox="0 0 540 200" role="img" aria-label="Two CNOT gates with live bit values on each wire">
+        <!-- wire y (bottom) -->
+        <line class="wire-base" x1="40" y1="168" x2="472" y2="168"/>
+        <!-- wires x1, x2, x3 -->
+        <line class="wire-base" x1="40" y1="36" x2="472" y2="36"/>
+        <line class="wire-base" x1="40" y1="82" x2="472" y2="82"/>
+        <line class="wire-base" x1="40" y1="128" x2="472" y2="128"/>
+        <text class="wire-label" x="8" y="40">x₁</text>
+        <text class="wire-label" x="8" y="86">x₂</text>
+        <text class="wire-label" x="8" y="132">x₃</text>
+        <text class="wire-label" x="8" y="172">y</text>
+        <!-- live bit values on the right of each wire -->
+        <g id="wireValX1" transform="translate(0,0)">
+          <rect class="wire-val-box" id="boxX1" x="488" y="22" width="36" height="28" rx="6"/>
+          <text class="wire-val-text" id="txtX1" x="506" y="38">1</text>
+        </g>
+        <g id="wireValX2" transform="translate(0,0)">
+          <rect class="wire-val-box" id="boxX2" x="488" y="68" width="36" height="28" rx="6"/>
+          <text class="wire-val-text" id="txtX2" x="506" y="84">1</text>
+        </g>
+        <g id="wireValX3" transform="translate(0,0)">
+          <rect class="wire-val-box" id="boxX3" x="488" y="114" width="36" height="28" rx="6"/>
+          <text class="wire-val-text" id="txtX3" x="506" y="130">0</text>
+        </g>
+        <g id="wireValY">
+          <rect class="wire-val-box target" id="boxY" x="488" y="154" width="36" height="28" rx="6"/>
+          <text class="wire-val-text" id="txtY" x="506" y="170">0</text>
+          <text class="wire-val-caption" x="506" y="192">target</text>
+        </g>
+        <!-- CNOT 1 at x=180 -->
+        <g id="cnot1">
+          <circle class="control-dot" cx="180" cy="36" r="7"/>
+          <line class="connector" x1="180" y1="43" x2="180" y2="168"/>
+          <rect class="target-box" x="166" y="154" width="28" height="28" rx="4"/>
+          <text class="gate-label" x="180" y="168">⊕</text>
+        </g>
+        <!-- CNOT 2 at x=340 -->
+        <g id="cnot2">
+          <circle class="control-dot" cx="340" cy="128" r="7"/>
+          <line class="connector" x1="340" y1="135" x2="340" y2="168"/>
+          <rect class="target-box" x="326" y="154" width="28" height="28" rx="4"/>
+          <text class="gate-label" x="340" y="168">⊕</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="controls">
+      <span class="step-pill" id="stepLabel">Step 0 — set bits, then run CNOTs</span><br>
+      <button type="button" class="action" id="btnStep">Run 1st CNOT (control x₁)</button>
+      <button type="button" class="action reset" id="btnReset">Reset</button>
+    </div>
+
+    <div id="explanation">
+      <strong>Ready.</strong> CNOT rule: when control = 1, target ← target ⊕ 1; when control = 0, target unchanged.
+    </div>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const ids = ["x1", "x2", "x3", "y"];
+    let step = 0;
+    let snapshot = null;
+    let yWork = 0;
+
+    const el = (id) => document.getElementById(id);
+    const val = (id) => Number(el(id).textContent);
+
+    function bitsString() {
+      return "" + val("x1") + val("x2") + val("x3");
+    }
+
+    function fParity() {
+      return val("x1") ^ val("x3");
+    }
+
+    function paintWireBit(boxId, textId, bit, isTarget) {
+      const box = el(boxId);
+      const text = el(textId);
+      const on = bit === 1;
+      box.classList.remove("on", "off");
+      box.classList.add(on ? "on" : "off");
+      if (isTarget) {
+        box.classList.add("target");
+      }
+      text.textContent = String(bit);
+    }
+
+    function syncWireValues() {
+      const x1 = step === 0 ? val("x1") : (snapshot ? snapshot.x1 : val("x1"));
+      const x2 = step === 0 ? val("x2") : (snapshot ? snapshot.x2 : val("x2"));
+      const x3 = step === 0 ? val("x3") : (snapshot ? snapshot.x3 : val("x3"));
+      const yBit = step === 0 ? val("y") : yWork;
+      paintWireBit("boxX1", "txtX1", x1, false);
+      paintWireBit("boxX2", "txtX2", x2, false);
+      paintWireBit("boxX3", "txtX3", x3, false);
+      paintWireBit("boxY", "txtY", yBit, true);
+    }
+
+    function highlightGates() {
+      el("cnot1").classList.toggle("inactive-gate", step < 1);
+      el("cnot1").classList.toggle("active-gate", step === 1);
+      el("cnot2").classList.toggle("inactive-gate", step < 2);
+      el("cnot2").classList.toggle("active-gate", step === 2);
+      if (step === 0 || step > 2) {
+        el("cnot1").classList.remove("active-gate");
+        el("cnot2").classList.remove("active-gate");
+        el("cnot1").classList.remove("inactive-gate");
+        el("cnot2").classList.remove("inactive-gate");
+      }
+    }
+
+    function setInputsDisabled(on) {
+      ids.forEach((id) => {
+        el(id).disabled = on;
+      });
+    }
+
+    function updateStepUI() {
+      const btn = el("btnStep");
+      if (step === 0) {
+        el("stepLabel").textContent = "Step 0 — set bits, then run CNOTs";
+        btn.textContent = "Run 1st CNOT (control x₁)";
+        btn.disabled = false;
+        setInputsDisabled(false);
+      } else if (step === 1) {
+        el("stepLabel").textContent = "Step 1 — first CNOT done";
+        btn.textContent = "Run 2nd CNOT (control x₃)";
+        btn.disabled = false;
+        setInputsDisabled(true);
+      } else if (step === 2) {
+        el("stepLabel").textContent = "Step 2 — oracle complete";
+        btn.textContent = "Done";
+        btn.disabled = true;
+        setInputsDisabled(true);
+      }
+      highlightGates();
+      syncWireValues();
+    }
+
+    function runCnot(controlBit) {
+      if (controlBit === 1) {
+        yWork ^= 1;
+      }
+      el("y").textContent = yWork;
+      syncWireValues();
+    }
+
+    ids.forEach((id) => {
+      el(id).addEventListener("click", () => {
+        if (step !== 0) return;
+        el(id).textContent = 1 - val(id);
+        el("result").textContent = "";
+        syncWireValues();
+      });
+    });
+
+    el("btnStep").addEventListener("click", () => {
+      if (step === 0) {
+        snapshot = {
+          x1: val("x1"),
+          x2: val("x2"),
+          x3: val("x3"),
+          y: val("y"),
+        };
+        yWork = snapshot.y;
+        const x1 = snapshot.x1;
+        const before = yWork;
+        runCnot(x1);
+        el("explanation").innerHTML =
+          "<strong>1st CNOT</strong> (x₁ controls y): control = " + x1 + ". " +
+          (x1 ? "Control is 1 → flip target." : "Control is 0 → target unchanged.") +
+          "<br>y: " + before + " → " + yWork;
+        step = 1;
+      } else if (step === 1) {
+        const x3 = snapshot.x3;
+        const before = yWork;
+        runCnot(x3);
+        const fx = snapshot.x1 ^ snapshot.x3;
+        el("explanation").innerHTML =
+          "<strong>2nd CNOT</strong> (x₃ controls y): control = " + x3 + ". " +
+          (x3 ? "Control is 1 → flip target." : "Control is 0 → target unchanged.") +
+          "<br>y: " + before + " → " + yWork +
+          "<br>Computed f(x) = x₁ ⊕ x₃ = " + snapshot.x1 + " ⊕ " + snapshot.x3 + " = " + fx +
+          ". Oracle: y′ = y ⊕ f(x) = " + snapshot.y + " ⊕ " + fx + " = " + (snapshot.y ^ fx) + ".";
+        el("result").textContent =
+          "Final state: |" + snapshot.x1 + snapshot.x2 + snapshot.x3 + "⟩|" + yWork + "⟩  (input unchanged)";
+        if (yWork !== (snapshot.y ^ fx)) {
+          el("result").textContent += " — check bits";
+        }
+        step = 2;
+      }
+      updateStepUI();
+    });
+
+    el("btnReset").addEventListener("click", () => {
+      if (snapshot) {
+        el("x1").textContent = snapshot.x1;
+        el("x2").textContent = snapshot.x2;
+        el("x3").textContent = snapshot.x3;
+        el("y").textContent = snapshot.y;
+      }
+      snapshot = null;
+      yWork = 0;
+      step = 0;
+      el("result").textContent = "";
+      el("explanation").innerHTML =
+        "<strong>Ready.</strong> CNOT rule: when control = 1, target ← target ⊕ 1; when control = 0, target unchanged.";
+      updateStepUI();
+    });
+
+    updateStepUI();
+    syncWireValues();
+  </script>
+<script src="embed-fit.js"></script>
+</body>
+</html>

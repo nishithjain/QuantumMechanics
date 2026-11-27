@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="440" viewBox="0 0 1040 440" role="img" aria-labelledby="title desc"><title id="title">CHSH game with referee</title><desc id="desc">Referee privately sends x to Alice and y to Bob, they independently reply a and b without communicating; win when a XOR b equals x AND y</desc>
+<rect width="1040" height="440" fill="#f7f9fc"/>
+<text x="43" y="44" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="27" fill="#6755dd" font-weight="700" >CHSH NONLOCAL GAME: NO TALKING AFTER INPUTS</text>
+<rect x="380" y="90" width="290" height="92" rx="14" fill="#f1edff" stroke="#6755dd" stroke-width="1.6"/>
+<text x="525" y="125" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="24" fill="#6755dd" font-weight="700" >REFEREE</text>
+<text x="525" y="155" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#172238" font-weight="400" >Picks x, y ∈ {0,1}</text>
+<rect x="90" y="260" width="270" height="95" rx="14" fill="#e6faf5" stroke="#087f77" stroke-width="1.6"/>
+<rect x="695" y="260" width="270" height="95" rx="14" fill="#e6faf5" stroke="#087f77" stroke-width="1.6"/>
+<text x="225" y="297" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#087f77" font-weight="700" >ALICE</text>
+<text x="225" y="325" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#172238" font-weight="400" >Receives x; replies a</text>
+<text x="831" y="297" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#087f77" font-weight="700" >BOB</text>
+<text x="831" y="325" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#172238" font-weight="400" >Receives y; replies b</text>
+<line x1="435" y1="183" x2="292" y2="257" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
+<polygon points="292,257 298.47,246.89 303.99,257.55" fill="#2563eb"/>
+<line x1="614" y1="183" x2="776" y2="257" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
+<polygon points="776,257 764.05,258.14 769.04,247.22" fill="#2563eb"/>
+<text x="345" y="218" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#2563eb" font-weight="700" >x</text>
+<text x="711" y="218" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#2563eb" font-weight="700" >y</text>
+<line x1="360" y1="305" x2="693" y2="305" stroke="#c24178" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 8"/>
+<text x="525" y="292" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#c24178" font-weight="700" >NO COMMUNICATION</text>
+<text x="525" y="400" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#6755dd" font-weight="700" >Referee declares win ⇔  a ⊕ b = x ∧ y</text>
+</svg>

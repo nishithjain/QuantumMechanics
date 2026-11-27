@@ -1,0 +1,12 @@
+/* Shared embed page: no extra document margin. Height comes from content. */
+html {
+  margin: 0;
+  background: #f4f6fc;
+}
+body {
+  margin: 0;
+  background: #f4f6fc;
+}
+.embed-hide {
+  display: none !important;
+}

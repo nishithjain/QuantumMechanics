@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Understanding Linear Transformations</title>
+
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: #f8fafc;
+    color: #172033;
+  }
+
+  main {
+    max-width: 900px;
+    margin: auto;
+  }
+
+  h2 { margin-top: 0; }
+
+  .controls, .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin: 16px 0;
+  }
+
+  button, select {
+    padding: 10px 14px;
+    font: inherit;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: white;
+  }
+
+  button { cursor: pointer; }
+  button:disabled { cursor: default; opacity: 0.5; }
+
+  #play {
+    background: #2459c4;
+    color: white;
+  }
+
+  .panels {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  section {
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #dbe2ea;
+    border-radius: 12px;
+    background: white;
+  }
+
+  h3 { margin: 0 0 10px; }
+
+  canvas {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+  }
+
+  .value {
+    min-height: 48px;
+    margin: 12px 0 0;
+    font-weight: bold;
+  }
+
+  #explanation {
+    padding: 14px;
+    border-radius: 8px;
+    background: #eaf1ff;
+    line-height: 1.6;
+  }
+
+  .blue { color: #2459c4; }
+  .orange { color: #b95012; }
+  .green { color: #12834b; }
+
+  @media (max-width: 600px) {
+    .panels { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+
+<body>
+<main>
+  <h2>One transformation, two routes</h2>
+  <p><strong>T(x, y) = (2x, 2y)</strong>: double both coordinates.</p>
+
+  <div class="controls">
+    <label for="example">Example:</label>
+    <select id="example">
+      <option value="addition">Addition: T(u + v)</option>
+      <option value="scaling">Scaling: T(3u)</option>
+    </select>
+
+    <button id="play">▶ Play</button>
+    <button id="next">Next step</button>
+    <button id="restart">Restart</button>
+  </div>
+
+  <div class="legend">
+    <span class="blue">━ u or a multiple of u</span>
+    <span class="orange">━ v or a multiple of v</span>
+    <span class="green">━ Result</span>
+  </div>
+
+  <div class="panels">
+    <section>
+      <h3 id="titleA"></h3>
+      <canvas id="canvasA" role="img"
+        aria-label="First route on a coordinate plane"></canvas>
+      <p class="value" id="valueA"></p>
+    </section>
+
+    <section>
+      <h3 id="titleB"></h3>
+      <canvas id="canvasB" role="img"
+        aria-label="Second route on a coordinate plane"></canvas>
+      <p class="value" id="valueB"></p>
+    </section>
+  </div>
+
+  <p id="explanation" aria-live="polite"></p>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const canvases = [$("canvasA"), $("canvasB")];
+const colors = ["#2459c4", "#b95012", "#12834b"];
+const reducedMotion =
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let mode = "addition";
+let step = 0;
+let position = 0;
+let playing = false;
+let busy = false;
+let frame;
+let timer;
+
+const content = {
+  addition: {
+    titles: [
+      "Add first → transform",
+      "Transform first → add"
+    ],
+    values: [
+      ["u = (1, 2), v = (3, 1)", "u = (1, 2), v = (3, 1)"],
+      ["u + v = (4, 3)", "T(u) = (2, 4), T(v) = (6, 2)"],
+      ["T(u + v) = (8, 6)", "T(u) + T(v) = (8, 6)"]
+    ],
+    explanations: [
+      "Start with u = (1, 2) and v = (3, 1).",
+      "Left: move v to the tip of u to add them. " +
+      "Right: double u and v separately.",
+      "Both routes end at (8, 6). " +
+      "Therefore, T(u + v) = T(u) + T(v)."
+    ]
+  },
+
+  scaling: {
+    titles: [
+      "Multiply by 3 → transform",
+      "Transform → multiply by 3"
+    ],
+    values: [
+      ["u = (1, 2)", "u = (1, 2)"],
+      ["3u = (3, 6)", "T(u) = (2, 4)"],
+      ["T(3u) = (6, 12)", "3T(u) = (6, 12)"]
+    ],
+    explanations: [
+      "Start with u = (1, 2). Multiplying a vector " +
+      "by 3 triples both coordinates.",
+      "Left: triple u first. Right: double u first.",
+      "Both routes end at (6, 12). " +
+      "Therefore, T(3u) = 3T(u)."
+    ]
+  }
+};
+
+// Each arrow is [startX, startY, changeX, changeY, colorIndex].
+function vectors(side, p) {
+  if (mode === "addition") {
+    if (side === 0) {
+      if (p <= 1) {
+        return [
+          [0, 0, 1, 2, 0],
+          [p, 2 * p, 3, 1, 1],
+          [0, 0, 4 * p, 3 * p, 2]
+        ];
+      }
+
+      const k = p;
+      return [
+        [0, 0, k, 2 * k, 0],
+        [k, 2 * k, 3 * k, k, 1],
+        [0, 0, 4 * k, 3 * k, 2]
+      ];
+    }
+
+    if (p <= 1) {
+      const k = 1 + p;
+      return [
+        [0, 0, k, 2 * k, 0],
+        [0, 0, 3 * k, k, 1]
+      ];
+    }
+
+    const t = p - 1;
+    return [
+      [0, 0, 2, 4, 0],
+      [2 * t, 4 * t, 6, 2, 1],
+      [0, 0, 8 * t, 6 * t, 2]
+    ];
+  }
+
+  const k = side === 0
+    ? (p <= 1 ? 1 + 2 * p : 3 + 3 * (p - 1))
+    : (p <= 1 ? 1 + p : 2 + 4 * (p - 1));
+
+  return [[0, 0, k, 2 * k, p === 2 ? 2 : 0]];
+}
+
+function draw(canvas, side) {
+  const size = canvas.getBoundingClientRect().width;
+  if (!size) return;
+
+  const ratio = window.devicePixelRatio || 1;
+  canvas.width = Math.round(size * ratio);
+  canvas.height = Math.round(size * ratio);
+
+  const ctx = canvas.getContext("2d");
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+  const max = mode === "addition" ? 10 : 14;
+  const margin = 32;
+  const unit = (size - 2 * margin) / max;
+  const x = n => margin + n * unit;
+  const y = n => size - margin - n * unit;
+
+  ctx.clearRect(0, 0, size, size);
+  ctx.font = "12px Arial";
+  ctx.lineWidth = 1;
+
+  for (let n = 0; n <= max; n++) {
+    ctx.strokeStyle = "#e4e9f0";
+    ctx.beginPath();
+    ctx.moveTo(x(n), y(0));
+    ctx.lineTo(x(n), y(max));
+    ctx.moveTo(x(0), y(n));
+    ctx.lineTo(x(max), y(n));
+    ctx.stroke();
+
+    if (n % (max === 10 ? 2 : 4) === 0) {
+      ctx.fillStyle = "#475569";
+      ctx.textAlign = "center";
+      ctx.fillText(n, x(n), y(0) + 18);
+      if (n !== 0) {
+        ctx.textAlign = "right";
+        ctx.fillText(n, x(0) - 8, y(n) + 4);
+      }
+    }
+  }
+
+  ctx.strokeStyle = "#64748b";
+  ctx.beginPath();
+  ctx.moveTo(x(0), y(max));
+  ctx.lineTo(x(0), y(0));
+  ctx.lineTo(x(max), y(0));
+  ctx.stroke();
+
+  ctx.fillStyle = "#172033";
+  ctx.textAlign = "left";
+  ctx.fillText("x", x(max) + 10, y(0) + 4);
+  ctx.fillText("y", x(0) - 4, y(max) - 10);
+
+  for (const [sx, sy, dx, dy, color] of vectors(side, position)) {
+    if (Math.hypot(dx, dy) < 0.01) continue;
+
+    const ax = x(sx), ay = y(sy);
+    const bx = x(sx + dx), by = y(sy + dy);
+    const angle = Math.atan2(by - ay, bx - ax);
+
+    ctx.strokeStyle = colors[color];
+    ctx.fillStyle = colors[color];
+    ctx.lineWidth = color === 2 ? 3.5 : 2.5;
+
+    ctx.beginPath();
+    ctx.moveTo(ax, ay);
+    ctx.lineTo(bx, by);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(bx, by);
+    ctx.lineTo(
+      bx - 10 * Math.cos(angle - Math.PI / 6),
+      by - 10 * Math.sin(angle - Math.PI / 6)
+    );
+    ctx.lineTo(
+      bx - 10 * Math.cos(angle + Math.PI / 6),
+      by - 10 * Math.sin(angle + Math.PI / 6)
+    );
+    ctx.closePath();
+    ctx.fill();
+  }
+}
+
+function render() {
+  canvases.forEach(draw);
+}
+
+function updateText() {
+  const data = content[mode];
+
+  $("titleA").textContent = data.titles[0];
+  $("titleB").textContent = data.titles[1];
+  $("valueA").textContent = data.values[step][0];
+  $("valueB").textContent = data.values[step][1];
+
+  $("explanation").textContent =
+    `Step ${step + 1} of 3: ${data.explanations[step]}`;
+
+  $("next").disabled = busy || playing || step === 2;
+  $("play").disabled = busy && !playing;
+  $("play").textContent = playing ? "Pause" : "▶ Play";
+}
+
+function stop() {
+  cancelAnimationFrame(frame);
+  clearTimeout(timer);
+  playing = false;
+  busy = false;
+  updateText();
+}
+
+function animateNext(done) {
+  if (step >= 2) return;
+
+  busy = true;
+  updateText();
+
+  const start = performance.now();
+  const from = position;
+  const target = step + 1;
+  const duration = reducedMotion ? 0 : 1800;
+
+  function tick(now) {
+    const t = duration ? Math.min(1, (now - start) / duration) : 1;
+    const eased = t * t * (3 - 2 * t);
+
+    position = from + (target - from) * eased;
+    render();
+
+    if (t < 1) {
+      frame = requestAnimationFrame(tick);
+    } else {
+      step = target;
+      busy = false;
+      updateText();
+      done();
+    }
+  }
+
+  frame = requestAnimationFrame(tick);
+}
+
+function restart() {
+  stop();
+  step = 0;
+  position = 0;
+  updateText();
+  render();
+}
+
+function continuePlaying() {
+  if (!playing) return;
+
+  if (step === 2) {
+    stop();
+    return;
+  }
+
+  animateNext(() => {
+    timer = setTimeout(continuePlaying, 1400);
+  });
+}
+
+$("play").addEventListener("click", () => {
+  if (playing) {
+    stop();
+    return;
+  }
+
+  if (step === 2) restart();
+
+  playing = true;
+  updateText();
+  continuePlaying();
+});
+
+$("next").addEventListener("click", () => {
+  animateNext(() => updateText());
+});
+
+$("restart").addEventListener("click", restart);
+
+$("example").addEventListener("change", event => {
+  mode = event.target.value;
+  restart();
+});
+
+new ResizeObserver(render).observe(document.querySelector(".panels"));
+
+updateText();
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="440" viewBox="0 0 1100 440" role="img" aria-labelledby="title desc"><title id="title">Entanglement as a resource</title><desc id="desc">Alice has an unknown quantum state, Alice and Bob share a Bell pair, and two classical bits are sent to Bob, who corrects his qubit</desc>
+<rect width="1100" height="440" fill="#f7f9fc"/>
+<text x="45" y="48" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="25" fill="#6755dd" font-weight="700" >ONE SHARED BELL PAIR + TWO CLASSICAL BITS → TELEPORTED STATE</text>
+<rect x="40" y="90" width="310" height="255" rx="14" fill="#fff" stroke="#dce3ec" stroke-width="1.6"/>
+<rect x="740" y="90" width="320" height="255" rx="14" fill="#fff" stroke="#dce3ec" stroke-width="1.6"/>
+<text x="78" y="132" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="30" fill="#172238" font-weight="700" >Alice</text>
+<text x="780" y="132" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="30" fill="#172238" font-weight="700" >Bob</text>
+<circle cx="150" cy="213" r="34" fill="#eee9ff" stroke="#6755dd" stroke-width="3"/>
+<text x="150" y="221" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="30" fill="#6755dd" font-weight="700" >|ψ⟩</text>
+<text x="205" y="202" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#172238" font-weight="400" >Unknown</text>
+<text x="205" y="226" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#172238" font-weight="400" >input</text>
+<circle cx="297" cy="294" r="23" fill="#e6fbf5" stroke="#087f77" stroke-width="3"/>
+<text x="297" y="303" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="25" fill="#087f77" font-weight="700" >A</text>
+<circle cx="790" cy="294" r="23" fill="#e6fbf5" stroke="#087f77" stroke-width="3"/>
+<text x="790" y="303" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="25" fill="#087f77" font-weight="700" >B</text>
+<line x1="325" y1="294" x2="764" y2="294" stroke="#6755dd" stroke-width="6" stroke-linecap="round" stroke-dasharray="9 8"/>
+<text x="545" y="322" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#6755dd" font-weight="700" >Pre-shared entanglement</text>
+<rect x="398" y="133" width="300" height="86" rx="14" fill="#fff" stroke="#dce3ec" stroke-width="1.6"/>
+<text x="548" y="163" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#172238" font-weight="700" >Alice measures 2 qubits</text>
+<text x="548" y="190" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#087f77" font-weight="700" >m₁ m₂  ∈  {00,01,10,11}</text>
+<line x1="356" y1="183" x2="395" y2="183" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
+<polygon points="395,183 384.61,189.00 384.61,177.00" fill="#2563eb"/>
+<line x1="700" y1="183" x2="763" y2="183" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
+<polygon points="763,183 752.61,189.00 752.61,177.00" fill="#2563eb"/>
+<text x="547" y="245" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#2563eb" font-weight="700" >Classical message: 2 bits</text>
+<text x="788" y="208" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#172238" font-weight="400" >X if m₂=1</text>
+<text x="788" y="240" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#172238" font-weight="400" >Z if m₁=1</text>
+<text x="788" y="339" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#087f77" font-weight="700" >Bob obtains |ψ⟩</text>
+<text x="55" y="398" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#6b7280" font-weight="400" >The original input is not copied. Quantum entanglement alone does not send a message.</text>
+</svg>

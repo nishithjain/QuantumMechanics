@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phase kickback — relative sign between branches</title>
+  <link rel="stylesheet" href="embed-frame.css">
+</head>
+<body style="background:#f4f6fc;">
+<div class="superposition-demo">
+<style>
+.superposition-demo {
+  font-family: Arial, sans-serif;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 14px 12px 16px;
+  background: #f4f6fc;
+  border: 1px solid #dce2ee;
+  border-radius: 13px;
+  color: #26324a;
+}
+.superposition-demo * { box-sizing: border-box; }
+.superposition-demo h3 { text-align: center; margin: 0 0 14px; font-size: 18px; }
+.superposition-demo .state {
+  background: white;
+  border: 1px solid #dce2ee;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+.superposition-demo .label {
+  font-size: 12px;
+  font-weight: bold;
+  color: #68758c;
+  margin-bottom: 10px;
+}
+.superposition-demo .terms {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font: 22px Georgia, serif;
+  flex-wrap: wrap;
+}
+.superposition-demo .term {
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #e8efff;
+  color: #2869bd;
+  min-width: 72px;
+}
+.superposition-demo .term.changed {
+  background: #fceaea;
+  color: #c13e3e;
+}
+.superposition-demo .operator { font-weight: bold; color: #65718a; }
+.superposition-demo .arrow { text-align: center; padding: 10px; }
+.superposition-demo .arrow span {
+  display: inline-block;
+  background: #303b99;
+  color: white;
+  padding: 7px 15px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: bold;
+}
+.superposition-demo .arrow div { font-size: 21px; color: #303b99; margin-top: 4px; }
+.superposition-demo .norm {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.superposition-demo .norm-bar {
+  display: block;
+  width: min(220px, 85%);
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-top: 2px solid #68758c;
+}
+.superposition-demo .norm-denom {
+  font: 17px Georgia, serif;
+  color: #26324a;
+}
+.superposition-demo .norm-hint {
+  font: 11px Arial, sans-serif;
+  color: #68758c;
+}
+.superposition-demo .explanation {
+  background: #e9f5ed;
+  border: 1px solid #b8ddc3;
+  color: #286b42;
+  padding: 10px;
+  border-radius: 9px;
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.superposition-demo button {
+  display: block;
+  margin: 12px auto 0;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #303b99;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+}
+.superposition-demo .after { transition: opacity .25s; }
+.superposition-demo .hidden { opacity: .25; }
+</style>
+
+<h3>Watch how the superposition changes</h3>
+<div class="state">
+  <div class="label">BEFORE PHASE KICKBACK</div>
+  <div class="terms">
+    <span class="term">|0⟩</span>
+    <span class="operator">+</span>
+    <span class="term">|1⟩</span>
+  </div>
+  <div class="norm" aria-label="normalized state">
+    <div class="norm-bar" aria-hidden="true"></div>
+    <div class="norm-denom">√2</div>
+    <span class="norm-hint">1/√2 times each term</span>
+  </div>
+</div>
+
+<div class="arrow">
+  <span>Apply phase kickback</span>
+  <div>↓</div>
+</div>
+
+<div class="state after hidden" id="sp-after">
+  <div class="label">AFTER PHASE KICKBACK</div>
+  <div class="terms">
+    <span class="term">|0⟩</span>
+    <span class="operator">−</span>
+    <span class="term changed">|1⟩</span>
+  </div>
+  <div class="norm" aria-label="normalized state">
+    <div class="norm-bar" aria-hidden="true"></div>
+    <div class="norm-denom">√2</div>
+    <span class="norm-hint">1/√2 times each term</span>
+  </div>
+</div>
+
+<div class="explanation">
+  The function returns f(0) = 0 and f(1) = 1.
+  Therefore, |0⟩ keeps its positive sign and |1⟩ gets a negative sign.
+  The relative sign between the two possibilities has changed.
+</div>
+
+<button type="button" id="sp-toggle">Reveal phase change</button>
+</div>
+<script>
+document.getElementById("sp-toggle").addEventListener("click", function () {
+  const el = document.getElementById("sp-after");
+  el.classList.toggle("hidden");
+  this.textContent = el.classList.contains("hidden") ? "Reveal phase change" : "Hide phase change";
+  if (window.qmEmbedFitSchedule) window.qmEmbedFitSchedule();
+});
+</script>
+<script src="embed-fit.js"></script>
+</body>
+</html>

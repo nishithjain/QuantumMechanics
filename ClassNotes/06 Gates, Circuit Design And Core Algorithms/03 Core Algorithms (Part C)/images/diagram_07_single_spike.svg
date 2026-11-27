@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="A single Fourier spike spreads uniformly">
+<rect width="960" height="540" fill="#fcfdff"/>
+<defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#087f8c"/></marker></defs>
+<text x="34" y="47" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#172554">A single Fourier spike spreads uniformly</text>
+<text x="36" y="77" font-family="Arial, sans-serif" font-size="15" fill="#4b647d">For a basis input |3⟩, every output probability is 1/8; the phases are not identical.</text>
+<path d="M34 89H925" stroke="#d5e1ee" stroke-width="1.5"/>
+<text x="60" y="176" font-family="Arial, sans-serif" text-anchor="start" font-size="19" font-weight="700" fill="#172554">Input: one certain outcome</text>
+<line x1="60" y1="380" x2="410" y2="380" stroke="#8da8b4" stroke-width="2" />
+<text x="91" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">0</text>
+<text x="132" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">1</text>
+<text x="173" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">2</text>
+<rect x="194" y="228" width="35" height="152" rx="2" fill="#d26a20" stroke="none" stroke-width="1.2"/>
+<text x="214" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">3</text>
+<text x="256" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">4</text>
+<text x="297" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">5</text>
+<text x="338" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">6</text>
+<text x="379" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">7</text>
+<text x="235.0" y="432" font-family="Arial, sans-serif" text-anchor="middle" font-size="14" font-weight="400" fill="#4b647d">Before F₈</text>
+<line x1="424" y1="283" x2="534" y2="283" stroke="#087f8c" stroke-width="3" marker-end="url(#a)" />
+<text x="480" y="261" font-family="Arial, sans-serif" text-anchor="middle" font-size="22" font-weight="700" fill="#087f8c">F₈</text>
+<text x="548" y="176" font-family="Arial, sans-serif" text-anchor="start" font-size="19" font-weight="700" fill="#172554">Output: eight equally likely outcomes</text>
+<line x1="548" y1="380" x2="898" y2="380" stroke="#8da8b4" stroke-width="2" />
+<rect x="558" y="361" width="35" height="19" rx="2" fill="#087f8c" stroke="none" stroke-width="1.2"/>
+<text x="579" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">0</text>
+<rect x="599" y="361" width="35" height="19" rx="2" fill="#d26a20" stroke="none" stroke-width="1.2"/>
+<text x="620" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">1</text>
+<rect x="640" y="361" width="35" height="19" rx="2" fill="#087f8c" stroke="none" stroke-width="1.2"/>
+<text x="661" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">2</text>
+<rect x="682" y="361" width="35" height="19" rx="2" fill="#d26a20" stroke="none" stroke-width="1.2"/>
+<text x="702" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">3</text>
+<rect x="723" y="361" width="35" height="19" rx="2" fill="#087f8c" stroke="none" stroke-width="1.2"/>
+<text x="744" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">4</text>
+<rect x="764" y="361" width="35" height="19" rx="2" fill="#d26a20" stroke="none" stroke-width="1.2"/>
+<text x="785" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">5</text>
+<rect x="806" y="361" width="35" height="19" rx="2" fill="#087f8c" stroke="none" stroke-width="1.2"/>
+<text x="826" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">6</text>
+<rect x="847" y="361" width="35" height="19" rx="2" fill="#d26a20" stroke="none" stroke-width="1.2"/>
+<text x="867" y="401" font-family="Arial, sans-serif" text-anchor="middle" font-size="13" font-weight="400" fill="#4b647d">7</text>
+<text x="723.0" y="432" font-family="Arial, sans-serif" text-anchor="middle" font-size="14" font-weight="400" fill="#4b647d">After F₈</text>
+</svg>

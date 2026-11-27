@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2D cross product: signed area</title>
+<style>
+body{font-family:system-ui,Segoe UI,sans-serif;max-width:980px;margin:24px auto;padding:0 16px;background:#f5f8fc;color:#17243a}
+.card{background:#fff;border:1px solid #d7e1ef;border-radius:14px;padding:16px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+label{display:block;margin:10px 0}input{width:100%;accent-color:#17569b}
+canvas{width:100%;height:390px;background:#fbfdff;border-radius:10px}
+.math{font-family:ui-monospace,Consolas,monospace;background:#f0f4fa;padding:10px;border-radius:8px;overflow-wrap:anywhere}
+.metric{font-size:1.15rem;font-weight:700}
+button{padding:9px 14px;border:0;border-radius:8px;background:#174f91;color:white;margin:4px;cursor:pointer}.alt{background:#e5edf7;color:#18304e}
+@media(max-width:650px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<h1>Explore the 2D cross product</h1>
+<p>Two vectors span a parallelogram. The magnitude of the 2D cross product is its area; the sign records orientation. Swap the vectors and the sign flips.</p>
+<div class="card">
+<div class="grid"><div>
+<label>v angle: <b id="av">20°</b><input id="a" type="range" min="-180" max="180" value="20"></label>
+<label>v length: <b id="lv">3</b><input id="l" type="range" min=".3" max="4" step=".1" value="3"></label>
+</div><div>
+<label>w angle: <b id="bv">80°</b><input id="b" type="range" min="-180" max="180" value="80"></label>
+<label>w length: <b id="mv">2</b><input id="m" type="range" min=".3" max="4" step=".1" value="2"></label>
+</div></div>
+<p class="math" id="formula"></p><p class="metric" id="result"></p><p id="meaning"></p>
+<canvas id="plot" width="900" height="390"></canvas>
+<button id="swap">Swap v and w</button><button class="alt" id="perp">Make perpendicular</button><button class="alt" id="parallel">Make parallel</button><button class="alt" id="reset">Reset</button>
+</div>
+<div class="card"><b>Remember:</b> Positive and negative do not mean positive or negative physical area. The ordinary area is always non-negative; the sign records orientation.</div>
+<script>
+const $=id=>document.getElementById(id);
+function draw(){
+ let a=+$('a').value*Math.PI/180,b=+$('b').value*Math.PI/180,L=+$('l').value,M=+$('m').value;
+ let v=[L*Math.cos(a),L*Math.sin(a)],w=[M*Math.cos(b),M*Math.sin(b)],cross=v[0]*w[1]-v[1]*w[0];
+ $('av').textContent=$('a').value+'°';$('bv').textContent=$('b').value+'°';$('lv').textContent=L.toFixed(1);$('mv').textContent=M.toFixed(1);
+ $('formula').textContent=`v × w = vₓwᵧ − vᵧwₓ = (${v[0].toFixed(2)})(${w[1].toFixed(2)}) − (${v[1].toFixed(2)})(${w[0].toFixed(2)})`;
+ $('result').textContent=`Signed area = ${cross.toFixed(3)}     |     Parallelogram area = ${Math.abs(cross).toFixed(3)}`;
+ $('meaning').textContent=Math.abs(cross)<.01?'The vectors are parallel or anti-parallel: the parallelogram has zero area.':cross>0?'Positive orientation: v is on the right of w in the convention used in the lecture.':'Negative orientation: v is on the left of w in the convention used in the lecture.';
+ let g=$('plot').getContext('2d'),O={x:450,y:205},s=62;g.clearRect(0,0,900,390);
+ g.strokeStyle='#cbd5e1';g.lineWidth=2;g.beginPath();g.moveTo(25,O.y);g.lineTo(875,O.y);g.moveTo(O.x,20);g.lineTo(O.x,370);g.stroke();
+ function P(q){return {x:O.x+q[0]*s,y:O.y-q[1]*s}}
+ let V=P(v),W=P(w),VW=P([v[0]+w[0],v[1]+w[1]]);
+ g.fillStyle=cross>=0?'rgba(22,163,74,.15)':'rgba(220,38,38,.15)';
+ g.beginPath();g.moveTo(O.x,O.y);g.lineTo(V.x,V.y);g.lineTo(VW.x,VW.y);g.lineTo(W.x,W.y);g.closePath();g.fill();
+ function arrow(q,color,label){let p=P(q);g.strokeStyle=color;g.fillStyle=color;g.lineWidth=5;g.beginPath();g.moveTo(O.x,O.y);g.lineTo(p.x,p.y);g.stroke();let an=Math.atan2(p.y-O.y,p.x-O.x);g.beginPath();g.moveTo(p.x,p.y);g.lineTo(p.x-13*Math.cos(an-.4),p.y-13*Math.sin(an-.4));g.lineTo(p.x-13*Math.cos(an+.4),p.y-13*Math.sin(an+.4));g.closePath();g.fill();g.font='bold 18px system-ui';g.fillText(label,p.x+8,p.y-8)}
+ arrow(v,'#2563eb','v');arrow(w,'#16a34a','w');
+ g.setLineDash([7,6]);g.strokeStyle='#9333a8';g.lineWidth=3;g.beginPath();g.moveTo(V.x,V.y);g.lineTo(VW.x,VW.y);g.moveTo(W.x,W.y);g.lineTo(VW.x,VW.y);g.stroke();g.setLineDash([]);
+ g.fillStyle='#475569';g.font='14px system-ui';g.fillText('Shaded parallelogram: area = |v × w|',18,25);
+}
+['a','b','l','m'].forEach(id=>$(id).addEventListener('input',draw));
+$('swap').onclick=()=>{let ids=['a','b','l','m'],vals=ids.map(x=>$(x).value);$('a').value=vals[1];$('b').value=vals[0];$('l').value=vals[3];$('m').value=vals[2];draw()};
+$('perp').onclick=()=>{$('b').value=(+$('a').value+90+180)%360-180;draw()};
+$('parallel').onclick=()=>{$('b').value=$('a').value;draw()};
+$('reset').onclick=()=>{$('a').value=20;$('b').value=80;$('l').value=3;$('m').value=2;draw()};
+draw();
+</script></body></html>

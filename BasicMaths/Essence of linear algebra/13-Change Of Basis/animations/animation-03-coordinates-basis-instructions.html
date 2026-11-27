@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coordinates are instructions for combining basis vectors</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:22px;background:#f3f6fa;color:#172334;font:16px system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+main{max-width:1050px;margin:auto}
+h1{font-size:clamp(1.4rem,3vw,2rem);margin:0 0 7px}
+.lead{color:#5b6879;line-height:1.55;margin:0 0 16px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;align-items:start}
+.panel{background:#fff;border:1px solid #dce4ed;border-radius:14px;padding:15px;box-shadow:0 5px 18px #20334a0a}
+canvas{display:block;width:100%;height:auto;border:1px solid #e5ebf1;border-radius:10px;background:#fbfdff}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}
+button{border:1px solid #cbd5e1;background:#fff;border-radius:9px;padding:9px 12px;font-weight:650;color:#172334;cursor:pointer}
+button.primary{background:#1f6fc7;color:white;border-color:#1f6fc7}
+button:focus-visible{outline:3px solid #9bcaff;outline-offset:2px}
+h2{font-size:1.05rem;margin:0 0 10px}
+.step{font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;font-weight:750;color:#68788d;margin-bottom:7px}
+.formula{background:#f2f6fb;border-radius:10px;padding:12px;line-height:1.75;margin:10px 0}
+.status{line-height:1.55;min-height:75px;margin:12px 0}
+.legend{display:flex;align-items:center;gap:8px;margin:8px 0;color:#5b6879;font-size:.9rem}
+.dot{width:11px;height:11px;border-radius:50%;flex:none}
+.small{font-size:.87rem;color:#5b6879;line-height:1.5}
+.slider{margin-top:13px}.slider input{width:100%;accent-color:#1f6fc7}
+.matrix{display:inline-grid;grid-template-columns:1fr;gap:2px;text-align:center;vertical-align:middle;padding:2px 10px;border-inline:2px solid #344256;border-radius:4px;font-variant-numeric:tabular-nums;font-weight:650}
+.math-row{display:flex;flex-wrap:wrap;align-items:center;gap:.65em}
+@media(max-width:780px){body{padding:12px}.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>Coordinates are instructions for combining basis vectors</h1>
+<p class="lead">A coordinate pair tells us how much of each basis vector to take. Watch 3 copies of the horizontal basis vector and 2 copies of the vertical basis vector combine to make (3, 2).</p>
+<div class="layout">
+<section class="panel">
+<canvas id="scene" width="760" height="570" aria-label="Animation showing three times the horizontal basis vector plus two times the vertical basis vector making the vector three comma two"></canvas>
+<div class="controls">
+<button class="primary" id="play">▶ Build the vector</button>
+<button id="step">Next step</button>
+<button id="reset">↺ Reset</button>
+</div>
+<div class="slider">
+<label for="progress"><strong>Animation progress:</strong> <span id="pct">0%</span></label>
+<input id="progress" type="range" min="0" max="100" value="0">
+</div>
+<p class="small">Blue = horizontal basis contribution. Orange = vertical basis contribution. Purple = final vector. The dashed lines show the horizontal and vertical movement.</p>
+</section>
+<aside class="panel">
+<div class="step" id="stepLabel">Step 1 · The standard basis</div>
+<h2>Start with two basis vectors</h2>
+<div class="formula">
+<div class="math-row">
+<span><b>î</b> = <span class="matrix" aria-label="i hat"><span>1</span><span>0</span></span></span>
+<span><b>ĵ</b> = <span class="matrix" aria-label="j hat"><span>0</span><span>1</span></span></span>
+</div>
+</div>
+<div class="formula">
+<strong>Our coordinates</strong><br>
+<span class="matrix" aria-label="coordinates 3 2"><span>3</span><span>2</span></span>
+= 3<b>î</b> + 2<b>ĵ</b>
+</div>
+<div class="status" id="status">The standard basis vectors are one unit to the right and one unit up.</div>
+<div class="legend"><span class="dot" style="background:#2878cf"></span>3î = (3, 0)</div>
+<div class="legend"><span class="dot" style="background:#e58b27"></span>2ĵ = (0, 2)</div>
+<div class="legend"><span class="dot" style="background:#8656c7"></span>Result = (3, 2)</div>
+<p class="small"><b>Remember:</b> The numbers 3 and 2 are not just a location label. They tell us how much to scale each chosen basis vector before adding them.</p>
+</aside>
+</div>
+<section class="panel" style="margin-top:14px">
+<h2>What does “relative to a basis” mean?</h2>
+<p class="small">The pair (3, 2) describes the vector using the standard basis î and ĵ. If we choose a different basis, the same geometric vector can have different coordinates. The vector itself has not changed—only the instructions used to describe it have changed.</p>
+</section>
+</main>
+<script>
+(()=>{
+const canvas=document.getElementById('scene'),ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
+const O={x:130,y:435},S=82;
+let t=0,playing=false,raf=0,last=0;
+const P=([x,y])=>[O.x+S*x,O.y-S*y];
+function line(a,b,color,width=2,dash=[]){ctx.beginPath();ctx.setLineDash(dash);ctx.moveTo(...a);ctx.lineTo(...b);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();ctx.setLineDash([])}
+function arrow(a,b,color,label,offset=[8,-9]){
+ line(a,b,color,4);
+ const ang=Math.atan2(b[1]-a[1],b[0]-a[0]),L=12;
+ ctx.beginPath();ctx.moveTo(...b);ctx.lineTo(b[0]-L*Math.cos(ang-.48),b[1]-L*Math.sin(ang-.48));ctx.lineTo(b[0]-L*Math.cos(ang+.48),b[1]-L*Math.sin(ang+.48));ctx.closePath();ctx.fillStyle=color;ctx.fill();
+ ctx.fillStyle=color;ctx.font='bold 16px system-ui';ctx.fillText(label,b[0]+offset[0],b[1]+offset[1]);
+}
+function draw(){
+ ctx.clearRect(0,0,W,H);
+ for(let x=-1;x<=7;x++)line(P([x,-1]),P([x,5]),'#e6ebf1',1);
+ for(let y=-1;y<=5;y++)line(P([-1,y]),P([7,y]),'#e6ebf1',1);
+ line(P([-1,0]),P([7,0]),'#8997a8',1.5);line(P([0,-1]),P([0,5]),'#8997a8',1.5);
+ ctx.fillStyle='#64748b';ctx.font='13px system-ui';ctx.fillText('x',W-22,O.y-12);ctx.fillText('y',O.x-18,22);
+ const origin=P([0,0]),i=P([1,0]),j=P([0,1]);
+ arrow(origin,i,'#2878cf','î',[7,-12]);arrow(origin,j,'#e58b27','ĵ',[9,-5]);
+ const h=[3*Math.min(1,t*2),0], hp=P(h);
+ if(t>.02)arrow(origin,hp,'#2878cf','3î = (3, 0)',[8,22]);
+ const tv=Math.max(0,Math.min(1,(t-.5)*2));
+ const v=[3,2*tv],vp=P(v);
+ if(tv>.02){
+   const from=P([3,0]);
+   arrow(from,vp,'#e58b27','2ĵ = (0, 2)',[10,-8]);
+   line(P([0,2*tv]),vp,'#e58b27',1.8,[5,5]);
+ }
+ if(t>.85){
+   line(P([3,0]),P([3,2]),'#8656c7',1.8,[5,5]);
+   line(P([0,2]),P([3,2]),'#8656c7',1.8,[5,5]);
+ }
+ if(t>=.99){
+   arrow(origin,P([3,2]),'#8656c7','(3, 2)',[10,-10]);
+   ctx.fillStyle='#8656c7';ctx.font='bold 14px system-ui';ctx.fillText('Final vector',P([3,2])[0]+12,P([3,2])[1]+22);
+ }
+ ctx.fillStyle='#344256';ctx.font='13px system-ui';ctx.fillText('Origin (0, 0)',O.x+9,O.y+21);
+ ctx.fillStyle='#64748b';ctx.font='13px system-ui';ctx.fillText('First move right 3 units, then move up 2 units.',18,H-18);
+}
+function update(){
+ document.getElementById('pct').textContent=Math.round(t*100)+'%';
+ document.getElementById('progress').value=Math.round(t*100);
+ let label,status;
+ if(t<.02){label='Step 1 · The standard basis';status='The standard basis vectors are î = (1, 0) and ĵ = (0, 1). They give us the horizontal and vertical directions.'}
+ else if(t<.5){label='Step 2 · Scale the horizontal basis vector';status='The first coordinate is 3. So take 3 copies of î. This gives 3î = (3, 0), a move 3 units to the right.'}
+ else if(t<.99){label='Step 3 · Add the vertical contribution';status='The second coordinate is 2. Take 2 copies of ĵ = (0, 1), giving (0, 2). Add this to (3, 0): the tip moves 2 units upward.'}
+ else{label='Step 4 · The resulting vector';status='We have combined the two scaled basis vectors: 3î + 2ĵ = (3, 0) + (0, 2) = (3, 2). The coordinates are the instructions for building the vector.'}
+ document.getElementById('stepLabel').textContent=label;document.getElementById('status').textContent=status;draw();
+}
+function stop(){playing=false;cancelAnimationFrame(raf);document.getElementById('play').textContent='▶ Build the vector'}
+function tick(ts){if(!playing)return;if(!last)last=ts;t=Math.min(1,t+(ts-last)/4200);last=ts;update();if(t>=1){stop();return}raf=requestAnimationFrame(tick)}
+document.getElementById('play').addEventListener('click',()=>{stop();if(t>=1)t=0;playing=true;last=0;document.getElementById('play').textContent='Building…';raf=requestAnimationFrame(tick)});
+document.getElementById('step').addEventListener('click',()=>{stop();t=t<.01?.25:t<.5?.75:t<.99?1:0;update()});
+document.getElementById('reset').addEventListener('click',()=>{stop();t=0;update()});
+document.getElementById('progress').addEventListener('input',e=>{stop();t=Number(e.target.value)/100;update()});
+update();
+})();
+</script></body></html>

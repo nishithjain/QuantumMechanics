@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eigenvectors along the x-axis</title>
+<style>
+:root{color-scheme:light;--ink:#172334;--muted:#5c697a;--blue:#2878cf;--orange:#e58b27;--green:#16865d;--line:#dce4ed}
+*{box-sizing:border-box}body{margin:0;padding:22px;background:#f3f6fa;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+main{max-width:1050px;margin:auto}h1{font-size:clamp(1.4rem,3vw,2rem);margin:0 0 6px}.lead{color:var(--muted);line-height:1.55;margin:0 0 18px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:15px;align-items:start}.panel{background:white;border:1px solid var(--line);border-radius:15px;padding:15px;box-shadow:0 5px 18px #20334a0a}
+canvas{display:block;width:100%;max-height:400px;height:auto;border:1px solid #e5ebf1;border-radius:10px;background:#fbfdff}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}button{border:1px solid #cbd5e1;background:white;border-radius:9px;padding:9px 11px;font-weight:650;color:var(--ink);cursor:pointer}button.primary{background:#1f6fc7;color:#fff;border-color:#1f6fc7}button:focus-visible{outline:3px solid #9bcaff;outline-offset:2px}
+h2{font-size:1.05rem;margin:0 0 10px}.step{font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;font-weight:750;color:#68788d;margin-bottom:7px}
+.formula{background:#f2f6fb;border-radius:10px;padding:11px;line-height:1.7;margin:10px 0;font-size:.92rem}
+.matrix{display:inline-grid;grid-template-columns:repeat(2,22px);gap:5px 12px;position:relative;padding:5px 12px;font-weight:750}.matrix:before,.matrix:after{content:"";position:absolute;top:0;bottom:0;width:6px;border-top:2px solid #344256;border-bottom:2px solid #344256}.matrix:before{left:0;border-left:2px solid #344256}.matrix:after{right:0;border-right:2px solid #344256}
+.status{line-height:1.55;min-height:78px;margin:12px 0}.legend{display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--muted);margin:8px 0}.dot{width:11px;height:11px;border-radius:50%;flex:none}.small{font-size:.86rem;color:var(--muted);line-height:1.5}.slider{margin-top:14px}.slider input{width:100%;accent-color:#1f6fc7}
+@media(max-width:760px){body{padding:12px}.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>Why every non-zero vector on the x-axis is an eigenvector</h1>
+<p class="lead">Using the same matrix, watch vectors of different lengths along the x-axis. Each one stays on the x-axis and is stretched by exactly the same factor: 3.</p>
+<div class="layout">
+<section class="panel">
+<canvas id="plot" width="760" height="530" aria-label="Animation showing vectors on the x-axis being stretched by a factor of three"></canvas>
+<div class="controls">
+<button type="button" class="primary" id="btnPlay">▶ Animate stretching</button>
+<button type="button" id="reset">↺ Reset</button>
+<button type="button" id="one">Show v = (1, 0)</button>
+<button type="button" id="many">Show several vectors</button>
+</div>
+<div class="slider">
+<label for="progress"><strong>Stretch progress:</strong> <span id="percent">0%</span></label>
+<input id="progress" type="range" min="0" max="100" value="0">
+</div>
+<p class="small">Light <strong>dashed</strong> grid = original. Solid grid = transformed plane. Blue = original vectors; orange = after A. Green highlights the x-axis span.</p>
+</section>
+<aside class="panel">
+<div class="step" id="step">Step 1 · Original vector</div>
+<h2>The transformation</h2>
+<div style="display:flex;align-items:center;gap:8px"><b>A =</b><span class="matrix"><span>3</span><span>1</span><span>0</span><span>2</span></span></div>
+<div class="formula">
+<strong>Start with the standard basis vector</strong><br>
+î = (1, 0)<br>
+A(1, 0) = (3, 0) = 3(1, 0)
+</div>
+<div class="formula" id="general">
+<strong>Any vector on the x-axis</strong><br>
+Let v = (c, 0), where c ≠ 0.<br>
+Av = (3c, 0) = 3(c, 0) = 3v
+</div>
+<div class="status" id="status">The vector starts at (0, 0) and ends at (1, 0). Its span is the x-axis.</div>
+<div class="legend"><span class="dot" style="background:#2878cf"></span>Original vector(s)</div>
+<div class="legend"><span class="dot" style="background:#e58b27"></span>Transformed vector(s)</div>
+<div class="legend"><span class="dot" style="background:#16865d"></span>Shared span: x-axis</div>
+<p class="small"><strong>Key idea:</strong> The matrix multiplies the x-coordinate by 3 and leaves the y-coordinate at zero. So every non-zero vector on the x-axis stays on that same line.</p>
+</aside>
+</div>
+</main>
+<script>
+(()=>{
+const c=document.getElementById('plot'),ctx=c.getContext('2d'),W=c.width,H=c.height,O={x:105,y:275},S=82;
+let t=0,many=false,playing=false,raf=0,last=0;
+const vectors=()=>many?[[1,0],[2,0],[-1.2,0],[-2,0]]:[[1,0]];
+const scr=([x,y])=>[O.x+S*x,O.y-S*y];
+const transform=(x,y,k)=>[(1-k)*x+k*(3*x+y),(1-k)*y+k*(2*y)];
+function line(a,b,col,w=2,dash=[]){ctx.beginPath();ctx.setLineDash(dash);ctx.moveTo(...a);ctx.lineTo(...b);ctx.strokeStyle=col;ctx.lineWidth=w;ctx.stroke();ctx.setLineDash([])}
+function arrow(a,b,col,label,offset=0){line(a,b,col,4);const ang=Math.atan2(b[1]-a[1],b[0]-a[0]),L=12;ctx.beginPath();ctx.moveTo(...b);ctx.lineTo(b[0]-L*Math.cos(ang-.48),b[1]-L*Math.sin(ang-.48));ctx.lineTo(b[0]-L*Math.cos(ang+.48),b[1]-L*Math.sin(ang+.48));ctx.closePath();ctx.fillStyle=col;ctx.fill();ctx.font='bold 15px system-ui';ctx.fillText(label,b[0]+5,b[1]-12-offset)}
+function drawGrid(k,style){
+ const{color='#e6ebf1',width=1,dash=[],axesColor='#8997a8',axesWidth=1.5}=style;
+ for(let n=-3;n<=7;n++){
+  let a=transform(n,-2.7,k),b=transform(n,2.7,k);
+  line(scr(a),scr(b),color,width,dash);
+  a=transform(-3.2,n,k);b=transform(7,n,k);
+  line(scr(a),scr(b),color,width,dash);
+ }
+ const x0=transform(-3.2,0,k),x1=transform(7,0,k);
+ const y0=transform(0,-2.7,k),y1=transform(0,2.7,k);
+ line(scr(x0),scr(x1),axesColor,axesWidth,dash);
+ line(scr(y0),scr(y1),axesColor,axesWidth,dash);
+}
+function draw(){
+ ctx.clearRect(0,0,W,H);
+ if(t>0.02)drawGrid(0,{color:'#b8d4f0',width:1,dash:[5,6],axesColor:'#9eb8d4',axesWidth:1.2});
+ const onGrid=t<0.02;
+ drawGrid(t,{
+   color:onGrid?'#e6ebf1':'#94a8bf',
+   width:onGrid?1:1.15,
+   dash:[],
+   axesColor:onGrid?'#8997a8':'#5e7389',
+   axesWidth:onGrid?1.5:1.8
+ });
+ line(scr(transform(-3.2,0,t)),scr(transform(7,0,t)),'#16865d',3);
+ ctx.fillStyle='#16865d';ctx.font='bold 15px system-ui';
+ ctx.fillText(t>0.02?'Dashed = original · Solid = transformed plane':'x-axis = span of every vector shown',20,28);
+ ctx.fillStyle='#64748b';ctx.font='13px system-ui';ctx.fillText('y',O.x-18,42);ctx.fillText('x',W-25,O.y-12);
+ ctx.fillStyle='#344256';ctx.font='13px system-ui';ctx.fillText('(0, 0)',O.x+8,O.y+20);
+ const arr=vectors();
+ arr.forEach((v,i)=>{
+   const yOffset=(i-(arr.length-1)/2)*19;
+   const start=[v[0],0];
+   const end=transform(v[0],0,t);
+   const a=scr([0,0]),b=scr(start),d=scr(end);
+   arrow(a,b,'#2878cf',`v${many?' '+(i+1):''}`,yOffset);
+   if(t>0.015)arrow(a,d,'#e58b27',`Av${many?' '+(i+1):''}`,yOffset);
+   if(t>=.999){
+    ctx.fillStyle='#a45c16';ctx.font='bold 13px system-ui';
+    ctx.fillText('×3',(b[0]+d[0])/2,(b[1]+d[1])/2-13-yOffset);
+   }
+ });
+ ctx.fillStyle='#475569';ctx.font='14px system-ui';
+ ctx.fillText(many?'Every arrow remains on the same green line.':'The arrow grows, but never leaves the green line.',20,H-20);
+}
+function update(){
+ document.getElementById('percent').textContent=Math.round(t*100)+'%';
+ document.getElementById('progress').value=Math.round(t*100);
+ document.getElementById('step').textContent=t<.01?'Step 1 · Original vector':t<.99?'Step 2 · Applying A':'Step 3 · Stretched by 3';
+ document.getElementById('status').textContent=t<.01?'The vector starts at (0, 0) and ends at (1, 0). Its span is the x-axis.':t<.99?'Watch the tip move farther along the x-axis. Its direction does not change; only its length increases.':'The final vector is (3, 0) = 3(1, 0). It has become three times as long and remains on the x-axis.';
+ draw();
+}
+function stop(){playing=false;cancelAnimationFrame(raf);document.getElementById('btnPlay').textContent='▶ Animate stretching'}
+function tick(ts){if(!playing)return;if(!last)last=ts;t=Math.min(1,t+(ts-last)/1900);last=ts;update();if(t>=1){stop();return}raf=requestAnimationFrame(tick)}
+document.getElementById('btnPlay').addEventListener('click',()=>{stop();t=0;playing=true;last=0;document.getElementById('btnPlay').textContent='Animating…';raf=requestAnimationFrame(tick)});
+document.getElementById('reset').addEventListener('click',()=>{stop();t=0;update()});
+document.getElementById('one').addEventListener('click',()=>{stop();many=false;t=0;document.getElementById('one').classList.add('primary');document.getElementById('many').classList.remove('primary');update()});
+document.getElementById('many').addEventListener('click',()=>{stop();many=true;t=0;document.getElementById('many').classList.add('primary');document.getElementById('one').classList.remove('primary');update()});
+document.getElementById('progress').addEventListener('input',e=>{stop();t=Number(e.target.value)/100;update()});
+update();
+})();
+</script>
+</body>
+</html>

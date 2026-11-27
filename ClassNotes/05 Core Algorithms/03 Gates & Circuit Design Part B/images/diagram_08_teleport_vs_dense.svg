@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="427" viewBox="0 0 1050 427" role="img" aria-labelledby="title desc"><title id="title">Teleportation and superdense coding resource table</title><desc id="desc">Teleportation uses a shared Bell pair and two classical bits to transfer a quantum state, while superdense coding uses a Bell pair and one traveling qubit to transfer two classical bits</desc>
+<rect width="1050" height="427" fill="#f7f9fc"/>
+<text x="35" y="47" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="27" fill="#6755dd" font-weight="700" >ENTANGLEMENT AS AN EXCHANGEABLE RESOURCE</text>
+<rect x="35" y="96" width="478" height="275" rx="14" fill="#fff" stroke="#dce3ec" stroke-width="1.6"/>
+<rect x="535" y="96" width="478" height="275" rx="14" fill="#fff" stroke="#dce3ec" stroke-width="1.6"/>
+<text x="65" y="145" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="27" fill="#087f77" font-weight="700" >TELEPORTATION</text>
+<text x="65" y="196" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#172238" font-weight="400" >1 shared Bell pair</text>
+<text x="65" y="231" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#172238" font-weight="400" >+ 2 sent classical bits</text>
+<line x1="78" y1="258" x2="461" y2="258" stroke="#087f77" stroke-width="5" stroke-linecap="round"/>
+<polygon points="461,258 450.61,264.00 450.61,252.00" fill="#087f77"/>
+<text x="75" y="317" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#087f77" font-weight="700" >1 unknown state transferred</text>
+<text x="565" y="145" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="27" fill="#bf651a" font-weight="700" >SUPERDENSE CODING</text>
+<text x="565" y="196" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#172238" font-weight="400" >1 shared Bell pair</text>
+<text x="565" y="231" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#172238" font-weight="400" >+ 1 physically sent qubit</text>
+<line x1="581" y1="258" x2="962" y2="258" stroke="#bf651a" stroke-width="5" stroke-linecap="round"/>
+<polygon points="962,258 951.61,264.00 951.61,252.00" fill="#bf651a"/>
+<text x="569" y="317" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#bf651a" font-weight="700" >2 classical bits delivered</text>
+<text x="39" y="405" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#6b7280" font-weight="400" >Both consume one pre-shared Bell pair; neither permits faster-than-light communication.</text>
+</svg>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Characteristic equation calculator</title>
+<style>
+body{font-family:system-ui,Segoe UI,sans-serif;max-width:950px;margin:22px auto;padding:0 16px;background:#f5f8fc;color:#17243a}
+.card{background:#fff;border:1px solid #d7e1ef;border-radius:14px;padding:16px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+label{display:block}input{width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:7px;margin-top:5px}
+.math{font-family:ui-monospace,Consolas,monospace;background:#f0f4fa;padding:10px;border-radius:8px;overflow-wrap:anywhere}
+button{padding:9px 13px;border:0;border-radius:8px;background:#174f91;color:white;margin:4px;cursor:pointer}.alt{background:#e5edf7;color:#18304e}
+@media(max-width:650px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style></head><body>
+<h1>Find eigenvalues by making the determinant zero</h1>
+<p>Enter a 2×2 matrix A = [[a,b],[c,d]]. The calculator forms det(A − λI), solves the quadratic, and reports whether the eigenvalues are real or complex. This demonstrates the characteristic-equation step from the lecture.</p>
+<div class="card"><div class="grid">
+<label>a<input id="a" type="number" step=".1" value="3"></label><label>b<input id="b" type="number" step=".1" value="1"></label>
+<label>c<input id="c" type="number" step=".1" value="0"></label><label>d<input id="d" type="number" step=".1" value="2"></label>
+</div>
+<p class="math" id="char"></p><p class="math" id="roots"></p><p id="meaning"></p>
+<button data-m="3,1,0,2">Lecture opening example</button><button data-m="0,-1,1,0" class="alt">90° rotation</button><button data-m="1,1,0,1" class="alt">Shear</button><button data-m="2,0,0,2" class="alt">Uniform scale by 2</button>
+</div>
+<div class="card"><b>Next step after finding λ</b><p>For each eigenvalue, substitute it into (A − λI)v = 0 and solve the resulting homogeneous linear system. The solutions other than v = 0 are the eigenvectors associated with that eigenvalue.</p></div>
+<script>
+const $=id=>document.getElementById(id),v=id=>Number($(id).value)||0,fmt=n=>Number(n.toFixed(5)).toString();
+function update(){
+ let a=v('a'),b=v('b'),c=v('c'),d=v('d');
+ // det(A-lambda I) = lambda^2 -(a+d)lambda +(ad-bc)
+ let B=-(a+d),C=a*d-b*c,disc=B*B-4*C;
+ $('char').textContent=`det(A − λI) = ( ${fmt(a)} − λ)( ${fmt(d)} − λ) − (${fmt(b)})(${fmt(c)}) = λ² ${B<0?'-':'+'} ${fmt(Math.abs(B))}λ ${C<0?'-':'+'} ${fmt(Math.abs(C))}`;
+ if(disc>1e-10){let r1=(-B+Math.sqrt(disc))/2,r2=(-B-Math.sqrt(disc))/2;$('roots').textContent=`Discriminant = ${fmt(disc)}. Real eigenvalues: λ₁ = ${fmt(r1)}, λ₂ = ${fmt(r2)}.`;$('meaning').textContent='There are two distinct real eigenvalues, so each has at least one real eigenvector.'}
+ else if(Math.abs(disc)<=1e-10){let r=-B/2;$('roots').textContent=`Discriminant = 0. Repeated real eigenvalue: λ = ${fmt(r)}.`;$('meaning').textContent='A repeated eigenvalue does not by itself tell us how many independent eigenvectors exist. Solve (A − λI)v = 0 to find the eigenspace.'}
+ else{let real=-B/2,imag=Math.sqrt(-disc)/2;$('roots').textContent=`Discriminant = ${fmt(disc)}. Complex eigenvalues: λ = ${fmt(real)} ± ${fmt(imag)}i.`;$('meaning').textContent='There are no real eigenvalues, and therefore no non-zero real eigenvectors for this real 2D matrix.'}
+}
+['a','b','c','d'].forEach(id=>$(id).addEventListener('input',update));
+document.querySelectorAll('button[data-m]').forEach(btn=>btn.onclick=()=>{btn.dataset.m.split(',').forEach((x,i)=>$(['a','b','c','d'][i]).value=x);update()});
+update();
+</script></body></html>

@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="An offline, interactive explanation of Deutsch’s algorithm. Run all four one-bit functions and watch preparation, phase kickback, interference, and measurement.">
+<title>Deutsch’s algorithm — run all four functions</title>
+<link rel="stylesheet" href="embed-frame.css">
+<script>if(window.self!==window.top||/embed=1/.test(location.search))document.documentElement.classList.add("qm-embed");</script>
+<style>
+  :root{color-scheme:light;--ink:#17243a;--muted:#56667c;--blue:#235fb5;--blue-soft:#edf4ff;--teal:#007d79;--teal-soft:#e9f7f5;--line:#dce5f0;--surface:#f5f8fc;--black:#111318;--orange:#a45119;--shadow:0 8px 30px #152b4b06}
+  *{box-sizing:border-box}body{margin:0;background:#f9fbfe;color:var(--ink);font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.42;cursor:default}button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #c08012;outline-offset:4px}button,select{touch-action:manipulation}h1,h2,h3,p{margin:0}h1{font-size:clamp(1.75rem,3.5vw,2.65rem);line-height:1.2;letter-spacing:-.035em}h2{font-size:1.1rem;line-height:1.4}h3{font-size:1rem}sub,sup{line-height:0}.math{font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;letter-spacing:.01em}.muted{color:var(--muted)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.tabular{font-variant-numeric:tabular-nums}.eyebrow{font-size:.78rem;font-weight:750;letter-spacing:.1em;color:var(--blue)}
+  main{max-width:1460px;margin:auto;padding:38px clamp(16px,3vw,42px) 36px}.page-head{display:flex;align-items:flex-start;gap:24px;justify-content:space-between;margin-bottom:26px}.page-head h1{margin:7px 0 10px}.page-head p{max-width:830px;color:var(--muted)}.call-badge{flex:none;border:1px solid var(--line);background:white;border-radius:12px;padding:12px 16px;margin-top:12px;min-width:162px}.call-badge span{display:block;color:var(--muted);font-size:.8rem}.call-badge strong{font-size:1.15rem}.card{border:1px solid var(--line);background:white;border-radius:16px;box-shadow:var(--shadow)}
+  .function-picker{padding:21px 22px;margin-bottom:16px}.picker-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:14px}.picker-head p{font-size:.9rem;color:var(--muted)}.function-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.function-choice{display:flex;flex-direction:column;gap:7px;position:relative;border:1px solid var(--line);border-radius:11px;background:white;padding:13px 16px;text-align:left;color:var(--ink);min-height:100px;transition:background .18s,border-color .18s,box-shadow .18s}.function-choice:hover{background:var(--surface)}.function-choice[aria-pressed=true]{background:var(--blue-soft);border-color:var(--blue);box-shadow:inset 0 0 0 1px var(--blue)}.function-name{font-size:1.25rem;font-weight:650}.truth-values{font-size:.87rem;color:var(--muted)}.choice-result{position:absolute;right:12px;top:14px;width:25px;height:25px;background:var(--teal-soft);color:var(--teal);font-size:1rem;border-radius:50%;text-align:center;font-weight:750}.choice-result:empty{display:none}
+  .controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:4px 0 17px}.btn{min-height:44px;border:1px solid #cbd7e6;border-radius:9px;background:white;color:var(--ink);padding:9px 15px;font-weight:650;white-space:nowrap}.btn:hover:enabled{background:#edf2f8}.btn-primary{background:var(--blue);border-color:var(--blue);color:white;min-width:148px}.btn-primary:hover:enabled{background:#174c98}.btn-dark{background:var(--ink);color:white;border-color:var(--ink)}.btn-dark:hover:enabled{background:#293c58}.step-buttons{display:flex;gap:7px}.speed{margin-left:auto;display:flex;align-items:center;gap:9px;color:var(--muted);font-size:.88rem}.speed select{appearance:none;border:1px solid #cbd7e6;border-radius:8px;color:var(--ink);background:white;padding:9px 33px 9px 12px;min-height:44px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='m3 5 4 4 4-4' fill='none' stroke='%2356667c' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center}.run-status{flex-basis:100%;font-size:.88rem;color:var(--muted);min-height:23px;padding:1px 2px 0}.run-status strong{color:var(--ink)}
+  .circuit-card{overflow:hidden}.timeline{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--line);background:#fafcff}.stage-button{border:0;background:transparent;padding:15px 8px 14px;color:var(--muted);font-size:.87rem;font-weight:650;position:relative;min-height:55px}.stage-button .stage-number{display:inline-flex;justify-content:center;align-items:center;width:24px;height:24px;margin-right:5px;border-radius:50%;background:#eaf0f7;font-size:.78rem}.stage-button[aria-current=step]{color:var(--blue);background:var(--blue-soft)}.stage-button[aria-current=step]:after{content:"";height:3px;background:var(--blue);position:absolute;bottom:0;left:0;right:0}.stage-button.done .stage-number{background:#e2f2ef;color:var(--teal)}.travel-track{height:3px;background:#e7edf6}.travel-fill{height:100%;width:0;background:var(--blue)}
+  .diagram-scroll{overflow-x:auto;overscroll-behavior-inline:contain;padding:4px 8px 0}.circuit-svg{display:block;width:100%;min-width:1020px;height:auto}.circuit-svg text{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink)}.circuit-svg .svg-math{font-family:"Cambria Math","Times New Roman",serif}.circuit-svg .wire{stroke:#33465e;stroke-width:2.5;fill:none;stroke-linecap:round}.circuit-svg .svg-label{font-size:17px;font-weight:700}.circuit-svg .svg-small{font-size:17px;fill:var(--muted)}.circuit-svg .blue-text{fill:var(--blue)}.circuit-svg .teal-text{fill:var(--teal)}.circuit-svg .initial-ket{font-size:34px}.circuit-svg .state-label{font-size:29px;transition:opacity .2s}.circuit-svg .gate-body{fill:var(--blue-soft);stroke:var(--blue);stroke-width:2.2}.circuit-svg .gate-symbol{font-size:38px;fill:var(--blue);font-style:italic}.circuit-svg .gate-glow{fill:none;stroke:#e2a62c;stroke-width:5;opacity:0}.circuit-svg .gate.active .gate-glow{opacity:1}.circuit-svg .gate.active .gate-body{fill:#dae9ff}.circuit-svg .oracle .gate-body{fill:var(--black);stroke:var(--black)}.circuit-svg .oracle.active .gate-body{fill:#172332}.circuit-svg .oracle text{fill:#fff}.circuit-svg .oracle .oracle-sub{fill:#c7ced8;font-size:17px}.circuit-svg .progress-marker{fill:var(--blue);stroke:white;stroke-width:3}.circuit-svg .helper-marker{fill:var(--teal)}.circuit-svg .measure .gate-body{fill:#f1f5fa;stroke:#6b7c92}.circuit-svg .result-number{font-size:45px;font-weight:750}.circuit-svg .result-kind{font-size:16px;font-weight:650}.diagram-note{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:0 24px 17px;font-size:.8rem;color:var(--muted)}.mobile-hint{display:none}
+  .live-grid{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:16px;margin-top:16px;align-items:stretch}.story{padding:23px 25px}.story-top{display:flex;align-items:center;gap:11px;margin-bottom:10px}.step-kicker{background:var(--blue-soft);color:var(--blue);border-radius:7px;font-size:.8rem;font-weight:750;padding:5px 9px;flex:none}.story h2{font-size:1.2rem}.story p{color:var(--muted);min-height:50px;max-width:870px}.state-equation{font-size:clamp(1.3rem,2.2vw,1.8rem);padding:17px 0 18px;min-height:80px;display:flex;align-items:center;flex-wrap:wrap;gap:8px}.fraction{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.95em;line-height:1.25}.fraction .numerator{border-bottom:1px solid currentColor;padding:0 7px 3px}.fraction .denominator{padding-top:3px;font-size:.85em}.helper-factor{color:var(--teal)}.phase-header{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-bottom:9px}.phase-header span{font-size:.8rem;color:var(--muted)}.phase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.phase-component{display:flex;align-items:center;gap:12px;background:var(--surface);padding:12px 14px;border-radius:10px}.phase-component .phase-sign{width:42px;height:42px;flex:none;border-radius:50%;background:#e1e9f5;color:var(--muted);display:grid;place-items:center;font-size:1.6rem;font-weight:650;line-height:1}.phase-component .phase-sign.positive{background:#e3edff;color:var(--blue)}.phase-component .phase-sign.negative{background:#dcf2ee;color:var(--teal)}.phase-input{font-size:1rem;font-weight:650}.phase-meta{font-size:.82rem;color:var(--muted)}.phase-detail{font-size:.87rem;color:var(--muted);margin-top:12px;min-height:28px}.probabilities{padding:23px 22px}.probabilities>p{font-size:.82rem;color:var(--muted);margin:4px 0 17px}.prob-row{margin-bottom:16px}.prob-label{display:flex;justify-content:space-between;gap:10px;font-size:.9rem;margin-bottom:6px}.prob-track{height:11px;border-radius:8px;background:#eaf0f7;overflow:hidden}.prob-fill{height:100%;width:0;background:var(--blue);border-radius:8px;transition:width .48s ease}.prob-fill.one{background:var(--teal)}.result-box{border-top:1px solid var(--line);margin-top:23px;padding-top:17px}.result-heading{font-size:.78rem;font-weight:750;letter-spacing:.05em;color:var(--muted);text-transform:uppercase}.result-value{display:flex;align-items:center;gap:13px;min-height:72px}.result-bit{font-size:3rem;line-height:1;font-weight:750;color:var(--blue)}.result-class{font-size:1.15rem;font-weight:750}.result-reason{font-size:.85rem;color:var(--muted)}.result-box[data-kind=balanced] .result-bit{color:var(--teal)}.result-placeholder{color:var(--muted);font-size:.95rem}
+  .comparison{padding:22px 25px;margin-top:18px}.section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:13px}.section-heading p{font-size:.87rem;color:var(--muted)}.table-scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.91rem;min-width:620px;text-align:left}th{color:var(--muted);font-size:.78rem;font-weight:700;padding:11px 13px;background:#f5f8fc;white-space:nowrap}td{padding:13px;border-bottom:1px solid #e5ecf5}tbody tr:last-child td{border-bottom:0}tbody tr[data-selected=true]{background:#f2f7ff}td.math{font-size:1.1rem}.pending{color:#7b8796}.outcome-pill{display:inline-flex;padding:3px 9px;border-radius:6px;font-size:.83rem;font-weight:650;background:var(--blue-soft);color:var(--blue)}.outcome-pill.balanced{color:var(--teal);background:var(--teal-soft)}.completion-count{font-size:.85rem;color:var(--muted);white-space:nowrap}
+  .details{margin-top:17px;border:1px solid var(--line);border-radius:13px;background:white;padding:0 22px}.details summary{padding:17px 0;cursor:pointer;font-weight:650;font-size:.93rem}.details-content{padding:0 0 20px;display:grid;grid-template-columns:1fr 1fr;gap:26px}.details-content p{font-size:.91rem;color:var(--muted);margin:9px 0}.details-content .math{font-size:1.18rem;color:var(--ink)}.amplitude-table{min-width:0;font-size:.88rem}.amplitude-table th,.amplitude-table td{padding:7px 10px}.amplitude-table td.math{font-size:1rem}.page-footer{font-size:.82rem;color:var(--muted);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:23px 2px 0}.motion-note{display:none}.toast{font-size:.83rem;color:var(--muted);margin-top:8px}
+  @media(max-width:1100px){.function-grid{gap:8px}.function-choice{padding:12px}.function-name{font-size:1.13rem}.truth-values{font-size:.8rem}.live-grid{grid-template-columns:minmax(0,1fr) 275px}.mobile-hint{display:inline}.phase-component{padding:11px 10px;gap:8px}.phase-component .phase-sign{width:36px;height:36px}.phase-meta{font-size:.78rem}.story{padding:22px 20px}.diagram-scroll{padding-bottom:6px}}
+  @media(max-width:760px){main{padding-top:23px}.page-head{margin-bottom:20px;gap:12px}.page-head .eyebrow{font-size:.7rem}.page-head p{font-size:.94rem}.call-badge{min-width:0;padding:9px 11px;align-self:flex-start}.call-badge span{font-size:.7rem;max-width:90px}.call-badge strong{font-size:1rem}.function-picker{padding:17px 15px}.picker-head{display:block}.picker-head p{margin-top:4px}.function-grid{grid-template-columns:1fr 1fr}.function-choice{min-height:94px}.choice-result{right:9px;top:12px;width:22px;height:22px}.controls{gap:8px}.btn{padding:9px 12px;font-size:.87rem}.btn-primary{min-width:130px}.speed{margin-left:0}.run-status{font-size:.82rem}.stage-button{font-size:.75rem;padding:12px 3px;min-height:60px}.stage-button .stage-number{display:block;width:21px;height:21px;margin:0 auto 3px;font-size:.72rem}.diagram-note{padding:3px 16px 15px;font-size:.75rem}.live-grid{grid-template-columns:1fr}.story{padding:20px 18px}.story p{min-height:0;font-size:.94rem}.story h2{font-size:1.08rem}.state-equation{font-size:1.45rem;min-height:80px}.phase-header{align-items:flex-start;flex-direction:column;gap:2px}.phase-component{padding:12px}.phase-input{font-size:.94rem}.phase-meta{font-size:.8rem}.phase-detail{font-size:.83rem}.probabilities{padding:20px}.probabilities>p{margin-bottom:13px}.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.prob-row{margin-bottom:0}.result-box{display:grid;grid-template-columns:1fr 1fr;align-items:center;margin-top:18px;padding-top:16px;column-gap:12px}.result-heading{grid-column:1 / -1}.result-value{min-height:65px}.result-bit{font-size:2.5rem}.comparison{padding:18px 16px}.section-heading{gap:6px}.section-heading p{font-size:.82rem}.details{padding:0 16px}.details-content{grid-template-columns:1fr;gap:15px}}
+  @media(max-width:390px){.page-head{flex-direction:column}.call-badge{display:flex;align-items:center;gap:12px;margin:0;align-self:stretch}.call-badge span{max-width:none}.function-choice{padding:11px}.function-name{font-size:1.08rem}.phase-grid{gap:8px}.phase-component{padding:10px 8px;gap:7px}.phase-component .phase-sign{width:30px;height:30px;font-size:1.3rem}.phase-meta{font-size:.75rem}.step-kicker{padding:4px 6px}}
+  @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}.motion-note{display:inline}}
+  /* Embedded in lecture notes: no inner scrollbars, tighter layout */
+  html.qm-embed,html.qm-embed body{overflow:hidden}
+  html.qm-embed main{padding:12px 14px 10px;max-width:none}
+  html.qm-embed .page-head{margin-bottom:8px;justify-content:flex-end}
+  html.qm-embed .page-head>div:first-child{display:none}
+  html.qm-embed .call-badge{margin:0;padding:7px 11px;min-width:0;border-radius:9px}
+  html.qm-embed .call-badge span{font-size:.72rem}
+  html.qm-embed .call-badge strong{font-size:.95rem}
+  html.qm-embed .function-picker{padding:14px 14px 12px;margin-bottom:10px}
+  html.qm-embed .picker-head{margin-bottom:10px}
+  html.qm-embed .picker-head h2{font-size:.98rem}
+  html.qm-embed .picker-head p{font-size:.8rem}
+  html.qm-embed .function-choice{min-height:76px;padding:10px 12px}
+  html.qm-embed .function-name{font-size:1.05rem}
+  html.qm-embed .controls{padding:0 0 10px;gap:8px}
+  html.qm-embed .btn{min-height:38px;padding:7px 12px;font-size:.86rem}
+  html.qm-embed .btn-primary{min-width:118px}
+  html.qm-embed .run-status{font-size:.8rem;min-height:20px}
+  html.qm-embed .stage-button{padding:10px 4px 9px;font-size:.78rem;min-height:46px}
+  html.qm-embed .stage-button .stage-number{width:20px;height:20px;font-size:.72rem}
+  html.qm-embed .diagram-scroll{overflow:visible;padding:0 4px;overscroll-behavior:auto}
+  html.qm-embed .circuit-svg{min-width:0;width:100%;height:auto;display:block;max-height:220px}
+  html.qm-embed .diagram-note{padding:6px 10px 10px;font-size:.72rem;line-height:1.35;gap:8px}
+  html.qm-embed .mobile-hint{display:none!important}
+  html.qm-embed .live-grid{gap:10px;margin-top:10px}
+  html.qm-embed .story{padding:16px 14px}
+  html.qm-embed .story h2{font-size:1.05rem}
+  html.qm-embed .story p{font-size:.86rem;min-height:0}
+  html.qm-embed .state-equation{font-size:1.2rem;min-height:56px;padding:10px 0}
+  html.qm-embed .probabilities{padding:16px 14px}
+  html.qm-embed .probabilities>p{font-size:.78rem;margin-bottom:10px}
+  html.qm-embed .result-bit{font-size:2.2rem}
+  html.qm-embed .comparison{padding:14px;margin-top:10px}
+  html.qm-embed .section-heading h2{font-size:1rem}
+  html.qm-embed .section-heading p{font-size:.78rem}
+  html.qm-embed .table-scroll{overflow:visible}
+  html.qm-embed table{min-width:0;font-size:.8rem}
+  html.qm-embed th,html.qm-embed td{padding:8px 7px;white-space:normal}
+  html.qm-embed .details{margin-top:10px;padding:0 14px}
+  html.qm-embed .details summary{padding:12px 0;font-size:.88rem}
+  html.qm-embed .page-footer{margin-top:12px;font-size:.75rem}
+</style>
+</head>
+<body>
+<main id="deutsch-demo" data-stage="0" data-function="0" data-playing="false">
+  <header class="page-head">
+    <div><div class="eyebrow">INTERACTIVE QUANTUM CIRCUIT</div><h1>Deutsch’s algorithm</h1><p>Two qubits, one black-box call. Run all four functions and watch the output become a plus or minus sign.</p></div>
+    <div class="call-badge"><span>Oracle calls this run</span><strong class="tabular"><span id="call-count" style="display:inline;color:inherit;font-size:inherit">0</span> / 1</strong></div>
+  </header>
+
+  <section class="card function-picker" aria-labelledby="choose-title">
+    <div class="picker-head"><h2 id="choose-title">Choose a black-box function</h2><p>The four possible functions from one bit to one bit.</p></div>
+    <div class="function-grid" id="function-grid" role="group" aria-label="Functions">
+      <button class="function-choice" type="button" data-function="0" aria-pressed="true"><span class="function-name math">f(x) = 0</span><span class="truth-values">f(0) = 0 &nbsp;·&nbsp; f(1) = 0</span><span class="choice-result" aria-label="Completed"></span></button>
+      <button class="function-choice" type="button" data-function="1" aria-pressed="false"><span class="function-name math">f(x) = 1</span><span class="truth-values">f(0) = 1 &nbsp;·&nbsp; f(1) = 1</span><span class="choice-result" aria-label="Completed"></span></button>
+      <button class="function-choice" type="button" data-function="2" aria-pressed="false"><span class="function-name math">f(x) = x</span><span class="truth-values">f(0) = 0 &nbsp;·&nbsp; f(1) = 1</span><span class="choice-result" aria-label="Completed"></span></button>
+      <button class="function-choice" type="button" data-function="3" aria-pressed="false"><span class="function-name math">f(x) = 1 − x</span><span class="truth-values">f(0) = 1 &nbsp;·&nbsp; f(1) = 0</span><span class="choice-result" aria-label="Completed"></span></button>
+    </div>
+  </section>
+
+  <div class="controls" role="group" aria-label="Animation controls">
+    <button type="button" class="btn btn-primary" id="play">Play selected</button>
+    <button type="button" class="btn btn-dark" id="run-all">Run all four</button>
+    <div class="step-buttons"><button type="button" class="btn" id="previous" disabled>Previous step</button><button type="button" class="btn" id="next">Next step</button></div>
+    <button type="button" class="btn" id="reset" title="Reset the animation and clear the comparison">Reset</button>
+    <label class="speed" for="speed">Speed <select id="speed" aria-label="Animation speed"><option value="0.5">0.5× · Slow</option><option value="1" selected>1× · Normal</option><option value="2">2× · Fast</option></select></label>
+    <div class="run-status" id="run-status">Ready. Play the selected function, or use Next step to go at your own pace.</div>
+  </div>
+
+  <section class="card circuit-card" aria-label="Interactive two-qubit circuit">
+    <nav class="timeline" aria-label="Circuit stages" id="timeline">
+      <button type="button" class="stage-button" data-stage="0" aria-current="step"><span class="stage-number">0</span>Start</button>
+      <button type="button" class="stage-button" data-stage="1"><span class="stage-number">1</span>Prepare</button>
+      <button type="button" class="stage-button" data-stage="2"><span class="stage-number">2</span>Black box</button>
+      <button type="button" class="stage-button" data-stage="3"><span class="stage-number">3</span>Final H</button>
+      <button type="button" class="stage-button" data-stage="4"><span class="stage-number">4</span>Measure</button>
+    </nav>
+    <div class="travel-track" aria-hidden="true"><div class="travel-fill" id="travel-fill"></div></div>
+    <div class="diagram-scroll" tabindex="0" role="region" aria-label="Circuit diagram; scroll horizontally on small screens">
+      <svg class="circuit-svg" viewBox="0 0 1440 410" role="img" aria-labelledby="circuit-title circuit-desc">
+        <title id="circuit-title">Deutsch’s two-qubit circuit</title><desc id="circuit-desc">The input starts in zero and the helper in one. Both pass through H gates and enter the same black box. Only the input passes through a final H gate and is measured.</desc>
+        <text x="30" y="110" class="svg-label blue-text">FIRST QUBIT</text><text x="30" y="146" style="font-size:27px;font-weight:700">Input</text><text x="30" y="177" class="svg-small">Carries x</text>
+        <text x="30" y="260" class="svg-label teal-text">SECOND QUBIT</text><text x="30" y="296" style="font-size:27px;font-weight:700">Helper</text><text x="30" y="327" class="svg-small">Enables the ± sign</text>
+        <text x="232" y="147" text-anchor="middle" class="svg-math initial-ket">|0⟩</text><text x="232" y="297" text-anchor="middle" class="svg-math initial-ket">|1⟩</text>
+        <path class="wire" d="M280 135H1210 M280 285H1236"/>
+        <path class="wire" d="M1284 132H1327 M1284 138H1327"/>
+        <g class="gate" id="prepare-input"><rect class="gate-glow" x="354" y="92" width="86" height="86" rx="11"/><rect class="gate-body" x="360" y="98" width="74" height="74" rx="7"/><text x="397" y="149" text-anchor="middle" class="svg-math gate-symbol">H</text></g>
+        <g class="gate" id="prepare-helper"><rect class="gate-glow" x="354" y="242" width="86" height="86" rx="11"/><rect class="gate-body" x="360" y="248" width="74" height="74" rx="7"/><text x="397" y="299" text-anchor="middle" class="svg-math gate-symbol">H</text></g>
+        <text x="545" y="95" text-anchor="middle" class="svg-math state-label blue-text" id="before-input">—</text><text x="545" y="245" text-anchor="middle" class="svg-math state-label teal-text" id="before-helper">—</text>
+        <g class="gate oracle" id="oracle-gate"><rect class="gate-glow" x="684" y="52" width="282" height="302" rx="16"/><rect class="gate-body" x="690" y="58" width="270" height="290" rx="10"/><text x="825" y="111" text-anchor="middle" style="font-size:25px;font-weight:750">BLACK BOX</text><text x="825" y="198" text-anchor="middle" class="svg-math" style="font-size:64px;font-style:italic">U<tspan font-size="40" baseline-shift="sub">f</tspan></text><text x="825" y="259" text-anchor="middle" style="font-size:22px">Evaluates f(x)</text><text x="825" y="312" text-anchor="middle" class="oracle-sub">Acts on both qubits</text></g>
+        <text x="1010" y="84" text-anchor="middle" class="svg-math state-label blue-text" id="after-input">—</text><text x="1100" y="245" text-anchor="middle" class="svg-math state-label teal-text" id="after-helper">—</text>
+        <g class="gate" id="final-gate"><rect class="gate-glow" x="1054" y="92" width="86" height="86" rx="11"/><rect class="gate-body" x="1060" y="98" width="74" height="74" rx="7"/><text x="1097" y="149" text-anchor="middle" class="svg-math gate-symbol">H</text></g>
+        <text x="1180" y="84" text-anchor="middle" class="svg-math state-label blue-text" id="final-input">—</text>
+        <g class="gate measure" id="measure-gate"><rect class="gate-glow" x="1204" y="92" width="86" height="86" rx="11"/><rect class="gate-body" x="1210" y="98" width="74" height="74" rx="7"/><path class="wire" d="M1222 145a25 25 0 0 1 50 0 M1247 145l17-24"/><circle cx="1247" cy="145" r="3.5" fill="#17243a"/></g>
+        <text x="1247" y="207" class="svg-small" text-anchor="middle">Measure</text>
+        <text x="1370" y="147" text-anchor="middle" class="result-number blue-text" id="diagram-result">?</text><text x="1370" y="178" text-anchor="middle" class="result-kind" id="diagram-kind">Result</text>
+        <text x="1100" y="333" class="svg-small" text-anchor="middle" id="helper-caption">Prepare the helper first</text>
+        <text x="360" y="389" class="svg-small">H = Hadamard gate</text><text x="690" y="389" class="svg-small">One oracle call per run</text><text x="1060" y="389" class="svg-small">Measure the first qubit</text>
+        <circle id="input-marker" class="progress-marker" cx="296" cy="135" r="8" aria-hidden="true"/><circle id="helper-marker" class="progress-marker helper-marker" cx="296" cy="285" r="8" aria-hidden="true"/>
+      </svg>
+    </div>
+    <div class="diagram-note"><span>Moving markers show progress through the circuit. States update after each gate.</span><span class="mobile-hint">Scroll the diagram sideways to see every gate.</span><span class="motion-note">Reduced motion is enabled.</span></div>
+  </section>
+
+  <div class="live-grid">
+    <section class="card story" aria-labelledby="story-title">
+      <div class="story-top"><span class="step-kicker" id="step-kicker">START</span><h2 id="story-title">Begin with |0⟩ and |1⟩</h2></div>
+      <p id="story-text">The first qubit starts in |0⟩. The helper starts in |1⟩; its first H gate will prepare the special state needed for phase kickback.</p>
+      <div class="state-equation math" id="state-equation" aria-label="Current two-qubit state">|0⟩ ⊗ <span class="helper-factor">|1⟩</span></div>
+      <div class="phase-header"><h3>Signs added by the black box</h3><span id="phase-status">Waiting for the oracle</span></div>
+      <div class="phase-grid">
+        <div class="phase-component"><span class="phase-sign" id="sign-zero">?</span><div><div class="phase-input math">Input |0⟩</div><div class="phase-meta" id="phase-zero">Not queried yet</div></div></div>
+        <div class="phase-component"><span class="phase-sign" id="sign-one">?</span><div><div class="phase-input math">Input |1⟩</div><div class="phase-meta" id="phase-one">Not queried yet</div></div></div>
+      </div>
+      <div class="phase-detail" id="phase-detail">The oracle has not been used yet.</div>
+    </section>
+    <section class="card probabilities" aria-labelledby="probability-title">
+      <h2 id="probability-title">First-qubit probabilities</h2><p>If measured at the current stage.</p>
+      <div class="prob-grid">
+        <div class="prob-row"><div class="prob-label"><span class="math">Outcome 0</span><strong id="p-zero" class="tabular">100%</strong></div><div class="prob-track" role="progressbar" aria-label="Probability of zero" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="prob-zero"><div class="prob-fill" id="bar-zero" style="width:100%"></div></div></div>
+        <div class="prob-row"><div class="prob-label"><span class="math">Outcome 1</span><strong id="p-one" class="tabular">0%</strong></div><div class="prob-track" role="progressbar" aria-label="Probability of one" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="prob-one"><div class="prob-fill one" id="bar-one"></div></div></div>
+      </div>
+      <div class="result-box" id="result-box" data-kind="pending"><div class="result-heading">Measurement result</div><div class="result-value" id="result-value"><span class="result-placeholder">Not measured yet</span></div><div class="result-reason" id="result-reason">The final H gate makes the answer readable.</div></div>
+    </section>
+  </div>
+
+  <section class="card comparison" aria-labelledby="comparison-title">
+    <div class="section-heading"><div><h2 id="comparison-title">Compare all four functions</h2><p>Each row is a separate experiment, with one call to its black box.</p></div><span class="completion-count" id="completion-count">0 of 4 completed</span></div>
+    <div class="table-scroll"><table><caption class="sr-only">Completed results for all four possible Boolean functions</caption><thead><tr><th scope="col">Function</th><th scope="col">f(0), f(1)</th><th scope="col">Signs on |0⟩, |1⟩</th><th scope="col">First qubit after final H</th><th scope="col">Measured bit</th><th scope="col">Function type</th></tr></thead><tbody id="comparison-body"></tbody></table></div>
+    <div class="toast" id="comparison-note">Run all four to fill the table automatically, or try the functions one at a time.</div>
+  </section>
+
+  <details class="details"><summary>See the mathematics and two-qubit amplitudes</summary><div class="details-content"><div><h3>What the black box does</h3><p class="math">U<sub>f</sub>|x⟩|y⟩ = |x⟩|y ⊕ f(x)⟩</p><p>The input x stays the same. If f(x) = 1, the helper is flipped. Because X|−⟩ = −|−⟩, that flip becomes a sign on the input component.</p><p class="math">U<sub>f</sub>(|x⟩|−⟩) = (−1)<sup>f(x)</sup>|x⟩|−⟩</p><p>A common minus sign on the whole state is a <strong>global phase</strong>. It does not change any measurement probability. Opposite signs between the two input components can change the result after H.</p></div><div><h3>Current joint state</h3><p>The first bit is the input; the second is the helper. Probabilities are squared amplitudes.</p><table class="amplitude-table"><thead><tr><th scope="col">Basis state</th><th scope="col">Amplitude</th><th scope="col">Probability</th></tr></thead><tbody id="amplitude-body"></tbody></table></div></div></details>
+  <footer class="page-footer"><span>Constant: f(0) = f(1). &nbsp; Balanced: f(0) ≠ f(1).</span><span>All four ideal circuits give a certain answer after the final H.</span></footer>
+  <div class="sr-only" id="announcement" aria-live="polite" aria-atomic="true"></div>
+</main>
+<script>
+(() => {
+  'use strict';
+  const FUNCTIONS = Object.freeze([
+    Object.freeze({name:'f(x) = 0', values:Object.freeze([0,0])}),
+    Object.freeze({name:'f(x) = 1', values:Object.freeze([1,1])}),
+    Object.freeze({name:'f(x) = x', values:Object.freeze([0,1])}),
+    Object.freeze({name:'f(x) = 1 − x', values:Object.freeze([1,0])})
+  ]);
+  const STAGES = ['Start','Prepare','Black box','Final H','Measure'];
+  const SQRT2 = Math.sqrt(2);
+  function applyH(state, qubit) {
+    const out = state.slice(), mask = qubit === 0 ? 2 : 1;
+    for (let i=0;i<4;i++) if ((i & mask)===0) {
+      const j=i|mask, a=state[i], b=state[j];
+      out[i]=(a+b)/SQRT2; out[j]=(a-b)/SQRT2;
+    }
+    return out;
+  }
+  function applyOracle(state, values) {
+    const out=[0,0,0,0];
+    for (let i=0;i<4;i++) {
+      const x=i>>1, y=i&1;
+      out[(x<<1)|(y^values[x])] = state[i];
+    }
+    return out;
+  }
+  function snapshots(values) {
+    const initial=[0,1,0,0];
+    const prepared=applyH(applyH(initial,0),1);
+    const queried=applyOracle(prepared,values);
+    const readout=applyH(queried,0);
+    return [initial,prepared,queried,readout,readout.slice()];
+  }
+  function probabilities(state) {
+    return [state[0]**2+state[1]**2, state[2]**2+state[3]**2];
+  }
+  const STATES=FUNCTIONS.map(f=>snapshots(f.values));
+  const $=id=>document.getElementById(id);
+  const els={root:$('deutsch-demo'),play:$('play'),all:$('run-all'),prev:$('previous'),next:$('next'),reset:$('reset'),speed:$('speed')};
+  const state={selected:0,stage:0,playing:false,batch:false,queue:[],results:[null,null,null,null],animation:null,frame:0,lastTime:0,rate:1,batchFinished:false};
+  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+  const signedKet=(values)=>`${values[0] ? '−' : ''}|${values[0] ^ values[1]}⟩`;
+  const afterOracleKet=values=>`${values[0] ? '−' : ''}|${values[0]===values[1] ? '+' : '−'}⟩`;
+  const percent=n=>Math.round(Math.max(0,Math.min(1,n))*100);
+  const fraction=(numerator,denominator='√2')=>`<span class="fraction"><span class="numerator">${numerator}</span><span class="denominator">${denominator}</span></span>`;
+  function phaseExpression(values) { return `${values[0]?'−':''}|0⟩ ${values[1]?'−':'+'} |1⟩`; }
+  function recordResult() {
+    const f=FUNCTIONS[state.selected], p=probabilities(STATES[state.selected][3]);
+    const bit=p[1]>.5 ? 1 : 0;
+    state.results[state.selected]={bit,kind:bit ? 'Balanced' : 'Constant',firstKet:signedKet(f.values),calls:1};
+  }
+  function stop() {
+    cancelAnimationFrame(state.frame); state.playing=false; state.batch=false;
+    state.queue=[]; state.animation=null; state.lastTime=0; state.batchFinished=false;
+  }
+  function selectFunction(index) { stop(); state.selected=index; state.stage=0; render(); announce(); }
+  function seek(stage) {
+    stop(); state.stage=Math.max(0,Math.min(4,stage));
+    if (state.stage===4) recordResult();
+    render(); announce();
+  }
+  function startSelected() {
+    if (state.playing) {
+      cancelAnimationFrame(state.frame); state.playing=false; state.lastTime=0; render(); announce('Animation paused.'); return;
+    }
+    state.batchFinished=false;
+    if (state.stage===4 && !state.batch) { state.stage=0; state.animation=null; }
+    if (!state.animation) state.animation={mode:'move',progress:0};
+    state.playing=true; state.lastTime=0; render(); state.frame=requestAnimationFrame(tick);
+  }
+  function startAll() {
+    stop(); state.selected=0; state.stage=0; state.results=[null,null,null,null];
+    state.batch=true; state.queue=[1,2,3]; state.playing=true;
+    state.animation={mode:'move',progress:0}; render(); announce('Running all four functions, one experiment at a time.');
+    state.frame=requestAnimationFrame(tick);
+  }
+  function tick(time) {
+    if (!state.playing) return;
+    const dt=state.lastTime ? Math.max(0,time-state.lastTime) : 0; state.lastTime=time;
+    const a=state.animation;
+    if (!a) return;
+    const duration=(a.mode==='hold' ? 1100 : 1700)/state.rate;
+    a.progress=Math.min(1,a.progress+dt/duration);
+    if (a.mode==='move') drawProgress(a.progress);
+    if (a.progress>=1) {
+      if (a.mode==='hold') {
+        state.selected=state.queue.shift(); state.stage=0;
+        state.animation={mode:'move',progress:0}; render(); announce();
+      } else {
+        state.stage=Math.min(4,state.stage+1);
+        if (state.stage===4) {
+          recordResult();
+          if (state.batch && state.queue.length) state.animation={mode:'hold',progress:0};
+          else {
+            state.playing=false; state.animation=null; state.batchFinished=state.batch;
+            state.batch=false; state.lastTime=0; render(); announce(); return;
+          }
+        } else state.animation={mode:'move',progress:0};
+        render(); announce();
+      }
+    }
+    state.frame=requestAnimationFrame(tick);
+  }
+  function activeGates(stage) {
+    for (const id of ['prepare-input','prepare-helper','oracle-gate','final-gate','measure-gate']) $(id).classList.remove('active');
+    const map={1:['prepare-input','prepare-helper'],2:['oracle-gate'],3:['final-gate'],4:['measure-gate']};
+    for (const id of map[stage]||[]) $(id).classList.add('active');
+  }
+  function drawProgress(progress=0) {
+    const positions=[296,575,996,1170,1355], i=state.stage;
+    const moving=state.animation && state.animation.mode==='move' && i<4;
+    const p=moving ? progress : 0;
+    const ease=reducedMotion.matches ? 0 : p*p*(3-2*p);
+    const upper=positions[i]+(moving?(positions[i+1]-positions[i])*ease:0);
+    const lowerStart=positions[Math.min(i,3)], lowerEnd=positions[Math.min(i+1,3)];
+    const lower=lowerStart+(moving?(lowerEnd-lowerStart)*ease:0);
+    $('input-marker').setAttribute('cx',upper); $('helper-marker').setAttribute('cx',lower);
+    $('input-marker').style.visibility=i===4 ? 'hidden' : 'visible';
+    $('travel-fill').style.width=`${(i+(moving?p:0))/4*100}%`;
+    activeGates(moving && progress>0 ? i+1 : i);
+  }
+  function storyContent() {
+    const v=FUNCTIONS[state.selected].values, equal=v[0]===v[1], negative=v[0]===1;
+    const helper='<span class="helper-factor">|−⟩</span>';
+    if(state.stage===0) return {
+      title:'Begin with |0⟩ and |1⟩',
+      text:'The first qubit starts in |0⟩. The helper starts in |1⟩; its first H gate will prepare the special state needed for phase kickback.',
+      equation:'|0⟩ ⊗ <span class="helper-factor">|1⟩</span>'
+    };
+    if(state.stage===1) return {
+      title:'Prepare both qubits with H',
+      text:'H prepares the input in |+⟩, an equal superposition of |0⟩ and |1⟩. It prepares the helper in |−⟩, so flipping the helper can become a minus sign.',
+      equation:`|+⟩ ⊗ ${helper} &nbsp;= &nbsp; ${fraction('|0⟩ + |1⟩')} ⊗ ${helper}`
+    };
+    if(state.stage===2) return {
+      title:'One call adds the phase signs',
+      text:equal ? (negative ? 'Both input components gain a minus sign. This is an overall (global) sign: the first qubit is −|+⟩, which has the same measurement behavior as |+⟩.' : 'Both input components keep their plus signs. The first qubit stays in |+⟩. The helper stays in |−⟩.') : (negative ? 'The |0⟩ component gains a minus sign while the |1⟩ component keeps a plus sign. The opposite signs make −|−⟩; its overall minus sign will not affect measurement.' : 'The |0⟩ component keeps a plus sign while the |1⟩ component gains a minus sign. These opposite signs turn the first qubit into |−⟩.'),
+      equation:`${fraction(phaseExpression(v))} ⊗ ${helper} &nbsp;= &nbsp; ${afterOracleKet(v)} ⊗ ${helper}`
+    };
+    if(state.stage===3) return {
+      title:'The final H makes the answer readable',
+      text:equal ? `H converts ${afterOracleKet(v)} into ${signedKet(v)}. Equal phase signs combine into outcome 0; outcome 1 cancels. ${negative?'The overall minus sign does not affect the result.':'The helper stays in |−⟩.'}` : `H converts ${afterOracleKet(v)} into ${signedKet(v)}. Opposite phase signs combine into outcome 1; outcome 0 cancels. ${negative?'The overall minus sign does not affect the result.':'The helper stays in |−⟩.'}`,
+      equation:`H(${afterOracleKet(v)}) = ${signedKet(v)} &nbsp;;&nbsp; ${signedKet(v)} ⊗ ${helper}`
+    };
+    const bit=equal?0:1;
+    return {title:`Measure ${bit}: the function is ${equal?'constant':'balanced'}`,
+      text:`Only the first qubit is measured. Its result is ${bit} with 100% probability because f(0) ${equal?'equals':'differs from'} f(1). This reveals the function’s type after one oracle call.`,
+      equation:`${signedKet(v)} ⊗ ${helper} &nbsp;⟶&nbsp; measured bit ${bit}`};
+  }
+  function amplitudeLabel(a) {
+    if (Math.abs(a)<1e-10) return '0';
+    const s=a<0?'−':'+';
+    if (Math.abs(Math.abs(a)-.5)<1e-10) return `${s}1/2`;
+    if (Math.abs(Math.abs(a)-1/SQRT2)<1e-10) return `${s}1/√2`;
+    if (Math.abs(Math.abs(a)-1)<1e-10) return `${s}1`;
+    return `${s}${Math.abs(a).toFixed(4)}`;
+  }
+  function render() {
+    const f=FUNCTIONS[state.selected], v=f.values, stage=state.stage;
+    els.root.dataset.stage=stage; els.root.dataset.function=state.selected; els.root.dataset.playing=String(state.playing);
+    for(const button of document.querySelectorAll('.function-choice')) {
+      const i=Number(button.dataset.function); button.setAttribute('aria-pressed',String(i===state.selected));
+      button.querySelector('.choice-result').textContent=state.results[i]?'✓':'';
+    }
+    for(const button of document.querySelectorAll('.stage-button')) {
+      const i=Number(button.dataset.stage);
+      if(i===stage)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current');
+      button.classList.toggle('done',i<stage);
+    }
+    els.play.textContent=state.playing?'Pause':state.animation?'Resume':stage===4?'Replay selected':'Play selected';
+    els.play.setAttribute('aria-label',state.playing?'Pause animation':state.batch?'Resume all four functions':els.play.textContent);
+    els.prev.disabled=stage===0; els.next.disabled=stage===4;
+    $('call-count').textContent=stage>=2?'1':'0';
+    if(state.batch) $('run-status').innerHTML=`${state.playing?'Running':'Paused'} function <strong>${state.selected+1} of 4</strong>: ${f.name}. ${state.animation?.mode==='hold'?'Result recorded; preparing the next experiment.':'Each experiment uses one oracle call.'}`;
+    else if(state.batchFinished) $('run-status').innerHTML='<strong>All four complete.</strong> Two constant functions give 0; two balanced functions give 1.';
+    else if(state.playing) $('run-status').textContent=`Running ${f.name}. Pause at any time to inspect the signs and probabilities.`;
+    else if(state.animation) $('run-status').textContent=`Paused at ${STAGES[stage].toLowerCase()}. Resume, or use Next step to continue.`;
+    else if(stage===4) $('run-status').textContent=`${f.name} complete. Try another function or compare all four.`;
+    else $('run-status').textContent='Ready. Play the selected function, or use Next step to go at your own pace.';
+
+    $('before-input').textContent=stage>=1?'|+⟩':'—'; $('before-helper').textContent=stage>=1?'|−⟩':'—';
+    $('after-input').textContent=stage>=2?afterOracleKet(v):'—'; $('after-helper').textContent=stage>=2?'|−⟩':'—';
+    $('final-input').textContent=stage>=3?signedKet(v):'—';
+    $('helper-caption').textContent=stage>=2?'Helper stays in |−⟩':stage>=1?'Helper is ready in |−⟩':'Prepare the helper first';
+    $('diagram-result').textContent=stage===4?String(v[0]^v[1]):'?';
+    $('diagram-result').setAttribute('class',`result-number ${v[0]===v[1]?'blue-text':'teal-text'}`);
+    $('diagram-kind').textContent=stage===4?(v[0]===v[1]?'Constant':'Balanced'):'Result';
+
+    const story=storyContent(); $('step-kicker').textContent=stage===0?'START':`STEP ${stage}`;
+    $('story-title').textContent=story.title; $('story-text').textContent=story.text; $('state-equation').innerHTML=story.equation;
+    $('phase-status').textContent=stage>=2?'f(x) = 0 gives +; f(x) = 1 gives −':'Waiting for the oracle';
+    for (const [x,id] of [[0,'zero'],[1,'one']]) {
+      const sign=$(`sign-${id}`); sign.textContent=stage>=2?(v[x]?'−':'+'):'?';
+      sign.className=`phase-sign${stage>=2?(v[x]?' negative':' positive'):''}`;
+      $(`phase-${id}`).textContent=stage>=2?`f(${x}) = ${v[x]} · amplitude ${v[x]?'−':'+'}1/√2`:'Not queried yet';
+    }
+    $('phase-detail').textContent=stage>=2?(v[0]===v[1]?'The signs match. A common minus sign is only a global phase.':'The signs are opposite. Their relative minus sign is what the final H detects.'):'Each input component will get its own sign. The helper enables this without keeping the output bit.';
+    const p=probabilities(STATES[state.selected][stage]);
+    for(const [i,id] of [[0,'zero'],[1,'one']]) {
+      const n=percent(p[i]); $(`p-${id}`).textContent=`${n}%`; $(`bar-${id}`).style.width=`${n}%`;
+      $(`prob-${id}`).setAttribute('aria-valuenow',String(n));
+    }
+    const bit=p[1]>.5?1:0;
+    if(stage===4) {
+      $('result-box').dataset.kind=bit?'balanced':'constant';
+      $('result-value').innerHTML=`<span class="result-bit tabular">${bit}</span><span class="result-class">${bit?'Balanced':'Constant'}</span>`;
+      $('result-reason').textContent=bit?'f(0) ≠ f(1) · different outputs':'f(0) = f(1) · same outputs';
+    } else {
+      $('result-box').dataset.kind='pending'; $('result-value').innerHTML='<span class="result-placeholder">Not measured yet</span>';
+      $('result-reason').textContent=stage===2?'Phase signs are encoded; probabilities stay 50/50.':stage===3?'The final H has made the outcome certain.':'The final H gate makes the answer readable.';
+    }
+    $('comparison-body').innerHTML=FUNCTIONS.map((fn,i)=> {
+      const r=state.results[i];
+      return `<tr data-selected="${i===state.selected}" data-function="${i}"><th scope="row" class="math" style="font-size:1rem;color:var(--ink);background:transparent">${fn.name}</th><td class="tabular">${fn.values.join(', ')}</td><td class="math ${r?'':'pending'}">${r?fn.values.map(x=>x?'−':'+').join(', '):'—'}</td><td class="math ${r?'':'pending'}">${r?r.firstKet:'—'}</td><td class="tabular ${r?'':'pending'}">${r?r.bit:'—'}</td><td>${r?`<span class="outcome-pill ${r.bit?'balanced':''}">${r.kind}</span>`:'<span class="pending">Not run</span>'}</td></tr>`;
+    }).join('');
+    const count=state.results.filter(Boolean).length;
+    $('completion-count').textContent=`${count} of 4 completed`;
+    $('comparison-note').textContent=count===4?'Same signs lead to 0. Opposite signs lead to 1. An overall minus sign changes neither result.':'Run all four to fill the table automatically, or try the functions one at a time.';
+    $('amplitude-body').innerHTML=STATES[state.selected][stage].map((a,i)=>`<tr><th scope="row" class="math" style="font-size:1rem;color:var(--ink);background:transparent">|${i>>1}${i&1}⟩</th><td class="math">${amplitudeLabel(a)}</td><td class="tabular">${percent(a*a)}%</td></tr>`).join('');
+    drawProgress(state.animation?.mode==='move'?state.animation.progress:0);
+    if (window.qmEmbedFitSchedule) window.qmEmbedFitSchedule();
+  }
+  function announce(message) {
+    $('announcement').textContent=message||`${FUNCTIONS[state.selected].name}. ${storyContent().title}. ${state.stage>=2?'One oracle call used.':''}`;
+  }
+  els.play.addEventListener('click',startSelected); els.all.addEventListener('click',startAll);
+  els.prev.addEventListener('click',()=>seek(state.stage-1)); els.next.addEventListener('click',()=>seek(state.stage+1));
+  els.reset.addEventListener('click',()=>{stop();state.stage=0;state.results=[null,null,null,null];render();announce('Animation and comparison reset.');});
+  els.speed.addEventListener('change',()=>{state.rate=Number(els.speed.value);});
+  document.querySelector('.details')?.addEventListener('toggle',()=>{if(window.qmEmbedFitSchedule)window.qmEmbedFitSchedule();});
+  $('function-grid').addEventListener('click',event=>{const b=event.target.closest('button[data-function]');if(b)selectFunction(Number(b.dataset.function));});
+  $('timeline').addEventListener('click',event=>{const b=event.target.closest('button[data-stage]');if(b)seek(Number(b.dataset.stage));});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&state.playing){cancelAnimationFrame(state.frame);state.playing=false;state.lastTime=0;render();}});
+  window.DeutschDemo=Object.freeze({
+    functions:FUNCTIONS,
+    calculate:values=>snapshots(values).map(s=>({amplitudes:s.slice(),probabilities:probabilities(s)})),
+    snapshot:()=>({selected:state.selected,stage:state.stage,playing:state.playing,batch:state.batch,calls:state.stage>=2?1:0,results:state.results.map(r=>r?{...r}:null),probabilities:probabilities(STATES[state.selected][state.stage])})
+  });
+  render();
+})();
+</script>
+<script src="embed-fit.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CNOT with target |−⟩</title>
+  <link rel="stylesheet" href="embed-frame.css">
+</head>
+<body style="background:#f4f6fc;">
+<div class="cnot-minus">
+<style>
+.cnot-minus {
+  font-family: Arial, sans-serif;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 10px 10px 12px;
+  background: #f4f6fc;
+  border: 1px solid #dce2ee;
+  border-radius: 13px;
+  color: #26324a;
+}
+.cnot-minus * { box-sizing: border-box; }
+.cnot-minus h3 { display: none; }
+.cnot-minus .cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.cnot-minus .case {
+  background: white;
+  border: 1px solid #dce2ee;
+  border-radius: 10px;
+  padding: 10px 6px;
+  text-align: center;
+}
+.cnot-minus .case-title { font-size: 12px; font-weight: bold; margin-bottom: 6px; }
+.cnot-minus .zero { color: #27804c; }
+.cnot-minus .one { color: #c13e3e; }
+.cnot-minus .equation { font: 17px Georgia, serif; margin: 4px 0; }
+.cnot-minus .arrow { font-size: 16px; color: #68758c; margin: 2px; }
+.cnot-minus .result {
+  border-radius: 8px;
+  padding: 6px 4px;
+  font: 17px Georgia, serif;
+}
+.cnot-minus .unchanged { background: #e8f5ec; color: #27804c; }
+.cnot-minus .flipped { background: #fceaea; color: #c13e3e; }
+.cnot-minus .caption { font-size: 10px; color: #64718a; margin-top: 5px; line-height: 1.4; }
+.cnot-minus .eigen {
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: #eef2ff;
+  border: 1px solid #cbd4fa;
+  border-radius: 9px;
+  font-size: 11px;
+  line-height: 1.45;
+  text-align: center;
+}
+.cnot-minus .eigen-eq {
+  font: 17px Georgia, serif;
+  margin-top: 4px;
+}
+@media (max-width: 300px) {
+  .cnot-minus .cases { grid-template-columns: 1fr; }
+}
+</style>
+
+<h3>CNOT with target |−⟩</h3>
+<div class="cases">
+  <div class="case">
+    <div class="case-title zero">CONTROL = 0</div>
+    <div class="equation">|0⟩ |−⟩</div>
+    <div class="arrow">↓</div>
+    <div class="result unchanged">|0⟩ |−⟩</div>
+    <div class="caption">CNOT does nothing (control is 0).</div>
+  </div>
+  <div class="case">
+    <div class="case-title one">CONTROL = 1</div>
+    <div class="equation">|1⟩ |−⟩</div>
+    <div class="arrow">↓</div>
+    <div class="result flipped">− |1⟩ |−⟩</div>
+    <div class="caption">CNOT applies X; X gives a minus on |−⟩.</div>
+  </div>
+</div>
+<div class="eigen">
+  <strong>|−⟩ is an X eigenstate:</strong>
+  <div class="eigen-eq">X |−⟩ = − |−⟩</div>
+</div>
+</div>
+<script src="embed-fit.js"></script>
+</body>
+</html>

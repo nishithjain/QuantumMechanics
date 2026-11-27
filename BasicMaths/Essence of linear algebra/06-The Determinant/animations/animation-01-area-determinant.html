@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Interactive 2D determinant</title>
+<style>
+body{font-family:system-ui,Segoe UI,sans-serif;max-width:980px;margin:24px auto;padding:0 16px;background:#f5f8fc;color:#17243a}
+.card{background:#fff;border:1px solid #d7e1ef;border-radius:14px;padding:16px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+label{display:block;font-size:.92rem}input{width:100%;accent-color:#17569b}
+canvas{width:100%;height:390px;background:#fbfdff;border-radius:10px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button{padding:9px 14px;border:0;border-radius:8px;background:#174f91;color:white;cursor:pointer}
+button.alt{background:#e5edf7;color:#18304e}
+.metric{font-size:1.12rem;font-weight:700}.math{font-family:ui-monospace,Consolas,monospace;background:#f0f4fa;padding:10px;border-radius:8px;overflow-wrap:anywhere}
+@media(max-width:620px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<h1>Explore a 2D determinant</h1>
+<p>Each matrix column tells where one basis vector goes. The transformed unit square becomes a parallelogram. Its area is <b>|det(A)|</b>; the determinant's sign tells whether orientation is reversed.</p>
+<div class="card">
+<div class="grid" id="sliders"></div>
+<p class="math" id="matrix"></p><p class="math" id="formula"></p>
+<p class="metric" id="det"></p><p id="meaning"></p>
+<canvas id="view" width="900" height="390"></canvas>
+<div class="controls"><button id="play">Play</button><button class="alt" id="pause">Pause</button><button class="alt" id="step">Step</button><button class="alt" id="reset">Reset</button><button class="alt" id="shear">Shear example</button><button class="alt" id="scale">Scale example</button><button class="alt" id="flip">Flip example</button></div>
+</div>
+<div class="card"><b>How to read it</b><ul><li>Blue arrow: transformed î, the first matrix column.</li><li>Green arrow: transformed ĵ, the second matrix column.</li><li>Shaded parallelogram: transformed unit square.</li><li>Area magnitude = |det(A)|. Negative determinant means orientation reversal.</li></ul></div>
+<script>
+const ids=['a','b','c','d'],defaults=[1,1,0,1],wrap=document.getElementById('sliders');
+ids.forEach((id,i)=>{let box=document.createElement('div');box.innerHTML=`<label>${id.toUpperCase()} <b id="${id}v">${defaults[i]}</b><input id="${id}" type="range" min="-3" max="3" step=".1" value="${defaults[i]}"></label>`;wrap.appendChild(box)});
+const $=id=>document.getElementById(id);let playing=false,raf=0,t=0,last=0;
+function vals(){return ids.map(id=>+$(id).value)}
+function draw(){
+ let [a,b,c,d]=vals(),det=a*d-b*c;
+ ids.forEach(id=>$(id+'v').textContent=$(id).value);
+ $('matrix').textContent=`A = [[${a.toFixed(1)}, ${b.toFixed(1)}], [${c.toFixed(1)}, ${d.toFixed(1)}]]`;
+ $('formula').textContent=`det(A) = ad − bc = (${a.toFixed(1)} × ${d.toFixed(1)}) − (${b.toFixed(1)} × ${c.toFixed(1)}) = ${det.toFixed(2)}`;
+ $('det').textContent=`Determinant: ${det.toFixed(2)}   |   Area scale: ${Math.abs(det).toFixed(2)}×`;
+ $('meaning').textContent=Math.abs(det)<.015?'The square has collapsed to a line or point (approximately zero area).':det<0?'Orientation is reversed. The physical area is still positive.':'Orientation is preserved.';
+ let cv=$('view'),g=cv.getContext('2d');g.clearRect(0,0,cv.width,cv.height);
+ const O={x:450,y:210},s=75;
+ function p(x,y){return {x:O.x+(x-y*.38)*s,y:O.y-(y+x*.08)*s}}
+ // axes
+ g.strokeStyle='#b6c2d1';g.lineWidth=2;g.beginPath();g.moveTo(65,O.y);g.lineTo(835,O.y);g.moveTo(O.x,30);g.lineTo(O.x,365);g.stroke();
+ const pts=[[0,0],[a,c],[a+b,c+d],[b,d]].map(v=>p(...v));
+ g.beginPath();pts.forEach((q,i)=>i?g.lineTo(q.x,q.y):g.moveTo(q.x,q.y));g.closePath();
+ g.fillStyle='rgba(235,91,145,.20)';g.fill();g.strokeStyle='#bd477e';g.lineWidth=3;g.stroke();
+ function arrow(q,color,label){g.strokeStyle=color;g.fillStyle=color;g.lineWidth=5;g.beginPath();g.moveTo(O.x,O.y);g.lineTo(q.x,q.y);g.stroke();let an=Math.atan2(q.y-O.y,q.x-O.x),h=12;g.beginPath();g.moveTo(q.x,q.y);g.lineTo(q.x-h*Math.cos(an-.45),q.y-h*Math.sin(an-.45));g.lineTo(q.x-h*Math.cos(an+.45),q.y-h*Math.sin(an+.45));g.closePath();g.fill();g.font='bold 17px system-ui';g.fillText(label,q.x+8,q.y-8)}
+ arrow(p(a,c),'#2563eb','î′');arrow(p(b,d),'#0f9d78','ĵ′');
+ g.fillStyle='#17243a';g.font='bold 17px system-ui';g.fillText(`Area = ${Math.abs(det).toFixed(2)}`,20,30);
+ g.font='14px system-ui';g.fillStyle='#64748b';g.fillText('Original unit square is 1 × 1. Diagram is a projected view.',20,55);
+}
+ids.forEach(id=>$(id).addEventListener('input',()=>{stop();draw()}));
+function set(v){ids.forEach((id,i)=>$(id).value=v[i]);draw()}
+function stop(){playing=false;last=0;cancelAnimationFrame(raf)}
+$('pause').onclick=stop;
+$('reset').onclick=()=>{stop();set(defaults)};
+$('shear').onclick=()=>{stop();set([1,1,0,1])};
+$('scale').onclick=()=>{stop();set([3,0,0,2])};
+$('flip').onclick=()=>{stop();set([-1,0,0,1])};
+$('step').onclick=()=>{stop();t=(t+.1)%1;set([1,1,0,1-t*2])};
+$('play').onclick=()=>{stop();playing=true;function tick(ts){if(!playing)return;if(!last)last=ts;let dt=(ts-last)/2200;last=ts;t=Math.min(1,t+dt);set([1,1,0,1-2*t]);if(t<1)raf=requestAnimationFrame(tick);else stop()}raf=requestAnimationFrame(tick)};
+draw();
+</script></body></html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Mathematics to Quantum Computing — Quiz</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.55;
+    max-width: 850px;
+    margin: 30px auto;
+    padding: 0 18px;
+    color: #202532;
+    background: #f5f7fb;
+  }
+  h1 { line-height: 1.2; }
+  .intro, .question {
+    background: white;
+    border: 1px solid #dce2ed;
+    border-radius: 12px;
+    padding: 18px;
+    margin: 14px 0;
+  }
+  .question h3 { margin-top: 0; }
+  label {
+    display: block;
+    padding: 7px 9px;
+    margin: 5px 0;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  label:hover { background: #f0f4fb; }
+  input { margin-right: 8px; }
+  button {
+    border: 0;
+    border-radius: 8px;
+    padding: 11px 17px;
+    margin: 8px 8px 8px 0;
+    cursor: pointer;
+    font-size: 1rem;
+    background: #2459c4;
+    color: white;
+  }
+  button.secondary { background: #596579; }
+  .feedback { margin-top: 10px; font-weight: bold; }
+  .correct { color: #16733a; }
+  .incorrect { color: #b42318; }
+  #result {
+    background: white;
+    border: 1px solid #dce2ed;
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 16px;
+    font-size: 1.15rem;
+  }
+</style>
+</head>
+<body>
+<h1>From basic mathematics to quantum computing</h1>
+<div class="intro">
+  <p>Test your understanding of vectors, products, matrices, tensor products,
+  complex amplitudes, quantum gates, CNOT and entanglement.</p>
+  <p>Select one answer for each question, then choose <b>Check answers</b>.</p>
+</div>
+
+<form id="quiz"></form>
+<button type="button" onclick="checkAnswers()">Check answers</button>
+<button type="button" class="secondary" onclick="resetQuiz()">Try again</button>
+<div id="result" aria-live="polite">Your score will appear here.</div>
+
+<script>
+const questions = [
+  {
+    q: "1. What is a scalar?",
+    options: ["A single number", "A rectangular array", "A column of several numbers", "A quantum gate"],
+    answer: 0,
+    why: "A scalar is one value, such as 5 or -2."
+  },
+  {
+    q: "2. What is the dot product of [2, 3] and [4, 5]?",
+    options: ["[8, 15]", "23", "[8, 10, 12, 15]", "46"],
+    answer: 1,
+    why: "Multiply matching entries and add: 2×4 + 3×5 = 8 + 15 = 23."
+  },
+  {
+    q: "3. What kind of result does an outer product produce?",
+    options: ["A scalar", "A matrix", "Always a single bit", "An angle"],
+    answer: 1,
+    why: "A column vector multiplied by a row vector produces a matrix."
+  },
+  {
+    q: "4. What is the result of I|0⟩?",
+    options: ["|1⟩", "|−⟩", "|0⟩", "0"],
+    answer: 2,
+    why: "The identity gate leaves the state unchanged."
+  },
+  {
+    q: "5. What does the Hadamard gate do to |0⟩?",
+    options: ["Produces |1⟩", "Produces |+⟩", "Produces |−⟩", "Measures the qubit"],
+    answer: 1,
+    why: "H|0⟩ = (|0⟩ + |1⟩)/√2 = |+⟩."
+  },
+  {
+    q: "6. How many computational basis states does a 3-qubit system have?",
+    options: ["3", "6", "8", "9"],
+    answer: 2,
+    why: "A system of n qubits has 2ⁿ basis states. For 3 qubits, 2³ = 8."
+  },
+  {
+    q: "7. What is i²?",
+    options: ["1", "-1", "i", "0"],
+    answer: 1,
+    why: "The imaginary unit is defined by i² = -1."
+  },
+  {
+    q: "8. What is the conjugate of 3 + 4i?",
+    options: ["3 + 4i", "3 - 4i", "-3 + 4i", "-3 - 4i"],
+    answer: 1,
+    why: "The complex conjugate changes the sign of the imaginary part."
+  },
+  {
+    q: "9. What is |3 + 4i|²?",
+    options: ["5", "7", "16", "25"],
+    answer: 3,
+    why: "|3 + 4i|² = 3² + 4² = 9 + 16 = 25."
+  },
+  {
+    q: "10. A normalized qubit has what total probability?",
+    options: ["0", "0.5", "1", "2"],
+    answer: 2,
+    why: "All possible measurement probabilities must add up to 1."
+  },
+  {
+    q: "11. What does the Pauli-X gate do?",
+    options: ["Flips |0⟩ and |1⟩", "Only changes phase", "Measures the qubit", "Combines two qubits"],
+    answer: 0,
+    why: "X|0⟩ = |1⟩ and X|1⟩ = |0⟩."
+  },
+  {
+    q: "12. What does the Pauli-Z gate do to |1⟩?",
+    options: ["Changes it to |0⟩", "Changes it to -|1⟩", "Changes it to i|0⟩", "Leaves it unchanged"],
+    answer: 1,
+    why: "Z|1⟩ = -|1⟩. It changes the phase of the |1⟩ component."
+  },
+  {
+    q: "13. When does CNOT flip its target qubit?",
+    options: ["When control is 0", "When control is 1", "Every time", "Only after measurement"],
+    answer: 1,
+    why: "CNOT flips the target if and only if the control is 1."
+  },
+  {
+    q: "14. What is CNOT|10⟩ when the first qubit is the control?",
+    options: ["|00⟩", "|01⟩", "|10⟩", "|11⟩"],
+    answer: 3,
+    why: "The control is 1, so the target changes from 0 to 1."
+  },
+  {
+    q: "15. Which state is the Bell state Φ+?",
+    options: [
+      "(|00⟩ + |11⟩)/√2",
+      "(|00⟩ - |01⟩)/√2",
+      "|00⟩",
+      "(|01⟩ + |11⟩)/√2"
+    ],
+    answer: 0,
+    why: "Φ+ = (|00⟩ + |11⟩)/√2 is a maximally entangled two-qubit state."
+  },
+  {
+    q: "16. Which gate sequence creates Φ+ from |00⟩?",
+    options: [
+      "X on both qubits",
+      "H on the first qubit, then CNOT",
+      "Z on the first qubit, then S",
+      "CNOT twice"
+    ],
+    answer: 1,
+    why: "H creates superposition in the first qubit; CNOT correlates the second qubit with it."
+  }
+];
+
+function renderQuiz() {
+  const form = document.getElementById("quiz");
+  form.innerHTML = "";
+  questions.forEach((item, index) => {
+    const section = document.createElement("section");
+    section.className = "question";
+    const heading = document.createElement("h3");
+    heading.textContent = item.q;
+    section.appendChild(heading);
+
+    item.options.forEach((option, optionIndex) => {
+      const label = document.createElement("label");
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = "q" + index;
+      radio.value = optionIndex;
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(option));
+      section.appendChild(label);
+    });
+
+    const feedback = document.createElement("div");
+    feedback.id = "feedback" + index;
+    feedback.className = "feedback";
+    section.appendChild(feedback);
+    form.appendChild(section);
+  });
+}
+
+function checkAnswers() {
+  let score = 0;
+  let unanswered = 0;
+
+  questions.forEach((item, index) => {
+    const selected = document.querySelector('input[name="q' + index + '"]:checked');
+    const feedback = document.getElementById("feedback" + index);
+
+    if (!selected) {
+      unanswered++;
+      feedback.textContent = "Please answer this question.";
+      feedback.className = "feedback incorrect";
+      return;
+    }
+
+    if (Number(selected.value) === item.answer) {
+      score++;
+      feedback.textContent = "Correct! " + item.why;
+      feedback.className = "feedback correct";
+    } else {
+      feedback.textContent =
+        "Not quite. Correct answer: " + item.options[item.answer] + ". " + item.why;
+      feedback.className = "feedback incorrect";
+    }
+  });
+
+  document.getElementById("result").textContent =
+    "Your score: " + score + " / " + questions.length +
+    (unanswered ? " — " + unanswered + " question(s) unanswered." : "");
+}
+
+function resetQuiz() {
+  document.getElementById("quiz").reset();
+  questions.forEach((_, index) => {
+    const feedback = document.getElementById("feedback" + index);
+    feedback.textContent = "";
+    feedback.className = "feedback";
+  });
+  document.getElementById("result").textContent = "Your score will appear here.";
+}
+
+renderQuiz();
+</script>
+</body>
+</html>

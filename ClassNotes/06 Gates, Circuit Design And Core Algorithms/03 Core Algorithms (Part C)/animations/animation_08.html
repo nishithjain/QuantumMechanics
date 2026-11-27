@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Phase Gates and Controlled Phase Rotations</title><style>
+:root{color-scheme:light;--ink:#172554;--muted:#46617a;--teal:#087f8c;--orange:#c46b25;--border:#d8e2ec;--panel:#f4f8fc}
+*{box-sizing:border-box}
+body{margin:0;padding:20px 16px;background:#f0f4f8;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.5}
+.page{max-width:1170px;margin:0 auto;background:#fff;border:1px solid #dde6ef;border-radius:18px;padding:26px;box-shadow:0 10px 34px #112e4d15}
+h1{font-size:clamp(25px,3vw,35px);margin:0 0 4px;line-height:1.15}
+.sub{margin:2px 0 18px;color:var(--muted)}
+.panel{border:1px solid var(--border);background:var(--panel);border-radius:13px;padding:14px}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin-bottom:12px}
+.controls label{font-weight:650;font-size:14px;display:flex;flex-direction:column;gap:5px;color:var(--ink)}
+.controls select,.controls input{appearance:auto;background:#fff;border:1px solid #9eb7ca;border-radius:8px;padding:8px;min-width:110px;font-size:16px;color:var(--ink)}
+button{border:0;border-radius:10px;padding:10px 16px;font-size:16px;font-weight:720;cursor:pointer;background:#087f8c;color:white;min-width:79px}
+button.secondary{background:#e2eff3;color:#075767}
+button:focus-visible,select:focus-visible{outline:3px solid #f0ad62;outline-offset:2px}
+.player{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:10px 0 0}
+#stageTag{margin-left:auto;font-weight:700;color:#426077}
+.vis{width:100%;height:auto;aspect-ratio:900 / 420;display:block;border-radius:12px;background:white;border:1px solid #d9e5ee}
+.lesson{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(270px,.95fr);gap:15px;margin-top:16px}
+.explanation{background:#f5fbfb;border:1px solid #cbdfdf;padding:19px;border-radius:12px;min-width:0}
+.calculation{background:#fffaf3;border:1px solid #e5d6c4;padding:19px;border-radius:12px;min-width:0}
+h2{font-size:18px;margin:0 0 10px}.desc{white-space:pre-line;margin:0;color:#263b52}
+.math{white-space:pre-wrap;overflow-wrap:anywhere;font:500 15px/1.7 ui-monospace,"SFMono-Regular",Consolas,monospace;color:#27334a;margin:0}
+.tip{margin-top:15px;border-top:1px solid #d8e2eb;padding-top:12px;color:#36536a;font-size:14px}
+.back{display:inline-block;margin-top:18px;color:var(--teal);font-weight:670;text-decoration:underline}
+footer{font-size:13px;color:#5d7186;margin-top:16px}
+@media(max-width:740px){body{padding:7px}.page{padding:14px;border-radius:8px}.lesson{grid-template-columns:1fr}.vis{aspect-ratio:900 / 500}.controls label{flex:1 1 120px}#stageTag{width:100%;margin-left:0}.player{gap:7px}button{padding:9px 11px;min-width:66px;font-size:14px}}
+</style></head><body><main class="page"><h1>Phase Gates and Controlled Phase Rotations</h1><p class="sub">Change j and input bits to see which basis amplitude receives the complex phase.</p><section class="panel" aria-label="Lesson settings"><div class="controls"><label for="j">Phase gate Rj<select data-pick id="j"><option value="1">R1 (Z)</option><option value="2">R2 (S)</option><option value="3">R3 (T)</option><option value="4">R4</option><option value="5">R5</option></select></label><label for="c">Control bit c<select data-pick id="c"><option value="0">0</option><option value="1">1</option></select></label><label for="t">Target bit t<select data-pick id="t"><option value="0">0</option><option value="1">1</option></select></label></div><div class="player"><button id="play" type="button">Play</button><button id="pause" class="secondary" type="button">Pause</button><button id="step" type="button">Step</button><button id="reset" class="secondary" type="button">Reset</button><span id="stageTag" aria-live="polite">Stage 1 of 5</span></div></section><section style="margin-top:15px" aria-label="Interactive visualization"><div id="visual" class="vis" aria-live="polite"><p>Enable JavaScript to interact. Core idea: controlled phase rotates only the |11&gt; basis component</p></div></section><section class="lesson"><div class="explanation"><h2>What is happening?</h2><p class="desc" id="narrative"></p></div><div class="calculation"><h2>Calculation alongside the visual</h2><pre class="math" id="calculation"></pre></div></section><p class="tip"><strong>Learn by predicting:</strong> Before pressing Step, predict what should happen next and compare your answer with the calculation. Press Reset to repeat the same lesson with a different input.</p><a class="back" href="../Lecture_Notes.md">Back to the lecture notes</a><footer>Standalone HTML · All calculations run in this file · No external libraries or internet connection.</footer></main><script>
+const notes=['Rj is a diagonal one-qubit gate: it leaves |0> and rotates the relative phase on |1>.',
+ 'The phase step is 360°/2^j: j=1 is Z, j=2 is S, j=3 is T.',
+ 'Controlled Rj acts on two qubits; if the control is 0 no gate is applied.',
+ 'Even when the control is 1, target |0> is unaffected. Only |11> acquires the phase.',
+ 'A complex phase can change interference on a superposition without changing computational-basis labels.'];
+function renderLesson(s){let j=val('j'),c=val('c'),t=val('t'),angle=2*Math.PI/Math.pow(2,j),active=c&&t,phase=active?angle:0;let out=tx(60,67,'Control',20,N,700)+tx(60,147,'Target',20,N,700)+ln(180,61,658,61,M,3)+ln(180,147,658,147,M,3)+circ(394,61,8,N,N,1)+ln(394,61,394,147,N,3)+re(364,119,62,53,'#d6f2ef',T)+tx(395,154,'R'+j,20,T,700,'middle');out+=re(65,214,290,156,'#f4f8fb')+tx(93,259,`Input |${c}${t}⟩`,25,N,700)+tx(93,310,`Output = ${active?'e^(iθ)|11⟩':`|${c}${t}⟩`}`,23,active?O:T,700)+re(494,205,350,169,'#faf5ec')+tx(524,250,`θ = 360°/${Math.pow(2,j)} = ${fmt(360/Math.pow(2,j))}°`,20,N,700)+tx(524,297,`Applied? ${active?'YES':'NO'}`,23,active?O:T,700)+tx(524,345,`phase = ${fmtC(cexp(phase))}`,19,O,700);
+let calc=[`R${j} = diag(1, exp(2πi/${Math.pow(2,j)})).`,`j=${j} gives angle ${fmt(360/Math.pow(2,j))}°; examples: R1=Z, R2=S, R3=T.`,`Control c=${c}: ${c?'apply the phase gate':'gate is skipped'}.`,`Target t=${t}; only |11⟩ receives a phase.\nHere |${c}${t}⟩ → ${active?fmtC(cexp(phase))+' × |11⟩':'|'+c+t+'⟩'}.`,`CR${j} = diag(1,1,1, ${fmtC(cexp(angle))}).\nComputational bit values are unchanged.`];return{svg:wrapSvg(out),calc:calc[s],narrative:notes[s]};}
+
+
+'use strict';
+const NS='http://www.w3.org/2000/svg';
+const $=id=>document.getElementById(id);
+const N='#172554',M='#4b647d',T='#087f8c',O='#c46b25',P='#6b4fa5';
+function val(id){return Number($(id).value)}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function wrapSvg(inner){return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" role="img" aria-label="Interactive mathematical visualization"><rect width="900" height="420" fill="#fff"/>${inner}</svg>`}
+function tx(x,y,str,size=17,color=N,weight=500,anchor='start'){return `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="system-ui,Arial,sans-serif" font-size="${size}" font-weight="${weight}" fill="${color}">${esc(str)}</text>`}
+function re(x,y,w,h,fill='#f1f7fb',stroke='#cbdde7',r=9){return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${fill}" stroke="${stroke}"/>`}
+function ln(x1,y1,x2,y2,color='#a0b8c8',thick=2){return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${thick}" stroke-linecap="round"/>`}
+function circ(x,y,r,fill='#fff',stroke=T,thick=2){return `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${thick}"/>`}
+function arr(cx,cy,a,length=73,color=T){let x=cx+length*Math.cos(a),y=cy-length*Math.sin(a);let th=Math.atan2(cy-y,x-cx),v=8;let b1x=x-v*Math.cos(th-.5),b1y=y+v*Math.sin(th-.5),b2x=x-v*Math.cos(th+.5),b2y=y+v*Math.sin(th+.5);return ln(cx,cy,x,y,color,4)+`<polygon points="${x},${y} ${b1x},${b1y} ${b2x},${b2y}" fill="${color}"/>`}
+function cexp(a){return {r:Math.cos(a),i:Math.sin(a)}}
+function cmul(a,b){return {r:a.r*b.r-a.i*b.i,i:a.r*b.i+a.i*b.r}}
+function cadd(a,b){return {r:a.r+b.r,i:a.i+b.i}}
+function cscale(a,b){return {r:a.r*b,i:a.i*b}}
+function fmt(n){if(Math.abs(n)<1e-9)n=0;return Number(n.toFixed(3)).toString()}
+function fmtC(z){let x=Math.abs(z.r)<1e-8?0:z.r,y=Math.abs(z.i)<1e-8?0:z.i;return y===0?fmt(x):x===0?`${fmt(y)}i`:`${fmt(x)} ${y>=0?'+':'−'} ${fmt(Math.abs(y))}i`}
+function chart(vals,x,y,w,h,title,highlight=-1,phaseColors=false){
+ let s=tx(x+3,y-15,title,17,N,700)+ln(x,y+h,x+w,y+h,'#afc2cf',2);const max=Math.max(0.01,...vals);let dx=w/vals.length;for(let j=0;j<vals.length;j++){
+ let bh=(h-24)*vals[j]/max,xx=x+j*dx+3,ww=Math.max(5,dx-7);
+ if(vals[j]>1e-10)s+=re(xx,y+h-bh,ww,bh,(j===highlight?'#ffbf87':(j%2?'#69aeb6':'#138e9a')),'none',2);
+ if(vals.length<=16)s+=tx(xx+ww/2,y+h+17,j,12,M,500,'middle');
+ if(j===highlight)s+=tx(xx+ww/2,y+h-bh-5,'↑',17,O,700,'middle');
+ }
+ return s;
+}
+function plane(cx,cy,rad,n,highlight=1,arrows=false){let s=ln(cx-rad-35,cy,cx+rad+35,cy,'#9fb6c2',1)+ln(cx,cy-rad-31,cx,cy+rad+31,'#9fb6c2',1)+circ(cx,cy,rad,'none','#adc7d4',2);
+ for(let j=0;j<n;j++){let a=2*Math.PI*j/n,xx=cx+rad*Math.cos(a),yy=cy-rad*Math.sin(a);if(arrows)s+=ln(cx,cy,xx,yy,j===highlight?O:'#bad4d6',j===highlight?3:1.5);s+=circ(xx,yy,j===highlight?7:4,j===highlight?O:T,'#fff',1);if(n<=8 || j%2===0)s+=tx(cx+(rad+23)*Math.cos(a),cy-(rad+25)*Math.sin(a)+4,j,14,j===highlight?O:N,700,'middle')}
+ s+=arr(cx,cy,2*Math.PI*highlight/n,rad-6,O);return s;
+}
+function stageLines(lines,s){return lines[Math.min(s,lines.length-1)]}
+let stage=0,timer=null;
+function render(){if(typeof syncInputs==='function')syncInputs();let out=renderLesson(stage);$('visual').innerHTML=out.svg;$('narrative').textContent=out.narrative;$('calculation').textContent=out.calc;$('stageTag').textContent=`Stage ${stage+1} of ${out.total||5}`;}
+function halt(){if(timer!==null){clearInterval(timer);timer=null} $('play').textContent='Play'}
+function advance(){stage=(stage+1)%5;render()}
+$('play').addEventListener('click',()=>{if(timer!==null){halt();return} $('play').textContent='Pause';timer=setInterval(advance,1700)});
+$('pause').addEventListener('click',halt);
+$('step').addEventListener('click',()=>{halt();advance()});
+$('reset').addEventListener('click',()=>{halt();stage=0;render()});
+document.querySelectorAll('[data-pick]').forEach(x=>x.addEventListener('change',()=>{halt();stage=0;render()}));
+render();
+</script></body></html>

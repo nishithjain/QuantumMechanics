@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="440" viewBox="0 0 1100 440" role="img" aria-labelledby="title desc"><title id="title">Undo a Bell circuit</title><desc id="desc">Inverse Bell circuit has CNOT followed by Hadamard on the first wire and measurements on both wires</desc>
+<rect width="1100" height="440" fill="#f7f9fc"/>
+<text x="40" y="46" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="27" fill="#6755dd" font-weight="700" >REVERSE THE BELL PREPARATION CIRCUIT</text>
+<line x1="135" y1="146" x2="1020" y2="146" stroke="#8ca1b5" stroke-width="3" stroke-linecap="round"/>
+<text x="30" y="153" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#172238" font-weight="400" >First qubit</text>
+<line x1="135" y1="245" x2="1020" y2="245" stroke="#8ca1b5" stroke-width="3" stroke-linecap="round"/>
+<text x="30" y="252" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#172238" font-weight="400" >Second qubit</text>
+<circle cx="350" cy="146" r="8" fill="#6755dd" stroke="#6755dd" stroke-width="3"/>
+<line x1="350" y1="146" x2="350" y2="245" stroke="#6755dd" stroke-width="3" stroke-linecap="round"/>
+<circle cx="350" cy="245" r="22" fill="#fff" stroke="#6755dd" stroke-width="2.5"/>
+<line x1="335" y1="245" x2="365" y2="245" stroke="#6755dd" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="350" y1="230" x2="350" y2="260" stroke="#6755dd" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="503.0" y="118" width="54" height="56" rx="9" fill="#fff" stroke="#6755dd" stroke-width="2.8"/>
+<text x="530" y="155" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#6755dd" font-weight="700" >H</text>
+<rect x="708.0" y="118" width="54" height="56" rx="9" fill="#fff" stroke="#087f77" stroke-width="2.8"/>
+<text x="735" y="155" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#087f77" font-weight="700" >M</text>
+<rect x="708.0" y="217" width="54" height="56" rx="9" fill="#fff" stroke="#087f77" stroke-width="2.8"/>
+<text x="735" y="254" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#087f77" font-weight="700" >M</text>
+<text x="350" y="97" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#6755dd" font-weight="700" >1. CNOT</text>
+<text x="530" y="97" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#6755dd" font-weight="700" >2. H</text>
+<text x="735" y="97" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#087f77" font-weight="700" >3. Measure</text>
+<text x="800" y="141" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#172238" font-weight="700" >m₁</text>
+<text x="800" y="241" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#172238" font-weight="700" >m₂</text>
+<rect x="50" y="305" width="1000" height="103" rx="14" fill="#fff" stroke="#dce3ec" stroke-width="1.6"/>
+<text x="80" y="335" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#6755dd" font-weight="700" >Φ+ → 00</text>
+<text x="350" y="335" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#6755dd" font-weight="700" >Φ− → 10</text>
+<text x="620" y="335" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#6755dd" font-weight="700" >Ψ+ → 01</text>
+<text x="875" y="335" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#6755dd" font-weight="700" >Ψ− → 11</text>
+<text x="80" y="381" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#6b7280" font-weight="400" >A Bell measurement distinguishes four orthogonal states by decoding them into bit strings.</text>
+</svg>

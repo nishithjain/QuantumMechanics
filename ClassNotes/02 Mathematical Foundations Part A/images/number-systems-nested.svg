@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 340" width="440" height="340" font-family="Arial, Helvetica, sans-serif">
+  <title>Number systems drawn as boxes inside boxes: N inside Z inside Q inside R inside C</title>
+  <rect x="0" y="0" width="440" height="340" fill="#ffffff"/>
+  <rect x="10" y="10" width="420" height="320" rx="12" fill="#fde8e8" stroke="#d62828" stroke-width="2.5"/>
+  <text x="24" y="32" font-size="15" font-weight="bold" fill="#d62828">C  Complex numbers</text>
+  <text x="24" y="49" font-size="13" fill="#333">e.g. 3 + 2i, i, &#8722; i</text>
+  <rect x="32" y="56" width="376" height="262" rx="12" fill="#fdf1e0" stroke="#e07b00" stroke-width="2.5"/>
+  <text x="46" y="78" font-size="15" font-weight="bold" fill="#e07b00">R  Real numbers</text>
+  <text x="46" y="95" font-size="13" fill="#333">e.g. 1.5, &#8722;0.5, &#960;, &#8730;2</text>
+  <rect x="54" y="102" width="332" height="204" rx="12" fill="#fffbe0" stroke="#b59b00" stroke-width="2.5"/>
+  <text x="68" y="124" font-size="15" font-weight="bold" fill="#b59b00">Q  Rational numbers (fractions)</text>
+  <text x="68" y="141" font-size="13" fill="#333">e.g. 1/2, &#8722;7/3, 0.25</text>
+  <rect x="76" y="148" width="288" height="146" rx="12" fill="#e8f6e8" stroke="#2e8b2e" stroke-width="2.5"/>
+  <text x="90" y="170" font-size="15" font-weight="bold" fill="#2e8b2e">Z  Integers</text>
+  <text x="90" y="187" font-size="13" fill="#333">e.g. &#8722;2, &#8722;1, 0, 1, 2</text>
+  <rect x="98" y="194" width="244" height="88" rx="12" fill="#e3eefc" stroke="#1f5fbf" stroke-width="2.5"/>
+  <text x="112" y="216" font-size="15" font-weight="bold" fill="#1f5fbf">N  Natural numbers</text>
+  <text x="112" y="233" font-size="13" fill="#333">e.g. 1, 2, 3, 4</text>
+</svg>

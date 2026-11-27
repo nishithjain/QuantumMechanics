@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 570" width="540" height="570" font-family="Arial, Helvetica, sans-serif">
+<defs><marker id="mB" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#1f5fbf"/></marker><marker id="mR" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#d62828"/></marker><marker id="mK" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#333"/></marker><marker id="mG" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2e8b2e"/></marker></defs>
+<rect width="540" height="570" fill="#ffffff"/>
+<text x="270.0" y="26" font-size="16" font-weight="bold" text-anchor="middle" fill="#222">The 10 solutions of z<tspan dy="-6" font-size="11">10</tspan><tspan dy="6"> = 1: cut the unit circle into 10 equal slices</tspan></text>
+<line x1="75" y1="285" x2="465" y2="285" stroke="#bbb" stroke-width="1"/><line x1="270" y1="480" x2="270" y2="90" stroke="#bbb" stroke-width="1"/><circle cx="270" cy="285" r="165" fill="none" stroke="#444" stroke-width="1.8"/>
+<polygon points="435.0,285.0 403.5,188.0 321.0,128.1 219.0,128.1 136.5,188.0 105.0,285.0 136.5,382.0 219.0,441.9 321.0,441.9 403.5,382.0" fill="none" stroke="#2e8b2e" stroke-width="1.2" stroke-dasharray="5,4"/>
+<line x1="270" y1="285" x2="435.0" y2="285.0" stroke="#ddd"/>
+<line x1="270" y1="285" x2="403.5" y2="188.0" stroke="#ddd"/>
+<line x1="270" y1="285" x2="321.0" y2="128.1" stroke="#ddd"/>
+<line x1="270" y1="285" x2="219.0" y2="128.1" stroke="#ddd"/>
+<line x1="270" y1="285" x2="136.5" y2="188.0" stroke="#ddd"/>
+<line x1="270" y1="285" x2="105.0" y2="285.0" stroke="#ddd"/>
+<line x1="270" y1="285" x2="136.5" y2="382.0" stroke="#ddd"/>
+<line x1="270" y1="285" x2="219.0" y2="441.9" stroke="#ddd"/>
+<line x1="270" y1="285" x2="321.0" y2="441.9" stroke="#ddd"/>
+<line x1="270" y1="285" x2="403.5" y2="382.0" stroke="#ddd"/>
+<path d="M325.0,285.0 A55,55 0 0 0 314.5,252.7" fill="none" stroke="#d62828" stroke-width="2" marker-end="url(#mR)"/>
+<text x="344.2" y="264.9" font-size="12" font-weight="bold" fill="#d62828">36&#176;</text>
+<circle cx="435.0" cy="285.0" r="6" fill="#e68a00"/>
+<circle cx="403.5" cy="188.0" r="6" fill="#d62828"/>
+<circle cx="321.0" cy="128.1" r="5" fill="#1f5fbf"/>
+<circle cx="219.0" cy="128.1" r="5" fill="#1f5fbf"/>
+<circle cx="136.5" cy="188.0" r="5" fill="#1f5fbf"/>
+<circle cx="105.0" cy="285.0" r="5" fill="#1f5fbf"/>
+<circle cx="136.5" cy="382.0" r="5" fill="#1f5fbf"/>
+<circle cx="219.0" cy="441.9" r="5" fill="#1f5fbf"/>
+<circle cx="321.0" cy="441.9" r="5" fill="#1f5fbf"/>
+<circle cx="403.5" cy="382.0" r="5" fill="#1f5fbf"/>
+<text x="451.0" y="289.0" font-size="12" fill="#e68a00" text-anchor="start" font-weight="bold">1 (0&#176;)</text>
+<text x="416.4" y="182.6" font-size="12" fill="#d62828" text-anchor="start" font-weight="bold">36&#176;  = z</text>
+<text x="325.9" y="110.9" font-size="12" fill="#1f5fbf" text-anchor="start">72&#176;</text>
+<text x="214.1" y="110.9" font-size="12" fill="#1f5fbf" text-anchor="end">108&#176;</text>
+<text x="123.6" y="182.6" font-size="12" fill="#1f5fbf" text-anchor="end">144&#176;</text>
+<text x="89.0" y="289.0" font-size="12" fill="#1f5fbf" text-anchor="end">&#8722;1 (180&#176;)</text>
+<text x="123.6" y="395.4" font-size="12" fill="#1f5fbf" text-anchor="end">216&#176;</text>
+<text x="214.1" y="467.1" font-size="12" fill="#1f5fbf" text-anchor="end">252&#176;</text>
+<text x="325.9" y="467.1" font-size="12" fill="#1f5fbf" text-anchor="start">288&#176;</text>
+<text x="416.4" y="395.4" font-size="12" fill="#1f5fbf" text-anchor="start">324&#176;</text>
+<text x="270" y="500" font-size="13" text-anchor="middle" fill="#222">Spacing between neighbours: 360&#176; / 10 = 36&#176; = 2&#960;/10.</text>
+<text x="270" y="520" font-size="13" text-anchor="middle" fill="#222">Point number k sits at angle k &#215; 36&#176;, that is z<tspan dy="-4" font-size="9">k</tspan><tspan dy="4"> = e</tspan><tspan dy="-5" font-size="9">i2&#960;k/10</tspan><tspan dy="5">, for k = 0, 1, ..., 9.</tspan></text>
+<text x="270" y="540" font-size="13" text-anchor="middle" fill="#222">Joining the points gives a regular 10-sided polygon (dashed green).</text>
+</svg>

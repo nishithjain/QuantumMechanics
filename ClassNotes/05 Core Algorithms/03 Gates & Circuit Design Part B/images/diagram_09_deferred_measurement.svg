@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1230" height="438" viewBox="0 0 1230 438" role="img" aria-labelledby="title desc"><title id="title">Deferred measurement coherent teleportation</title><desc id="desc">Three-wire coherent teleportation circuit prepares Bell pair, Alice does CNOT H, Bob corrected by quantum controlled CNOT and CZ without intermediate measurement</desc>
+<rect width="1230" height="438" fill="#f7f9fc"/>
+<text x="37" y="44" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="25" fill="#6755dd" font-weight="700" >DEFERRED MEASUREMENT: REPLACE FEED-FORWARD WITH CONTROLLED GATES</text>
+<line x1="145" y1="128" x2="1150" y2="128" stroke="#8ca1b5" stroke-width="3" stroke-linecap="round"/>
+<text x="25" y="135" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#172238" font-weight="700" >q₀  |ψ⟩</text>
+<line x1="145" y1="232" x2="1150" y2="232" stroke="#8ca1b5" stroke-width="3" stroke-linecap="round"/>
+<text x="25" y="239" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#172238" font-weight="700" >q₁  |0⟩</text>
+<line x1="145" y1="336" x2="1150" y2="336" stroke="#8ca1b5" stroke-width="3" stroke-linecap="round"/>
+<text x="25" y="343" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#172238" font-weight="700" >q₂  |0⟩</text>
+<rect x="211.0" y="204" width="54" height="56" rx="9" fill="#fff" stroke="#6755dd" stroke-width="2.8"/>
+<text x="238" y="241" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#6755dd" font-weight="700" >H</text>
+<circle cx="314" cy="232" r="8" fill="#6755dd" stroke="#6755dd" stroke-width="3"/>
+<line x1="314" y1="232" x2="314" y2="336" stroke="#6755dd" stroke-width="3" stroke-linecap="round"/>
+<circle cx="314" cy="336" r="22" fill="#fff" stroke="#6755dd" stroke-width="2.5"/>
+<line x1="299" y1="336" x2="329" y2="336" stroke="#6755dd" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="314" y1="321" x2="314" y2="351" stroke="#6755dd" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="477" cy="128" r="8" fill="#6755dd" stroke="#6755dd" stroke-width="3"/>
+<line x1="477" y1="128" x2="477" y2="232" stroke="#6755dd" stroke-width="3" stroke-linecap="round"/>
+<circle cx="477" cy="232" r="22" fill="#fff" stroke="#6755dd" stroke-width="2.5"/>
+<line x1="462" y1="232" x2="492" y2="232" stroke="#6755dd" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="477" y1="217" x2="477" y2="247" stroke="#6755dd" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="529.0" y="100" width="54" height="56" rx="9" fill="#fff" stroke="#6755dd" stroke-width="2.8"/>
+<text x="556" y="137" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#6755dd" font-weight="700" >H</text>
+<circle cx="745" cy="232" r="8" fill="#6755dd" stroke="#6755dd" stroke-width="3"/>
+<line x1="745" y1="232" x2="745" y2="336" stroke="#bf651a" stroke-width="3" stroke-linecap="round"/>
+<circle cx="745" cy="336" r="22" fill="#fff" stroke="#6755dd" stroke-width="2.5"/>
+<line x1="730" y1="336" x2="760" y2="336" stroke="#6755dd" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="745" y1="321" x2="745" y2="351" stroke="#6755dd" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="913" cy="128" r="8" fill="#bf651a" stroke="#bf651a" stroke-width="3"/>
+<line x1="913" y1="128" x2="913" y2="336" stroke="#bf651a" stroke-width="3" stroke-linecap="round"/>
+<rect x="886.0" y="308" width="54" height="56" rx="9" fill="#fff" stroke="#bf651a" stroke-width="2.8"/>
+<text x="913" y="345" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#bf651a" font-weight="700" >Z</text>
+<text x="283" y="88" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#6755dd" font-weight="700" >Bell preparation</text>
+<text x="511" y="88" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#6755dd" font-weight="700" >Alice analysis</text>
+<text x="746" y="87" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#bf651a" font-weight="700" >CNOT = X if middle=1</text>
+<text x="976" y="87" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#bf651a" font-weight="700" >CZ = Z if top=1</text>
+<text x="1075" y="325" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="29" fill="#087f77" font-weight="700" >|ψ⟩</text>
+<rect x="150" y="375" width="1040" height="50" rx="14" fill="#e9f7f5" stroke="#bbe3da" stroke-width="1.6"/>
+<text x="174" y="406" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#172238" font-weight="400" >This unitary model assumes coherent quantum interactions. It is not a faster-than-light remote protocol.</text>
+</svg>

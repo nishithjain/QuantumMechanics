@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="465" viewBox="0 0 1280 465" role="img" aria-labelledby="title desc"><title id="title">Teleportation circuit</title><desc id="desc">Three-wire teleportation: prepare Bell pair, Alice applies CNOT then H and measures q0 q1, Bob performs X and Z controlled by classical bits</desc>
+<rect width="1280" height="465" fill="#f7f9fc"/>
+<text x="38" y="45" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="26" fill="#6755dd" font-weight="700" >QUANTUM TELEPORTATION: THREE WIRES, TWO CLASSICAL BITS</text>
+<line x1="160" y1="133" x2="1240" y2="133" stroke="#8ca1b5" stroke-width="3" stroke-linecap="round"/>
+<text x="27" y="141" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#172238" font-weight="700" >q₀   |ψ⟩</text>
+<line x1="160" y1="241" x2="1240" y2="241" stroke="#8ca1b5" stroke-width="3" stroke-linecap="round"/>
+<text x="27" y="249" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#172238" font-weight="700" >q₁   |0⟩</text>
+<line x1="160" y1="349" x2="1240" y2="349" stroke="#8ca1b5" stroke-width="3" stroke-linecap="round"/>
+<text x="27" y="357" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#172238" font-weight="700" >q₂   |0⟩</text>
+<rect x="241.0" y="213" width="54" height="56" rx="9" fill="#fff" stroke="#6755dd" stroke-width="2.8"/>
+<text x="268" y="250" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#6755dd" font-weight="700" >H</text>
+<circle cx="350" cy="241" r="8" fill="#6755dd" stroke="#6755dd" stroke-width="3"/>
+<line x1="350" y1="241" x2="350" y2="349" stroke="#6755dd" stroke-width="3" stroke-linecap="round"/>
+<circle cx="350" cy="349" r="22" fill="#fff" stroke="#6755dd" stroke-width="2.5"/>
+<line x1="335" y1="349" x2="365" y2="349" stroke="#6755dd" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="350" y1="334" x2="350" y2="364" stroke="#6755dd" stroke-width="2.5" stroke-linecap="round"/>
+<text x="270" y="91" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#6755dd" font-weight="700" >1. Bell pair</text>
+<circle cx="515" cy="133" r="8" fill="#6755dd" stroke="#6755dd" stroke-width="3"/>
+<line x1="515" y1="133" x2="515" y2="241" stroke="#6755dd" stroke-width="3" stroke-linecap="round"/>
+<circle cx="515" cy="241" r="22" fill="#fff" stroke="#6755dd" stroke-width="2.5"/>
+<line x1="500" y1="241" x2="530" y2="241" stroke="#6755dd" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="515" y1="226" x2="515" y2="256" stroke="#6755dd" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="583.0" y="105" width="54" height="56" rx="9" fill="#fff" stroke="#6755dd" stroke-width="2.8"/>
+<text x="610" y="142" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#6755dd" font-weight="700" >H</text>
+<text x="570" y="91" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#6755dd" font-weight="700" >2. Alice decodes</text>
+<rect x="687.0" y="105" width="54" height="56" rx="9" fill="#fff" stroke="#087f77" stroke-width="2.8"/>
+<text x="714" y="142" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#087f77" font-weight="700" >M</text>
+<rect x="687.0" y="213" width="54" height="56" rx="9" fill="#fff" stroke="#087f77" stroke-width="2.8"/>
+<text x="714" y="250" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#087f77" font-weight="700" >M</text>
+<text x="715" y="91" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#087f77" font-weight="700" >3. Measure</text>
+<line x1="746" y1="133" x2="1104" y2="133" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 6"/>
+<line x1="746" y1="241" x2="912" y2="241" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 6"/>
+<text x="802" y="123" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="21" fill="#2563eb" font-weight="700" >m₁</text>
+<text x="805" y="232" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="21" fill="#2563eb" font-weight="700" >m₂</text>
+<rect x="885.0" y="321" width="54" height="56" rx="9" fill="#fff" stroke="#bf651a" stroke-width="2.8"/>
+<text x="912" y="358" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#bf651a" font-weight="700" >X</text>
+<rect x="1077.0" y="321" width="54" height="56" rx="9" fill="#fff" stroke="#bf651a" stroke-width="2.8"/>
+<text x="1104" y="358" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="23" fill="#bf651a" font-weight="700" >Z</text>
+<line x1="912" y1="241" x2="912" y2="321" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-dasharray="7 7"/>
+<line x1="1104" y1="133" x2="1104" y2="321" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-dasharray="7 7"/>
+<text x="918" y="295" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#bf651a" font-weight="700" >if m₂=1</text>
+<text x="1115" y="295" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#bf651a" font-weight="700" >if m₁=1</text>
+<text x="1181" y="339" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="28" fill="#087f77" font-weight="700" >|ψ⟩</text>
+<rect x="160" y="391" width="1080" height="57" rx="14" fill="#e9f7f5" stroke="#bbe3da" stroke-width="1.6"/>
+<text x="186" y="425" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#172238" font-weight="400" >Alice owns q₀ and q₁  •  Bob owns q₂  •  Classical communication is required to correct Bob’s state.</text>
+</svg>

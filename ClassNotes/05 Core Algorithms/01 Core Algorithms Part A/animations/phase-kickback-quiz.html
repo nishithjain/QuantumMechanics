@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 9 — Phase kickback quiz</title>
+<link rel="stylesheet" href="embed-frame.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: #fff; }
+  body {
+    font-family: Arial, sans-serif;
+    color: #202938;
+    padding: 4px 8px 6px;
+    line-height: 1.4;
+    background: #fff;
+  }
+  .quiz-container {
+    max-width: 100%;
+    padding: 4px 2px 2px;
+  }
+  .question {
+    border-top: 1px solid #e8ebf0;
+    padding: 8px 0 6px;
+  }
+  .question:first-of-type { border-top: none; padding-top: 0; }
+  h3 { font-size: 13px; font-weight: 700; margin: 0 0 5px; line-height: 1.35; }
+  .option {
+    display: block;
+    padding: 5px 7px;
+    margin: 3px 0;
+    background: #f6f7fb;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+  .option:hover { background: #ebeffa; }
+  .option input { margin-right: 5px; vertical-align: -1px; }
+  .quiz-actions { margin-top: 6px; }
+  button {
+    background: #245bb5;
+    color: white;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 0 6px 0 0;
+    font-size: 12px;
+  }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .feedback {
+    display: none;
+    padding: 6px 7px;
+    margin-top: 4px;
+    border-radius: 5px;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  .correct { background: #e0f5e8; color: #176b39; }
+  .incorrect { background: #fde8e8; color: #a12828; }
+  .score { font-size: 14px; font-weight: bold; margin-top: 6px; }
+  .score:empty { display: none; margin: 0; padding: 0; height: 0; }
+</style>
+</head>
+<body>
+<div class="quiz-container">
+  <div id="quiz-form"></div>
+  <div class="quiz-actions">
+    <button type="button" id="submit">Check answers</button>
+    <button type="button" id="retry" style="display:none">Try again</button>
+  </div>
+  <div class="score" id="score"></div>
+</div>
+<script>
+const lesson = {
+  questions: [
+    {
+      q: "Why prepare the target in |−⟩?",
+      options: [
+        "To store f(x) as an ordinary bit",
+        "So XOR with f(x) can kick a phase sign to the input",
+        "To remove the target register"
+      ],
+      answer: 1,
+      explanation: "On |−⟩, XOR shows up as ± on the joint state."
+    },
+    {
+      q: "What happens when f(x) = 0?",
+      options: [
+        "The input gets a minus sign",
+        "The target becomes |0⟩",
+        "The state stays |x⟩|−⟩"
+      ],
+      answer: 2,
+      explanation: "XOR with 0 leaves the target unchanged."
+    },
+    {
+      q: "What happens when f(x) = 1?",
+      options: [
+        "The result is −|x⟩|−⟩",
+        "The result is |x⟩|+⟩",
+        "The input register is erased"
+      ],
+      answer: 0,
+      explanation: "X on |−⟩ gives an overall minus."
+    },
+    {
+      q: "Why is phase kickback useful on a superposition?",
+      options: [
+        "It reads every f(x) in one measurement",
+        "Different branches get different signs (relative phase)",
+        "It removes the need for more gates"
+      ],
+      answer: 1,
+      explanation: "Relative signs drive interference later."
+    }
+  ]
+};
+
+function scheduleFit() {
+  if (window.qmEmbedFitSchedule) window.qmEmbedFitSchedule();
+}
+
+const form = document.getElementById("quiz-form");
+const feedbacks = [];
+
+lesson.questions.forEach((q, qi) => {
+  const div = document.createElement("div");
+  div.className = "question";
+  const title = document.createElement("h3");
+  title.textContent = `${qi + 1}. ${q.q}`;
+  div.appendChild(title);
+  q.options.forEach((option, oi) => {
+    const label = document.createElement("label");
+    label.className = "option";
+    const radio = document.createElement("input");
+    radio.type = "radio";
+    radio.name = `q${qi}`;
+    radio.value = oi;
+    label.appendChild(radio);
+    label.append(option);
+    div.appendChild(label);
+  });
+  const feedback = document.createElement("div");
+  feedback.className = "feedback";
+  div.appendChild(feedback);
+  feedbacks.push(feedback);
+  form.appendChild(div);
+});
+
+const submit = document.getElementById("submit");
+const retry = document.getElementById("retry");
+const scoreEl = document.getElementById("score");
+
+submit.onclick = () => {
+  let score = 0;
+  lesson.questions.forEach((q, qi) => {
+    const selected = form.querySelector(`input[name="q${qi}"]:checked`);
+    const feedback = feedbacks[qi];
+    if (!selected) {
+      feedback.className = "feedback incorrect";
+      feedback.textContent = "Pick an option.";
+      feedback.style.display = "block";
+      return;
+    }
+    const correct = Number(selected.value) === q.answer;
+    if (correct) score++;
+    feedback.className = "feedback " + (correct ? "correct" : "incorrect");
+    feedback.textContent = correct
+      ? "Correct! " + q.explanation
+      : "Correct answer: " + q.options[q.answer] + ". " + q.explanation;
+    feedback.style.display = "block";
+  });
+  scoreEl.textContent = `Score: ${score} / ${lesson.questions.length}`;
+  submit.style.display = "none";
+  retry.style.display = "inline-block";
+  form.querySelectorAll("input").forEach((input) => { input.disabled = true; });
+  scheduleFit();
+};
+
+retry.onclick = () => {
+  form.querySelectorAll("input").forEach((input) => {
+    input.checked = false;
+    input.disabled = false;
+  });
+  feedbacks.forEach((f) => { f.style.display = "none"; });
+  scoreEl.textContent = "";
+  submit.style.display = "inline-block";
+  retry.style.display = "none";
+  scheduleFit();
+};
+
+scheduleFit();
+</script>
+<script src="embed-fit.js"></script>
+</body>
+</html>

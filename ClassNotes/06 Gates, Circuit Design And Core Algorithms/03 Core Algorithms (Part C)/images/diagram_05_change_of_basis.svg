@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="One state, two coordinate descriptions">
+<rect width="960" height="540" fill="#fcfdff"/>
+<defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#087f8c"/></marker></defs>
+<text x="34" y="47" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#172554">One state, two coordinate descriptions</text>
+<text x="36" y="77" font-family="Arial, sans-serif" font-size="15" fill="#4b647d">Fourier coordinates of the UNCHANGED state are F† α; applying F is a DIFFERENT operation.</text>
+<path d="M34 89H925" stroke="#d5e1ee" stroke-width="1.5"/>
+<rect x="40" y="159" width="252" height="233" rx="12" fill="#eff7fc" stroke="#d5e1ee" stroke-width="1.2"/>
+<text x="166" y="200" font-family="Arial, sans-serif" text-anchor="middle" font-size="21" font-weight="700" fill="#172554">Computational basis</text>
+<text x="166" y="245" font-family="Arial, sans-serif" text-anchor="middle" font-size="19" font-weight="400" fill="#172554">|ψ⟩ = Σ αₓ|x⟩</text>
+<text x="166" y="315" font-family="Arial, sans-serif" text-anchor="middle" font-size="18" font-weight="700" fill="#087f8c">α = (α₀, α₁, …)</text>
+<rect x="667" y="159" width="252" height="233" rx="12" fill="#f5f0fc" stroke="#d5e1ee" stroke-width="1.2"/>
+<text x="793" y="200" font-family="Arial, sans-serif" text-anchor="middle" font-size="21" font-weight="700" fill="#172554">Fourier basis</text>
+<text x="793" y="245" font-family="Arial, sans-serif" text-anchor="middle" font-size="19" font-weight="400" fill="#172554">|ψ⟩ = Σ âγ|fγ⟩</text>
+<text x="793" y="315" font-family="Arial, sans-serif" text-anchor="middle" font-size="24" font-weight="700" fill="#6b4fa5">â = F† α</text>
+<line x1="300" y1="257" x2="651" y2="257" stroke="#087f8c" stroke-width="3" marker-end="url(#a)" />
+<text x="474" y="226" font-family="Arial, sans-serif" text-anchor="middle" font-size="17" font-weight="700" fill="#087f8c">Change coordinate description</text>
+<rect x="300" y="352" width="345" height="80" rx="12" fill="#fff4e6" stroke="#d5e1ee" stroke-width="1.2"/>
+<text x="472" y="386" font-family="Arial, sans-serif" text-anchor="middle" font-size="18" font-weight="700" fill="#d26a20">Physical gate instead:</text>
+<text x="472" y="414" font-family="Arial, sans-serif" text-anchor="middle" font-size="18" font-weight="400" fill="#172554">new state has amplitudes F α</text>
+</svg>

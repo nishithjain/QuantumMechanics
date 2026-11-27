@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Black-box function flow</title>
+  <link rel="stylesheet" href="embed-frame.css">
+</head>
+<body style="background:#f4f6fc;">
+<div class="function-demo">
+  <style>
+    .function-demo {
+      font-family: Arial, sans-serif;
+      background: #f4f6fc;
+      border: 1px solid #dce2f0;
+      border-radius: 14px;
+      padding: 14px 14px 16px;
+      color: #202b45;
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    .function-demo .heading {
+      display: none;
+    }
+
+    .function-demo .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .function-demo .stage {
+      width: 145px;
+      min-height: 105px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
+      box-sizing: border-box;
+      padding: 12px;
+    }
+
+    .function-demo .input {
+      background: #e3edff;
+      border: 2px solid #7da6f5;
+    }
+
+    .function-demo .output {
+      background: #e0f5e8;
+      border: 2px solid #65bd85;
+    }
+
+    .function-demo .oracle {
+      background: #303c9b;
+      color: white;
+      border: 2px solid #202b75;
+      width: 180px;
+      min-height: 125px;
+      box-shadow: 0 5px 12px rgba(48, 60, 155, 0.2);
+    }
+
+    .function-demo .symbol {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .function-demo .name {
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .function-demo .detail {
+      font-size: 12px;
+      opacity: .85;
+    }
+
+    .function-demo .arrow {
+      font-size: 27px;
+      color: #65718d;
+      font-weight: bold;
+    }
+
+    .function-demo .secret {
+      border-top: 1px dashed #aab4e9;
+      margin-top: 13px;
+      padding-top: 10px;
+      font-size: 12px;
+      color: #dce3ff;
+    }
+
+    .function-demo .caption {
+      margin-top: 14px;
+      background: white;
+      border-radius: 9px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #56627a;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    @media (max-width: 620px) {
+      .function-demo .flow {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 6px;
+        transform: scale(0.92);
+        transform-origin: center top;
+        width: 108%;
+        margin-left: -4%;
+      }
+      .function-demo .stage {
+        width: 118px;
+        min-height: 88px;
+        padding: 8px 6px;
+      }
+      .function-demo .oracle {
+        width: 130px;
+        min-height: 96px;
+      }
+      .function-demo .symbol { font-size: 24px; }
+      .function-demo .name { font-size: 13px; }
+      .function-demo .detail, .function-demo .secret { font-size: 10px; }
+      .function-demo .arrow { font-size: 20px; }
+    }
+  </style>
+
+  <div class="heading">How does a black-box function work?</div>
+
+  <div class="flow">
+    <div class="stage input">
+      <div class="symbol">x</div>
+      <div class="name">INPUT</div>
+      <div class="detail">Give the machine a value</div>
+    </div>
+
+    <div class="arrow" aria-hidden="true">→</div>
+
+    <div class="stage oracle">
+      <div style="font-size:27px" aria-hidden="true">🔒</div>
+      <div class="name">MYSTERY MACHINE</div>
+      <div style="font-size:22px;font-weight:bold">f(x)</div>
+      <div class="secret">Internal working is hidden</div>
+    </div>
+
+    <div class="arrow" aria-hidden="true">→</div>
+
+    <div class="stage output">
+      <div class="symbol">f(x)</div>
+      <div class="name">OUTPUT</div>
+      <div class="detail">The calculated result</div>
+    </div>
+  </div>
+
+  <div class="caption">
+    <b>Key idea:</b> We can provide an input and receive the function's output, but we cannot
+    inspect the internal implementation of the black box.
+  </div>
+</div>
+<script src="embed-fit.js"></script>
+</body>
+</html>

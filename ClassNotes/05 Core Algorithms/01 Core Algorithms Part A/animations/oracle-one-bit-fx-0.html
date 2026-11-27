@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oracle f(x)=0</title>
+<link rel="stylesheet" href="oracle-one-bit-card-styles.css">
+</head>
+<body>
+<div class="card">
+  <h3>Example A — f(x) = 0</h3>
+  <div class="meaning">The function always returns 0</div>
+  <div class="circuit">
+    <svg viewBox="0 0 340 115" role="img" aria-label="No gate on either wire">
+      <text class="wire-label" x="28" y="35">x</text>
+      <text class="wire-label" x="28" y="78">y</text>
+      <line class="wire" x1="55" y1="35" x2="315" y2="35"/>
+      <line class="wire" x1="55" y1="78" x2="315" y2="78"/>
+    </svg>
+    <div class="circuit-caption">Do nothing — identity</div>
+  </div>
+  <div class="explanation">
+    <strong>What happens?</strong><br>
+    The function returns 0 for every input. XOR with 0 does not change y.
+  </div>
+  <div class="formula">y ⊕ 0 = y</div>
+</div>
+<script src="embed-fit.js"></script>
+</body>
+</html>

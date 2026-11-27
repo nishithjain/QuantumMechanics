@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deutsch–Jozsa black box — four inputs</title>
+<link rel="stylesheet" href="embed-frame.css">
+<script>if(window.self!==window.top)document.documentElement.classList.add("qm-embed");</script>
+<style>
+  html.qm-embed,html.qm-embed body{overflow:hidden}
+  .oracle-demo {
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 14px 14px 12px;
+    border: 1px solid #dce2ee;
+    border-radius: 14px;
+    color: #172033;
+    background: #f4f6fc;
+    box-sizing: border-box;
+  }
+  html.qm-embed .oracle-demo{max-width:none;border-color:#dce3ef;padding:12px 12px 10px}
+  .oracle-demo h3 { margin: 0 0 6px; font-size: 17px; }
+  .oracle-demo .intro { color: #596579; margin: 0 0 14px; line-height: 1.45; font-size: 13px; }
+  .oracle-stage {
+    display: grid;
+    grid-template-columns: 1fr minmax(150px, 1.2fr) 1fr;
+    gap: 14px;
+    align-items: center;
+  }
+  .oracle-side-title {
+    font-size: 13px; font-weight: 700; color: #596579;
+    text-transform: uppercase; letter-spacing: .05em;
+    margin-bottom: 10px;
+  }
+  .oracle-inputs, .oracle-outputs { display: grid; gap: 9px; }
+  .oracle-row {
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 42px; padding: 8px 11px; border-radius: 9px;
+    border: 1px solid #e1e5eb; background: #fff;
+    font-family: ui-monospace, monospace; font-weight: 700;
+    transition: background .2s, border-color .2s, transform .2s;
+  }
+  .oracle-row.active {
+    border: 2px solid #2563eb; background: #eff6ff;
+    transform: scale(1.025);
+  }
+  .oracle-row.done { border-color: #86c89b; background: #effaf2; }
+  .oracle-arrow { color: #7b8493; font-size: 20px; margin: 0 4px; }
+  .oracle-box {
+    min-height: 190px; border: 3px solid #27358f;
+    border-radius: 16px; background: linear-gradient(145deg,#303b9c,#20276f);
+    color: white; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    padding: 14px; position: relative; overflow: hidden;
+    box-shadow: 0 7px 18px #20276f25;
+  }
+  .oracle-box .box-icon { font-size: 34px; margin-bottom: 8px; }
+  .oracle-box strong { font-size: 20px; }
+  .oracle-box small { color: #e0e7ff; margin-top: 7px; line-height: 1.35; }
+  .traveller {
+    position: absolute; top: 10px; left: 8px;
+    width: 35px; height: 35px; border-radius: 8px;
+    background: #facc15; color: #1f2937; display: none;
+    align-items: center; justify-content: center;
+    font: bold 14px ui-monospace, monospace;
+    box-shadow: 0 2px 8px #0003; z-index: 2;
+  }
+  .traveller.go { display: flex; animation: enterBox 1.25s ease-in-out forwards; }
+  @keyframes enterBox {
+    0% { left: -30px; opacity: 0; transform: scale(.8); }
+    25% { opacity: 1; }
+    70% { left: calc(50% - 17px); transform: scale(1); }
+    100% { left: calc(100% - 42px); opacity: 0; }
+  }
+  .oracle-controls { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 14px; }
+  .oracle-controls button {
+    border: 0; border-radius: 9px; padding: 10px 16px;
+    font-weight: 700; cursor: pointer; background: #e8edf5; color: #1f2937;
+  }
+  .oracle-controls button.primary { background: #27358f; color: white; }
+  .oracle-controls button:disabled { opacity: .5; cursor: not-allowed; }
+  .oracle-status {
+    margin-top: 12px; min-height: 44px; padding: 10px 12px;
+    background: #fff; border: 1px solid #e5e7eb; border-radius: 9px; line-height: 1.45;
+    font-size: 13px;
+  }
+  .oracle-summary {
+    margin-top: 12px; border-top: 1px solid #e5e7eb; padding-top: 11px;
+    display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center;
+    font-size: 13px;
+  }
+  .oracle-summary strong { font-size: 15px; }
+  .bit-zero { color: #15803d; font-weight: 800; }
+  .bit-one { color: #b91c1c; font-weight: 800; }
+  .oracle-note { color: #596579; font-size: 12px; margin-top: 10px; line-height: 1.45; }
+  @media (max-width: 600px) {
+    .oracle-stage { grid-template-columns: 1fr; }
+    .oracle-box { min-height: 145px; }
+    .oracle-arrow { display: none; }
+    .oracle-side-title { margin-top: 5px; }
+  }
+</style>
+</head>
+<body style="background:#f4f6fc;">
+<div class="oracle-demo" id="dj-oracle-demo">
+  <h3>How does the black box (oracle) work?</h3>
+  <p class="intro">
+    Each two-bit input enters the same function. The black box returns one output bit.
+    Watch the inputs travel through the oracle one at a time.
+  </p>
+
+  <div class="oracle-stage">
+    <div>
+      <div class="oracle-side-title">Possible inputs</div>
+      <div class="oracle-inputs" id="dj-inputs">
+        <div class="oracle-row" data-i="0"><span>00</span><span class="oracle-arrow">→</span></div>
+        <div class="oracle-row" data-i="1"><span>01</span><span class="oracle-arrow">→</span></div>
+        <div class="oracle-row" data-i="2"><span>10</span><span class="oracle-arrow">→</span></div>
+        <div class="oracle-row" data-i="3"><span>11</span><span class="oracle-arrow">→</span></div>
+      </div>
+    </div>
+
+    <div class="oracle-box">
+      <div class="traveller" id="dj-traveller">00</div>
+      <div class="box-icon" aria-hidden="true">⚙️</div>
+      <strong>BLACK BOX</strong>
+      <div style="font-size:18px;margin-top:5px;font-weight:700">Oracle: f(x)</div>
+      <small>It applies the hidden rule<br>and returns one bit.</small>
+    </div>
+
+    <div>
+      <div class="oracle-side-title">Output from f(x)</div>
+      <div class="oracle-outputs" id="dj-outputs">
+        <div class="oracle-row" data-o="0"><span>f(00)</span><span>?</span></div>
+        <div class="oracle-row" data-o="1"><span>f(01)</span><span>?</span></div>
+        <div class="oracle-row" data-o="2"><span>f(10)</span><span>?</span></div>
+        <div class="oracle-row" data-o="3"><span>f(11)</span><span>?</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="oracle-controls">
+    <button type="button" class="primary" id="dj-run">▶ Run animation</button>
+    <button type="button" id="dj-next">Next input</button>
+    <button type="button" id="dj-reset">↻ Reset</button>
+  </div>
+
+  <div class="oracle-status" id="dj-status" aria-live="polite">
+    Ready. Press <b>Run animation</b> to send the first input into the black box.
+  </div>
+
+  <div class="oracle-summary">
+    <span>Outputs found:</span>
+    <strong id="dj-count">0 / 4</strong>
+    <span>Zeros: <b id="dj-zeros">0</b></span>
+    <span>Ones: <b id="dj-ones">0</b></span>
+    <strong id="dj-classification">Not classified yet</strong>
+  </div>
+
+  <p class="oracle-note">
+    Example function used: f(00)=0, f(01)=1, f(10)=0, f(11)=1 — the same values as above.
+    This is a balanced function: exactly two inputs produce 0 and two produce 1.
+    The quantum algorithm later queries its oracle once using a superposition (not shown here).
+  </p>
+</div>
+
+<script>
+(function () {
+  const root = document.getElementById("dj-oracle-demo");
+  if (!root) return;
+  const inputs = ["00", "01", "10", "11"];
+  const outputs = [0, 1, 0, 1];
+  const inputRows = [...root.querySelectorAll(".oracle-inputs .oracle-row")];
+  const outputRows = [...root.querySelectorAll(".oracle-outputs .oracle-row")];
+  const traveller = root.querySelector("#dj-traveller");
+  const status = root.querySelector("#dj-status");
+  const count = root.querySelector("#dj-count");
+  const zeros = root.querySelector("#dj-zeros");
+  const ones = root.querySelector("#dj-ones");
+  const classification = root.querySelector("#dj-classification");
+  const runButton = root.querySelector("#dj-run");
+  const nextButton = root.querySelector("#dj-next");
+  let current = 0;
+  let busy = false;
+  let timer = null;
+
+  function fit() {
+    if (window.qmEmbedFitSchedule) window.qmEmbedFitSchedule();
+  }
+
+  function updateSummary() {
+    const completed = outputRows.filter(row => row.dataset.done === "yes").length;
+    const z = outputRows.filter((row, i) => row.dataset.done === "yes" && outputs[i] === 0).length;
+    const o = outputRows.filter((row, i) => row.dataset.done === "yes" && outputs[i] === 1).length;
+    count.textContent = completed + " / 4";
+    zeros.textContent = z;
+    ones.textContent = o;
+    if (completed < 4) classification.textContent = "Not classified yet";
+    else classification.textContent = z === 2 && o === 2 ? "BALANCED" : (z === 4 || o === 4 ? "CONSTANT" : "Neither (outside promise)");
+    fit();
+  }
+
+  function reset() {
+    if (timer) clearTimeout(timer);
+    busy = false;
+    current = 0;
+    traveller.classList.remove("go");
+    inputRows.forEach(row => row.classList.remove("active", "done"));
+    outputRows.forEach(row => {
+      row.classList.remove("active", "done");
+      row.dataset.done = "no";
+      row.lastElementChild.textContent = "?";
+      row.lastElementChild.className = "";
+    });
+    runButton.disabled = false;
+    nextButton.disabled = false;
+    status.innerHTML = 'Ready. Press <b>Run animation</b> to send the first input into the black box.';
+    updateSummary();
+  }
+
+  function step() {
+    if (busy || current >= 4) return;
+    busy = true;
+    const i = current;
+    const inRow = inputRows[i];
+    const outRow = outputRows[i];
+    inRow.classList.add("active");
+    traveller.textContent = inputs[i];
+    traveller.classList.remove("go");
+    void traveller.offsetWidth;
+    traveller.classList.add("go");
+    status.innerHTML = '<b>Input ' + inputs[i] + '</b> is travelling into the oracle. The oracle applies its hidden function rule…';
+
+    timer = setTimeout(() => {
+      inRow.classList.remove("active");
+      inRow.classList.add("done");
+      outRow.classList.add("active", "done");
+      outRow.dataset.done = "yes";
+      const bit = outputs[i];
+      const value = outRow.lastElementChild;
+      value.textContent = bit;
+      value.className = bit === 0 ? "bit-zero" : "bit-one";
+      status.innerHTML = '<b>Output:</b> f(' + inputs[i] + ') = <b class="' + (bit === 0 ? "bit-zero" : "bit-one") + '">' + bit + '</b>. The black box has returned one bit.';
+      current++;
+      updateSummary();
+      busy = false;
+      if (current === 4) {
+        runButton.disabled = true;
+        nextButton.disabled = true;
+        status.innerHTML += '<br><b>All four mappings are now visible.</b> There are two 0s and two 1s, so this example is balanced.';
+        fit();
+      }
+    }, 1300);
+  }
+
+  function runAll() {
+    if (busy || current >= 4) return;
+    runButton.disabled = true;
+    function runNext() {
+      if (current >= 4) return;
+      step();
+      const wait = () => {
+        if (busy) timer = setTimeout(wait, 100);
+        else if (current < 4) runNext();
+      };
+      timer = setTimeout(wait, 1450);
+    }
+    runNext();
+  }
+
+  runButton.addEventListener("click", runAll);
+  nextButton.addEventListener("click", step);
+  root.querySelector("#dj-reset").addEventListener("click", reset);
+  updateSummary();
+})();
+</script>
+<script src="embed-fit.js"></script>
+</body>
+</html>

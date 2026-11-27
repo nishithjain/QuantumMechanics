@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Explore relative signs — phase kickback</title>
+  <link rel="stylesheet" href="embed-frame.css">
+</head>
+<body style="background:#f4f6fc;">
+<div class="signs-explorer">
+<style>
+.signs-explorer {
+  font-family: Arial, sans-serif;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 12px 12px 14px;
+  background: #f4f6fc;
+  border: 1px solid #dce2ee;
+  border-radius: 13px;
+  color: #26324a;
+}
+.signs-explorer * { box-sizing: border-box; }
+.signs-explorer h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  text-align: center;
+}
+.signs-explorer .lead {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #53617b;
+  text-align: center;
+  margin: 0 0 12px;
+}
+.signs-explorer .pick {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.signs-explorer .pick-block {
+  background: #fff;
+  border: 1px solid #dce2ee;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+.signs-explorer .pick-label {
+  font-size: 11px;
+  font-weight: bold;
+  color: #68758c;
+  margin-bottom: 8px;
+}
+.signs-explorer .toggle {
+  display: inline-flex;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #b8c4dc;
+}
+.signs-explorer .toggle button {
+  border: 0;
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  background: #eef1f8;
+  color: #3d4a63;
+}
+.signs-explorer .toggle button.active {
+  background: #303b99;
+  color: #fff;
+  font-weight: bold;
+}
+.signs-explorer .flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 8px;
+  align-items: stretch;
+}
+.signs-explorer .panel {
+  background: #fff;
+  border: 1px solid #dce2ee;
+  border-radius: 10px;
+  padding: 10px 8px;
+}
+.signs-explorer .panel-title {
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: #68758c;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.signs-explorer .mid-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  color: #303b99;
+  text-align: center;
+  line-height: 1.35;
+  padding: 0 2px;
+}
+.signs-explorer .reg-title {
+  font-size: 11px;
+  color: #68758c;
+  margin: 6px 0 4px;
+  text-align: center;
+}
+.signs-explorer .branches {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.signs-explorer .branch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 6px;
+  border-radius: 8px;
+  font: 18px Georgia, serif;
+  background: #e8efff;
+}
+.signs-explorer .branch.neg {
+  background: #fceaea;
+}
+.signs-explorer .badge {
+  font: bold 13px Arial, sans-serif;
+  min-width: 22px;
+  text-align: center;
+}
+.signs-explorer .badge.plus { color: #1d6b3a; }
+.signs-explorer .badge.minus { color: #b52a2a; }
+.signs-explorer .connector {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #64718a;
+  margin: 2px 0;
+}
+.signs-explorer .target-chip {
+  text-align: center;
+  padding: 8px;
+  border-radius: 8px;
+  background: #eef2ff;
+  font: 17px Georgia, serif;
+  margin-top: 4px;
+}
+.signs-explorer .insight {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 9px;
+  font-size: 12px;
+  line-height: 1.55;
+  border: 1px solid;
+}
+.signs-explorer .insight.same {
+  background: #f5f6fa;
+  border-color: #d5dbe8;
+  color: #4a5568;
+}
+.signs-explorer .insight.diff {
+  background: #e9f5ed;
+  border-color: #b8ddc3;
+  color: #286b42;
+}
+.signs-explorer .hadamard {
+  margin-top: 8px;
+  padding: 10px;
+  background: #fff8e8;
+  border: 1px solid #f0d9a8;
+  border-radius: 9px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #5c4a1f;
+}
+.signs-explorer .hadamard strong { color: #3d2f0f; }
+@media (max-width: 520px) {
+  .signs-explorer .flow {
+    grid-template-columns: 1fr 22px 1fr;
+    gap: 4px;
+  }
+  .signs-explorer .mid-arrow {
+    font-size: 9px;
+    line-height: 1.2;
+  }
+  .signs-explorer .branch {
+    font-size: 15px;
+    padding: 6px 4px;
+    gap: 4px;
+  }
+  .signs-explorer .target-chip {
+    font-size: 15px;
+    padding: 6px;
+  }
+  .signs-explorer .panel {
+    padding: 8px 4px;
+  }
+}
+</style>
+
+<h3>Explore relative signs</h3>
+<p class="lead">
+  Input: superposition on the first register. Target: <strong>|−⟩</strong>.
+  Choose <em>f</em>(0) and <em>f</em>(1); one oracle call attaches a sign (−1)<sup><em>f</em>(<em>x</em>)</sup> to each branch.
+</p>
+
+<div class="pick">
+  <div class="pick-block">
+    <div class="pick-label">f(0) — function on input 0</div>
+    <div class="toggle" id="f0-toggle">
+      <button type="button" data-val="0" class="active">0</button>
+      <button type="button" data-val="1">1</button>
+    </div>
+  </div>
+  <div class="pick-block">
+    <div class="pick-label">f(1) — function on input 1</div>
+    <div class="toggle" id="f1-toggle">
+      <button type="button" data-val="0" class="active">0</button>
+      <button type="button" data-val="1">1</button>
+    </div>
+  </div>
+</div>
+
+<div class="flow">
+  <div class="panel" id="panel-before">
+    <div class="panel-title">BEFORE U<sub>f</sub></div>
+    <div class="reg-title">First register</div>
+    <div class="branches" id="before-branches"></div>
+    <div class="reg-title">Target</div>
+    <div class="target-chip">|−⟩</div>
+  </div>
+
+  <div class="mid-arrow">One<br>oracle<br>call<br>U<sub>f</sub></div>
+
+  <div class="panel" id="panel-after">
+    <div class="panel-title">AFTER U<sub>f</sub></div>
+    <div class="reg-title">First register (signs kicked back)</div>
+    <div class="branches" id="after-branches"></div>
+    <div class="reg-title">Target (unchanged direction)</div>
+    <div class="target-chip">|−⟩</div>
+  </div>
+</div>
+
+<div class="insight same" id="insight"></div>
+<div class="hadamard" id="hadamard-note"></div>
+</div>
+
+<script>
+(function () {
+  const f0Toggle = document.getElementById("f0-toggle");
+  const f1Toggle = document.getElementById("f1-toggle");
+  let f0 = 0;
+  let f1 = 0;
+
+  function bindToggle(el, setter) {
+    el.querySelectorAll("button").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        el.querySelectorAll("button").forEach(function (b) {
+          b.classList.remove("active");
+        });
+        btn.classList.add("active");
+        setter(+btn.getAttribute("data-val"));
+        render();
+        if (window.qmEmbedFitSchedule) window.qmEmbedFitSchedule();
+      });
+    });
+  }
+
+  bindToggle(f0Toggle, function (v) {
+    f0 = v;
+  });
+  bindToggle(f1Toggle, function (v) {
+    f1 = v;
+  });
+
+  function branchHtml(sign, ket, showTarget) {
+    const cls = sign === "-" ? " branch neg" : " branch";
+    const badge = sign === "-" ? "minus" : "plus";
+    return (
+      '<div class="' +
+      cls.trim() +
+      '">' +
+      '<span class="badge ' +
+      badge +
+      '">' +
+      sign +
+      "</span>" +
+      "<span>" +
+      ket +
+      "</span>" +
+      (showTarget
+        ? '<span style="font:11px Arial,sans-serif;color:#68758c">×|−⟩</span>'
+        : "") +
+      "</div>"
+    );
+  }
+
+  function render() {
+    const before = document.getElementById("before-branches");
+    const after = document.getElementById("after-branches");
+    const sign0 = f0 === 0 ? "+" : "−";
+    const sign1 = f1 === 0 ? "+" : "−";
+
+    before.innerHTML =
+      branchHtml("+", "|0⟩", false) +
+      '<div class="connector">+</div>' +
+      branchHtml("+", "|1⟩", false);
+
+    after.innerHTML =
+      branchHtml(sign0, "|0⟩", true) +
+      '<div class="connector">' +
+      (sign0 === sign1 ? "+" : "−") +
+      "</div>" +
+      branchHtml(sign1, "|1⟩", true);
+
+    const insight = document.getElementById("insight");
+    const had = document.getElementById("hadamard-note");
+    const same = f0 === f1;
+
+    if (same) {
+      insight.className = "insight same";
+      insight.innerHTML =
+        "<strong>Same sign on both branches.</strong> The extra minus (if any) is only a " +
+        "<em>global</em> phase on the whole state. The first register is still the same " +
+        "as |+⟩ = (|0⟩+|1⟩)/√2 for interference purposes.";
+      had.innerHTML =
+        "<strong>After H on the first qubit:</strong> both paths add in phase → measure " +
+        "<strong>|0⟩</strong> with certainty (in the ideal Deutsch setup).";
+    } else {
+      insight.className = "insight diff";
+      insight.innerHTML =
+        "<strong>Different signs on |0⟩ and |1⟩.</strong> That is a " +
+        "<em>relative</em> phase — not an overall multiply-by-−1. The first register behaves " +
+        "like |−⟩ = (|0⟩−|1⟩)/√2 (up to a global sign).";
+      had.innerHTML =
+        "<strong>After H on the first qubit:</strong> the branches interfere with opposite sign → " +
+        "measure <strong>|1⟩</strong> with certainty (balanced vs constant discrimination in Deutsch).";
+    }
+  }
+
+  render();
+})();
+</script>
+<script src="embed-fit.js"></script>
+</body>
+</html>

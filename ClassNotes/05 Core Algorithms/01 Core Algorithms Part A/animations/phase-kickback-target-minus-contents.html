@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>|−⟩ — what the target contains</title>
+  <link rel="stylesheet" href="embed-frame.css">
+</head>
+<body style="background:#f4f6fc;">
+<div class="target-state">
+<style>
+.target-state {
+  font-family: Arial, sans-serif;
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 10px 10px 12px;
+  background: #f4f6fc;
+  border: 1px solid #dce2ee;
+  border-radius: 13px;
+  color: #26324a;
+}
+.target-state * { box-sizing: border-box; }
+.target-state h3 { display: none; }
+.target-state .parts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.target-state .part {
+  padding: 10px 6px;
+  border-radius: 10px;
+  text-align: center;
+}
+.target-state .positive { background: #e6f1ff; border: 1px solid #b4cff5; }
+.target-state .negative { background: #fceaea; border: 1px solid #edbaba; }
+.target-state .symbol { font-size: 24px; font-weight: bold; line-height: 1.2; }
+.target-state .positive .symbol { color: #2869bd; }
+.target-state .negative .symbol { color: #c13e3e; }
+.target-state .caption { font-size: 11px; margin-top: 4px; color: #68758c; }
+.target-state .equation {
+  background: white;
+  border: 1px solid #dce2ee;
+  border-radius: 9px;
+  padding: 8px 10px;
+  margin-top: 8px;
+  text-align: center;
+  font: 19px Georgia, serif;
+}
+.target-state .note { display: none; }
+@media (max-width: 280px) {
+  .target-state .parts { grid-template-columns: 1fr; }
+}
+</style>
+
+<h3>What does the target contain?</h3>
+<div class="parts">
+  <div class="part positive">
+    <div class="symbol">|0⟩</div>
+    <div class="caption">Positive part</div>
+  </div>
+  <div class="part negative">
+    <div class="symbol">− |1⟩</div>
+    <div class="caption">Negative part</div>
+  </div>
+</div>
+<div class="equation">
+  |−⟩ = (|0⟩ − |1⟩) / √2
+</div>
+<div class="note">
+  The target is not simply 0 or 1. It is a carefully prepared
+  quantum state containing both possibilities.
+</div>
+</div>
+<script src="embed-fit.js"></script>
+</body>
+</html>

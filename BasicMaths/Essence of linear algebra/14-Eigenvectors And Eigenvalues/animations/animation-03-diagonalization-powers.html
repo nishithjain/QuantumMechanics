@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eigenbasis and diagonalization</title>
+<style>
+body{font-family:system-ui,Segoe UI,sans-serif;max-width:980px;margin:22px auto;padding:0 16px;background:#f5f8fc;color:#17243a}
+.card{background:#fff;border:1px solid #d7e1ef;border-radius:14px;padding:16px;margin:14px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label{display:block;margin:10px 0}input{width:100%}
+.math{font-family:ui-monospace,Consolas,monospace;background:#f0f4fa;padding:10px;border-radius:8px;overflow-wrap:anywhere}
+button{padding:9px 13px;border:0;border-radius:8px;background:#174f91;color:white;margin:4px;cursor:pointer}.alt{background:#e5edf7;color:#18304e}
+@media(max-width:650px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<h1>Why an eigenbasis makes powers easier</h1>
+<p>Use the lecture's diagonal example: one basis direction is scaled by −1 and the other by 2. In the eigenbasis, the matrix is diagonal. Repeating the transformation simply raises each eigenvalue to the chosen power.</p>
+<div class="card">
+<label>Number of repetitions n: <b id="nv">5</b><input id="n" type="range" min="0" max="20" value="5"></label>
+<div class="grid"><div><h3>Diagonal / eigenbasis matrix</h3><p class="math">D = [[−1, 0], [0, 2]]</p><p class="math" id="dout"></p></div>
+<div><h3>What happens to each direction?</h3><p id="first"></p><p id="second"></p><p class="math" id="formula"></p></div></div>
+<button id="play">Play powers</button><button id="pause" class="alt">Pause</button><button id="step" class="alt">Step +1</button><button id="reset" class="alt">Reset</button>
+</div>
+<div class="card"><b>Change of basis reminder</b><p>If P contains independent eigenvectors as columns and M is the original matrix, then D = P⁻¹MP. After computing Dⁿ, convert back: Mⁿ = PDⁿP⁻¹.</p><p>The animation uses D directly so the simple repeated-scaling behavior is easy to see.</p></div>
+<script>
+const $=id=>document.getElementById(id);let n=5,playing=false,handle=null;
+function fmt(x){if(!Number.isFinite(x))return 'undefined';if(Math.abs(x)>1e6)return x.toExponential(2);return String(x)}
+function render(){ $('n').value=n;$('nv').textContent=n;let a=Math.pow(-1,n),b=Math.pow(2,n);
+$('dout').textContent=`D^${n} = [[${a}, 0], [0, ${b}]]`;
+$('first').textContent=`First eigenvector direction: (−1)^${n} = ${a}. It alternates direction because the eigenvalue is −1.`;
+$('second').textContent=`Second eigenvector direction: 2^${n} = ${fmt(b)}. It doubles at every application.`;
+$('formula').textContent=`D^n = diag((−1)^n, 2^n)`;
+}
+function stop(){playing=false;if(handle!==null){clearInterval(handle);handle=null}}
+$('n').oninput=()=>{stop();n=+$('n').value;render()};
+$('play').onclick=()=>{if(playing)return;playing=true;handle=setInterval(()=>{n=n>=20?0:n+1;render()},650)};
+$('pause').onclick=stop;$('step').onclick=()=>{stop();n=Math.min(20,n+1);render()};$('reset').onclick=()=>{stop();n=0;render()};
+render();
+</script></body></html>

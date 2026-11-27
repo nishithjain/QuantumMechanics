@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Change a transformation matrix with A inverse M A</title>
+<style>
+body{font-family:system-ui,Segoe UI,sans-serif;max-width:980px;margin:24px auto;padding:0 16px;background:#f5f8fc;color:#17243a}
+.card{background:#fff;border:1px solid #d7e1ef;border-radius:14px;padding:16px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+label{display:block;margin:8px 0}input{width:100%;padding:7px;border:1px solid #cbd5e1;border-radius:7px}
+.math{font-family:ui-monospace,Consolas,monospace;background:#f0f4fa;padding:10px;border-radius:8px;overflow-wrap:anywhere}
+.metric{font-weight:700;font-size:1.1rem}
+button{padding:9px 14px;border:0;border-radius:8px;background:#174f91;color:white;margin:4px;cursor:pointer}.alt{background:#e5edf7;color:#18304e}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<h1>Why does a transformation become A⁻¹MA?</h1>
+<p>We want the same geometric transformation expressed in Jennifer's coordinates. First translate into standard coordinates, apply M, then translate back.</p>
+<div class="card">
+<h3>Standard transformation matrix M</h3>
+<div class="grid">
+<label>m₁₁ <input id="m11" type="number" step=".1" value="0"></label><label>m₁₂ <input id="m12" type="number" step=".1" value="-1"></label>
+<label>m₂₁ <input id="m21" type="number" step=".1" value="1"></label><label>m₂₂ <input id="m22" type="number" step=".1" value="0"></label>
+<label>Jennifer input c₁ <input id="c1" type="number" step=".1" value="1"></label><label>Jennifer input c₂ <input id="c2" type="number" step=".1" value="0"></label>
+</div>
+<p class="math" id="matrices"></p><p class="math" id="steps"></p><p class="metric" id="out"></p>
+<button id="rotation">90° counterclockwise rotation</button><button class="alt" id="shear">Try a shear</button><button class="alt" id="reset">Reset</button>
+</div>
+<div class="card"><b>Remember the order</b><ol><li><b>A</b>: Jennifer → standard.</li><li><b>M</b>: perform the transformation in standard coordinates.</li><li><b>A⁻¹</b>: standard → Jennifer.</li></ol><p>The rightmost matrix acts first, so the complete formula is M<sub>J</sub> = A⁻¹ M A.</p></div>
+<script>
+const $=id=>document.getElementById(id),v=id=>Number($(id).value)||0,fmt=x=>Number(x.toFixed(4)).toString();
+function mul(A,B){return [[A[0][0]*B[0][0]+A[0][1]*B[1][0],A[0][0]*B[0][1]+A[0][1]*B[1][1]],[A[1][0]*B[0][0]+A[1][1]*B[1][0],A[1][0]*B[0][1]+A[1][1]*B[1][1]]]}
+function vec(A,x){return [A[0][0]*x[0]+A[0][1]*x[1],A[1][0]*x[0]+A[1][1]*x[1]]}
+function mat(A){return `[[${fmt(A[0][0])}, ${fmt(A[0][1])}], [${fmt(A[1][0])}, ${fmt(A[1][1])}]]`}
+function calc(){
+ let M=[[v('m11'),v('m12')],[v('m21'),v('m22')]],A=[[2,-1],[1,1]],Ai=[[1/3,1/3],[-1/3,2/3]],c=[v('c1'),v('c2')];
+ let MA=mul(M,A),MJ=mul(Ai,MA),std=vec(A,c),trans=vec(M,std),back=vec(Ai,trans),direct=vec(MJ,c);
+ $('matrices').textContent=`A⁻¹ M A = ${mat(Ai)} × ${mat(M)} × ${mat(A)} = ${mat(MJ)}`;
+ $('steps').textContent=`Step 1: A c = (${fmt(std[0])}, ${fmt(std[1])}) in standard coordinates. Step 2: M(Ac) = (${fmt(trans[0])}, ${fmt(trans[1])}). Step 3: A⁻¹M(Ac) = (${fmt(back[0])}, ${fmt(back[1])}) in Jennifer coordinates.`;
+ $('out').textContent=`Jennifer-coordinate output = (${fmt(direct[0])}, ${fmt(direct[1])}). Direct and step-by-step results ${Math.hypot(back[0]-direct[0],back[1]-direct[1])<1e-8?'match':'should match'}.`;
+}
+['m11','m12','m21','m22','c1','c2'].forEach(id=>$(id).addEventListener('input',calc));
+$('rotation').onclick=()=>{[['m11',0],['m12',-1],['m21',1],['m22',0]].forEach(([id,x])=>$(id).value=x);calc()};
+$('shear').onclick=()=>{[['m11',1],['m12',1],['m21',0],['m22',1]].forEach(([id,x])=>$(id).value=x);calc()};
+$('reset').onclick=()=>{[['m11',0],['m12',-1],['m21',1],['m22',0],['c1',1],['c2',0]].forEach(([id,x])=>$(id).value=x);calc()};
+calc();
+</script></body></html>

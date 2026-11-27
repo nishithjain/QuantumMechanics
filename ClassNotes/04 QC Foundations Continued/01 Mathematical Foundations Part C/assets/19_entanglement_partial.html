@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bell state — partial measurement</title>
+<style>
+:root{--ink:#172b4d;--muted:#526581;--blue:#2455c8;--green:#167548;--line:#d7e0ef;--bg:#eef3fb;--purple:#5b3fb9}
+*{box-sizing:border-box}
+body{margin:0;padding:20px 12px;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif}
+main{max-width:820px;margin:auto}
+h2{font-size:14px;font-weight:800;margin:0 0 12px;color:var(--blue);text-transform:uppercase;letter-spacing:.06em}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+.card h3{margin:0 0 10px;font-size:16px}
+.ket{font-family:Georgia,serif;font-size:22px;font-weight:700;text-align:center;margin:8px 0 14px}
+.row{display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:8px 0;border-top:1px solid #edf1f7}
+.row span{color:var(--muted)}
+.tag{font-size:11px;font-weight:800;text-transform:uppercase;padding:3px 8px;border-radius:6px;background:#eef3ff;color:var(--blue)}
+.tag.measured{background:#e8f5ee;color:var(--green)}
+.tag.known{background:#f3efff;color:var(--purple)}
+.prob{margin-top:10px;font-weight:800;color:var(--blue);font-size:14px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+.panel h3{margin:0 0 6px;font-size:15px}
+.sub{color:var(--muted);font-size:13px;margin:0 0 12px;line-height:1.45}
+.barwrap{margin:8px 0}
+.bar{height:28px;border-radius:8px;background:linear-gradient(90deg,#4f6ef7,#6b8cff);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+.split .bar{background:linear-gradient(90deg,#64748b,#94a3b8);font-size:12px;height:32px}
+.note{margin-top:14px;font-size:12px;color:var(--muted);line-height:1.5}
+@media(max-width:620px){.grid,.compare{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+  <h2>After measuring the first qubit (Bell state)</h2>
+  <div class="grid">
+    <section class="card">
+      <h3>Measurement outcome: 0</h3>
+      <div class="ket">|00⟩</div>
+      <div class="row"><span>First qubit</span><strong>0</strong> <span class="tag measured">Measured</span></div>
+      <div class="row"><span>Second qubit</span><strong>0</strong> <span class="tag known">Now known</span></div>
+      <p class="prob">Probability: 50%</p>
+    </section>
+    <section class="card">
+      <h3>Measurement outcome: 1</h3>
+      <div class="ket">|11⟩</div>
+      <div class="row"><span>First qubit</span><strong>1</strong> <span class="tag measured">Measured</span></div>
+      <div class="row"><span>Second qubit</span><strong>1</strong> <span class="tag known">Now known</span></div>
+      <p class="prob">Probability: 50%</p>
+    </section>
+  </div>
+
+  <h2>Independent versus entangled (first qubit = 0)</h2>
+  <div class="compare">
+    <section class="panel">
+      <h3>Independent</h3>
+      <p class="sub">|+⟩ ⊗ |+⟩ — second qubit can still be 0 or 1</p>
+      <div class="split">
+        <div class="barwrap"><div class="bar">|00⟩ 25%</div></div>
+        <div class="barwrap"><div class="bar">|01⟩ 25%</div></div>
+      </div>
+    </section>
+    <section class="panel">
+      <h3>Entangled</h3>
+      <p class="sub">|Φ⁺⟩ — second qubit must be 0</p>
+      <div class="barwrap"><div class="bar">|00⟩ (50% overall)</div></div>
+    </section>
+  </div>
+  <p class="note">Partial measurement on |Φ⁺⟩ collapses the branch to a single joint basis state; on a product state it does not fix the unmeasured qubit.</p>
+</main>
+</body>
+</html>

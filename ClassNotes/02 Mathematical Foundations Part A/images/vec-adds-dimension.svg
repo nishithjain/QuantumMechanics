@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" width="720" height="320" font-family="Arial, Helvetica, sans-serif"><defs><marker id="m999" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#999"/></marker><marker id="m1f5fbf" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#1f5fbf"/></marker><marker id="md62828" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#d62828"/></marker><marker id="m2e8b2e" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#2e8b2e"/></marker></defs><rect width="720" height="320" fill="#ffffff"/>
+<text x="360.0" y="24.0" font-size="16" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">Each independent vector adds one dimension</text>
+<text x="110.0" y="62.0" font-size="14" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">span{v&#8321;}</text>
+<line x1="110.0" y1="215.0" x2="78.5" y2="237.5" stroke="#999" stroke-width="1.3" marker-end="url(#m999)"/>
+<line x1="110.0" y1="215.0" x2="205.0" y2="215.0" stroke="#999" stroke-width="1.3" marker-end="url(#m999)"/>
+<line x1="110.0" y1="215.0" x2="110.0" y2="125.0" stroke="#999" stroke-width="1.3" marker-end="url(#m999)"/>
+<line x1="25.0" y1="215.0" x2="195.0" y2="215.0" stroke="#9ec3f0" stroke-width="9" stroke-opacity="0.8"/>
+<line x1="110.0" y1="215.0" x2="185.0" y2="215.0" stroke="#1f5fbf" stroke-width="3" marker-end="url(#m1f5fbf)"/>
+<text x="191.0" y="229.0" font-size="13" fill="#1f5fbf" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">v&#8321;</text>
+<circle cx="110.0" cy="215.0" r="3.5" fill="#222222"/>
+<text x="110.0" y="290.0" font-size="12" fill="#222222" text-anchor="middle">1 vector: a line</text>
+<text x="110.0" y="306.0" font-size="12" fill="#222222" text-anchor="middle" font-weight="bold">(1 dimension)</text>
+<text x="360.0" y="62.0" font-size="14" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">span{v&#8321;, v&#8322;}</text>
+<line x1="360.0" y1="215.0" x2="328.5" y2="237.5" stroke="#999" stroke-width="1.3" marker-end="url(#m999)"/>
+<line x1="360.0" y1="215.0" x2="455.0" y2="215.0" stroke="#999" stroke-width="1.3" marker-end="url(#m999)"/>
+<line x1="360.0" y1="215.0" x2="360.0" y2="125.0" stroke="#999" stroke-width="1.3" marker-end="url(#m999)"/>
+<polygon points="307.3,195.5 252.7,234.5 412.7,234.5 467.3,195.5" fill="#9ec3f0" stroke="#6c9bd8" stroke-width="1.2" fill-opacity="0.5"/>
+<line x1="360.0" y1="215.0" x2="435.0" y2="215.0" stroke="#1f5fbf" stroke-width="3" marker-end="url(#m1f5fbf)"/>
+<text x="441.0" y="229.0" font-size="13" fill="#1f5fbf" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">v&#8321;</text>
+<line x1="360.0" y1="215.0" x2="336.9" y2="231.5" stroke="#d62828" stroke-width="3" marker-end="url(#md62828)"/>
+<text x="330.9" y="245.5" font-size="13" fill="#d62828" text-anchor="end" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">v&#8322;</text>
+<circle cx="360.0" cy="215.0" r="3.5" fill="#222222"/>
+<text x="360.0" y="290.0" font-size="12" fill="#222222" text-anchor="middle">a 2nd vector off that line:</text>
+<text x="360.0" y="306.0" font-size="12" fill="#222222" text-anchor="middle" font-weight="bold">a plane (2 dimensions)</text>
+<text x="610.0" y="62.0" font-size="14" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">span{v&#8321;, v&#8322;, v&#8323;}</text>
+<line x1="610.0" y1="215.0" x2="578.5" y2="237.5" stroke="#999" stroke-width="1.3" marker-end="url(#m999)"/>
+<line x1="610.0" y1="215.0" x2="705.0" y2="215.0" stroke="#999" stroke-width="1.3" marker-end="url(#m999)"/>
+<line x1="610.0" y1="215.0" x2="610.0" y2="125.0" stroke="#999" stroke-width="1.3" marker-end="url(#m999)"/>
+<polygon points="557.3,195.5 502.7,234.5 662.7,234.5 717.3,195.5" fill="#9ec3f0" stroke="#6c9bd8" stroke-width="1.2" fill-opacity="0.5"/>
+<line x1="610.0" y1="215.0" x2="685.0" y2="215.0" stroke="#1f5fbf" stroke-width="3" marker-end="url(#m1f5fbf)"/>
+<text x="691.0" y="229.0" font-size="13" fill="#1f5fbf" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">v&#8321;</text>
+<line x1="610.0" y1="215.0" x2="586.9" y2="231.5" stroke="#d62828" stroke-width="3" marker-end="url(#md62828)"/>
+<text x="580.9" y="245.5" font-size="13" fill="#d62828" text-anchor="end" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">v&#8322;</text>
+<line x1="610.0" y1="215.0" x2="610.0" y2="130.0" stroke="#2e8b2e" stroke-width="3" marker-end="url(#m2e8b2e)"/>
+<text x="618.0" y="134.0" font-size="12" fill="#2e8b2e" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">v&#8323;</text>
+<circle cx="610.0" cy="215.0" r="3.5" fill="#222222"/>
+<text x="610.0" y="290.0" font-size="12" fill="#222222" text-anchor="middle">a 3rd vector off that plane:</text>
+<text x="610.0" y="306.0" font-size="12" fill="#222222" text-anchor="middle" font-weight="bold">all of 3D (3 dimensions)</text>
+</svg>

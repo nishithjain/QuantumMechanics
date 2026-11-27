@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 340" width="440" height="340" font-family="Arial, Helvetica, sans-serif">
+  <title>The complex conjugate is the reflection in the real axis: 3 + 2i becomes 3 - 2i</title>
+  <defs>
+    <marker id="axC" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 z" fill="#222"/></marker>
+    <marker id="zC" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L14,7 L0,14 z" fill="#1f5fbf"/></marker>
+    <marker id="cC" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L14,7 L0,14 z" fill="#d62828"/></marker>
+  </defs>
+  <rect x="0" y="0" width="440" height="340" fill="#ffffff"/>
+  <text x="230" y="18" font-size="15" font-weight="bold" fill="#222" text-anchor="middle">Conjugate = reflection in the real axis</text>
+  <g stroke="#e6e6e6" stroke-width="1">
+    <line x1="120" y1="40" x2="120" y2="310"/>
+    <line x1="180" y1="40" x2="180" y2="310"/>
+    <line x1="240" y1="40" x2="240" y2="310"/>
+    <line x1="300" y1="40" x2="300" y2="310"/>
+    <line x1="60" y1="50" x2="320" y2="50"/>
+    <line x1="60" y1="110" x2="320" y2="110"/>
+    <line x1="60" y1="230" x2="320" y2="230"/>
+    <line x1="60" y1="290" x2="320" y2="290"/>
+  </g>
+  <line x1="30" y1="170" x2="345" y2="170" stroke="#222" stroke-width="3" marker-end="url(#axC)"/>
+  <line x1="60" y1="322" x2="60" y2="30" stroke="#222" stroke-width="2" marker-end="url(#axC)"/>
+  <text x="350" y="166" font-size="13" fill="#222">Real axis</text>
+  <text x="350" y="182" font-size="12" fill="#666">(the mirror)</text>
+  <text x="70" y="36" font-size="13" fill="#222">Imaginary axis</text>
+  <g font-size="12" fill="#555" text-anchor="middle">
+    <text x="120" y="186">1</text>
+    <text x="180" y="186">2</text>
+    <text x="240" y="186">3</text>
+    <text x="300" y="186">4</text>
+  </g>
+  <g font-size="12" fill="#555" text-anchor="end">
+    <text x="52" y="54">2i</text>
+    <text x="52" y="114">i</text>
+    <text x="52" y="234">&#8722;i</text>
+    <text x="52" y="294">&#8722;2i</text>
+  </g>
+  <line x1="240" y1="50" x2="240" y2="290" stroke="#777" stroke-width="2" stroke-dasharray="6,5"/>
+  <polyline points="230,170 230,160 240,160" fill="none" stroke="#777" stroke-width="1.5"/>
+  <line x1="60" y1="170" x2="240" y2="50" stroke="#1f5fbf" stroke-width="4" marker-end="url(#zC)"/>
+  <line x1="60" y1="170" x2="240" y2="290" stroke="#d62828" stroke-width="4" marker-end="url(#cC)"/>
+  <circle cx="60" cy="170" r="4" fill="#222"/>
+  <text x="250" y="54" font-size="15" font-weight="bold" fill="#1f5fbf">z = 3 + 2i</text>
+  <text x="250" y="70" font-size="13" fill="#1f5fbf">(3, 2)</text>
+  <text x="250" y="294" font-size="15" font-weight="bold" fill="#d62828">conjugate = 3 &#8722; 2i</text>
+  <text x="250" y="310" font-size="13" fill="#d62828">(3, &#8722;2)</text>
+  <text x="230" y="336" font-size="12" fill="#555" text-anchor="middle">Same real part, opposite imaginary part. Same length from the origin.</text>
+</svg>

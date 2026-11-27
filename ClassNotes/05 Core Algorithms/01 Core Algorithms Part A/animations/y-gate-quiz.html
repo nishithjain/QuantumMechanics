@@ -1,0 +1,506 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y Gate – Test Your Understanding</title>
+<link rel="stylesheet" href="embed-frame.css">
+<style>
+    * { box-sizing: border-box; }
+
+    body {
+        padding: 8px 10px 10px;
+        font-family: Arial, sans-serif;
+        color: #202938;
+    }
+
+    .quiz-container {
+        max-width: 750px;
+        margin: 0 auto;
+        background: white;
+        padding: 14px 14px 16px;
+        border-radius: 14px;
+        box-shadow: 0 5px 22px rgba(0,0,0,0.07);
+    }
+
+    h1 {
+        display: none;
+    }
+
+    .intro {
+        color: #667085;
+        line-height: 1.5;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+
+    .progress-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .progress {
+        height: 9px;
+        background: #e9edf3;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 25px;
+    }
+
+    .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: #3478db;
+        transition: width .3s;
+    }
+
+    .question {
+        border: 1px solid #e4e8ef;
+        border-radius: 10px;
+        padding: 14px;
+        margin-bottom: 12px;
+    }
+
+    .question h3 {
+        font-size: 17px;
+        line-height: 1.5;
+        margin: 0 0 15px;
+    }
+
+    .option {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        padding: 12px;
+        margin: 8px 0;
+        border: 1px solid #e2e6ed;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: .2s;
+    }
+
+    .option:hover {
+        background: #f2f6ff;
+        border-color: #8bb5f0;
+    }
+
+    .option input {
+        width: 17px;
+        height: 17px;
+        cursor: pointer;
+        accent-color: #3478db;
+    }
+
+    .option.correct {
+        background: #eaf8ef;
+        border-color: #36a66b;
+    }
+
+    .option.incorrect {
+        background: #fff0f0;
+        border-color: #dc5555;
+    }
+
+    .explanation {
+        display: none;
+        margin-top: 14px;
+        padding: 12px;
+        border-radius: 8px;
+        background: #f1f5f9;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .explanation.show {
+        display: block;
+    }
+
+    .feedback-title {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .correct-text { color: #16834b; }
+    .incorrect-text { color: #c03939; }
+
+    .buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 25px;
+    }
+
+    button {
+        padding: 13px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    #checkBtn {
+        flex: 1;
+        background: #3478db;
+        color: white;
+    }
+
+    #checkBtn:hover { background: #2464bd; }
+
+    #retryBtn {
+        display: none;
+        background: #e9edf3;
+        color: #344054;
+    }
+
+    button:disabled {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+
+    .result {
+        display: none;
+        text-align: center;
+        padding: 22px;
+        margin-top: 22px;
+        background: #edf5ff;
+        border-radius: 10px;
+    }
+
+    .result h2 {
+        margin: 0 0 8px;
+        font-size: 23px;
+    }
+
+    .score {
+        font-size: 36px;
+        font-weight: bold;
+        color: #2464bd;
+        margin: 10px;
+    }
+
+    .math {
+        font-family: Georgia, serif;
+        font-size: 18px;
+    }
+
+    @media(max-width:500px) {
+        .quiz-container { padding: 18px; }
+        h1 { font-size: 22px; }
+        .question { padding: 15px; }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h1>Test Your Understanding</h1>
+
+    <p class="intro">
+        Let's check whether you understood how we calculate
+        eigenvalues and eigenvectors of the quantum Y gate.
+        Answer all four questions and check your score.
+    </p>
+
+    <div class="progress-section">
+        <span>Quick Quiz</span>
+        <span id="progressText">0 / 4 answered</span>
+    </div>
+
+    <div class="progress">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div id="questions">
+
+        <div class="question" data-answer="1">
+            <h3>1. Why do we calculate det(Y − λI) = 0?</h3>
+
+            <label class="option">
+                <input type="radio" name="q1" value="0">
+                To find the eigenvectors directly
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1" value="1">
+                To find the eigenvalues
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1" value="2">
+                To normalize the quantum state
+            </label>
+
+            <div class="explanation">
+                <div class="feedback-title"></div>
+                A zero determinant ensures that
+                (Y − λI)v = 0 has a nonzero solution.
+                Solving the characteristic equation gives
+                us the eigenvalues.
+            </div>
+        </div>
+
+        <div class="question" data-answer="1">
+            <h3>2. What is i × i?</h3>
+
+            <label class="option">
+                <input type="radio" name="q2" value="0">
+                +1
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q2" value="1">
+                −1
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q2" value="2">
+                i
+            </label>
+
+            <div class="explanation">
+                <div class="feedback-title"></div>
+                By definition, i² = −1.
+                Therefore i × i = −1.
+            </div>
+        </div>
+
+        <div class="question" data-answer="1">
+            <h3>3. For λ = +1, what eigenvector did we find?</h3>
+
+            <label class="option">
+                <input type="radio" name="q3" value="0">
+                <span class="math">(1, −i)ᵀ</span>
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q3" value="1">
+                <span class="math">(1, i)ᵀ</span>
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q3" value="2">
+                <span class="math">(0, 1)ᵀ</span>
+            </label>
+
+            <div class="explanation">
+                <div class="feedback-title"></div>
+                For λ = +1, we solve Yv = v.
+                Choosing v₁ = 1 gives v₂ = i.
+                Therefore the eigenvector is (1, i)ᵀ.
+            </div>
+        </div>
+
+        <div class="question" data-answer="2">
+            <h3>4. Why do we divide the eigenvector by √2?</h3>
+
+            <label class="option">
+                <input type="radio" name="q4" value="0">
+                To change its eigenvalue
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q4" value="1">
+                To make it a real vector
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q4" value="2">
+                To normalize it so its total probability is 1
+            </label>
+
+            <div class="explanation">
+                <div class="feedback-title"></div>
+                The squared magnitudes of 1 and i add up to 2.
+                Dividing the vector by √2 makes the total
+                probability equal to 1.
+            </div>
+        </div>
+
+    </div>
+
+    <div class="buttons">
+        <button id="checkBtn" onclick="checkAnswers()">
+            Check My Answers
+        </button>
+
+        <button id="retryBtn" onclick="retryQuiz()">
+            Try Again
+        </button>
+    </div>
+
+    <div class="result" id="result">
+        <h2 id="resultTitle">Quiz Completed!</h2>
+        <div class="score" id="score"></div>
+        <p id="resultMessage"></p>
+    </div>
+
+</div>
+
+<script>
+    const totalQuestions = 4;
+
+    const correctMessages = [
+        "Correct!",
+        "Correct!",
+        "Correct!",
+        "Correct!"
+    ];
+
+    function updateProgress() {
+        const answered = document.querySelectorAll(
+            '#questions input:checked'
+        ).length;
+
+        document.getElementById('progressText').textContent =
+            answered + ' / ' + totalQuestions + ' answered';
+
+        document.getElementById('progressFill').style.width =
+            (answered / totalQuestions * 100) + '%';
+    }
+
+    document.querySelectorAll(
+        '#questions input[type="radio"]'
+    ).forEach(input => {
+        input.addEventListener('change', updateProgress);
+    });
+
+    function checkAnswers() {
+        const questions = document.querySelectorAll('.question');
+
+        let score = 0;
+        let unanswered = 0;
+
+        questions.forEach((question, index) => {
+            const correctAnswer = question.dataset.answer;
+
+            const selected = question.querySelector(
+                'input:checked'
+            );
+
+            const explanation = question.querySelector(
+                '.explanation'
+            );
+
+            const feedbackTitle = question.querySelector(
+                '.feedback-title'
+            );
+
+            const options = question.querySelectorAll('.option');
+
+            if (!selected) {
+                unanswered++;
+                return;
+            }
+
+            const isCorrect = selected.value === correctAnswer;
+
+            if (isCorrect) {
+                score++;
+                feedbackTitle.textContent = '✓ Correct!';
+                feedbackTitle.className =
+                    'feedback-title correct-text';
+            } else {
+                feedbackTitle.textContent = '✗ Incorrect!';
+                feedbackTitle.className =
+                    'feedback-title incorrect-text';
+            }
+
+            options.forEach(option => {
+                const radio = option.querySelector('input');
+
+                if (radio.value === correctAnswer) {
+                    option.classList.add('correct');
+                }
+
+                if (radio.checked && !isCorrect) {
+                    option.classList.add('incorrect');
+                }
+            });
+
+            explanation.classList.add('show');
+        });
+
+        if (unanswered > 0) {
+            alert('Please answer all four questions before checking.');
+            return;
+        }
+
+        document.querySelectorAll(
+            '#questions input'
+        ).forEach(input => input.disabled = true);
+
+        document.getElementById('checkBtn').disabled = true;
+        document.getElementById('retryBtn').style.display = 'block';
+
+        const result = document.getElementById('result');
+        result.style.display = 'block';
+
+        document.getElementById('score').textContent =
+            score + ' / ' + totalQuestions;
+
+        let message = '';
+
+        if (score === 4) {
+            message = 'Excellent! You understood all the concepts.';
+        } else if (score === 3) {
+            message = 'Very good! Just revisit one concept.';
+        } else if (score === 2) {
+            message = 'Good effort! Review the explanations and try again.';
+        } else {
+            message = 'Keep learning! Revisit the Y-gate explanation and try again.';
+        }
+
+        document.getElementById('resultMessage').textContent = message;
+
+        document.getElementById('resultTitle').textContent =
+            score === 4 ? '🎉 Perfect Score!' : 'Quiz Completed!';
+
+        result.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+    }
+
+    function retryQuiz() {
+        document.querySelectorAll(
+            '#questions input'
+        ).forEach(input => {
+            input.checked = false;
+            input.disabled = false;
+        });
+
+        document.querySelectorAll('.option').forEach(option => {
+            option.classList.remove('correct', 'incorrect');
+        });
+
+        document.querySelectorAll('.explanation').forEach(item => {
+            item.classList.remove('show');
+        });
+
+        document.querySelectorAll('.feedback-title').forEach(item => {
+            item.textContent = '';
+        });
+
+        document.getElementById('checkBtn').disabled = false;
+        document.getElementById('retryBtn').style.display = 'none';
+        document.getElementById('result').style.display = 'none';
+
+        updateProgress();
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+</script>
+
+<script src="embed-fit.js"></script>
+</body>
+</html>

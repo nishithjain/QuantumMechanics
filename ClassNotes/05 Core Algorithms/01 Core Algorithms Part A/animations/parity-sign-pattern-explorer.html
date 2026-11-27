@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Explore parity sign patterns — mask a</title>
+  <link rel="stylesheet" href="embed-frame.css">
+</head>
+<body style="background:#f4f6fc;">
+<div class="parity-explorer">
+<style>
+.parity-explorer {
+  font-family: Arial, sans-serif;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 10px 10px 12px;
+  background: #f4f6fc;
+  border: 1px solid #dce2ee;
+  border-radius: 12px;
+  color: #26324a;
+}
+.parity-explorer * { box-sizing: border-box; }
+.parity-explorer h3 { margin: 0 0 8px; font-size: 16px; text-align: center; }
+.parity-explorer .lead { font-size: 12px; color: #53617b; text-align: center; margin: 0 0 10px; line-height: 1.45; }
+.parity-explorer .mask-buttons { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 8px; }
+.parity-explorer .mask-buttons button {
+  padding: 7px 14px;
+  border: 1px solid #b8c4dc;
+  border-radius: 8px;
+  background: #eef1f8;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+.parity-explorer .mask-buttons button.active { background: #303b99; color: #fff; border-color: #303b99; }
+.parity-explorer .mask-label { text-align: center; font-size: 12px; color: #68758c; margin-bottom: 8px; }
+.parity-explorer .sign-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.parity-explorer .sign-card { text-align: center; padding: 10px 4px; border-radius: 8px; background: #eee; font-size: 11px; }
+.parity-explorer .sign-card.positive { background: #dcfce7; color: #166534; }
+.parity-explorer .sign-card.negative { background: #fee2e2; color: #991b1b; }
+.parity-explorer .sign-card strong { display: block; font-size: 20px; margin-top: 4px; }
+.parity-explorer .sum-box {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 9px;
+  background: #fff;
+  border: 1px solid #dce2ee;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.parity-explorer .sum-box .total { font-size: 17px; font-weight: bold; color: #303b99; margin-bottom: 4px; }
+@media (max-width: 420px) { .parity-explorer .sign-cards { grid-template-columns: repeat(2, 1fr); } }
+</style>
+
+<h3>Explore the sign pattern</h3>
+<p class="lead">Two-bit mask <strong>a</strong>: each input <strong>x</strong> gets sign $(-1)^{a\cdot x}$.</p>
+<div class="mask-buttons" id="mask-buttons">
+  <button type="button" data-mask="00">a = 00</button>
+  <button type="button" data-mask="01">a = 01</button>
+  <button type="button" data-mask="10">a = 10</button>
+  <button type="button" data-mask="11">a = 11</button>
+</div>
+<p class="mask-label" id="mask-label">Selected mask: 00</p>
+<div class="sign-cards" id="sign-cards"></div>
+<div class="sum-box">
+  <div class="total" id="sum-result">S(a) = 4</div>
+  <p id="sum-explanation" style="margin:0">All four signs are +1.</p>
+</div>
+</div>
+<script>
+(function () {
+  const inputs = ["00", "01", "10", "11"];
+  const buttons = document.querySelectorAll("#mask-buttons button");
+  const cards = document.getElementById("sign-cards");
+  const label = document.getElementById("mask-label");
+  const result = document.getElementById("sum-result");
+  const explanation = document.getElementById("sum-explanation");
+
+  function parity(mask, x) {
+    return (Number(mask[0]) * Number(x[0])) ^ (Number(mask[1]) * Number(x[1]));
+  }
+
+  function update(mask) {
+    buttons.forEach((b) => b.classList.toggle("active", b.dataset.mask === mask));
+    label.textContent = "Selected mask: " + mask;
+    cards.innerHTML = "";
+    let total = 0;
+    let positives = 0;
+    let negatives = 0;
+    inputs.forEach((x) => {
+      const p = parity(mask, x);
+      const sign = p === 0 ? 1 : -1;
+      total += sign;
+      if (sign === 1) positives++;
+      else negatives++;
+      const card = document.createElement("div");
+      card.className = "sign-card " + (sign === 1 ? "positive" : "negative");
+      card.innerHTML = "<span>x = " + x + "</span><strong>" + (sign === 1 ? "+1" : "−1") + "</strong>";
+      cards.appendChild(card);
+    });
+    result.textContent = "S(a) = " + total;
+    explanation.textContent =
+      total === 4
+        ? "All signs +1 → sum is 2² = 4."
+        : positives + " times +1 and " + negatives + " times −1 → they cancel.";
+    if (window.qmEmbedFitSchedule) window.qmEmbedFitSchedule();
+  }
+
+  buttons.forEach((btn) => btn.addEventListener("click", () => update(btn.dataset.mask)));
+  update("00");
+})();
+</script>
+<script src="embed-fit.js"></script>
+</body>
+</html>

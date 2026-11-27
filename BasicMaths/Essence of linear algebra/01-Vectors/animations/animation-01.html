@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore vector coordinates · 01 Vectors</title>
+<style>
+:root{--bg:#f4f8fc;--ink:#14263c;--muted:#587087;--blue:#177bcb;--orange:#e78c23;--teal:#0c9a8d;--line:#dce7f1}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink)}
+main{max-width:1080px;margin:20px auto;padding:20px}h1{margin:0 0 8px;font-size:clamp(24px,4vw,34px)}.intro{line-height:1.65;color:var(--muted);margin:0 0 18px}
+.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,1fr);gap:20px}.panel{background:white;border-radius:16px;box-shadow:0 4px 22px #15344b14;padding:18px}.plot{width:100%;height:auto;display:block}.label{display:block;font-weight:700;margin-bottom:8px}.sliderLine{display:flex;align-items:center;gap:12px;margin:20px 0}.sliderLine input{flex:1}.sliderLine output{width:62px;text-align:right;font-weight:800;color:var(--blue)}
+.controls{display:flex;flex-wrap:wrap;gap:9px;margin:15px 0}button{border:1px solid #cbdced;color:var(--ink);background:white;border-radius:9px;padding:9px 15px;font-weight:700;cursor:pointer}button:hover,button:focus-visible{border-color:var(--blue);background:#eaf5fc}button.primary{background:var(--blue);color:white;border-color:var(--blue)}.status{border-left:4px solid var(--blue);padding:12px 14px;background:#eff7ff;border-radius:8px;line-height:1.6;min-height:100px}.value{font-size:26px;color:var(--blue);font-weight:750}.small{font-size:14px;color:var(--muted);line-height:1.65}a{color:var(--blue)}
+@media(max-width:780px){main{padding:10px}.layout{grid-template-columns:1fr}.panel{padding:13px}}
+</style>
+</head>
+<body><main>
+<h1>Animation 01 — Coordinates as walking instructions</h1>
+<p class="intro">In the lecture, a 2D vector is an arrow from the origin. Its first number tells us how far to go horizontally, and its second number tells us how far to go vertically. Change the coordinates, then click <b>Step</b> to follow the route.</p>
+<div class="layout"><section class="panel"><svg id="graph" class="plot" viewBox="0 0 620 500" role="img" aria-label="Interactive x-y coordinate plane showing a walk followed by a vector arrow"><defs><marker id="arrOrange" markerWidth="8" markerHeight="8" refX="6.3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e78c23"/></marker><marker id="arrTeal" markerWidth="8" markerHeight="8" refX="6.3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#0c9a8d"/></marker><marker id="arrBlue" markerWidth="8" markerHeight="8" refX="6.3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#177bcb"/></marker></defs><g id="grid"></g><g id="vectors"><line id="horiz" stroke="#e78c23" stroke-width="5" marker-end="url(#arrOrange)"/><line id="vert" stroke="#0c9a8d" stroke-width="5" marker-end="url(#arrTeal)"/><line id="result" stroke="#177bcb" stroke-width="5" marker-end="url(#arrBlue)"/><circle id="tip" r="6" fill="#177bcb"/><text id="tipLabel" font-size="21" font-weight="700" fill="#177bcb"></text></g></svg></section>
+<section class="panel"><label class="label" for="xRange">First coordinate — x (right / left)</label><div class="sliderLine"><input id="xRange" type="range" min="-4" max="4" step="1" value="3"><output id="xOut">+3</output></div>
+<label class="label" for="yRange">Second coordinate — y (up / down)</label><div class="sliderLine"><input id="yRange" type="range" min="-4" max="4" step="1" value="2"><output id="yOut">+2</output></div>
+<div class="value" id="vecLabel">v = [3, 2]</div><div class="controls"><button id="play" class="primary" type="button">▶ Play</button><button id="pause" type="button">Ⅱ Pause</button><button id="step" type="button">Step →</button><button id="reset" type="button">↺ Reset</button></div>
+<div class="status" id="status" aria-live="polite"></div>
+<p class="small">Try <b>x = −2, y = 3</b>, matching the negative-coordinate picture shown in the video. Negative x means left; negative y means down. The final arrow does not depend on the order in which you imagine taking the horizontal and vertical steps.</p></section></div>
+<p class="small"><a href="../notes/lecture-notes.md">← Return to lecture notes</a></p>
+</main><script>
+'use strict';
+const S='http://www.w3.org/2000/svg',X=310,Y=248,U=45,$=id=>document.getElementById(id);
+const graph=$('grid');function el(name,atts,text){let n=document.createElementNS(S,name);Object.entries(atts).forEach(([k,v])=>n.setAttribute(k,v));if(text!==undefined)n.textContent=text;graph.appendChild(n);return n}
+for(let i=-6;i<=6;i++){let a=X+i*U; if(a>=24&&a<=596)el('line',{x1:a,y1:16,x2:a,y2:483,stroke:i===0?'#354f65':'#dce7f1','stroke-width':i===0?2:1});let b=Y+i*U;if(b>=16&&b<=484)el('line',{x1:24,y1:b,x2:598,y2:b,stroke:i===0?'#354f65':'#dce7f1','stroke-width':i===0?2:1});if(i&&a>=24&&a<=596)el('text',{x:a,y:Y+18,fill:'#71869b','font-size':14,'text-anchor':'middle'},String(i));if(i&&b>=16&&b<=484)el('text',{x:X-10,y:b+5,fill:'#71869b','font-size':14,'text-anchor':'end'},String(-i));}
+el('text',{x:585,y:Y-12,fill:'#14263c','font-size':20},'x');el('text',{x:X+10,y:28,fill:'#14263c','font-size':20},'y');el('circle',{cx:X,cy:Y,r:5,fill:'#14263c'});
+let stage=0,timer=null;
+const getX=()=>Number($('xRange').value),getY=()=>Number($('yRange').value),sign=n=>(n>0?'+':'')+n;
+function segment(id,x1,y1,x2,y2,show){let n=$(id);n.setAttribute('x1',x1);n.setAttribute('y1',y1);n.setAttribute('x2',x2);n.setAttribute('y2',y2);n.style.display=show?'':'none'}
+function update(){const x=getX(),y=getY(),xx=X+x*U,yy=Y-y*U;
+ $('xOut').textContent=sign(x);$('yOut').textContent=sign(y);$('vecLabel').textContent=`v = [${x}, ${y}]`;
+ segment('horiz',X,Y,xx,Y,stage>=1 && x!==0);segment('vert',xx,Y,xx,yy,stage>=2&&y!==0);segment('result',X,Y,xx,yy,stage>=3&&(x!==0||y!==0));
+ $('tip').setAttribute('cx',xx);$('tip').setAttribute('cy',yy);$('tip').style.display=stage>=3?'':'none';
+ $('tipLabel').setAttribute('x',Math.min(xx+12,515));$('tipLabel').setAttribute('y',Math.max(yy-12,30));$('tipLabel').textContent=`(${x}, ${y})`;$('tipLabel').style.display=stage>=3?'':'none';
+ let msg=['Stage 0 / 3: Start at the origin (0, 0).',`Stage 1 / 3: Move ${Math.abs(x)} unit(s) ${x<0?'left':x>0?'right':'horizontally (no movement)'}.`,`Stage 2 / 3: From there, move ${Math.abs(y)} unit(s) ${y<0?'down':y>0?'up':'vertically (no movement)'}.`,`Stage 3 / 3: Draw one arrow from (0, 0) to (${x}, ${y}). That arrow represents the vector [${x}, ${y}].`];$('status').textContent=msg[stage];
+}
+function stop(){if(timer!==null){clearInterval(timer);timer=null}}
+function go(){if(stage>=3)stage=0;update();stop();timer=setInterval(()=>{if(stage<3){stage++;update()}else stop()},1050)}
+$('play').addEventListener('click',go);$('pause').addEventListener('click',stop);$('step').addEventListener('click',()=>{stop();stage=Math.min(stage+1,3);update()});$('reset').addEventListener('click',()=>{stop();stage=0;update()});for(const id of ['xRange','yRange'])$(id).addEventListener('input',()=>{stop();stage=0;update()});update();
+</script></body></html>

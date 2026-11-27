@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Negative determinants and orientation</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101923;color:#e9f1f7;font:16px/1.5 Inter,system-ui,sans-serif}
+main{max-width:1080px;margin:auto;padding:clamp(16px,4vw,44px)}
+h1{font-size:clamp(28px,5vw,48px);line-height:1.1;margin:0}
+h2{font-size:17px;margin:0 0 8px}
+p{margin:8px 0;color:#bdcddd}
+.layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:16px;margin-top:22px}
+section,aside{background:#182634;border:1px solid #3a4d5f;border-radius:15px;padding:15px}
+canvas{width:100%;height:auto;display:block;background:#101923;border-radius:9px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+button{background:#293d50;color:#f5f8fb;border:1px solid #657b8f;border-radius:8px;padding:8px 11px;font:inherit;cursor:pointer}
+#play{background:#ffd98a;color:#172433;border-color:#ffd98a;font-weight:700}
+input{width:100%;accent-color:#ffd98a}
+label,.caption{font-size:14px}
+.x{color:#ffc36d}.y{color:#70e2cf}.turn{color:#e6b7ff}
+dl{display:grid;grid-template-columns:1fr auto;gap:8px;margin:16px 0;font-variant-numeric:tabular-nums}
+dd{text-align:right;margin:0;font-weight:700}
+#orientation{min-height:3em;color:#e6b7ff;font-weight:650}
+.key{border-top:1px solid #425568;padding-top:12px}
+.matrix{display:inline-grid;grid-template-columns:repeat(2,1.5em);vertical-align:middle;text-align:center;border-inline:2px solid;border-radius:4px;margin-left:.3em}
+@media(max-width:740px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>Negative determinants and orientation</h1>
+<p>Follow the turn from <strong class="x">î</strong> to <strong class="y">ĵ</strong> as the unit square stretches and flips across the x-axis.</p>
+<div class="layout">
+<section aria-label="Orientation animation">
+<canvas id="plot" width="620" height="390" role="img">See the basis vector coordinates and orientation beside the graph.</canvas>
+<div class="controls">
+<button id="play" type="button">Play animation</button>
+<button id="reset" type="button">Start</button>
+<button id="collapse" type="button">Show collapse</button>
+<button id="finish" type="button">Show final</button>
+</div>
+<label for="progress">Animation progress <output id="percent" for="progress">0%</output></label>
+<input id="progress" type="range" min="0" max="100" value="0">
+<p class="caption">The dashed outline marks the original square. The <strong class="turn">curved arrow</strong> shows the turn from î to ĵ.</p>
+</section>
+<aside>
+<h2>Final transformation</h2>
+<div aria-label="A has first column 3, 0 and second column 0, minus 1">A = <span class="matrix" aria-hidden="true"><span class="x">3</span><span class="y">0</span><span class="x">0</span><span class="y">−1</span></span></div>
+<p><strong class="x">î</strong> stretches right. <strong class="y">ĵ</strong> flips downward.</p>
+<h2>Current transformation</h2>
+<dl>
+<dt class="x">Image of î</dt><dd id="ihat"></dd>
+<dt class="y">Image of ĵ</dt><dd id="jhat"></dd>
+<dt>Determinant</dt><dd id="det"></dd>
+<dt>Ordinary area</dt><dd id="area"></dd>
+</dl>
+<p id="orientation"></p>
+<p class="key">At the end, <strong>det(A) = −3</strong>. The minus sign tells you the orientation reversed. The magnitude <strong>|−3| = 3</strong> tells you the area is three times the original.</p>
+</aside>
+</div>
+</main>
+<script>
+const byId = id => document.getElementById(id);
+const ctx = byId('plot').getContext('2d');
+const slider = byId('progress');
+const play = byId('play');
+const x0 = 122;
+const y0 = 194;
+const unit = 112;
+let progress = 0;
+let frame = null;
+
+function line(x1, y1, x2, y2, color, thickness = 1) {
+  ctx.strokeStyle = color;
+  ctx.lineWidth = thickness;
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+}
+
+function arrowhead(x, y, angle, color, length) {
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  for (const offset of [-0.5, 0.5]) {
+    ctx.lineTo(x - length * Math.cos(angle + offset), y - length * Math.sin(angle + offset));
+  }
+  ctx.closePath();
+  ctx.fill();
+}
+
+function vector(x, y, color) {
+  line(x0, y0, x, y, color, 4);
+  const length = Math.hypot(x - x0, y - y0);
+  if (length > 0) arrowhead(x, y, Math.atan2(y - y0, x - x0), color, Math.min(length, 15));
+}
+
+function draw(value) {
+  progress = value;
+  const width = 1 + 2 * Math.min(1, 2 * value);
+  const vertical = value <= 0.5 ? 1 : 3 - 4 * value;
+  const det = width * vertical;
+  const right = x0 + width * unit;
+  const endY = y0 - vertical * unit;
+  const format = n => Number(n.toFixed(2)).toString().replace('-', '−');
+  const orientation = vertical > 0 ? 'Counterclockwise · orientation preserved' :
+    vertical < 0 ? 'Clockwise · orientation reversed' : 'Collapsed to a line · area is zero';
+
+  slider.value = Math.round(100 * value);
+  byId('percent').textContent = slider.value + '%';
+  byId('ihat').textContent = '(' + format(width) + ', 0)';
+  byId('jhat').textContent = '(0, ' + format(vertical) + ')';
+  byId('det').textContent = format(det);
+  byId('area').textContent = format(Math.abs(det));
+  byId('orientation').textContent = orientation;
+  byId('plot').setAttribute('aria-label', orientation + '. Area ' + format(Math.abs(det)) + '.');
+
+  ctx.clearRect(0, 0, 620, 390);
+  ctx.fillStyle = vertical < 0 ? '#453755' : '#2a5454';
+  ctx.fillRect(x0, Math.min(y0, endY), right - x0, Math.abs(endY - y0));
+  ctx.font = '19px system-ui';
+  for (let i = 1; i <= 4; i++) {
+    const x = x0 + i * unit;
+    line(x, 51, x, 334, '#374959');
+    ctx.fillStyle = '#bdcddd';
+    ctx.fillText(i, x - 5, 358);
+  }
+  for (const i of [-1, 1]) {
+    const y = y0 - i * unit;
+    line(87, y, 580, y, '#374959');
+    ctx.fillStyle = '#bdcddd';
+    ctx.fillText(format(i), 86, y + 6);
+  }
+  line(86, y0, 584, y0, '#9badbf', 2);
+  line(x0, 51, x0, 334, '#9badbf', 2);
+  ctx.fillStyle = '#bdcddd';
+  ctx.fillText('x', 594, y0 + 7);
+  ctx.fillText('y', x0 - 5, 38);
+  ctx.fillText('0', x0 - 21, y0 + 24);
+  ctx.strokeStyle = vertical < 0 ? '#d4a3ff' : '#8de9d8';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(x0, Math.min(endY, y0), right - x0, Math.abs(endY - y0));
+  ctx.setLineDash([6, 6]);
+  ctx.strokeStyle = '#e2eaf1';
+  ctx.strokeRect(x0, y0 - unit, unit, unit);
+  ctx.setLineDash([]);
+  vector(right, y0, '#ffc36d');
+  vector(x0, endY, '#70e2cf');
+  ctx.font = 'bold 23px system-ui';
+  ctx.fillStyle = '#ffc36d';
+  ctx.fillText('î', right + 10, y0 - 12);
+  ctx.fillStyle = '#70e2cf';
+  ctx.fillText('ĵ', x0 - 61, endY + 7);
+
+  const radius = Math.min(52, Math.abs(endY - y0) * 0.78);
+  if (radius >= 13) {
+    const direction = vertical > 0 ? -1 : 1;
+    const angle = direction * 1.37;
+    ctx.strokeStyle = '#e6b7ff';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(x0, y0, radius, direction * 0.2, angle, direction < 0);
+    ctx.stroke();
+    arrowhead(x0 + radius * Math.cos(angle), y0 + radius * Math.sin(angle),
+      angle + direction * Math.PI / 2, '#e6b7ff', 11);
+  }
+}
+
+function stop() {
+  if (frame !== null) cancelAnimationFrame(frame);
+  frame = null;
+  play.textContent = progress === 1 ? 'Replay animation' : progress === 0 ? 'Play animation' : 'Resume';
+}
+
+function seek(value) {
+  draw(value);
+  stop();
+}
+
+play.addEventListener('click', () => {
+  if (frame !== null) {
+    stop();
+    return;
+  }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    seek(1);
+    return;
+  }
+  if (progress === 1) draw(0);
+  const initial = progress;
+  let start;
+  play.textContent = 'Pause';
+  function animate(now) {
+    start ??= now;
+    draw(Math.min(1, initial + (now - start) / 4800));
+    if (progress === 1) stop();
+    else frame = requestAnimationFrame(animate);
+  }
+  frame = requestAnimationFrame(animate);
+});
+
+slider.addEventListener('input', () => seek(Number(slider.value) / 100));
+byId('reset').addEventListener('click', () => seek(0));
+byId('collapse').addEventListener('click', () => seek(0.75));
+byId('finish').addEventListener('click', () => seek(1));
+draw(0);
+</script>
+</body>
+</html>

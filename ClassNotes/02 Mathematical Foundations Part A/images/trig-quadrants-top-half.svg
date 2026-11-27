@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 480" width="620" height="480" font-family="Arial, Helvetica, sans-serif"><defs><marker id="m444" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#444"/></marker><marker id="m1f5fbf" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="#1f5fbf"/></marker></defs><rect width="620" height="480" fill="#ffffff"/>
+<text x="310.0" y="24.0" font-size="16" fill="#222222" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">The four quadrants and the sign of cos and sin</text>
+<rect x="30.0" y="66.0" width="560.0" height="184.0" rx="0" fill="#dbe8fb" stroke="none" stroke-width="1.2" fill-opacity="0.9"/>
+<rect x="30.0" y="250.0" width="560.0" height="184.0" rx="0" fill="#eeeeee" stroke="none" stroke-width="1.2" fill-opacity="0.9"/>
+<line x1="30.0" y1="250.0" x2="590.0" y2="250.0" stroke="#444" stroke-width="1.5" marker-end="url(#m444)"/>
+<line x1="310.0" y1="434.0" x2="310.0" y2="66.0" stroke="#444" stroke-width="1.5" marker-end="url(#m444)"/>
+<text x="588.0" y="266.0" font-size="13" fill="#444" text-anchor="end">x</text>
+<text x="318.0" y="76.0" font-size="13" fill="#444" text-anchor="start">y</text>
+<circle cx="310.0" cy="250.0" r="160" fill="none" stroke="#999" stroke-width="1.5"/>
+<circle cx="310.0" cy="250.0" r="3.5" fill="#222222"/>
+<text x="310.0" y="52.0" font-size="14" fill="#1f5fbf" text-anchor="middle" font-weight="bold">Quadrants I and II = the TOP half (y &gt; 0, so sin &#952; &gt; 0)</text>
+<text x="310.0" y="458.0" font-size="14" fill="#555555" text-anchor="middle" font-weight="bold">Quadrants III and IV = the BOTTOM half (y &lt; 0, so sin &#952; &lt; 0)</text>
+<text x="470.0" y="100.0" font-size="14" fill="#222222" text-anchor="start" font-weight="bold">Quadrant I</text>
+<text x="470.0" y="118.0" font-size="13" fill="#222222" text-anchor="start">0&#176; to 90&#176;</text>
+<text x="470.0" y="136.0" font-size="13" fill="#2e8b2e" text-anchor="start" font-weight="bold">cos +,  sin +</text>
+<text x="150.0" y="100.0" font-size="14" fill="#222222" text-anchor="end" font-weight="bold">Quadrant II</text>
+<text x="150.0" y="118.0" font-size="13" fill="#222222" text-anchor="end">90&#176; to 180&#176;</text>
+<text x="150.0" y="136.0" font-size="13" fill="#2e8b2e" text-anchor="end" font-weight="bold">cos &#8722;,  sin +</text>
+<text x="150.0" y="372.0" font-size="14" fill="#222222" text-anchor="end" font-weight="bold">Quadrant III</text>
+<text x="150.0" y="390.0" font-size="13" fill="#222222" text-anchor="end">180&#176; to 270&#176;</text>
+<text x="150.0" y="408.0" font-size="13" fill="#d62828" text-anchor="end" font-weight="bold">cos &#8722;,  sin &#8722;</text>
+<text x="470.0" y="372.0" font-size="14" fill="#222222" text-anchor="start" font-weight="bold">Quadrant IV</text>
+<text x="470.0" y="390.0" font-size="13" fill="#222222" text-anchor="start">270&#176; to 360&#176;</text>
+<text x="470.0" y="408.0" font-size="13" fill="#d62828" text-anchor="start" font-weight="bold">cos +,  sin &#8722;</text>
+<line x1="310.0" y1="250.0" x2="412.8" y2="127.4" stroke="#1f5fbf" stroke-width="3"/>
+<line x1="412.8" y1="127.4" x2="412.8" y2="250.0" stroke="#2e8b2e" stroke-width="3.5"/>
+<line x1="310.0" y1="250.0" x2="412.8" y2="250.0" stroke="#d62828" stroke-width="3.5"/>
+<circle cx="412.8" cy="127.4" r="5" fill="#1f5fbf"/>
+<text x="416.8" y="268.0" font-size="12" fill="#d62828" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">cos</text>
+<text x="420.8" y="192.7" font-size="12" fill="#2e8b2e" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">sin</text>
+<text x="420.8" y="119.4" font-size="13" fill="#1f5fbf" text-anchor="start" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">50&#176;</text>
+<line x1="310.0" y1="250.0" x2="207.2" y2="127.4" stroke="#1f5fbf" stroke-width="3"/>
+<line x1="207.2" y1="127.4" x2="207.2" y2="250.0" stroke="#2e8b2e" stroke-width="3.5"/>
+<line x1="310.0" y1="250.0" x2="207.2" y2="250.0" stroke="#d62828" stroke-width="3.5"/>
+<circle cx="207.2" cy="127.4" r="5" fill="#1f5fbf"/>
+<text x="203.2" y="268.0" font-size="12" fill="#d62828" text-anchor="middle" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">cos (negative)</text>
+<text x="199.2" y="192.7" font-size="12" fill="#2e8b2e" text-anchor="end" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">sin</text>
+<text x="199.2" y="119.4" font-size="13" fill="#1f5fbf" text-anchor="end" font-weight="bold" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">130&#176;</text>
+<path d="M348.0,250.0 A38,38 0 0 0 334.4,220.9" fill="none" stroke="#1f5fbf" stroke-width="1.6" marker-end="url(#m1f5fbf)"/>
+<path d="M340.0,250.0 A30,30 0 0 0 290.7,227.0" fill="none" stroke="#1f5fbf" stroke-width="1.6" marker-end="url(#m1f5fbf)"/>
+</svg>

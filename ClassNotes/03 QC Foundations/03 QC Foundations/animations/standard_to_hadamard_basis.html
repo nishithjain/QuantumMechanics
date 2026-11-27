@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- plot v2: fixed axis scale ±8, vector always visible -->
+<title>Standard ↔ Hadamard Basis — Interactive Lesson</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:linear-gradient(165deg,#eef2fb 0%,#f8fafc 45%,#eef6f4 100%);color:#152238;font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:min(1680px,98vw);margin:0 auto;padding:28px 24px 56px}
+h1{font-size:clamp(1.55rem,3.5vw,2.15rem);line-height:1.25;margin:0 0 8px}
+.subtitle{color:#4a5d7a;margin:0 0 24px;max-width:56rem}
+.panel-step{max-width:920px}
+.panel-viz{margin-top:20px}
+.panel-viz h2{font-size:1.2rem;margin:0 0 12px}
+.panel-viz .lead{font-size:.95rem;color:#52617a;margin:0 0 14px}
+.plots{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+.plots.single{grid-template-columns:1fr;max-width:920px;margin-left:auto;margin-right:auto}
+@media(max-width:900px){.plots{grid-template-columns:1fr}}
+.plot-wrap{background:#fafbfd;border:1px solid #e2e8f4;border-radius:14px;padding:12px 12px 8px}
+.plot-title{font-size:1rem;font-weight:650;text-align:center;margin:6px 0 10px}
+.step-badge{display:inline-block;background:#395cd8;color:#fff;font-size:.75rem;font-weight:650;padding:4px 10px;border-radius:999px;margin-bottom:8px}
+.intuition{font-size:1.02rem;margin:0 0 14px}
+.intuition strong{color:#1a3058}
+.equation-box{background:#f4f7fd;border-radius:12px;padding:14px 16px;margin:12px 0;overflow-x:auto;min-height:3.2rem}
+.equation-box .katex{font-size:1.12em}
+.detail{font-size:.92rem;color:#4a5d7a;margin:8px 0 0}
+.panel{background:#fff;border:1px solid #d5deed;border-radius:16px;padding:20px 22px;box-shadow:0 8px 28px rgba(22,40,80,.06)}
+.panel h2{font-size:1.05rem;margin:0 0 10px;color:#1a3058}
+.plot-title.std{color:#2563eb}
+.plot-title.had{color:#0d9488}
+svg{display:block;width:100%;height:auto;min-height:min(52vh,520px);max-height:560px;aspect-ratio:580/500;touch-action:none}
+svg text{font-family:system-ui,sans-serif;font-size:14px;fill:#334155}
+.legend{font-size:.9rem;color:#64748b;margin-top:12px;display:flex;flex-wrap:wrap;gap:14px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.swatch{width:18px;height:4px;border-radius:2px;display:inline-block}
+.fade{transition:opacity .5s ease}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+button,.speed-btn{border:1px solid #c3cde0;border-radius:8px;padding:8px 14px;background:#fff;color:#152238;font:inherit;cursor:pointer;transition:background .15s,border-color .15s}
+button:hover{background:#f0f4fd}
+button:focus-visible,input:focus-visible{outline:3px solid #ed9d28;outline-offset:2px}
+button.primary{background:#395cd8;color:#fff;border-color:#395cd8}
+button.primary:hover{background:#2d4bb8}
+button.active{background:#395cd8;color:#fff;border-color:#395cd8}
+button:disabled{opacity:.45;cursor:not-allowed}
+.speed-group{display:flex;gap:4px;align-items:center;margin-left:auto;flex-wrap:wrap}
+.speed-group span{font-size:.85rem;color:#52617a;margin-right:4px}
+.row{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin:10px 0}
+label.field{flex:1;min-width:140px;font-size:.9rem}
+label.field input[type=range]{width:100%;accent-color:#395cd8;margin-top:4px}
+label.field input[type=number]{width:100%;padding:8px;border:1px solid #c3cde0;border-radius:8px;font:inherit}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+.presets button{font-size:.85rem;padding:6px 12px}
+.toggles{display:flex;flex-wrap:wrap;gap:12px;margin:10px 0;font-size:.9rem}
+.toggles label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.step-indicator{font-variant-numeric:tabular-nums;color:#52617a;font-size:.9rem;margin-bottom:8px}
+.side-by-side{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;font-size:.92rem}
+@media(max-width:600px){.side-by-side{grid-template-columns:1fr}}
+.coord-box{padding:12px;border-radius:10px;border:1px solid #e2e8f4}
+.coord-box.std{background:#eff6ff}
+.coord-box.had{background:#f0fdfa}
+.qc-box{margin-top:14px;padding:14px;border-left:4px solid #7c3aed;background:#faf5ff;border-radius:0 10px 10px 0;font-size:.92rem}
+.controls-panel{margin-top:20px}
+</style>
+</head>
+<body>
+<main>
+<h1>Same arrow, different coordinates</h1>
+<p class="subtitle">The point in the plane does not move when you change basis — only the numbers you use to describe it change. Compare the standard basis <em>e</em><sub>1</sub>, <em>e</em><sub>2</sub> with the Hadamard basis <strong>|+⟩</strong>, <strong>|−⟩</strong>, project with inner products, and verify with the matrix <em>H</em>.</p>
+
+<section class="panel panel-step" aria-live="polite">
+<p class="step-indicator"><span id="stepLabel">Step 1 of 8</span></p>
+<span class="step-badge" id="stepTitle">Standard basis</span>
+<p class="intuition" id="stepText">Before any formulas: imagine a fixed point in the plane. Coordinates are how many unit steps you take along two chosen directions. Loading interactive steps…</p>
+<div class="equation-box" id="eqPrimary"></div>
+<div class="equation-box" id="eqSecondary"></div>
+<p class="detail" id="stepDetail"></p>
+
+<div class="side-by-side" id="coordSummary">
+<div class="coord-box std"><strong>Standard</strong><div id="sumStd"></div></div>
+<div class="coord-box had"><strong>Hadamard</strong><div id="sumHad"></div></div>
+</div>
+
+<div class="qc-box" id="qcBox" hidden></div>
+</section>
+
+<section class="panel panel-viz">
+<h2>Two views of the same plane</h2>
+<p class="lead">Left: <em>e</em><sub>1</sub>, <em>e</em><sub>2</sub>. Right: <em>h</em><sub>+</sub>, <em>h</em><sub>−</sub>. The green arrow <strong>v</strong> is the same in both panels. With <strong>Show perpendicular projections</strong>, dashed lines drop from <strong>v</strong> onto each axis; labels show inner products ⟨e<sub>i</sub>, v⟩ and ⟨h<sub>±</sub>, v⟩ = a<sub>±</sub>.</p>
+<div class="plots" id="plotsGrid">
+<div class="plot-wrap"><div class="plot-title std">Standard basis — e₁ = |0⟩, e₂ = |1⟩</div><svg id="svgStd" role="img" aria-label="Standard basis diagram"></svg></div>
+<div class="plot-wrap"><div class="plot-title had">Hadamard basis — h₊ = |+⟩, h₋ = |−⟩</div><svg id="svgHad" role="img" aria-label="Hadamard basis diagram"></svg></div>
+</div>
+<div class="legend">
+<span><i class="swatch" style="background:#2563eb"></i> e₁ / |0⟩</span>
+<span><i class="swatch" style="background:#ea580c"></i> e₂ / |1⟩</span>
+<span><i class="swatch" style="background:#0d9488"></i> h₊ / |+⟩</span>
+<span><i class="swatch" style="background:#7c3aed"></i> h₋ / |−⟩</span>
+<span><i class="swatch" style="background:#16a34a"></i> v</span>
+</div>
+</section>
+
+<section class="panel controls-panel">
+<h2>Controls</h2>
+<div class="toolbar">
+<button type="button" id="btnPlay" class="primary">▶ Play</button>
+<button type="button" id="btnPause">Pause</button>
+<button type="button" id="btnResume">Resume</button>
+<button type="button" id="btnReset">Reset</button>
+<button type="button" id="btnPrev">← Previous</button>
+<button type="button" id="btnNext">Next →</button>
+<button type="button" id="btnView">Dual view</button>
+<div class="speed-group">
+<span>Speed</span>
+<button type="button" class="speed-btn" data-speed="0.5">0.5×</button>
+<button type="button" class="speed-btn active" data-speed="1">1×</button>
+<button type="button" class="speed-btn" data-speed="2">2×</button>
+</div>
+</div>
+<div class="toggles">
+<label><input type="checkbox" id="chkProj" checked> Show perpendicular projections</label>
+<label><input type="checkbox" id="chkComp" checked> Show vector components (parallelogram)</label>
+</div>
+<div class="row">
+<label class="field">x = <output id="outX">4</output><input type="range" id="sliderX" min="-3" max="12" step="0.1" value="4"></label>
+<label class="field">y = <output id="outY">5</output><input type="range" id="sliderY" min="-3" max="12" step="0.1" value="5"></label>
+<label class="field">Manual x<input type="number" id="numX" step="0.1" value="4"></label>
+<label class="field">Manual y<input type="number" id="numY" step="0.1" value="5"></label>
+</div>
+<p style="font-size:.85rem;color:#64748b;margin:4px 0 6px">Presets (professor examples and qubit directions as real vectors):</p>
+<div class="presets">
+<button type="button" data-preset="45">v = (4, 5)</button>
+<button type="button" data-preset="21">v = (2, 1)</button>
+<button type="button" data-preset="10">v = (1, 0) = |0⟩</button>
+<button type="button" data-preset="plus">v = (1/√2, 1/√2) = |+⟩</button>
+</div>
+</section>
+</main>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer>
+(() => {
+'use strict';
+const SQ2 = Math.SQRT2;
+const ns = 'http://www.w3.org/2000/svg';
+const SVG_W = 580;
+const SVG_H = 500;
+const SVG_PAD = 50;
+const DEFAULT_PLOT_BOUND = 8;
+/** Fixed axis half-range: sliders move v on a constant grid (no auto-zoom). */
+const FIXED_PLOT_BOUND = DEFAULT_PLOT_BOUND;
+
+const state = {
+  x: 4, y: 5,
+  step: 0,
+  speed: 1,
+  playing: false,
+  playTimer: null,
+  viewMode: 'dual',
+  showProj: true,
+  showComp: true,
+  hadBasisOpacity: 0,
+  orientAnim: 0
+};
+
+const STEPS = [
+  {
+    title: 'Standard basis',
+    text: 'Before any formulas: imagine a fixed point in the plane. Coordinates are just <strong>how many unit steps</strong> you take along two chosen directions. The standard basis uses horizontal <em>e</em><sub>1</sub> and vertical <em>e</em><sub>2</sub>, each of length 1 and at right angles — an <strong>orthonormal</strong> basis.',
+    detail: 'Orthonormal means perpendicular (inner product 0) and each basis vector has length 1.',
+    primary: String.raw`\mathbf e_1=\begin{pmatrix}1\\0\end{pmatrix}=|0\rangle,\quad
+\mathbf e_2=\begin{pmatrix}0\\1\end{pmatrix}=|1\rangle`,
+    secondary: String.raw`\langle \mathbf e_1,\mathbf e_2\rangle=0,\quad \|\mathbf e_1\|=\|\mathbf e_2\|=1`
+  },
+  {
+    title: 'A fixed vector v',
+    text: 'Draw <strong>v</strong> from the origin. In the standard basis its coordinates are the numbers you read off the axes. The vector equals <em>x</em> copies of <em>e</em><sub>1</sub> plus <em>y</em> copies of <em>e</em><sub>2</sub> — a parallelogram rule, not “adding two unrelated numbers”.',
+    detail: 'Changing x or y moves the arrow; the basis arrows stay fixed.',
+    primary: (x,y) => String.raw`\mathbf v=\begin{pmatrix}${fmt(x)}\\${fmt(y)}\end{pmatrix}=${fmt(x)}\mathbf e_1+${fmt(y)}\mathbf e_2`,
+    secondary: String.raw`\text{The arrow stays put; only the description will change in later steps.}`
+  },
+  {
+    title: 'Hadamard basis (same plane)',
+    text: 'Now use two <strong>different</strong> measuring directions: diagonals <em>h</em><sub>+</sub> and <em>h</em><sub>−</sub>, still perpendicular and unit length. The green arrow <strong>v does not move</strong>. Warning: you cannot rotate the whole standard frame by 45° and get this ordered pair — the Hadamard basis has the <strong>opposite orientation</strong> (a reflection is involved), not a rigid rotation.',
+    detail: 'Geometrically: rotate e₁ by 45° to align with h₊, but the second axis must be reflected, not rotated, to match h₋.',
+    primary: String.raw`\mathbf h_+=\tfrac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix}=|+\rangle,\quad
+\mathbf h_-=\tfrac1{\sqrt2}\begin{pmatrix}1\\-1\end{pmatrix}=|-\rangle`,
+    secondary: String.raw`\langle \mathbf h_+,\mathbf h_-\rangle=0,\quad \|\mathbf h_\pm\|=1`
+  },
+  {
+    title: 'Project onto h₊',
+    text: 'The Hadamard coordinate <em>a</em><sub>+</sub> is the inner product ⟨<em>h</em><sub>+</sub>, <strong>v</strong>⟩: “how far <strong>v</strong> reaches along the |+⟩ direction”, with sign. For real vectors this is the signed length of the perpendicular projection onto the line through <em>h</em><sub>+</sub>.',
+    detail: '⟨u,v⟩ here uses the real dot product (same as the lecture’s real case).',
+    primary: (x,y,aP) => String.raw`a_+=\langle \mathbf h_+,\mathbf v\rangle=\tfrac{${fmt(x)}+${fmt(y)}}{\sqrt2}=${texFrac(aP)}`,
+    secondary: String.raw`\text{Dashed teal: projection of }\mathbf v\text{ onto the }|+\rangle\text{ axis.}`
+  },
+  {
+    title: 'Project onto h₋',
+    text: 'Likewise <em>a</em><sub>−</sub> = ⟨<em>h</em><sub>−</sub>, <strong>v</strong>⟩. A <strong>negative</strong> value means <strong>v</strong> points opposite to the labeled h₋ arrow along that line — like reading “−2 steps east” when your axis points west.',
+    detail: 'Signed coordinates keep track of direction along each basis line.',
+    primary: (x,y,aM) => String.raw`a_-=\langle \mathbf h_-,\mathbf v\rangle=\tfrac{${fmt(x)}-${fmt(y)}}{\sqrt2}=${texFrac(aM)}`,
+    secondary: String.raw`\text{Purple dashed line: projection onto the }|-\rangle\text{ axis.}`
+  },
+  {
+    title: 'Two descriptions, one vector',
+    text: 'Same physical arrow: once as <em>x</em>,<em>y</em> along |0⟩,|1⟩, once as <em>a</em><sub>+</sub>,<em>a</em><sub>−</sub> along |+⟩,|−⟩. Neither is “more true” — they are coordinates in different orthonormal bases.',
+    detail: 'Recombining with h₊ and h₋ must rebuild the original arrow.',
+    primary: (x,y,aP,aM) => String.raw`\mathbf v=${fmt(x)}\mathbf e_1+${fmt(y)}\mathbf e_2=${texFrac(aP)}\mathbf h_+${aM<0?'':'+'}${aM<0?'':' '}${texFrac(aM)}\mathbf h_-`,
+    secondary: (x,y,aP,aM) => String.raw`\text{Coefficients }(${texFrac(aP)},\,${texFrac(aM)})\text{ in the Hadamard basis.}`
+  },
+  {
+    title: 'Convert back to standard',
+    text: 'Solve for <em>x</em>,<em>y</em> from <em>a</em><sub>+</sub>,<em>a</em><sub>−</sub>. These formulas are what you get when you expand |+⟩ and |−⟩ in the computational basis and collect terms.',
+    detail: 'Substitute your numbers to recover the original coordinates.',
+    primary: (x,y,aP,aM) => String.raw`\begin{aligned}
+x&=\tfrac{a_++a_-}{\sqrt2}=\tfrac{${texFrac(aP)}+(${texFrac(aM)})}{\sqrt2}=${fmt(x)},\\
+y&=\tfrac{a_+-a_-}{\sqrt2}=\tfrac{${texFrac(aP)}-(${texFrac(aM)})}{\sqrt2}=${fmt(y)}
+\end{aligned}`,
+    secondary: String.raw`\text{You should land on your starting }(x,y)\text{ pair.}`
+  },
+  {
+    title: 'Matrix form (and not the gate story)',
+    text: '<strong>Change of coordinates</strong> (same vector): [a₊,a₋]<sup>T</sup> = H[x,y]<sup>T</sup> and [x,y]<sup>T</sup> = H[a₊,a₋]<sup>T</sup> because H² = I. That is different from <strong>applying</strong> the Hadamard gate to a quantum state, which physically sends |0⟩→|+⟩ etc.',
+    detail: 'Quantum connection: |0⟩ = (|+⟩ + |−⟩)/√2 so its Hadamard coordinates are (1/√2, 1/√2); probabilities use squared magnitudes.',
+    primary: String.raw`H=\tfrac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},\quad H^2=I`,
+    secondary: (x,y,aP,aM) => String.raw`\begin{pmatrix}${texFrac(aP)}\\${texFrac(aM)}\end{pmatrix}=H\begin{pmatrix}${fmt(x)}\\${fmt(y)}\end{pmatrix},\quad
+\begin{pmatrix}${fmt(x)}\\${fmt(y)}\end{pmatrix}=H\begin{pmatrix}${texFrac(aP)}\\${texFrac(aM)}\end{pmatrix}`
+  }
+];
+
+function fmt(n) {
+  if (Math.abs(n - Math.round(n)) < 1e-9) return String(Math.round(n));
+  if (Math.abs(n - 1/SQ2) < 1e-6) return '\\tfrac1{\\sqrt2}';
+  if (Math.abs(n + 1/SQ2) < 1e-6) return '-\\tfrac1{\\sqrt2}';
+  return n.toFixed(Math.abs(n) < 10 ? 2 : 1).replace(/\.?0+$/,'');
+}
+function texFrac(n) {
+  const k = n * SQ2;
+  const r = Math.round(k * 1000) / 1000;
+  if (Math.abs(r - Math.round(r)) < 1e-4) {
+    const num = Math.round(r);
+    if (num === 0) return '0';
+    if (num === 1) return '\\tfrac1{\\sqrt2}';
+    if (num === -1) return '-\\tfrac1{\\sqrt2}';
+    if (num > 0) return `\\tfrac{${num}}{\\sqrt2}`;
+    return `-\\tfrac{${-num}}{\\sqrt2}`;
+  }
+  return fmt(n);
+}
+function compute() {
+  const { x, y } = state;
+  const aP = (x + y) / SQ2;
+  const aM = (x - y) / SQ2;
+  return { x, y, aP, aM };
+}
+
+function renderTex(el, tex) {
+  if (!window.katex) { el.textContent = tex; return; }
+  try { katex.render(tex, el, { throwOnError: false, displayMode: true }); }
+  catch { el.textContent = tex; }
+}
+
+function updateStepUI() {
+  const s = STEPS[state.step];
+  const c = compute();
+  document.getElementById('stepLabel').textContent = `Step ${state.step + 1} of 8`;
+  document.getElementById('stepTitle').textContent = s.title;
+  document.getElementById('stepText').innerHTML = s.text;
+  document.getElementById('stepDetail').textContent = s.detail;
+
+  let p = s.primary, sec = s.secondary;
+  if (typeof p === 'function') p = p(c.x, c.y, c.aP, c.aM);
+  if (typeof sec === 'function') sec = sec(c.x, c.y, c.aP, c.aM);
+  renderTex(document.getElementById('eqPrimary'), p);
+  renderTex(document.getElementById('eqSecondary'), sec || '');
+
+  const aMtex = texFrac(c.aM);
+  const aPtex = texFrac(c.aP);
+  renderTex(document.getElementById('sumStd'),
+    String.raw`\mathbf v=${fmt(c.x)}\mathbf e_1+${fmt(c.y)}\mathbf e_2`);
+  renderTex(document.getElementById('sumHad'),
+    String.raw`\mathbf v=${aPtex}\mathbf h_+${c.aM < 0 ? '' : '+'}${c.aM < 0 ? '' : ' '}${aMtex}\mathbf h_-`);
+
+  const qc = document.getElementById('qcBox');
+  if (state.step >= 7) {
+    qc.hidden = false;
+    const norm = Math.hypot(c.x, c.y);
+    const isUnit = Math.abs(norm - 1) < 0.02;
+    const pPlus = isUnit ? (c.aP * c.aP).toFixed(3) : '—';
+    const pMinus = isUnit ? (c.aM * c.aM).toFixed(3) : '—';
+    qc.innerHTML = `<strong>Quantum link (unit states only for probabilities):</strong><br>
+    $|0\\rangle=\\tfrac{|+\\rangle+|-\\rangle}{\\sqrt2}$ so Hadamard coordinates of $|0\\rangle$ are $(\\tfrac1{\\sqrt2},\\tfrac1{\\sqrt2})$.<br>
+    Measuring $|0\\rangle$ in the Hadamard basis: $P(+)\\approx\\tfrac12$, $P(-)\\approx\\tfrac12$ from $|a_+|^2$ and $|a_-|^2$.<br>
+    <span style="color:#64748b">Your current v has length ${norm.toFixed(3)}${isUnit ? ` → example probs P(+)=${pPlus}, P(-)=${pMinus}` : ' — use preset |0⟩ or |+⟩ for unit-length probability demo.'}</span>`;
+    if (window.renderMathInElement) renderMathInElement(qc, { delimiters: [{ left: '$', right: '$', display: false }] });
+  } else qc.hidden = true;
+
+  document.getElementById('outX').textContent = c.x.toFixed(2);
+  document.getElementById('outY').textContent = c.y.toFixed(2);
+}
+
+function plotBoundForVector() {
+  return FIXED_PLOT_BOUND;
+}
+
+function setVector(x, y) {
+  state.x = x;
+  state.y = y;
+  document.getElementById('sliderX').value = x;
+  document.getElementById('sliderY').value = y;
+  document.getElementById('numX').value = x;
+  document.getElementById('numY').value = y;
+  redraw();
+}
+
+function projectOntoAxis(x, y, bx, by) {
+  const uLen = Math.hypot(bx, by) || 1;
+  const ux = bx / uLen, uy = by / uLen;
+  const scalar = x * ux + y * uy;
+  return { scalar, px: scalar * ux, py: scalar * uy };
+}
+
+function formatCoord(n) {
+  if (Math.abs(n - Math.round(n)) < 1e-6) return String(Math.round(n));
+  return n.toFixed(2);
+}
+
+function svgEl(tag, attrs, text) {
+  const e = document.createElementNS(ns, tag);
+  for (const [k, v] of Object.entries(attrs || {})) e.setAttribute(k, v);
+  if (text != null) e.textContent = text;
+  return e;
+}
+
+function drawPlot(svg, mode, c, step, bound) {
+  const W = SVG_W, H = SVG_H, pad = SVG_PAD;
+  const scale = (Math.min(W, H) - 2 * pad) / (2 * bound);
+  const cx = W / 2, cy = H / 2;
+  const tx = x => cx + x * scale;
+  const ty = y => cy - y * scale;
+  const ah = 0.22;
+
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+  for (let i = -bound; i <= bound; i++) {
+    const light = i === 0;
+    svg.appendChild(svgEl('line', {
+      x1: tx(i), y1: ty(-bound), x2: tx(i), y2: ty(bound),
+      stroke: light ? '#94a3b8' : '#e2e8f0', 'stroke-width': light ? 1.5 : 0.8
+    }));
+    svg.appendChild(svgEl('line', {
+      x1: tx(-bound), y1: ty(i), x2: tx(bound), y2: ty(i),
+      stroke: light ? '#94a3b8' : '#e2e8f0', 'stroke-width': light ? 1.5 : 0.8
+    }));
+    if (i !== 0 && Math.abs(i) <= bound) {
+      svg.appendChild(svgEl('text', { x: tx(i), y: ty(-bound) - 8, 'text-anchor': 'middle', fill: '#94a3b8', 'font-size': '13' }, String(i)));
+      svg.appendChild(svgEl('text', { x: tx(-bound) - 10, y: ty(i) + 5, 'text-anchor': 'end', fill: '#94a3b8', 'font-size': '13' }, String(i)));
+    }
+  }
+  svg.appendChild(svgEl('text', { x: tx(bound) + 6, y: ty(0) + 5, fill: '#64748b', 'font-size': '14' }, 'x'));
+  svg.appendChild(svgEl('text', { x: tx(0) - 10, y: ty(bound) - 6, fill: '#64748b', 'font-size': '14' }, 'y'));
+
+  function arrow(x1, y1, x2, y2, color, width, dash, opacity) {
+    const g = svgEl('g', { opacity: opacity ?? 1 });
+    g.appendChild(svgEl('line', {
+      x1: tx(x1), y1: ty(y1), x2: tx(x2), y2: ty(y2),
+      stroke: color, 'stroke-width': width || 3,
+      ...(dash ? { 'stroke-dasharray': '8 6' } : {})
+    }));
+    const ang = Math.atan2(y2 - y1, x2 - x1);
+    const px = x2 - ah * Math.cos(ang - 0.35);
+    const py = y2 - ah * Math.sin(ang - 0.35);
+    const px2 = x2 - ah * Math.cos(ang + 0.35);
+    const py2 = y2 - ah * Math.sin(ang + 0.35);
+    g.appendChild(svgEl('polygon', {
+      points: `${tx(x2)},${ty(y2)} ${tx(px)},${ty(py)} ${tx(px2)},${ty(py2)}`,
+      fill: color
+    }));
+    svg.appendChild(g);
+  }
+
+  function projDrop(x1, y1, x2, y2, color, width) {
+    svg.appendChild(svgEl('line', {
+      x1: tx(x1), y1: ty(y1), x2: tx(x2), y2: ty(y2),
+      stroke: color, 'stroke-width': width || 2,
+      'stroke-dasharray': '7 6', opacity: 0.9
+    }));
+  }
+
+  function axisLine(bx, by, color, opacity) {
+    const L = bound * 1.05;
+    svg.appendChild(svgEl('line', {
+      x1: tx(-bx * L), y1: ty(-by * L), x2: tx(bx * L), y2: ty(by * L),
+      stroke: color, 'stroke-width': 1, 'stroke-dasharray': '4 6', opacity: opacity ?? 0.35
+    }));
+  }
+
+  const showStd = mode === 'std';
+  const hadOp = state.hadBasisOpacity;
+
+  if (showStd && step >= 0) {
+    arrow(0, 0, 1, 0, '#2563eb', 3.5);
+    arrow(0, 0, 0, 1, '#ea580c', 3.5);
+    if (step === 0) {
+      svg.appendChild(svgEl('text', { x: tx(1.08), y: ty(0) - 10, fill: '#2563eb', 'font-size': '15' }, 'e₁'));
+      svg.appendChild(svgEl('text', { x: tx(0) + 10, y: ty(1.08), fill: '#ea580c', 'font-size': '15' }, 'e₂'));
+    }
+  }
+
+  if (!showStd) {
+    const hadArrowOp = step >= 2 ? Math.max(hadOp, 0.92) : 0.88;
+    axisLine(1 / SQ2, 1 / SQ2, '#0d9488', 0.35 + 0.25 * hadArrowOp);
+    axisLine(1 / SQ2, -1 / SQ2, '#7c3aed', 0.35 + 0.25 * hadArrowOp);
+
+    if (step === 2 && state.orientAnim > 0 && state.orientAnim < 1) {
+      const t = state.orientAnim;
+      const r1x = Math.cos(Math.PI / 4 * t), r1y = Math.sin(Math.PI / 4 * t);
+      arrow(0, 0, r1x, r1y, '#2563eb', 2.2, true, 0.45);
+      const r2x = -Math.sin(Math.PI / 4 * t), r2y = Math.cos(Math.PI / 4 * t);
+      arrow(0, 0, r2x, r2y, '#ea580c', 2.2, true, 0.45);
+    }
+
+    arrow(0, 0, 1 / SQ2, 1 / SQ2, '#0d9488', 3.2, false, hadArrowOp);
+    arrow(0, 0, 1 / SQ2, -1 / SQ2, '#7c3aed', 3.2, false, hadArrowOp);
+    svg.appendChild(svgEl('text', {
+      x: tx(0.88), y: ty(0.88), fill: '#0d9488', opacity: hadArrowOp, 'font-size': '15'
+    }, 'h₊'));
+    svg.appendChild(svgEl('text', {
+      x: tx(0.88), y: ty(-0.58), fill: '#7c3aed', opacity: hadArrowOp, 'font-size': '15'
+    }, 'h₋'));
+  }
+
+  const showV = true;
+  if (showV) {
+    if (state.showComp && showStd && state.step >= 1) {
+      arrow(0, 0, c.x, 0, '#2563eb', 2, true, 0.85);
+      arrow(c.x, 0, c.x, c.y, '#ea580c', 2, true, 0.85);
+      svg.appendChild(svgEl('text', { x: tx(c.x/2), y: ty(0) - 6, fill: '#2563eb' }, `${c.x.toFixed(1)} e₁`));
+      svg.appendChild(svgEl('text', { x: tx(c.x) + 6, y: ty(c.y/2), fill: '#ea580c' }, `${c.y.toFixed(1)} e₂`));
+    }
+    arrow(0, 0, c.x, c.y, '#16a34a', 3.8);
+    svg.appendChild(svgEl('text', { x: tx(c.x) + 10, y: ty(c.y) - 8, fill: '#16a34a', 'font-weight': '600', 'font-size': '16' }, 'v'));
+
+    if (state.showProj && showStd) {
+      projDrop(c.x, c.y, c.x, 0, '#2563eb');
+      arrow(0, 0, c.x, 0, '#2563eb', 2.8, true, 0.8);
+      svg.appendChild(svgEl('text', {
+        x: tx(c.x / 2), y: ty(0) + 18, fill: '#2563eb', 'font-size': '13', 'text-anchor': 'middle'
+      }, `⟨e₁,v⟩ = ${formatCoord(c.x)}`));
+
+      projDrop(c.x, c.y, 0, c.y, '#ea580c');
+      arrow(0, 0, 0, c.y, '#ea580c', 2.8, true, 0.8);
+      svg.appendChild(svgEl('text', {
+        x: tx(0) - 14, y: ty(c.y / 2), fill: '#ea580c', 'font-size': '13', 'text-anchor': 'end'
+      }, `⟨e₂,v⟩ = ${formatCoord(c.y)}`));
+    }
+
+    if (state.showProj && !showStd) {
+      const hp = projectOntoAxis(c.x, c.y, 1 / SQ2, 1 / SQ2);
+      const hm = projectOntoAxis(c.x, c.y, 1 / SQ2, -1 / SQ2);
+      projDrop(c.x, c.y, hp.px, hp.py, '#0d9488');
+      arrow(0, 0, hp.px, hp.py, '#0d9488', 2.8, true, 0.85);
+      svg.appendChild(svgEl('text', {
+        x: tx(hp.px * 0.55), y: ty(hp.py * 0.55) - 10, fill: '#0d9488', 'font-size': '13'
+      }, `a₊ = ⟨h₊,v⟩ = ${formatCoord(hp.scalar)}`));
+
+      projDrop(c.x, c.y, hm.px, hm.py, '#7c3aed');
+      arrow(0, 0, hm.px, hm.py, '#7c3aed', 2.8, true, 0.85);
+      svg.appendChild(svgEl('text', {
+        x: tx(hm.px * 0.55), y: ty(hm.py * 0.55) + 16, fill: '#7c3aed', 'font-size': '13'
+      }, `a₋ = ⟨h₋,v⟩ = ${formatCoord(hm.scalar)}`));
+    }
+  }
+}
+
+function redraw() {
+  const c = compute();
+  const bound = plotBoundForVector();
+  updateStepUI();
+  drawPlot(document.getElementById('svgStd'), 'std', c, state.step, bound);
+  drawPlot(document.getElementById('svgHad'), 'had', c, state.step, bound);
+}
+
+function setStep(n, animateHadamard) {
+  state.step = Math.max(0, Math.min(7, n));
+  if (state.step >= 2) {
+    if (animateHadamard) {
+      state.hadBasisOpacity = 0;
+      state.orientAnim = 0;
+      let start = null;
+      const dur = 1200 / state.speed;
+      function tick(ts) {
+        if (!start) start = ts;
+        const u = Math.min(1, (ts - start) / dur);
+        state.orientAnim = u < 0.45 ? u / 0.45 : 1;
+        state.hadBasisOpacity = u < 0.45 ? 0 : (u - 0.45) / 0.55;
+        redraw();
+        if (u < 1) requestAnimationFrame(tick);
+        else { state.orientAnim = 1; state.hadBasisOpacity = 1; redraw(); }
+      }
+      requestAnimationFrame(tick);
+      return;
+    }
+    state.hadBasisOpacity = 1;
+    state.orientAnim = 1;
+  } else {
+    state.hadBasisOpacity = state.step === 2 ? state.hadBasisOpacity : 0;
+  }
+  redraw();
+}
+
+function stopPlay() {
+  state.playing = false;
+  if (state.playTimer) clearTimeout(state.playTimer);
+  state.playTimer = null;
+  document.getElementById('btnPlay').textContent = '▶ Play';
+}
+
+function playLoop() {
+  if (!state.playing) return;
+  const delay = (state.step === 2 ? 2200 : 2800) / state.speed;
+  state.playTimer = setTimeout(() => {
+    if (state.step >= 7) { stopPlay(); return; }
+    const next = state.step + 1;
+    setStep(next, next === 2);
+    playLoop();
+  }, delay);
+}
+
+function syncVectorFromUI() {
+  setVector(
+    Number(document.getElementById('sliderX').value),
+    Number(document.getElementById('sliderY').value)
+  );
+}
+
+const presets = {
+  '45': [4, 5],
+  '21': [2, 1],
+  '10': [1, 0],
+  'plus': [1/SQ2, 1/SQ2]
+};
+
+document.getElementById('btnPlay').addEventListener('click', () => {
+  if (state.playing) return;
+  state.playing = true;
+  document.getElementById('btnPlay').textContent = 'Playing…';
+  if (state.step >= 7) setStep(0);
+  playLoop();
+});
+document.getElementById('btnPause').addEventListener('click', stopPlay);
+document.getElementById('btnResume').addEventListener('click', () => {
+  if (state.playing || state.step >= 7) return;
+  state.playing = true;
+  document.getElementById('btnPlay').textContent = 'Playing…';
+  playLoop();
+});
+document.getElementById('btnReset').addEventListener('click', () => {
+  stopPlay();
+  state.step = 0;
+  state.hadBasisOpacity = 0;
+  state.orientAnim = 0;
+  setVector(4, 5);
+});
+document.getElementById('btnNext').addEventListener('click', () => {
+  stopPlay();
+  setStep(state.step + 1, state.step + 1 === 2);
+});
+document.getElementById('btnPrev').addEventListener('click', () => {
+  stopPlay();
+  setStep(state.step - 1);
+});
+function applyViewMode() {
+  const grid = document.getElementById('plotsGrid');
+  const btn = document.getElementById('btnView');
+  const a = grid.children[0], b = grid.children[1];
+  if (state.viewMode === 'dual') {
+    grid.classList.remove('single');
+    a.style.display = '';
+    b.style.display = '';
+    btn.textContent = 'View: both panels';
+  } else if (state.viewMode === 'std') {
+    grid.classList.add('single');
+    a.style.display = '';
+    b.style.display = 'none';
+    btn.textContent = 'View: standard only';
+  } else {
+    grid.classList.add('single');
+    a.style.display = 'none';
+    b.style.display = '';
+    btn.textContent = 'View: Hadamard only';
+  }
+}
+document.getElementById('btnView').addEventListener('click', () => {
+  state.viewMode = state.viewMode === 'dual' ? 'std' : state.viewMode === 'std' ? 'had' : 'dual';
+  applyViewMode();
+  redraw();
+});
+document.querySelectorAll('.speed-btn').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.speed-btn').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  state.speed = Number(b.dataset.speed);
+}));
+document.getElementById('chkProj').addEventListener('change', e => { state.showProj = e.target.checked; redraw(); });
+document.getElementById('chkComp').addEventListener('change', e => { state.showComp = e.target.checked; redraw(); });
+document.getElementById('sliderX').addEventListener('input', syncVectorFromUI);
+document.getElementById('sliderY').addEventListener('input', syncVectorFromUI);
+['numX', 'numY'].forEach(id => document.getElementById(id).addEventListener('input', () => {
+  setVector(
+    Number(document.getElementById('numX').value),
+    Number(document.getElementById('numY').value)
+  );
+}));
+document.querySelectorAll('[data-preset]').forEach(b => b.addEventListener('click', () => {
+  const [x, y] = presets[b.dataset.preset];
+  stopPlay();
+  setVector(x, y);
+}));
+
+function init() {
+  applyViewMode();
+  setStep(0);
+  let resizeTimer = 0;
+  const scheduleRedraw = () => {
+    cancelAnimationFrame(resizeTimer);
+    resizeTimer = requestAnimationFrame(() => redraw());
+  };
+  window.addEventListener('resize', scheduleRedraw);
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else init();
+})();
+</script>
+</body>
+</html>

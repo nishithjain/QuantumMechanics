@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shear · One eigenvector direction</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101923;color:#edf4fa;font:16px/1.5 Inter,system-ui,sans-serif}
+main{max-width:1100px;margin:auto;padding:clamp(14px,4vw,44px)}
+h1{font-size:clamp(30px,5vw,48px);letter-spacing:-.04em;line-height:1.08;margin:0}
+h2{font-size:19px;margin:0 0 8px}p{margin:8px 0;color:#bfd0df}
+.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;margin-top:20px}
+section{background:#192735;border:1px solid #3b5064;border-radius:15px;padding:15px}
+canvas{display:block;width:100%;height:auto;background:#101923;border-radius:9px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+button{font:inherit;padding:7px 11px;background:#293d50;color:#edf4fa;border:1px solid #687f94;border-radius:8px;cursor:pointer}
+#play{background:#ffda91;color:#172735;font-weight:700;border-color:#ffda91}
+:focus-visible{outline:3px solid #ffda91;outline-offset:3px}
+input{width:100%;accent-color:#ffda91}
+label{display:block;font-size:14px}
+.matrix{display:inline-grid;grid-template-columns:repeat(2,minmax(1.6em,auto));gap:0 .4em;text-align:center;border-inline:2px solid;border-radius:5px;padding:0 .25em;vertical-align:middle}
+.gold{color:#ffda91}.mint{color:#8ee5ce}.pink{color:#e7baff}
+.rule{border-top:1px solid #40566a;margin-top:17px;padding-top:12px}
+.math{font-size:18px;color:#edf4fa}
+.caption{font-size:14px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body><main>
+<h1>Which vectors survive a shear unchanged?</h1>
+<p>Each horizontal row slides sideways by its height. Watch what happens to a row at height zero.</p>
+<div class="layout">
+<section aria-label="Animated shear">
+<canvas id="plot" width="640" height="450" role="img"></canvas>
+<p class="caption"><span class="mint">Mint line</span> · fixed x-axis &nbsp; <span class="pink">Purple grid</span> · sheared plane &nbsp; <span class="gold">Gold arrow</span> · your vector</p>
+<div class="controls">
+<button id="play" type="button">Play shear</button>
+<button id="start" type="button">Show start</button>
+<button id="end" type="button">Show result</button>
+</div>
+<label for="progress">Shear progress <output id="percent" for="progress">0%</output></label>
+<input id="progress" type="range" min="0" max="100" value="0">
+<h2 class="rule">Try a starting vector</h2>
+<div class="controls">
+<button type="button" data-x="1" data-y="0">î = (1, 0)</button>
+<button type="button" data-x="0" data-y="1">ĵ = (0, 1)</button>
+<button type="button" data-x="1" data-y="2">(1, 2)</button>
+</div>
+<label for="x">Starting x = <output id="vx" for="x"></output></label>
+<input id="x" type="range" min="-2" max="2" step=".25" value="0">
+<label for="y">Starting y = <output id="vy" for="y"></output></label>
+<input id="y" type="range" min="-2" max="2" step=".25" value="1">
+</section>
+<section aria-label="Shear calculation">
+<h2>What the shear does</h2>
+<div class="math">S = <span class="matrix"><span>1</span><span>1</span><span>0</span><span>1</span></span> &nbsp; S(x, y) = (x + y, y)</div>
+<p id="motion" class="math"></p>
+<p id="result"></p>
+<p id="verdict"></p>
+<h2 class="rule">Find the eigenvalue</h2>
+<div class="math">S − λI = <span class="matrix"><span>1 − λ</span><span>1</span><span>0</span><span>1 − λ</span></span></div>
+<p class="math">det(S − λI) = (1 − λ)²</p>
+<p>This is zero only at <strong class="gold">λ = 1</strong>. The same root occurs twice.</p>
+<h2 class="rule">Find the eigenvectors</h2>
+<div class="math">S − I = <span class="matrix"><span>0</span><span>1</span><span>0</span><span>0</span></span></div>
+<p class="math">(S − I)(x, y) = (y, 0)</p>
+<p>To get (0, 0), we need <strong class="mint">y = 0</strong>. Every nonzero arrow on the x-axis stays fixed. These arrows are all multiples of (1, 0), so they supply only <strong>one independent direction</strong>. Two independent directions would be needed to span the plane.</p>
+</section>
+</div>
+</main>
+<script>
+const byId = id => document.getElementById(id);
+const canvas = byId('plot');
+const ctx = canvas.getContext('2d');
+const progressInput = byId('progress');
+const xInput = byId('x');
+const yInput = byId('y');
+const play = byId('play');
+const format = n => String(Number(n.toFixed(2))).replace('-', '−');
+const pair = (x, y) => '(' + format(x) + ', ' + format(y) + ')';
+const screen = ([x,y]) => [320 + 57*x, 225 - 57*y];
+let progress = 0;
+let frame = null;
+
+function path(points, stroke, width = 1, fill = null) {
+  ctx.beginPath();
+  ctx.moveTo(...screen(points[0]));
+  for (const point of points.slice(1)) ctx.lineTo(...screen(point));
+  if (fill) {
+    ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.fill();
+  }
+  ctx.strokeStyle = stroke;
+  ctx.lineWidth = width;
+  ctx.stroke();
+}
+
+function arrow(x,y,color,width) {
+  path([[0,0],[x,y]],color,width);
+  const angle = Math.atan2(y,x);
+  const size = Math.min(.24, Math.hypot(x,y));
+  for (const offset of [-.5,.5]) {
+    path([[x,y],[x-size*Math.cos(angle+offset),y-size*Math.sin(angle+offset)]],color,width);
+  }
+}
+
+function draw(value) {
+  progress = value;
+  const x = Number(xInput.value);
+  const y = Number(yInput.value);
+  const tipX = x + value*y;
+  const zero = x === 0 && y === 0;
+  progressInput.value = Math.round(value*100);
+  byId('percent').textContent = progressInput.value + '%';
+  byId('vx').textContent = format(x);
+  byId('vy').textContent = format(y);
+  byId('motion').textContent = 'Current arrow ' + pair(tipX,y);
+  byId('result').textContent = 'Full shear ' + pair(x,y) + ' → ' + pair(x+y,y);
+  const verdict = zero ? 'The origin stays fixed. Eigenvectors must be nonzero.' :
+    y === 0 ? 'Height is zero, so there is no sideways movement. This vector is an eigenvector with eigenvalue 1.' :
+    'The arrow tip slides sideways and keeps the same nonzero height. Its direction changes, so this vector is not an eigenvector.';
+  byId('verdict').textContent = verdict;
+  canvas.setAttribute('aria-label','Shear at '+progressInput.value+' percent. Arrow at '+pair(tipX,y)+'. '+verdict);
+  ctx.clearRect(0,0,640,450);
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(27,26,586,398);
+  ctx.clip();
+  for (let row=-3;row<=3;row++) path([[-6,row],[6,row]],'#304456');
+  for (let col=-5;col<=5;col++) path([[col,-3.6],[col,3.6]],'#304456');
+  for (let col=-8;col<=8;col++) path([[col-3.6*value,-3.6],[col+3.6*value,3.6]],'#78668f');
+  path([[0,0],[1,0],[1+value,1],[value,1],[0,0]],'#b997e3',2,'#46385c');
+  ctx.setLineDash([5,5]);
+  path([[0,0],[1,0],[1,1],[0,1],[0,0]],'#b8c8d8',1.5);
+  if (y !== 0) path([[x,y],[x+y,y]],'#a9bdce',1.5);
+  ctx.setLineDash([]);
+  path([[-5.3,0],[5.3,0]],'#8ee5ce',2.5);
+  if (zero) {
+    ctx.beginPath();
+    ctx.fillStyle = '#ffda91';
+    ctx.arc(...screen([0,0]),5,0,2*Math.PI);
+    ctx.fill();
+  } else {
+    if (Math.abs(tipX-x) > .01) {
+      ctx.setLineDash([5,5]);
+      path([[0,0],[x,y]],'#c6d5df',2);
+      ctx.setLineDash([]);
+    }
+    arrow(tipX,y,'#ffda91',4);
+  }
+  ctx.restore();
+  ctx.font = 'bold 16px system-ui';
+  ctx.fillStyle = '#8ee5ce';
+  ctx.fillText('x-axis · y = 0',491,247);
+  ctx.fillStyle = '#ffda91';
+  const [tipScreenX,tipScreenY] = screen([tipX,y]);
+  ctx.textAlign = tipScreenX > 490 ? 'right' : 'left';
+  ctx.fillText(pair(tipX,y),tipScreenX+(tipScreenX>490?-8:8),tipScreenY-9);
+  ctx.textAlign = 'left';
+}
+
+function stop() {
+  if (frame !== null) cancelAnimationFrame(frame);
+  frame = null;
+  play.textContent = progress === 1 ? 'Replay shear' : progress === 0 ? 'Play shear' : 'Resume';
+}
+function seek(value) {
+  draw(value);
+  stop();
+}
+play.addEventListener('click', () => {
+  if (frame !== null) {
+    stop();
+    return;
+  }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    seek(1);
+    return;
+  }
+  if (progress === 1) draw(0);
+  const initial = progress;
+  let start;
+  play.textContent = 'Pause';
+  function animate(now) {
+    start ??= now;
+    draw(Math.min(1,initial+(now-start)/3300));
+    if (progress === 1) stop();
+    else frame = requestAnimationFrame(animate);
+  }
+  frame = requestAnimationFrame(animate);
+});
+progressInput.addEventListener('input', () => seek(Number(progressInput.value)/100));
+for (const input of [xInput,yInput]) input.addEventListener('input', () => draw(progress));
+for (const button of document.querySelectorAll('[data-x]')) {
+  button.addEventListener('click', () => {
+    xInput.value = button.dataset.x;
+    yInput.value = button.dataset.y;
+    seek(0);
+  });
+}
+byId('start').addEventListener('click', () => seek(0));
+byId('end').addEventListener('click', () => seek(1));
+draw(0);
+</script>
+</body></html>

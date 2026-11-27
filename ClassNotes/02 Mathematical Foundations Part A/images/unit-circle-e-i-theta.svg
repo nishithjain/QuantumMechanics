@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 410" width="480" height="410" font-family="Arial, Helvetica, sans-serif">
+  <title>The unit circle: e^(i theta) is the point at angle theta on the circle of radius 1</title>
+  <defs>
+    <marker id="axU" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 z" fill="#222"/></marker>
+    <marker id="zU" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L14,7 L0,14 z" fill="#1f5fbf"/></marker>
+  </defs>
+  <rect x="0" y="0" width="480" height="410" fill="#ffffff"/>
+  <text x="240.0" y="16.0" font-size="15" font-weight="bold" fill="#222" text-anchor="middle">The unit circle: e<tspan dy="-6" font-size="10">i&#952;</tspan><tspan dy="6"> lies on the circle of radius 1</tspan></text>
+  <circle cx="240" cy="200" r="130" fill="#f3f7fd" stroke="#1f5fbf" stroke-width="3"/>
+  <line x1="95" y1="200" x2="472" y2="200" stroke="#222" stroke-width="2" marker-end="url(#axU)"/>
+  <line x1="240" y1="376" x2="240" y2="36" stroke="#222" stroke-width="2" marker-end="url(#axU)"/>
+  <text x="474.0" y="262.0" font-size="12" font-weight="normal" fill="#222" text-anchor="end">Real axis</text>
+  <text x="250.0" y="42.0" font-size="12" font-weight="normal" fill="#222" text-anchor="start">Imaginary axis</text>
+  <polygon points="240,200 331.9,200 331.9,108.1" fill="#fff4e0"/>
+  <line x1="240" y1="200" x2="331.9" y2="200" stroke="#e07b00" stroke-width="4"/>
+  <line x1="331.9" y1="200" x2="331.9" y2="108.1" stroke="#e07b00" stroke-width="4" stroke-dasharray="7,4"/>
+  <line x1="240" y1="200" x2="331.9" y2="108.1" stroke="#1f5fbf" stroke-width="4" marker-end="url(#zU)"/>
+  <path d="M 275,200 A 35 35 0 0 0 264.7,175.3" fill="none" stroke="#d62828" stroke-width="3"/>
+  <text x="283.0" y="193.0" font-size="16" font-weight="bold" fill="#d62828" text-anchor="start">&#952;</text>
+  <text x="286.0" y="218.0" font-size="13" font-weight="bold" fill="#e07b00" text-anchor="middle">cos &#952;</text>
+  <text x="325.9" y="158.0" font-size="13" font-weight="bold" fill="#e07b00" text-anchor="end">sin &#952;</text>
+  <circle cx="370.0" cy="200.0" r="6" fill="#2e8b2e"/>
+  <circle cx="240.0" cy="70.0" r="6" fill="#2e8b2e"/>
+  <circle cx="110.0" cy="200.0" r="6" fill="#2e8b2e"/>
+  <circle cx="240.0" cy="330.0" r="6" fill="#2e8b2e"/>
+  <circle cx="331.9" cy="108.1" r="7" fill="#1f5fbf"/>
+  <circle cx="240" cy="200" r="4" fill="#222"/>
+  <text x="343.9" y="100.1" font-size="14" font-weight="bold" fill="#1f5fbf" text-anchor="start">e<tspan dy="-6" font-size="10">i&#960;/4</tspan><tspan dy="6"></tspan></text>
+  <text x="343.9" y="116.1" font-size="11" font-weight="normal" fill="#1f5fbf" text-anchor="start">= cos 45&#176; + i sin 45&#176;</text>
+  <text x="343.9" y="132.1" font-size="12" font-weight="normal" fill="#1f5fbf" text-anchor="start">(angle 45&#176; = &#960;/4)</text>
+  <text x="382.0" y="186.0" font-size="14" font-weight="bold" fill="#2e8b2e" text-anchor="start">e<tspan dy="-6" font-size="10">i0</tspan><tspan dy="6"> = 1</tspan></text>
+  <text x="382.0" y="232.0" font-size="11" font-weight="normal" fill="#2e8b2e" text-anchor="start">(0&#176; = 360&#176;)</text>
+  <text x="252.0" y="66.0" font-size="14" font-weight="bold" fill="#2e8b2e" text-anchor="start">e<tspan dy="-6" font-size="10">i&#960;/2</tspan><tspan dy="6"> = i</tspan></text>
+  <text x="252.0" y="84.0" font-size="12" font-weight="normal" fill="#2e8b2e" text-anchor="start">(90&#176;)</text>
+  <text x="98.0" y="186.0" font-size="14" font-weight="bold" fill="#2e8b2e" text-anchor="end">e<tspan dy="-6" font-size="10">i&#960;</tspan><tspan dy="6"> = &#8722;1</tspan></text>
+  <text x="98.0" y="232.0" font-size="12" font-weight="normal" fill="#2e8b2e" text-anchor="end">(180&#176;)</text>
+  <text x="252.0" y="346.0" font-size="14" font-weight="bold" fill="#2e8b2e" text-anchor="start">e<tspan dy="-6" font-size="10">i3&#960;/2</tspan><tspan dy="6"> = &#8722;i</tspan></text>
+  <text x="252.0" y="364.0" font-size="12" font-weight="normal" fill="#2e8b2e" text-anchor="start">(270&#176;)</text>
+  <text x="240.0" y="396.0" font-size="12" font-weight="normal" fill="#222" text-anchor="middle">Every point e<tspan dy="-5" font-size="9">i&#952;</tspan><tspan dy="5"> = cos &#952; + i sin &#952; is exactly 1 away from the origin.</tspan></text>
+</svg>

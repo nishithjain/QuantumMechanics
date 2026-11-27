@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNOT — Test Your Understanding</title>
+<style>
+:root{--ink:#172b4d;--muted:#526581;--blue:#2455c8;--line:#d7e0ef;--bg:#eef3fb;--green:#167548;--red:#b42318}
+*{box-sizing:border-box}
+body{margin:0;padding:28px 16px;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif}
+main{max-width:760px;margin:auto}.card{background:white;border-radius:18px;padding:30px;box-shadow:0 8px 28px rgba(30,55,90,.08)}
+.eyebrow{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+h1{font-size:clamp(27px,5vw,36px);margin:10px 0 8px}.intro{color:var(--muted);line-height:1.6;margin:0}
+hr{border:0;border-top:1px solid var(--line);margin:22px 0}
+.question{border:1px solid var(--line);border-radius:14px;padding:19px;margin:16px 0}
+.qtitle{font-weight:750;font-size:17px;line-height:1.5;margin-bottom:13px}
+.num{color:var(--blue);margin-right:7px}
+.options{display:grid;gap:9px}
+.option{display:flex;align-items:center;gap:11px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;cursor:pointer;line-height:1.4}
+.option:hover{background:#f7f9ff;border-color:#9bb2e8}
+input{width:17px;height:17px;accent-color:var(--blue);flex:none}
+.option.correct{background:#effaf3;border-color:#65b88b}
+.option.incorrect{background:#fff3f2;border-color:#e69a94}
+.feedback{display:none;margin-top:12px;padding:12px 14px;border-radius:10px;font-size:14px;line-height:1.5}
+.feedback.show{display:block}.feedback.good{background:#effaf3;color:var(--green)}.feedback.bad{background:#fff3f2;color:var(--red)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+button{border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer}
+#check{background:var(--blue);color:white}#reset{background:#e9eef7;color:var(--ink)}
+#result{display:none;margin-top:18px;padding:16px;border-radius:12px;background:#edf3ff;font-weight:750}
+.note{margin-top:20px;color:var(--muted);font-size:13px;line-height:1.5}
+@media(max-width:520px){.card{padding:21px 16px}.question{padding:15px}}
+</style>
+</head>
+<body>
+<main><section class="card">
+<div class="eyebrow">Two-qubit gates · Knowledge check</div>
+<h1>Test your understanding: CNOT</h1>
+<p class="intro">Remember: the first qubit is the control and the second qubit is the target. The target flips only when the control is 1.</p>
+<hr>
+
+<section class="question" data-answer="unchanged"
+ data-explanation="When the control qubit is 0, CNOT does not apply X to the target. The target stays as it is.">
+<div class="qtitle"><span class="num">1.</span>What happens when the control qubit is 0?</div>
+<div class="options">
+<label class="option"><input type="radio" name="q1" value="flipped">The target is flipped</label>
+<label class="option"><input type="radio" name="q1" value="unchanged">The target stays unchanged</label>
+<label class="option"><input type="radio" name="q1" value="both">Both qubits are flipped</label>
+</div><div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="question" data-answer="10"
+ data-explanation="In |11⟩, the control is 1, so the target flips from 1 to 0. The output is |10⟩.">
+<div class="qtitle"><span class="num">2.</span>What is the output of CNOT applied to <span class="math">|11⟩</span>?</div>
+<div class="options">
+<label class="option"><input type="radio" name="q2" value="10"><span class="math">|10⟩</span></label>
+<label class="option"><input type="radio" name="q2" value="01"><span class="math">|01⟩</span></label>
+<label class="option"><input type="radio" name="q2" value="11"><span class="math">|11⟩</span></label>
+</div><div class="feedback" aria-live="polite"></div>
+</section>
+
+<section class="question" data-answer="restored"
+ data-explanation="The first CNOT flips the target when the control is 1. The second CNOT flips it back. If the control is 0, neither operation changes the target.">
+<div class="qtitle"><span class="num">3.</span>What happens when CNOT is applied twice?</div>
+<div class="options">
+<label class="option"><input type="radio" name="q3" value="both">Both bits are flipped</label>
+<label class="option"><input type="radio" name="q3" value="restored">The original state is restored</label>
+<label class="option"><input type="radio" name="q3" value="control">Only the control bit changes</label>
+</div><div class="feedback" aria-live="polite"></div>
+</section>
+
+<div class="actions"><button id="check" type="button">Check answers</button><button id="reset" type="button">Try again</button></div>
+<div id="result" role="status"></div>
+<p class="note">Quick reminder: CNOT keeps the control bit and flips the target bit only when the control is 1.</p>
+</section></main>
+<script>
+const questions=[...document.querySelectorAll(".question")];
+const result=document.getElementById("result");
+document.getElementById("check").addEventListener("click",()=>{
+ let score=0,answered=0;
+ questions.forEach(q=>{
+  const selected=q.querySelector("input:checked");
+  const feedback=q.querySelector(".feedback");
+  const correct=!!selected&&selected.value===q.dataset.answer;
+  if(selected){answered++;if(correct)score++;}
+  q.querySelectorAll(".option").forEach(label=>{
+   label.classList.remove("correct","incorrect");
+   const input=label.querySelector("input");
+   if(input.value===q.dataset.answer)label.classList.add("correct");
+   if(selected&&input===selected&&!correct)label.classList.add("incorrect");
+  });
+  feedback.className="feedback show "+(correct?"good":"bad");
+  feedback.textContent=(selected?(correct?"Correct! ":"Not quite. ")+q.dataset.explanation:"Not answered. "+q.dataset.explanation);
+ });
+ result.style.display="block";
+ result.textContent=`Your score: ${score} / ${questions.length} · Answered: ${answered} / ${questions.length}`;
+});
+document.getElementById("reset").addEventListener("click",()=>{
+ questions.forEach(q=>{
+  q.querySelectorAll("input").forEach(input=>input.checked=false);
+  q.querySelectorAll(".option").forEach(label=>label.classList.remove("correct","incorrect"));
+  const feedback=q.querySelector(".feedback");feedback.className="feedback";feedback.textContent="";
+ });
+ result.style.display="none";result.textContent="";
+});
+</script>
+</body>
+</html>

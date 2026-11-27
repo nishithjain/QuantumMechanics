@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="440" viewBox="0 0 1100 440" role="img" aria-labelledby="title desc"><title id="title">CNOT copying trap</title><desc id="desc">CNOT copies computational basis bit into blank but entangles a plus state rather than cloning it</desc>
+<rect width="1100" height="440" fill="#f7f9fc"/>
+<text x="35" y="44" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="25" fill="#6755dd" font-weight="700" >CNOT: BASIS BITS CAN BE COPIED; SUPERPOSITIONS CANNOT</text>
+<rect x="35" y="85" width="500" height="302" rx="14" fill="#fff" stroke="#dce3ec" stroke-width="1.6"/>
+<rect x="555" y="85" width="510" height="302" rx="14" fill="#fff" stroke="#dce3ec" stroke-width="1.6"/>
+<text x="60" y="123" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="25" fill="#087f77" font-weight="700" >Known basis input</text>
+<text x="580" y="123" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="25" fill="#c24178" font-weight="700" >Unknown superposition</text>
+<text x="80" y="174" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="25" fill="#172238" font-weight="400" >|0⟩|0⟩  →  |0⟩|0⟩</text>
+<text x="80" y="221" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="25" fill="#172238" font-weight="400" >|1⟩|0⟩  →  |1⟩|1⟩</text>
+<text x="80" y="289" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="21" fill="#087f77" font-weight="700" >CNOT copies a chosen</text>
+<text x="80" y="321" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="21" fill="#087f77" font-weight="700" >orthogonal basis.</text>
+<text x="575" y="174" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#172238" font-weight="400" >|+⟩|0⟩ → (|00⟩+|11⟩)/√2</text>
+<text x="575" y="221" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#172238" font-weight="400" >Wanted: |+⟩|+⟩</text>
+<text x="575" y="270" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#172238" font-weight="400" >= (|00⟩+|01⟩+|10⟩+|11⟩)/2</text>
+<text x="575" y="333" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="21" fill="#c24178" font-weight="700" >Not equal: the output is entangled.</text>
+<text x="38" y="421" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#6b7280" font-weight="400" >The no-cloning theorem forbids a single universal machine for arbitrary unknown states.</text>
+</svg>
