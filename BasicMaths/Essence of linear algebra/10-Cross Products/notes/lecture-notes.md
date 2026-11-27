@@ -2,14 +2,14 @@
 
 > **Learning goal:** Understand what the cross product represents geometrically in 2D and 3D, how orientation affects its sign, and how determinants are used to calculate it.
 
-These notes follow the lecture's order. This video covers the standard introduction to cross products. the deeper connection to linear transformations and duality will be explored in the next video.
+These notes follow the lecture's order. This chapter covers the standard introduction to cross products. the deeper connection to linear transformations and duality will be explored in the next chapter.
 
 ## 1. What this lecture is about
 
-The previous lecture explored dot products and their connection to linear transformations. This lecture does something similar for cross products, but splits the subject into two videos:
+The previous lecture explored dot products and their connection to linear transformations. This lecture does something similar for cross products, but splits the subject into two chapters:
 
-- This video covers the main ideas students are usually taught about cross products.
-- The next video will explain a less commonly taught, deeper connection using duality.
+- This chapter covers the main ideas students are usually taught about cross products.
+- The next chapter will explain a less commonly taught, deeper connection using duality.
 
 This section starts in 2D, where the cross product is a signed number, and then moves to the true 3D cross product, which is a vector.
 
@@ -256,7 +256,7 @@ Explain that students are often told to treat this as a notational trick:
 2. The result is a linear combination of $\hat{\mathbf i}$, $\hat{\mathbf j}$, and $\hat{\mathbf k}$.
 3. Interpret that linear combination as a 3D vector.
 
-there is a deeper reason this works. It is not merely a random trick. The determinant and the basis vectors have a meaningful geometric connection, which the next video will explain using duality.
+there is a deeper reason this works. It is not merely a random trick. The determinant and the basis vectors have a meaningful geometric connection, which the next chapter will explain using duality.
 
 For this lecture, the important thing is to understand what the resulting vector represents geometrically.
 
@@ -309,11 +309,11 @@ $$
 
 matching the geometric right-hand-rule result.
 
-## 10. What the next video will explain
+## 10. What the next chapter will explain
 
 Deliberately, separates the standard cross-product introduction from its deeper explanation.
 
-The next video will use the idea of **duality**, introduced in the previous dot-product lecture, to explain why the determinant mnemonic works and why the basis vectors appear in the first column.
+The next chapter will use the idea of **duality**, introduced in the previous dot-product lecture, to explain why the determinant mnemonic works and why the basis vectors appear in the first column.
 
 this deeper topic may be beyond what is essential for an introductory linear algebra course. It is optional for anyone who wants to understand the underlying geometry more fully.
 
@@ -338,7 +338,7 @@ this deeper topic may be beyond what is essential for an introductory linear alg
 | The true cross product of two 3D vectors is a number. | It is a 3D vector. |
 | The 3D cross product points in the same plane as the two inputs. | It is perpendicular to the plane they span. |
 | The length of the 3D cross product is the sum of the input lengths. | Its length is the parallelogram's area. |
-| The determinant notation with basis vectors is just random decoration. | The lecture says there is a deeper reason, which will be explained through duality in the next video. |
+| The determinant notation with basis vectors is just random decoration. | The lecture says there is a deeper reason, which will be explained through duality in the next chapter. |
 
 ## 13. Check your understanding
 
@@ -370,4 +370,4 @@ Try answering these questions before looking at the answers.
 9. The area of the parallelogram formed by the two input vectors.
 10. Point the right-hand forefinger along the first vector, middle finger along the second; the thumb gives the cross-product direction.
 11. $-4\hat{\mathbf i}$.
-12. They form the basis-vector components of the resulting 3D vector in the determinant mnemonic; the deeper justification is the subject of the next video.
+12. They form the basis-vector components of the resulting 3D vector in the determinant mnemonic; the deeper justification is the subject of the next chapter.

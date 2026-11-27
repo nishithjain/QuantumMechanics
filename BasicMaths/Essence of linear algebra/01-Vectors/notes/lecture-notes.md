@@ -2,7 +2,7 @@
 
 **Essence of Linear Algebra · Chapter 1 · Beginner-friendly learning notes**
 
-**Source:** The supplied *01-Vectors.mp4* lecture and its accompanying transcript. The explanations follow the order of the lecture, from three interpretations of vectors to coordinates, addition, scaling, and applications. Illustrations and practice explanations are original teaching aids.
+**Source:** The supplied *01 — Vectors* transcript and accompanying figures. The explanations follow the order of the lecture, from three interpretations of vectors to coordinates, addition, scaling, and applications. Illustrations and practice explanations are original teaching aids.
 
 > **How to study:** Read one section, look at its diagram, and repeat the steps aloud. When a blue **Try the animation** link appears, open it in your browser. You can change values, play the demonstration, or advance one step at a time. No internet is required.
 
@@ -56,7 +56,7 @@ Suppose we are comparing houses, and we care about only two things:
 1. House area in square feet.
 2. House price.
 
-The video illustrates a house using values such as **2,600 square feet** and **\$300,000**. We can describe that house with an ordered pair:
+The lecture illustrates a house using values such as **2,600 square feet** and **\$300,000**. We can describe that house with an ordered pair:
 
 $$
 \begin{bmatrix}
@@ -119,7 +119,7 @@ The formal mathematical definition is intentionally **postponed** in the lecture
 
 ## 2. The picture we will use for the rest of the course
 
-After showing three perspectives, Choose the approach that will guide these videos:
+After showing three perspectives, Choose the approach that will guide this series:
 
 > Whenever you hear "vector," first imagine an **arrow drawn in a coordinate system, with its tail at the origin**.
 
@@ -204,7 +204,7 @@ The notation helps distinguish an arrow from a point, even though the numbers ar
 
 ### 3.2 What if one coordinate is negative?
 
-The video also shows a vector pointing left and up, corresponding to
+The lecture also shows a vector pointing left and up, corresponding to
 
 $$
 \begin{bmatrix}-2\cr 3\end{bmatrix}.
@@ -287,7 +287,7 @@ $$
 \mathbf w=\begin{bmatrix}2\cr 1\cr 3\end{bmatrix}.
 $$
 
-The video illustrates an example with those three components. Read it as three instructions:
+The lecture illustrates an example with those three components. Read it as three instructions:
 
 1. Move **2 units along x**.
 2. Then move **1 unit parallel to y**.
@@ -720,7 +720,7 @@ then the programmer knows the final displacement is four units horizontally and 
 
 ## 9. What comes next in the lecture series?
 
-Concludes this introductory video by saying the next topics will include:
+Concludes this introductory chapter by saying the next topics will include:
 
 - **Span**.
 - **Basis** (plural: **bases**).

@@ -633,7 +633,7 @@ In closing, pointing toward the next topic: eigenvectors and eigenvalues.
 
 Alternate coordinate systems are useful because a transformation can sometimes become much easier to understand when represented in a suitable basis.
 
-The next video will give an important example of why this matters.
+The next chapter will give an important example of why this matters.
 
 ## 14. Quick reference: which matrix do I use?
 

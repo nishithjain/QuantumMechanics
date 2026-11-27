@@ -136,7 +136,7 @@ Order matters. Chain: **horizontal → 45° → vertical** can pass **about 25%*
 
 **Takeaway:** **Photon polarization** is a real **physical qubit**. The lecture’s polarizer demo is the hook for superposition, interference, and measurement later in Part A.
 
-*(In class, a video demonstrated the effect; if you missed it, search “three polarizer quantum” or use any Malus-law demo — the logic is in the slides.)*
+*(In class, a demonstration showed the effect; for background, search “three polarizer quantum” or use any Malus-law demo — the logic is in the slides.)*
 
 ---
 

@@ -1,6 +1,6 @@
 # Chapter 02 — Linear Combinations, Span, and Basis Vectors
 
-A self-contained study package based on the user-supplied video and transcript from **Essence of Linear Algebra, Chapter 2**. The explanations follow the instructor's order. Additional worked examples are explicitly labeled in the notes.
+A self-contained study package based on the user-supplied lecture materials and transcript from **Essence of Linear Algebra, Chapter 2**. The explanations follow the instructor's order. Additional worked examples are explicitly labeled in the notes.
 
 ## Start here
 
@@ -45,6 +45,6 @@ lecture-notes/
 
 ## Source and teaching note
 
-The source video is **not copied into this ZIP**, keeping it small and easy to download. The transcript determines the order and the content of the lecture. For concepts shown visually but not assigned exact numerical values by the narrator (such as the alternative slanted basis), the notes give clearly marked **additional beginner examples** with exact numbers. The video does not introduce matrices yet; the notes preserve that order.
+The source lecture is **not copied into this ZIP**, keeping it small and easy to download. The transcript determines the order and the content of the lecture. For concepts shown visually but not assigned exact numerical values by the narrator (such as the alternative slanted basis), the notes give clearly marked **additional beginner examples** with exact numbers. The lecture does not introduce matrices yet; the notes preserve that order.
 
 No external JavaScript, CSS, fonts, web requests, or internet connection is needed for the animations.

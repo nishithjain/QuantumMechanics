@@ -1,6 +1,6 @@
 # Chapter 03 — Linear Transformations and Matrices
 
-**Series:** Essence of Linear Algebra · **Original video:** `03-Linear Transformations And Matrices.mp4` · **Duration:** approximately 10 min 58 sec 
+**Series:** Essence of Linear Algebra · **Chapter:** 03 — Linear Transformations and Matrices (transcript, ~11 minutes) 
 **Level:** First-time learner · **Approach:** follow this lesson order, with clearly marked beginner explanations.
 
 > **The central idea of this lecture:** A matrix is not merely a rectangular arrangement of numbers. It is a compact description of **how a linear transformation moves space**. Each column tells us where one standard basis vector ends up.
@@ -115,7 +115,7 @@ We now restricts attention to a particularly well-behaved kind of transformation
 1. **Straight lines remain straight** (or, in a degenerate case, may be compressed to single points).
 2. **The origin stays fixed**: the zero vector is sent to the zero vector.
 
-For the non-collapsing examples in the video, the grid stays made of **parallel, evenly spaced straight lines**. The sheet may rotate, stretch, squash, flip, or shear, but its structure is preserved in a predictable way.
+For the non-collapsing examples in the lecture, the grid stays made of **parallel, evenly spaced straight lines**. The sheet may rotate, stretch, squash, flip, or shear, but its structure is preserved in a predictable way.
 
 ### 4.1 Non-linear example 1 — A straight line becomes curved
 
@@ -159,7 +159,7 @@ The origin is also fixed. This example therefore shows **why looking only at hor
 
 ### 4.4 Why these visual properties are important
 
-A linear grid never changes in a random, point-by-point way. It keeps the addition and scaling patterns that already existed in space. That is the property the rest of this video depends on.
+A linear grid never changes in a random, point-by-point way. It keeps the addition and scaling patterns that already existed in space. That is the property the rest of this chapter depends on.
 
 **Beginner extension — the exact algebraic test:** The most precise way to say “linear” is that for any vectors $\mathbf u,\mathbf v$ and numbers $a,b$,
 
@@ -171,7 +171,7 @@ In plain English: **if you mix two vectors first and then transform them, you ge
 
 This is not an additional assumption for a linear transformation; it is the algebraic rule behind the geometry. We will use it in the very next section.
 
-> **Important technical nuance:** The video speaks informally about straight lines “remaining lines.” A transformation may also **collapse** a whole line to one point, and still be linear. The later example of collapsing the plane onto a line is linear even though some lines collapse. The algebraic formula above handles both cases without ambiguity.
+> **Important technical nuance:** The lecture speaks informally about straight lines “remaining lines.” A transformation may also **collapse** a whole line to one point, and still be linear. The later example of collapsing the plane onto a line is linear even though some lines collapse. The algebraic formula above handles both cases without ambiguity.
 
 ---
 
@@ -245,7 +245,7 @@ We have not yet said where the two basis vectors move; that comes next. The impo
 
 ## 6. Calculate the transformed vector from the two destinations
 
-The video now provides the actual basis-vector destinations:
+The lecture now provides the actual basis-vector destinations:
 
 $$
 T(\hat{\mathbf i})=\begin{bmatrix}1\\-2\end{bmatrix}
@@ -318,7 +318,7 @@ $$
 
 <p><a href="../animations/animation-02.html">Open Animation 02 — See how the two matrix columns build T(v) in full tab</a> if the embed does not load.</p>
 
-This is the key insight. We did **not** need to watch the original video of the entire grid moving to find the answer. We only needed two vectors.
+This is the key insight. We did **not** need to watch the full animated explanation of the entire grid moving to find the answer. We only needed two vectors.
 
 **Common mistakes:**
 
@@ -385,7 +385,7 @@ Without any new grid drawing, we know exactly where the vector lands.
 
 ## 8. A matrix is a convenient package for those four numbers
 
-The video now introduces the **matrix**. A 2-by-2 matrix is simply a rectangular arrangement with **two rows** and **two columns**.
+The lecture now introduces the **matrix**. A 2-by-2 matrix is simply a rectangular arrangement with **two rows** and **two columns**.
 
 For our running example, put the two basis-vector destinations next to each other:
 
@@ -659,7 +659,7 @@ The lecture finishes by reconnecting everything:
 4. Multiplying a matrix by an input vector means taking a **linear combination of its columns**, with the input coordinates used as coefficients.
 5. This gives us a geometric interpretation of matrix arithmetic and prepares us for later topics: **matrix–matrix multiplication, determinants, change of basis, and eigenvalues**.
 
-The very next video takes up **multiplying two matrices together**—which will be much easier to picture if we already know that each matrix represents a movement of the entire space.
+The very next chapter takes up **multiplying two matrices together**—which will be much easier to picture if we already know that each matrix represents a movement of the entire space.
 
 ### One equation to remember
 

@@ -1,6 +1,6 @@
 # Chapter 08 — Nonsquare Matrices as Transformations Between Dimensions
 
-Beginner-friendly companion to the attached **08 — Nonsquare Matrices as Transformations Between Dimensions** lecture video and transcript.
+Beginner-friendly companion to the attached **08 — Nonsquare Matrices as Transformations Between Dimensions** lecture and transcript.
 
 ## Start here
 
@@ -17,15 +17,15 @@ Beginner-friendly companion to the attached **08 — Nonsquare Matrices as Trans
 - `notes/lecture-notes.md` — complete Markdown study notes, worked examples, mathematical derivations, misconceptions, practice questions, answer key, and glossary.
 - `images/` — 10 original labelled illustrations placed in the appropriate locations in the notes.
 - `animations/animation-01-2d-to-3d.html` — two input coordinates produce three output coordinates; see the output plane.
-- `animations/animation-02-3d-to-2d.html` — three input coordinates produce two output coordinates using the matrix visible in the video.
+- `animations/animation-02-3d-to-2d.html` — three input coordinates produce two output coordinates using the matrix shown in the lecture notes.
 - `animations/animation-03-2d-to-number-line.html` — one-row matrix maps the input plane to a number line.
 - `animations/animation-04-composing-different-dimensions.html` — optional additional example: 2D → 3D → 2D.
 
 ## The lecturer's original numbers
 
 - The $3\times2$ matrix is $\begin{bmatrix}2&0\\-1&1\\-2&1\end{bmatrix}$.
-- The $2\times3$ matrix visible in the video is $\begin{bmatrix}3&1&4\\1&5&9\end{bmatrix}$.
-- The $1\times2$ matrix visible in the video is $\begin{bmatrix}1&2\end{bmatrix}$.
+- The $2\times3$ matrix shown in the lecture notes is $\begin{bmatrix}3&1&4\\1&5&9\end{bmatrix}$.
+- The $1\times2$ matrix shown in the lecture notes is $\begin{bmatrix}1&2\end{bmatrix}$.
 
 Additional examples are explicitly marked in the notes so they are not mistaken for lecture quotations.
 

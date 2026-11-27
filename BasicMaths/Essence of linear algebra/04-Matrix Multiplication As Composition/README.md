@@ -1,6 +1,6 @@
 # Chapter 04 — Matrix Multiplication as Composition
 
-This learning package was prepared using the uploaded **04 — Matrix Multiplication as Composition** video and transcript. It preserves the sequence of the lecturer's explanations and adds beginner-friendly derivations, numerical checks, original diagrams, and standalone interactive animations.
+This learning package was prepared using the supplied **04 — Matrix Multiplication as Composition** transcript. It preserves the sequence of the lecturer's explanations and adds beginner-friendly derivations, numerical checks, original diagrams, and standalone interactive animations.
 
 ## Open the notes
 

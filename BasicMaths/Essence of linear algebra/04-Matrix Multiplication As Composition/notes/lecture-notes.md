@@ -1,7 +1,7 @@
 # 04 — Matrix Multiplication as Composition
 
 **Essence of Linear Algebra · Chapter 4 · Beginner-friendly lecture notes** 
-**Based on:** the supplied Chapter 04 video and transcript (approximately 10 minutes). 
+**Based on:** the supplied Chapter 04 lecture and transcript (approximately 10 minutes). 
 **Study approach:** Follow the lecture in order, stopping at the diagrams and animations. Mathematical extensions and extra examples are explicitly labelled **Beginner's extra explanation**.
 
 > **The central question:** What does multiplying *two matrices* actually *mean*? The answer is not “multiply rows by columns.” It is **perform one linear transformation, then another**.
@@ -134,7 +134,7 @@ For this shear,
 - `S(i-hat) = (1,0)`: i-hat stays put.
 - `S(j-hat) = (1,1)`: j-hat is tilted right.
 
-These matrices and arrow movements are the ones shown in the supplied video.
+These matrices and arrow movements are the ones shown in the supplied lecture.
 
 ![The two individual transformations and the combined result](../images/concept-02.png)
 
@@ -689,7 +689,7 @@ These are different properties:
 
 The lecture ends with an invitation to *play with transformations*: imagine two geometric movements, predict the result of performing one after the other, and then calculate the corresponding matrix product. Repeat in the reverse order. That makes the ideas more intuitive than memorizing a formula in isolation.
 
-The next video will extend the same principles beyond the two-dimensional plane.
+The next chapter will extend the same principles beyond the two-dimensional plane.
 
 ### Final mental picture
 
@@ -705,7 +705,7 @@ The next video will extend the same principles beyond the two-dimensional plane.
 
 ## 9. Practice questions — use the animations, then try without looking
 
-The problems below are **additional practice**, not a claim that the source video assigned them. Try to explain *why* each answer makes sense geometrically.
+The problems below are **additional practice**, not a claim that the source lecture assigned them. Try to explain *why* each answer makes sense geometrically.
 
 1. A matrix has columns `(3,0)` and `(1,2)`. Write it as a 2×2 matrix. Where does it take i-hat? Where does it take j-hat?
 2. For `A = [[2,1],[0,1]]`, compute `A(1,3)` as a linear combination of its columns.
@@ -753,4 +753,4 @@ The problems below are **additional practice**, not a claim that the source vide
 | Commutativity | Swapping the order leaves the result unchanged (not generally true) |
 | Associativity | Changing parentheses leaves the result unchanged (true for compatible matrix products) |
 
-**Study suggestion:** Rewatch the supplied video after using animation 01 and animation 02; you will be able to predict where the basis arrows finish before the video shows you the answer.
+**Study suggestion:** Re-read the lecture notes after using animation 01 and animation 02; you will be able to predict where the basis arrows finish before the animation shows you the answer.

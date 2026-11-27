@@ -2,7 +2,7 @@
 
 **Series:** Essence of Linear Algebra 
 **Learning level:** Complete beginner 
-**Sources:** The attached Chapter 08 video and its transcript. The video also shows the concrete $2\times3$ and $1\times2$ matrices used below, even though their numerical entries are not stated in the transcript. 
+**Sources:** The attached Chapter 08 lecture and its transcript. The lecture also shows the concrete $2\times3$ and $1\times2$ matrices used below, even though their numerical entries are not stated in the transcript. 
 **Aim:** Understand *what a rectangular matrix does to space*, instead of just memorizing how to multiply its numbers.
 
 > **Big idea:** A matrix with **$m$ rows and $n$ columns** represents a linear transformation from **$n$-dimensional input** to **$m$-dimensional output**:
@@ -11,7 +11,7 @@
 >
 > The **columns** tell you where the input basis vectors land. The **number of entries in each column** tells you how many coordinates each output has.
 
-Read the sections in order: they intentionally follow the progression. Whenever an explanation or example goes beyond the video, it is labelled **Extra beginner explanation**.
+Read the sections in order: they intentionally follow the progression. Whenever an explanation or example goes beyond the lecture, it is labelled **Extra beginner explanation**.
 
 ---
 
@@ -83,7 +83,7 @@ This part of the explanation is easy to overlook but important.
 
 In an ordinary 2D-to-2D animation, it looks as though all the input arrows are moving around within one plane. For a 2D-to-3D transformation, the input is a **flat 2D coordinate space** and the output belongs to a **different 3D coordinate space**.
 
-The video therefore shows the two spaces **side by side** rather than pretending every point is physically traveling from one to the other. The transformation defines a relationship between vectors; it does not require a literal journey through physical space.
+The lecture therefore shows the two spaces **side by side** rather than pretending every point is physically traveling from one to the other. The transformation defines a relationship between vectors; it does not require a literal journey through physical space.
 
 ![The 2D input space and 3D output space shown separately](../images/concept-02-separate-input-output-spaces.png)
 
@@ -118,7 +118,7 @@ The first coordinate tells us how much of $\hat{\imath}$ to use; the second tell
 
 ### 3.2 Follow each basis vector in the lecture's example
 
-In the video, Note:
+In the lecture, Note:
 
 $$T(\hat{\imath})=\begin{bmatrix}2\\-1\\-2\end{bmatrix}$$
 
@@ -305,9 +305,9 @@ So:
 
 $$\boxed{B:\mathbb R^3\longrightarrow\mathbb R^2.}$$
 
-### 6.1 The matrix shown in the video
+### 6.1 The matrix shown in the lecture
 
-The video illustrates this idea with the following matrix (its entries are visible on screen):
+The lecture illustrates this idea with the following matrix (its entries are visible on screen):
 
 $$\boxed{B=\begin{bmatrix}3&1&4\\1&5&9\end{bmatrix}.}$$
 
@@ -360,7 +360,7 @@ $$P=\begin{bmatrix}1&0&0\\0&1&0\end{bmatrix},\qquad P(x,y,z)=(x,y).$$
 
 Then $P(2,3,4)=(2,3)$ and $P(2,3,9)=(2,3)$. Both produce **exactly the same output**, even though the inputs are different.
 
-**Precision note:** A $2\times3$ matrix always outputs 2D vectors, but whether its outputs fill the entire output plane or only a line depends on its rank. The video’s displayed matrix has rank 2, so its outputs do fill the 2D plane.
+**Precision note:** A $2\times3$ matrix always outputs 2D vectors, but whether its outputs fill the entire output plane or only a line depends on its rank. The lecture’s displayed matrix has rank 2, so its outputs do fill the 2D plane.
 
 ### Try the second animation
 
@@ -398,7 +398,7 @@ A matrix for this machine has:
 
 Its shape is therefore **$1\times2$**.
 
-### 7.1 The example visible in the video
+### 7.1 The example shown in the lecture notes
 
 The visual shows the matrix:
 
@@ -439,7 +439,7 @@ For example, consider:
 $$\mathbf p_0=(0,0),\quad\mathbf p_1=(1,1),\quad
 \mathbf p_2=(2,2),\quad\mathbf p_3=(3,3).$$
 
-Each dot is reached by taking the same step, $(1,1)$, from the previous one. Using the video’s matrix $C=[\,1\ \ 2\,]$:
+Each dot is reached by taking the same step, $(1,1)$, from the previous one. Using the lecture’s matrix $C=[\,1\ \ 2\,]$:
 
 $$\begin{array}{c|c}
 \text{Input point}&\text{Number-line output }C(x,y)=x+2y\\\hline
@@ -478,7 +478,7 @@ Advance through the basis-vector locations, the calculated output, equally space
 
 ## 8. Connection to the dot product — a preview, not the full next lesson
 
-Closes the main teaching portion by hinting that $1\times2$ transformations have a **surprisingly important relationship** to the *dot product*, which will be explained in the next video.
+Closes the main teaching portion by hinting that $1\times2$ transformations have a **surprisingly important relationship** to the *dot product*, which will be explained in the next chapter.
 
 **Extra beginner preview:** If you already know that a dot product multiplies corresponding coordinates and adds the results, then
 
@@ -489,13 +489,13 @@ looks exactly like the dot product of $(1,2)$ and $(x,y)$:
 
 $$\boxed{(1,2)\cdot(x,y)=x+2y.}$$
 
-This is why a row matrix that maps a vector to a scalar is so useful. We will leave the deeper geometric explanation for the lecture that follows, just as in the video series.
+This is why a row matrix that maps a vector to a scalar is so useful. We will leave the deeper geometric explanation for the lecture that follows, just as in the lecture series.
 
 ---
 
 ## 9. The closing challenge: imagine matrix multiplication between dimensions
 
-At the end of the video, Try to us to explore what matrix multiplication and linear systems of equations mean when the transformations change dimensions.
+At the end of the chapter, Try to us to explore what matrix multiplication and linear systems of equations mean when the transformations change dimensions.
 
 What happens if you first apply a $3\times2$ matrix and then a $2\times3$ matrix?
 

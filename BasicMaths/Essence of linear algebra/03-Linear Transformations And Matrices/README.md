@@ -1,6 +1,6 @@
 # Chapter 03 — Linear Transformations and Matrices
 
-This is an offline-friendly companion to the 3Blue1Brown **Essence of Linear Algebra**, Chapter 03 lecture (approximately 10 min 58 sec). It is based on the uploaded video and transcript.
+This is an offline-friendly companion to the 3Blue1Brown **Essence of Linear Algebra**, Chapter 03 lecture (approximately 10 min 58 sec). It is based on the supplied lecture materials and transcript.
 
 ## Start here
 

@@ -2,7 +2,7 @@
 
 **Who these notes are for:** someone new to quantum computing who wants the maths explained slowly, with every step shown.
 
-> **How to read this.** The lecture had two halves. **Part I** is a big-picture tour of quantum computing. **Part II** is the actual maths: complex numbers. Most of these notes are about Part II, because that is the foundation everything else is built on. **The notes follow the same order as the transcript**, so you can read them side by side with the video. Anything that was *not* said in the lecture (extra examples, practice problems, a maths refresher) is labelled as an addition or placed in the Appendix at the end.
+> **How to read this.** The lecture had two halves. **Part I** is a big-picture tour of quantum computing. **Part II** is the actual maths: complex numbers. Most of these notes are about Part II, because that is the foundation everything else is built on. **The notes follow the same order as the transcript**, so you can read them alongside the transcript. Anything that was *not* said in the lecture (extra examples, practice problems, a maths refresher) is labelled as an addition or placed in the Appendix at the end.
 
 **Follow-along map: transcript heading and the matching section of these notes**
 

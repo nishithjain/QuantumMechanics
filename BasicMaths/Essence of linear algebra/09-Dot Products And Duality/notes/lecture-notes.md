@@ -489,7 +489,7 @@ Applying that transformation is equivalent to taking the dot product with the ve
 
 This correspondence between vectors and number-valued linear transformations is the duality introduced in the lecture.
 
-The next video will show another example of duality through the **cross product**.
+The next chapter will show another example of duality through the **cross product**.
 
 ## 14. Key formulas
 

@@ -1,6 +1,6 @@
 # Core Algorithms (Part C) — Quantum Fourier Transform: Basis, Interference and Periodicity
 
-**Source:** IIT Delhi Quantum Computing lecture, *03 Core Algorithms (Part C)* (complete video transcription supplied by the learner).  
+**Source:** IIT Delhi Quantum Computing lecture, *03 Core Algorithms (Part C)* (complete lecture transcription supplied by the learner).  
 **Teaching approach:** The **lecture sequence** is followed below. Explanations marked **Beginner's expansion** or **Supplementary example** are added to help someone new to the mathematics.  
 **Source availability:** No PDF slides were included with this upload. All diagrams in `images/` are original teaching diagrams; formulas are reconstructed from the spoken lecture and checked mathematically.  
 **Read alongside:** [Practice workbook and fully worked answers](practice/practice_questions.md).

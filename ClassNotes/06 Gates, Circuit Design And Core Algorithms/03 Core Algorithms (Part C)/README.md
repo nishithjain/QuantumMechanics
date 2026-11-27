@@ -1,6 +1,6 @@
 # Quantum Computing — Core Algorithms (Part C): Offline Learning Pack
 
-This complete learning pack was created from the supplied **03 Core Algorithms (Part C)** video transcription. **No PDF slides were included in this turn**, so the educational illustrations are original reconstructions of the mathematics described verbally. The transcript, not a guessed slide deck, determines the lecture sequence.
+This complete learning pack was created from the supplied **03 Core Algorithms (Part C)** lecture transcription. **No PDF slides were included in this turn**, so the educational illustrations are original reconstructions of the mathematics described verbally. The transcript, not a guessed slide deck, determines the lecture sequence.
 
 ## Start here
 

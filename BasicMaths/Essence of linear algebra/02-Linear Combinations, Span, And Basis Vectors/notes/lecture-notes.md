@@ -2,7 +2,7 @@
 
 **Essence of Linear Algebra · Chapter 2 · Detailed beginner-friendly lecture notes**
 
-**Source:** Supplied video, *02-Linear Combinations, Span, And Basis Vectors.mp4*, and its transcript (approximately 10 minutes). The order of the sections follows the actual teaching progression. The diagrams, extra numerical examples, checks, and HTML demonstrations are original learning aids; they are clearly distinguished from the central examples in the source material.
+**Source:** Supplied transcript for *02 — Linear Combinations, Span, and Basis Vectors* (approximately 10 minutes) (approximately 10 minutes). The order of the sections follows the actual teaching progression. The diagrams, extra numerical examples, checks, and HTML demonstrations are original learning aids; they are clearly distinguished from the central examples in the source material.
 
 > **How to learn from these notes:** Start with the story and the pictures. When an equation appears, read the words below it before doing the arithmetic. Then open the linked HTML animation and move the sliders yourself. You do **not** need to know matrices or calculus for this lesson.
 
@@ -112,7 +112,7 @@ The two reference arrows $\hat i$ and $\hat j$ are the **basis vectors** for our
 
 For now, think of a basis as **a set of reference directions that we use to build and describe other vectors**.
 
-Deliberately, postpones the more precise mathematical definition until the end of the video. We will do the same.
+Deliberately, postpones the more precise mathematical definition until the end of the chapter. We will do the same.
 
 **Remember this:** The numbers in a vector's coordinates tell us **how much to scale each basis vector**.
 

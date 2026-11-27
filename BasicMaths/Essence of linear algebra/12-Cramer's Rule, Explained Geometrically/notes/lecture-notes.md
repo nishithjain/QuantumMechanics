@@ -1,7 +1,7 @@
 # Chapter 12 — Cramer's Rule, Explained Geometrically
 
 **Series:** Essence of Linear Algebra 
-**Source:** Provided video (approximately 12 minutes 12 seconds) and accompanying transcript. 
+**Source:** Provided lecture (approximately 12 minutes 12 seconds) and accompanying transcript. 
 **Study goal:** Understand *why* the determinant ratios in Cramer's rule recover the unknown coordinates, rather than memorizing a formula.
 
 > **How to read:** Work through the sections in order; they follow the teaching sequence. `Lecture example` means the example appears in the source. `Extra beginner explanation` or `Extra practice` identifies added teaching support. Original diagrams appear immediately after relevant discussions. Open the linked HTML files in any browser to interact with the geometry.
@@ -32,11 +32,11 @@ $$
 
 Read this aloud: “Matrix `A` acts on an unknown input vector `(x,y)` and produces the known output vector `b`.” The challenge is to **find the input**.
 
-The video initially shows the output
+The lecture initially shows the output
 
 $$\mathbf b=\begin{bmatrix}-4\\-2\end{bmatrix}.$$
 
-The video image for this early setup shows the two matrix columns `a₁ = (3,−1)` and `a₂ = (2,2)`, so the example can be written as
+The lecture image for this early setup shows the two matrix columns `a₁ = (3,−1)` and `a₂ = (2,2)`, so the example can be written as
 
 $$
 \underbrace{\begin{bmatrix}3&2\\-1&2\end{bmatrix}}_{A}
@@ -59,7 +59,7 @@ $$
 
 We know **the two directions** `a₁` and `a₂`, and we know **the destination** `b`. We need the coefficients `x` and `y` that produce it.
 
-**Extra beginner calculation:** For this particular early system, subtracting the second equation from the first gives `4x = −2`, so `x = −1/2`; then `−(−1/2) + 2y = −2`, so `y = −5/4`. The video does *not* use this early setup for the later numerical Cramer's-rule check; those are **two separate examples**.
+**Extra beginner calculation:** For this particular early system, subtracting the second equation from the first gives `4x = −2`, so `x = −1/2`; then `−(−1/2) + 2y = −2`, so `y = −5/4`. The lecture does *not* use this early setup for the later numerical Cramer's-rule check; those are **two separate examples**.
 
 ## 3. Why a zero determinant changes the answer
 

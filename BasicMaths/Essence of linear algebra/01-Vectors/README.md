@@ -1,13 +1,13 @@
 # 01 — Vectors | Interactive Lecture Notes
 
-Beginner-friendly study material based on the uploaded **01-Vectors** video and transcript from the *Essence of Linear Algebra* series.
+Beginner-friendly study material based on the supplied **01-Vectors** transcript from the *Essence of Linear Algebra* series.
 
 ## Start here
 
 1. Open **`notes/lecture-notes.md`** in VS Code (Markdown Preview: `Ctrl+Shift+V`), Obsidian, or a Markdown viewer that supports LaTeX mathematics.
 2. Read the sections **in order**. They follow the lecture's progression, not a reorganized textbook syllabus.
 3. When you encounter a **▶ Open Animation** link, open the linked HTML file in your browser. You can also double-click the HTML files directly in `animations/`.
-4. Press **Play**, **Pause**, **Step**, or **Reset**. Try the examples from the video and then change the values yourself.
+4. Press **Play**, **Pause**, **Step**, or **Reset**. Try the examples from the lecture and then change the values yourself.
 5. Review the questions and worked answers at the end of the notes.
 
 **No setup needed:** All three animations use self-contained HTML, CSS, JavaScript, and SVG, with no external libraries, network connections, or build steps.
@@ -52,4 +52,4 @@ lecture-notes/
 
 ## Source fidelity
 
-The attached video (about 9 minutes 51 seconds) and transcript were used together. The notes preserve the order and main examples of the lecture. Extra analogies, additional coordinate examples, the zero-scalar case, worked exercises, illustrations, and HTML demonstrations are identified as instructional additions where appropriate. The three-dimensional video example is `[2,1,3]`, and the addition example is `[1,2] + [3,−1]`.
+The supplied transcript (about 9 minutes 51 seconds) anchors the notes. The notes preserve the order and main examples of the lecture. Extra analogies, additional coordinate examples, the zero-scalar case, worked exercises, illustrations, and HTML demonstrations are identified as instructional additions where appropriate. The three-dimensional worked example is `[2,1,3]`, and the addition example is `[1,2] + [3,−1]`.

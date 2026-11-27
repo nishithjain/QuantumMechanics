@@ -16,4 +16,4 @@ This folder contains beginner-friendly, transcript-sequenced notes, **9 original
 
 ## Source fidelity
 
-The lecture initially illustrates a system with output `(-4,-2)` and later checks Cramer's rule with a **different** matrix `[[2,-1],[0,1]]` and output `(4,2)` yielding `(3,2)`. The notes explicitly distinguish them. Details not in the transcript were checked against video frames at approximately 145 s and 625 s. Additional teaching calculations are marked separately.
+The lecture initially illustrates a system with output `(-4,-2)` and later checks Cramer's rule with a **different** matrix `[[2,-1],[0,1]]` and output `(4,2)` yielding `(3,2)`. The notes explicitly distinguish them. Details not in the transcript were checked against on-screen figures at approximately 145 s and 625 s. Additional teaching calculations are marked separately.

@@ -185,7 +185,7 @@ A line has no 2D area. A single point also has no 2D area. So every original reg
 
 This is why a determinant of zero is important: it tells us that the transformation has collapsed the 2D space into something lower-dimensional.
 
-this will become useful in later videos. For now, remember the geometric meaning.
+this will become useful in later chapters. For now, remember the geometric meaning.
 
 ## 6. Correction: determinants can be negative
 
@@ -525,7 +525,7 @@ The same reasoning applies to volume in 3D. The signed factors also combine corr
 
 In closing, connecting the topic to the next major application of linear algebra: **linear systems of equations**.
 
-The next video will relate the ideas of linear transformations covered so far to systems of linear equations.
+The next chapter will relate the ideas of linear transformations covered so far to systems of linear equations.
 
 ## 15. Key takeaways
 

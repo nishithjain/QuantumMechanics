@@ -15,7 +15,7 @@ This lecture uses that same viewpoint to understand four ideas:
 - rank;
 - null space (also called the kernel).
 
-Explicitly says that this video will not teach the procedures for computing these objects. Those methods are often taught using **Gaussian elimination** and **row echelon form**. The goal here is to build intuition for what the objects mean. In practice, software is often used to perform the calculations.
+Explicitly says that this chapter will not teach the procedures for computing these objects. Those methods are often taught using **Gaussian elimination** and **row echelon form**. The goal here is to build intuition for what the objects mean. In practice, software is often used to perform the calculations.
 
 ## 2. Why linear algebra is useful: solving systems of equations
 
@@ -559,11 +559,11 @@ This last equation is an additional useful consequence of the definitions.
 
 Explicitly limits the scope:
 
-- The video does not teach how to compute inverses, rank, column space, or null space.
+- The lecture does not teach how to compute inverses, rank, column space, or null space.
 - It does not cover all cases where the number of equations differs from the number of unknowns.
 - The emphasis is on geometric intuition, so future study of the computational methods has a clearer meaning.
 
-The next video will be a brief footnote about **non-square matrices**. After that, this lesson plans to discuss dot products through the lens of linear transformations.
+The next chapter will be a brief footnote about **non-square matrices**. After that, this lesson plans to discuss dot products through the lens of linear transformations.
 
 ## 18. Key takeaways
 

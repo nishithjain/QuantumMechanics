@@ -1115,4 +1115,4 @@ This reasoning follows this chain:
 
 ## 23. Scope note: the final puzzle
 
-The source mentions a puzzle shown on screen near the end of the video, but the supplied transcript does not contain the puzzle's actual wording or data. It is therefore not reconstructed here. The transcript does state that the next and final video in the series will discuss abstract vector spaces.
+The source mentions a puzzle shown on screen near the end of the chapter, but the supplied transcript does not contain the puzzle's actual wording or data. It is therefore not reconstructed here. The transcript does state that the next and final chapter in the series will discuss abstract vector spaces.

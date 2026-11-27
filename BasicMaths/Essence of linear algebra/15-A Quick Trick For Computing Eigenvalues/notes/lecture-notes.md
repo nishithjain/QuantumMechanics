@@ -1,5 +1,5 @@
 # 15 — A Quick Trick for Computing Eigenvalues
-*Beginner-friendly lecture notes, following the video’s teaching sequence.*
+*Beginner-friendly lecture notes, following the lecture’s teaching sequence.*
 
 > **Prerequisite note:** This chapter assumes you already know eigenvectors and eigenvalues. The short explanations marked **Beginner bridge** are added to make this chapter self-contained.
 
@@ -75,7 +75,7 @@ $$
 Geometrically, the determinant describes the signed area-scaling factor of the transformation. Eigenvalues describe scaling along special directions. Their product gives the determinant.
 
 ### Lecture example — mean 7, product 40
-The video shows a matrix whose diagonal entries are $8$ and $6$, and whose off-diagonal product is $8$.
+The lecture shows a matrix whose diagonal entries are $8$ and $6$, and whose off-diagonal product is $8$.
 $$
 m=\frac{8+6}{2}=7,\qquad p=8(6)-8=40.
 $$

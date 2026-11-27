@@ -436,4 +436,4 @@ Try to answer these questions before looking at the answers below:
 
 ## 11. What comes next?
 
-In closing, saying that the next video will begin the topic of the **determinant**. This lecture itself does not explain the determinant, so these notes do not attempt to introduce its rules or properties.
+In closing, saying that the next chapter will begin the topic of the **determinant**. This lecture itself does not explain the determinant, so these notes do not attempt to introduce its rules or properties.

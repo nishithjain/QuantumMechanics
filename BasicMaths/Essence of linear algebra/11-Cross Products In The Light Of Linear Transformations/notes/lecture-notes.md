@@ -2,7 +2,7 @@
 
 > **Learning goal:** Understand why the 3D cross product determinant mnemonic works, and how its algebraic formula is connected to its geometric meaning through linear transformations and duality.
 
-These notes follow the sequence. The video assumes that you have watched the earlier lessons on determinants and duality.
+These notes follow the sequence. The lecture assumes that you have studied the earlier chapters on determinants and duality.
 
 ## 1. Where we left off: the unusual 3D determinant
 
