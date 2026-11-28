@@ -148,9 +148,15 @@ i \cdot \begin{pmatrix} 1 + i \\ 2 \end{pmatrix}
 = \begin{pmatrix} -1 + i \\ 2i \end{pmatrix}
 $$
 
-Here is what both operations look like for real vectors. On the left, adding $\mathbf{u} = (4, 1)$ and $\mathbf{v} = (1, 3)$ gives $(5, 4)$. On the right, scaling $\mathbf{v} = (2, 1)$ by $2$ and by $-1$:
+Here is what both operations look like for real vectors. On the left, adding $\mathbf{u} = (4, 1)$ and $\mathbf{v} = (1, 3)$ gives $(5, 4)$. On the right, scaling $\mathbf{v} = (2, 1)$ by $2$ and by $-1$. **Play** the animation to step through addition and scaling:
 
-![Left: the parallelogram rule for adding two vectors in the real plane. Right: scaling a vector by 2 and by minus 1](assets/vec-addition-scaling-r2.svg)
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe scrolling="no" src="assets/interactive-vector-addition-scaling.html" title="Adding vectors and scalar multiplication in the real plane" width="100%" height="920" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;overflow:hidden;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open vector addition and scaling animation in full page](assets/interactive-vector-addition-scaling.html) if the embed does not appear in your Markdown preview.
 
 > **The big difference from school.** In school the scalar was a real number. Here the scalar can be **complex**. A complex scalar also *turns* the entries (remember: multiplying by a complex number rotates and stretches). The slide says: *"Scalars are now complex. That single change is what makes quantum linear algebra different from what many of you saw in school."*
 
@@ -464,9 +470,15 @@ So the east–west line is a subspace.
 - $\mathbf{u} = (2, 1)$ and $\mathbf{w} = (-1, 1)$ are in $W$. Their sum is $(1, 2)$. The second coordinate is $2$, not $1$, so the sum is **not** on the line $y = 1$. Rule 1 already fails.
 - Even worse: $\alpha = 0$ gives $0\cdot(2, 1) = (0, 0)$, which is not on $y = 1$. Rule 2 fails too.
 
-In the picture, $\mathbf{u}$ and $\mathbf{w}$ lie on the red line $y = 1$, but the parallelogram sum $\mathbf{u}+\mathbf{w}$ lands at $(1, 2)$, off that line. The origin is marked too: $0\cdot\mathbf{u}$ would send you there, which is also not on $y = 1$.
+In the picture, $\mathbf{u}$ and $\mathbf{w}$ lie on the red line $y = 1$, but the parallelogram sum $\mathbf{u}+\mathbf{w}$ lands at $(1, 2)$, off that line. The origin is marked too: $0\cdot\mathbf{u}$ would send you there, which is also not on $y = 1$. **Play** the step-through:
 
-![The line y equals 1 in the plane: vectors u equals (2, 1) and w equals (-1, 1) on the line, their sum u plus w at (1, 2) off the line, and the origin not on y equals 1](assets/vec-subspace-y-equals-one-fails.svg)
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe scrolling="no" src="assets/interactive-subspace-y-equals-one.html" title="The line y equals 1 is not a subspace" width="100%" height="880" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;overflow:hidden;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open y = 1 subspace counterexample in full page](assets/interactive-subspace-y-equals-one.html) if the embed does not appear in your Markdown preview.
 
 So that shifted line is **not** a subspace.
 
@@ -994,7 +1006,15 @@ $$
 \mathbf{e}_1 = \frac{1}{\sqrt2}\left(\mathbf{h}_+ + \mathbf{h}_-\right), \qquad \mathbf{e}_2 = \frac{1}{\sqrt2}\left(\mathbf{h}_+ - \mathbf{h}_-\right)
 $$
 
-![The standard basis e1, e2 and the rotated basis h plus and h minus in the plane, with e1 built from half-length steps along h plus and h minus, and a table of coordinates in both bases](assets/vec-hadamard-basis.svg)
+**Play** the diagram comparing {e₁, e₂} with {h₊, h₋}, including how e₁ splits into (1/√2)h₊ + (1/√2)h₋:
+
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe scrolling="no" src="assets/interactive-hadamard-two-bases.html" title="Standard basis and Hadamard basis in the plane" width="100%" height="760" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;overflow:hidden;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open Hadamard two-bases animation in full page](assets/interactive-hadamard-two-bases.html) if the embed does not appear in your Markdown preview.
 
 *In the picture the entries happen to be real, so it can be drawn. This is the "real cartoon".* The two blue and purple arrows are perpendicular to each other and both have length 1. The red arrow $\mathbf{e}_1$ is the diagonal of the dashed parallelogram built from $\tfrac{1}{\sqrt2}\mathbf{h}_+$ and $\tfrac{1}{\sqrt2}\mathbf{h}_-$.
 
@@ -1154,7 +1174,15 @@ In words: the dot product is **(length of $\mathbf{u}$) $\times$ (length of $\ma
 
 Another way to see it: **project $\mathbf{u}$ onto the line that $\mathbf{v}$ spans** (drop a perpendicular from the tip of $\mathbf{u}$ onto that line). The green piece in the picture below has length $\lVert\mathbf{u}\rVert\cos\theta$. Why? Recall from trigonometry: in a right-angled triangle with hypotenuse $r$ and the side next to the angle $a$, $\cos\theta = a/r$, so $a = r\cos\theta$. Here $r$ is $\lVert\mathbf{u}\rVert$ and $a$ is the green length. The dot product is that **projection length times the length of $\mathbf{v}$**.
 
-![The vectors u = (5, 1) and v = (3, 7) with the angle theta between them and the projection of u onto v drawn in green; the dot product is 22](assets/vec-real-dot-product.svg)
+**Play** the animation to see **u**, **v**, and the green projection of **u** onto **v**:
+
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe scrolling="no" src="assets/interactive-dot-product-projection.html" title="Dot product: projection of u onto v" width="100%" height="900" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;overflow:hidden;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open dot product projection animation in full page](assets/interactive-dot-product-projection.html) if the embed does not appear in your Markdown preview.
 
 This is exactly **cosine similarity**, as used in vector retrieval (searching for similar items).
 
@@ -1458,7 +1486,15 @@ $$
 
 In general, $\mathbf{v} - \mathbf{u}$ is the arrow from the tip of $\mathbf{u}$ to the tip of $\mathbf{v}$, with coordinates $(v_1 - u_1,\ v_2 - u_2)$.
 
-![Two points u equals (1, 1) and v equals (4, 5) on a map grid; orange arrow v minus u from u to v; green dashed legs 3 right and 4 up; distance norm v minus u equals 5](assets/vec-distance-two-vectors.svg)
+**Play** the step-by-step picture (position vectors from **O**, movement **v − u**, then the 3–4–5 triangle):
+
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe scrolling="no" src="assets/interactive-distance-v-minus-u.html" title="Distance between u and v: v minus u" width="100%" height="720" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;overflow:hidden;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open distance v minus u animation in full page](assets/interactive-distance-v-minus-u.html) if the embed does not appear in your Markdown preview.
 
 ### 2. How far apart are the endpoints?
 

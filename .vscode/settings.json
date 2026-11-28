@@ -2,5 +2,11 @@
   "markdownlint.configFile": ".markdownlint.json",
   "markdown.math.enabled": true,
   "markdown.preview.allowScriptsAndStyle": true,
-  "markdown.preview.securityLevel": "allowScriptsAndUnsafeContent"
+  "markdown.preview.securityLevel": "allowScriptsAndUnsafeContent",
+  "markdown.styles": [
+    "ClassNotes/02 Mathematical Foundations Part A/assets/markdown-embed.css"
+  ],
+  "markdown.preview.scripts": [
+    "ClassNotes/02 Mathematical Foundations Part A/assets/markdown-embed-parent.js"
+  ]
 }

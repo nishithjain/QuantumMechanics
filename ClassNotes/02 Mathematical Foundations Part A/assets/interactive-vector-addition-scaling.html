@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="qm-embed.css">
+<script src="qm-embed-resize.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Adding Vectors and Scaling a Vector</title>
+<style>
+:root{--blue:#2563c7;--green:#25883d;--red:#df343d;--orange:#e58a16;--purple:#8747b4;--ink:#1e293b;--muted:#64748b}
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:linear-gradient(135deg,#edf3ff,#f9fafc 58%,#eff7f1);font-family:Arial,sans-serif;color:var(--ink)}
+main{max-width:1050px;margin:auto;background:white;border:1px solid #e4eaf2;border-radius:20px;padding:22px;box-shadow:0 14px 42px #24395816}
+h1{font-size:clamp(22px,3vw,29px);margin:0 0 7px}
+.subtitle{margin:0;color:var(--muted);line-height:1.5}
+.pill{background:#eaf1ff;color:#2458a8;border-radius:99px;padding:8px 12px;font-size:13px;font-weight:700}
+header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:18px}
+.panel{border:1px solid #e6ecf4;border-radius:16px;padding:12px;background:#fcfdff;min-width:0}
+.panel h2{font-size:17px;margin:2px 3px 8px}
+svg{width:100%;height:auto;display:block}
+.controls{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0 10px}
+button{border:0;border-radius:10px;padding:11px 16px;background:#245fc5;color:#fff;font-weight:700;cursor:pointer}
+button.secondary{background:#edf2f9;color:#26364e}
+button:focus-visible{outline:3px solid #9ac0ff;outline-offset:2px}
+.status{background:#f0f5fc;border-left:4px solid #2865c5;border-radius:0 12px 12px 0;padding:13px 15px;line-height:1.55;min-height:58px}
+.explain{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:13px}
+.box{border:1px solid #e7edf4;border-radius:14px;padding:13px 15px;line-height:1.7}
+.box h3{font-size:14px;margin:0 0 7px}
+.blue{color:var(--blue)}.green{color:var(--green)}.red{color:var(--red)}.orange{color:var(--orange)}.purple{color:var(--purple)}
+.note{font-size:13px;color:var(--muted);line-height:1.5;margin:12px 2px 0}
+.vec-hide{opacity:0;visibility:hidden;pointer-events:none}
+svg .arrow-head{stroke-linejoin:round}
+@media(max-width:700px){body{padding:8px}main{padding:12px}.panels,.explain{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<header>
+ <div><h1>Adding vectors and scaling a vector</h1><p class="subtitle">Two different operations: add corresponding coordinates, or multiply every coordinate by a scalar.</p></div>
+ <span class="pill">Interactive vector animation</span>
+</header>
+
+<section class="panels">
+ <div class="panel">
+  <h2>1. Addition: add coordinates</h2>
+  <svg viewBox="0 0 500 390" role="img" aria-label="Vector addition: u equals (4,1), v equals (1,3), and u plus v equals (5,4), with dashed parallelogram construction">
+   <defs></defs>
+   <!-- origin (55,320), scale 43 -->
+   <g stroke="#e9edf3" stroke-width="1">
+    <path d="M55 40V340 M98 40V340 M141 40V340 M184 40V340 M227 40V340 M270 40V340 M313 40V340 M356 40V340 M399 40V340 M442 40V340"/>
+    <path d="M35 320H465 M35 277H465 M35 234H465 M35 191H465 M35 148H465 M35 105H465 M35 62H465"/>
+   </g>
+   <g stroke="#586779" stroke-width="1.8"><line x1="35" y1="320" x2="462" y2="320"/><line x1="55" y1="350" x2="55" y2="36"/><polygon points="470,320 458,315 458,325" fill="#586779"/><polygon points="55,28 50,40 60,40" fill="#586779"/></g>
+   <g fill="#586779" font-size="13"><text x="474" y="326">x</text><text x="63" y="27">y</text><text x="45" y="337">0</text></g>
+   <line id="uVector" class="vec-hide" x1="55" y1="320" x2="55" y2="320" stroke="#2563c7" stroke-width="4.5" stroke-linecap="round"/>
+   <line id="vVector" class="vec-hide" x1="55" y1="320" x2="55" y2="320" stroke="#25883d" stroke-width="4.5" stroke-linecap="round"/>
+   <line id="uCopy" class="vec-hide" x1="227" y1="277" x2="227" y2="277" stroke="#2563c7" stroke-width="2.2" stroke-dasharray="6 5"/>
+   <line id="vCopy" class="vec-hide" x1="98" y1="191" x2="98" y2="191" stroke="#25883d" stroke-width="2.2" stroke-dasharray="6 5"/>
+   <line id="sumVector" class="vec-hide" x1="55" y1="320" x2="55" y2="320" stroke="#df343d" stroke-width="5" stroke-linecap="round"/>
+   <g font-size="14" font-weight="700">
+    <text id="uLabel" class="vec-hide" x="0" y="0" fill="#2563c7">u = (4, 1)</text>
+    <text id="vLabel" class="vec-hide" x="0" y="0" fill="#25883d">v = (1, 3)</text>
+    <text id="sumLabel" class="vec-hide" x="0" y="0" fill="#df343d">u + v = (5, 4)</text>
+   </g>
+   <circle cx="55" cy="320" r="4" fill="#26364e"/>
+   <g class="arrow-heads">
+    <polygon id="uHead" class="vec-hide arrow-head" fill="#2563c7" stroke="#2563c7" points="0,0 0,0 0,0"/>
+    <polygon id="vHead" class="vec-hide arrow-head" fill="#25883d" stroke="#25883d" points="0,0 0,0 0,0"/>
+    <polygon id="uCopyHead" class="vec-hide arrow-head" fill="#2563c7" stroke="#2563c7" points="0,0 0,0 0,0"/>
+    <polygon id="vCopyHead" class="vec-hide arrow-head" fill="#25883d" stroke="#25883d" points="0,0 0,0 0,0"/>
+    <polygon id="sumHead" class="vec-hide arrow-head" fill="#df343d" stroke="#df343d" points="0,0 0,0 0,0"/>
+   </g>
+  </svg>
+ </div>
+
+ <div class="panel">
+  <h2>2. Scaling: multiply every coordinate</h2>
+  <svg viewBox="0 0 500 390" role="img" aria-label="Scaling vector v equals (2,1) by two to get (4,2), and by negative one to get (-2,-1)">
+   <defs></defs>
+   <!-- origin (230,220), scale 42 -->
+   <g stroke="#e9edf3" stroke-width="1">
+    <path d="M20 40V330 M62 40V330 M104 40V330 M146 40V330 M188 40V330 M230 40V330 M272 40V330 M314 40V330 M356 40V330 M398 40V330 M440 40V330 M482 40V330"/>
+    <path d="M20 52H485 M20 94H485 M20 136H485 M20 178H485 M20 220H485 M20 262H485 M20 304H485"/>
+   </g>
+   <g stroke="#586779" stroke-width="1.8"><line x1="20" y1="220" x2="482" y2="220"/><line x1="230" y1="340" x2="230" y2="32"/><polygon points="490,220 478,215 478,225" fill="#586779"/><polygon points="230,24 225,36 235,36" fill="#586779"/></g>
+   <g fill="#586779" font-size="13"><text x="494" y="226">x</text><text x="240" y="25">y</text><text x="219" y="237">0</text></g>
+   <line id="baseVector" class="vec-hide" x1="230" y1="220" x2="230" y2="220" stroke="#2563c7" stroke-width="4.5" stroke-linecap="round"/>
+   <line id="doubleVector" class="vec-hide" x1="230" y1="220" x2="230" y2="220" stroke="#e58a16" stroke-width="5" stroke-linecap="round"/>
+   <line id="negativeVector" class="vec-hide" x1="230" y1="220" x2="230" y2="220" stroke="#8747b4" stroke-width="4.5" stroke-linecap="round"/>
+   <g font-size="14" font-weight="700">
+    <text id="baseLabel" class="vec-hide" x="0" y="0" fill="#2563c7">v = (2, 1)</text>
+    <text id="doubleLabel" class="vec-hide" x="0" y="0" fill="#e58a16">2v = (4, 2)</text>
+    <text id="negativeLabel" class="vec-hide" x="0" y="0" fill="#8747b4">−v = (−2, −1)</text>
+   </g>
+   <circle cx="230" cy="220" r="4" fill="#26364e"/>
+   <g class="arrow-heads">
+    <polygon id="baseHead" class="vec-hide arrow-head" fill="#2563c7" stroke="#2563c7" points="0,0 0,0 0,0"/>
+    <polygon id="doubleHead" class="vec-hide arrow-head" fill="#e58a16" stroke="#e58a16" points="0,0 0,0 0,0"/>
+    <polygon id="negativeHead" class="vec-hide arrow-head" fill="#8747b4" stroke="#8747b4" points="0,0 0,0 0,0"/>
+   </g>
+  </svg>
+ </div>
+</section>
+
+<div class="controls">
+ <button id="play">▶ Play animation</button>
+ <button id="next" class="secondary">Next step</button>
+ <button id="reset" class="secondary">↺ Reset</button>
+</div>
+<div class="status" id="status" aria-live="polite">Press Play to explore vector addition and scalar multiplication.</div>
+<section class="explain">
+ <div class="box">
+  <h3 class="red">Addition: add matching coordinates</h3>
+  <span class="blue">u = (4, 1)</span><br>
+  <span class="green">v = (1, 3)</span><br>
+  <b class="red">u + v = (4 + 1, 1 + 3) = (5, 4)</b>
+ </div>
+ <div class="box">
+  <h3 class="orange">Scaling: multiply every coordinate</h3>
+  <span class="blue">v = (2, 1)</span><br>
+  <span class="orange">2v = (2×2, 2×1) = (4, 2)</span><br>
+  <span class="purple">−v = (−1×2, −1×1) = (−2, −1)</span>
+ </div>
+</section>
+<p class="note">A positive scalar stretches or shrinks a vector without changing its direction. A negative scalar also reverses its direction (a 180° flip). Vector addition is different: add the x-coordinates together and the y-coordinates together.</p>
+</main>
+<script>
+(()=>{
+ const $=id=>document.getElementById(id);
+ // Left panel coordinate map: origin (55,320), 43 px per coordinate unit.
+ const L={x:55,y:320,s:43};
+ const lp=(x,y)=>({x:L.x+x*L.s,y:L.y-y*L.s});
+ const lu=lp(4,1),lv=lp(1,3),ls=lp(5,4),vTipCopy=lp(5,4);
+ function setArrow(lineId,headId,a,b,len=11,halfW=5.5){
+  const line=$(lineId), head=headId?$(headId):null;
+  const dx=b.x-a.x, dy=b.y-a.y, mag=Math.hypot(dx,dy)||1;
+  const ux=dx/mag, uy=dy/mag;
+  const bx=b.x-ux*len, by=b.y-uy*len;
+  line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);
+  line.setAttribute('x2',bx);line.setAttribute('y2',by);
+  if(head){const px=-uy, py=ux;head.setAttribute('points',`${b.x},${b.y} ${bx+px*halfW},${by+py*halfW} ${bx-px*halfW},${by-py*halfW}`);}
+ }
+ setArrow('uVector','uHead',lp(0,0),lu);setArrow('vVector','vHead',lp(0,0),lv);setArrow('sumVector','sumHead',lp(0,0),ls,12,6);
+ setArrow('uCopy','uCopyHead',lv,ls,9,4);setArrow('vCopy','vCopyHead',lu,ls,9,4);
+ $('uLabel').setAttribute('x',lu.x-45);$('uLabel').setAttribute('y',lu.y+19);
+ $('vLabel').setAttribute('x',lv.x-56);$('vLabel').setAttribute('y',lv.y-8);
+ $('sumLabel').setAttribute('x',ls.x+12);$('sumLabel').setAttribute('y',ls.y-7);
+ // Right panel coordinate map: origin (230,220), 42 px per unit.
+ const R={x:230,y:220,s:42},rp=(x,y)=>({x:R.x+x*R.s,y:R.y-y*R.s});
+ // Same arrowhead sizing as addition panel (u/v use default 11×5.5; sum uses 12×6)
+ setArrow('baseVector','baseHead',rp(0,0),rp(2,1));
+ setArrow('doubleVector','doubleHead',rp(0,0),rp(4,2),12,6);
+ setArrow('negativeVector','negativeHead',rp(0,0),rp(-2,-1));
+ $('baseLabel').setAttribute('x',rp(2,1).x+10);$('baseLabel').setAttribute('y',rp(2,1).y-7);
+ $('doubleLabel').setAttribute('x',rp(4,2).x+10);$('doubleLabel').setAttribute('y',rp(4,2).y-7);
+ $('negativeLabel').setAttribute('x',rp(-2,-1).x-5);$('negativeLabel').setAttribute('y',rp(-2,-1).y+22);
+ const steps=[
+  {ids:['uVector','uHead','uLabel'],msg:'1. First draw u = (4, 1): move 4 units right and 1 unit up.'},
+  {ids:['vVector','vHead','vLabel'],msg:'2. Draw v = (1, 3): move 1 unit right and 3 units up.'},
+  {ids:['uCopy','uCopyHead','vCopy','vCopyHead'],msg:'3. Slide copies of the vectors to the opposite tips. The dashed sides complete a parallelogram; the opposite sides are equal and parallel.'},
+  {ids:['sumVector','sumHead','sumLabel'],msg:'4. The red diagonal is the sum. Add x-coordinates and y-coordinates separately: (4 + 1, 1 + 3) = (5, 4).'},
+  {ids:['baseVector','baseHead','baseLabel'],msg:'5. On the right, start with v = (2, 1). Scaling means multiplying every coordinate by the same number.'},
+  {ids:['doubleVector','doubleHead','doubleLabel'],msg:'6. Multiply by +2: (2×2, 2×1) = (4, 2). The orange vector is twice as long and points in the same direction.'},
+  {ids:['negativeVector','negativeHead','negativeLabel'],msg:'7. Multiply by −1: (−1×2, −1×1) = (−2, −1). The purple vector has the same length as v but points in the opposite direction.'}
+ ];
+ let index=0,timer=null;
+ const all=['uVector','uHead','vVector','vHead','uCopy','uCopyHead','vCopy','vCopyHead','sumVector','sumHead','uLabel','vLabel','sumLabel','baseVector','baseHead','doubleVector','doubleHead','negativeVector','negativeHead','baseLabel','doubleLabel','negativeLabel'];
+ function show(ids){ids.forEach(id=>{const el=$(id);if(el)el.classList.remove('vec-hide');});}
+ function hideAll(){all.forEach(id=>{const el=$(id);if(el)el.classList.add('vec-hide');});}
+ function stop(){if(timer){clearInterval(timer);timer=null;}}
+ function reset(){stop();index=0;hideAll();$('play').textContent='▶ Play animation';$('status').textContent='Press Play to explore vector addition and scalar multiplication.';}
+ function advance(){if(index>=steps.length){stop();return;}const s=steps[index++];show(s.ids);$('status').textContent=s.msg;if(index===steps.length){stop();$('play').textContent='↻ Replay';}}
+ function toggle(){if(index===steps.length)reset();if(timer){stop();$('play').textContent='▶ Resume';return;}$('play').textContent='Ⅱ Pause';timer=setInterval(advance,1750);}
+ $('play').addEventListener('click',toggle);
+ $('next').addEventListener('click',()=>{stop();$('play').textContent='▶ Play';advance();});
+ $('reset').addEventListener('click',reset);
+ reset();
+})();
+</script>
+</main>
+</body>
+</html>

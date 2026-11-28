@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="qm-embed.css">
+<script src="qm-embed-resize.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Dot Product and Its Geometric Meaning</title>
+<style>
+html.qm-embed body{padding:8px}
+html.qm-embed main{padding:12px;box-shadow:none}
+html.qm-embed h1{font-size:1.2rem}
+.vec-hide{opacity:0;visibility:hidden;pointer-events:none}
+:root{--blue:#2463c7;--red:#dc343d;--green:#21864b;--orange:#e58a16;--ink:#1d2939;--muted:#65748a}
+*{box-sizing:border-box}
+body{margin:0;padding:18px;background:linear-gradient(135deg,#edf3ff,#f8fafc 60%,#eff7f1);font-family:Arial,sans-serif;color:var(--ink)}
+main{max-width:1050px;margin:auto;background:#fff;border:1px solid #e5ebf3;border-radius:20px;padding:22px;box-shadow:0 14px 42px #24395816}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+h1{font-size:clamp(22px,3vw,29px);margin:0 0 7px;letter-spacing:-.3px}
+.subtitle{margin:0;color:var(--muted);line-height:1.5}
+.pill{background:#eaf1ff;color:#2458a8;padding:8px 12px;border-radius:99px;font-size:13px;font-weight:700}
+.layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(250px,.75fr);gap:15px;margin-top:18px}
+.plot{border:1px solid #e7edf4;border-radius:15px;background:#fcfdff;padding:7px;min-width:0}
+svg{display:block;width:100%;height:auto}
+.side{display:flex;flex-direction:column;gap:11px}
+.card{border:1px solid #e7edf4;border-radius:14px;padding:13px 14px;background:#fff}
+.card h2{font-size:14px;margin:0 0 8px}
+.card p{margin:4px 0;font-size:14px;line-height:1.5}
+.blue{color:var(--blue)}.red{color:var(--red)}.green{color:var(--green)}.orange{color:var(--orange)}
+.formula{background:#f5f8fd}
+.formula .equation{font-size:18px;font-weight:700;line-height:1.65}
+.controls{display:flex;flex-wrap:wrap;gap:9px;margin:15px 0 10px}
+button{border:0;border-radius:10px;padding:11px 16px;background:#245fc5;color:white;font-weight:700;cursor:pointer}
+button.secondary{background:#edf2f9;color:#26364e}
+button:focus-visible{outline:3px solid #9ac0ff;outline-offset:2px}
+.status{background:#f0f5fc;border-left:4px solid #2865c5;border-radius:0 12px 12px 0;padding:13px 15px;line-height:1.55;min-height:60px}
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:13px}
+.bottom .card{line-height:1.65}
+.note{font-size:13px;color:var(--muted);line-height:1.5;margin:12px 2px 0}
+@media(max-width:760px){body{padding:8px}main{padding:12px}.layout{grid-template-columns:1fr}.bottom{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<header>
+ <div>
+  <h1>The dot product and its geometric meaning</h1>
+  <p class="subtitle">The same number can be calculated from coordinates or understood as a projection.</p>
+ </div>
+ <span class="pill">Interactive vector animation</span>
+</header>
+<section class="layout">
+ <div class="plot">
+ <svg viewBox="0 0 650 560" role="img" aria-label="Vector u equals (5,1) in blue and v equals (3,7) in red. The green vector is the projection of u onto v. A dashed perpendicular joins the projection endpoint to u's endpoint.">
+ <defs></defs>
+ <!-- Cartesian grid: origin (90,470), 48 px per unit -->
+ <g stroke="#e9edf3" stroke-width="1">
+  <path d="M90 35V505 M138 35V505 M186 35V505 M234 35V505 M282 35V505 M330 35V505 M378 35V505 M426 35V505 M474 35V505 M522 35V505 M570 35V505 M618 35V505"/>
+  <path d="M45 470H625 M45 422H625 M45 374H625 M45 326H625 M45 278H625 M45 230H625 M45 182H625 M45 134H625 M45 86H625"/>
+ </g>
+ <g stroke="#596779" stroke-width="2">
+  <line x1="45" y1="470" x2="622" y2="470"/>
+  <line x1="90" y1="520" x2="90" y2="33"/>
+  <polygon points="630,470 618,465 618,475" fill="#596779"/>
+  <polygon points="90,25 85,37 95,37" fill="#596779"/>
+ </g>
+ <g fill="#596779" font-size="14"><text x="633" y="476">x</text><text x="100" y="25">y</text><text x="76" y="490">0</text></g>
+ <!-- angle between u and v -->
+ <path id="angleArc" class="vec-hide" d="" fill="none" stroke="#e58a16" stroke-width="3.5" stroke-linecap="round"/>
+ <text id="angleLabel" class="vec-hide" x="0" y="0" fill="#e58a16" font-size="14" font-weight="700">θ ≈ 55.5°</text>
+ <line id="perpendicular" class="vec-hide" x1="0" y1="0" x2="0" y2="0" stroke="#7b8794" stroke-width="2" stroke-dasharray="7 6"/>
+ <line id="uVector" class="vec-hide" x1="90" y1="470" x2="90" y2="470" stroke="#2463c7" stroke-width="5" stroke-linecap="round"/>
+ <line id="vVector" class="vec-hide" x1="90" y1="470" x2="90" y2="470" stroke="#dc343d" stroke-width="5" stroke-linecap="round"/>
+ <line id="projectionVector" class="vec-hide" x1="90" y1="470" x2="90" y2="470" stroke="#21864b" stroke-width="6" stroke-linecap="round"/>
+ <path id="rightAngle" class="vec-hide" d="" fill="none" stroke="#21864b" stroke-width="2.3"/>
+ <circle id="projectionPoint" class="vec-hide" cx="90" cy="470" r="5" fill="#21864b"/>
+ <g font-size="15" font-weight="700">
+  <text id="uLabel" class="vec-hide" x="0" y="0" fill="#2463c7">u = (5, 1)</text>
+  <text id="vLabel" class="vec-hide" x="0" y="0" fill="#dc343d">v = (3, 7)</text>
+  <text id="projectionLabel" class="vec-hide" x="0" y="0" fill="#21864b" font-size="13">proj on v</text>
+ </g>
+ <g class="arrow-heads">
+  <polygon id="uHead" class="vec-hide" fill="#2463c7" stroke="#2463c7" points="0,0 0,0 0,0"/>
+  <polygon id="vHead" class="vec-hide" fill="#dc343d" stroke="#dc343d" points="0,0 0,0 0,0"/>
+  <polygon id="projHead" class="vec-hide" fill="#21864b" stroke="#21864b" points="0,0 0,0 0,0"/>
+ </g>
+ </svg>
+ </div>
+ <aside class="side">
+  <div class="card">
+   <h2 class="blue">Vector u</h2>
+   <p><b>u = (5, 1)</b></p>
+   <p>Blue arrow: 5 right, 1 up</p>
+  </div>
+  <div class="card">
+   <h2 class="red">Vector v</h2>
+   <p><b>v = (3, 7)</b></p>
+   <p>Red arrow: 3 right, 7 up</p>
+  </div>
+  <div class="card formula">
+   <h2>Dot product from coordinates</h2>
+   <div class="equation">u · v = 5×3 + 1×7</div>
+   <div class="equation">= 15 + 7 = 22</div>
+  </div>
+  <div class="card">
+   <h2 class="green">Projection meaning</h2>
+   <p>The green arrow is the part of <b>u</b> that points along <b>v</b>.</p>
+   <p>Its length is the scalar projection:</p>
+   <p><b>u · v / ‖v‖ = 22 / √58 ≈ 2.89</b></p>
+  </div>
+ </aside>
+</section>
+<div class="controls">
+ <button id="play">▶ Play animation</button>
+ <button id="next" class="secondary">Next step</button>
+ <button id="reset" class="secondary">↺ Reset</button>
+</div>
+<div class="status" id="status" aria-live="polite">Press Play to build the picture: draw u and v, then drop the perpendicular projection of u onto v.</div>
+<section class="bottom">
+ <div class="card">
+  <b>Geometric formula</b><br>
+  <span class="green">u · v = ‖u‖ ‖v‖ cos θ</span><br>
+  The dot product measures how much the vectors point in the same direction.
+ </div>
+ <div class="card">
+  <b>For this example</b><br>
+  ‖u‖ = √26, ‖v‖ = √58, and θ ≈ 55.5°.<br>
+  <span class="green">√26 × √58 × cos(55.5°) ≈ 22</span>
+ </div>
+</section>
+<p class="note">The green projection is a vector along v, not the perpendicular dashed line. The dashed line joins the tip of u to the projection tip and meets v at 90°. Because the angle is acute, the projection and dot product are positive.</p>
+</main>
+<script>
+(()=>{
+ const $=id=>document.getElementById(id);
+ const O={x:90,y:470},S=48;
+ const map=(x,y)=>({x:O.x+x*S,y:O.y-y*S});
+ const U=map(5,1),V=map(3,7);
+ const dot=5*3+1*7, vv=3*3+7*7, k=dot/vv;
+ const P=map(3*k,7*k);
+ function setArrow(lineId,headId,a,b,len=11,halfW=5.5){
+  const line=$(lineId), head=headId?$(headId):null;
+  const dx=b.x-a.x, dy=b.y-a.y, mag=Math.hypot(dx,dy)||1;
+  const ux=dx/mag, uy=dy/mag;
+  const bx=b.x-ux*len, by=b.y-uy*len;
+  line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);
+  line.setAttribute('x2',bx);line.setAttribute('y2',by);
+  if(head){const px=-uy, py=ux;head.setAttribute('points',`${b.x},${b.y} ${bx+px*halfW},${by+py*halfW} ${bx-px*halfW},${by-py*halfW}`);}
+ }
+ const setLine=(id,a,b)=>{const e=$(id);e.setAttribute('x1',a.x);e.setAttribute('y1',a.y);e.setAttribute('x2',b.x);e.setAttribute('y2',b.y);};
+ setArrow('uVector','uHead',O,U);setArrow('vVector','vHead',O,V);setArrow('projectionVector','projHead',O,P,12,6);
+ setLine('perpendicular',P,U);
+ $('projectionPoint').setAttribute('cx',P.x);$('projectionPoint').setAttribute('cy',P.y);
+ // Angle from u (11.31 degrees) to v (66.80 degrees), drawn close to origin.
+ const a1=Math.atan2(1,5),a2=Math.atan2(7,3),r=66;
+ const A={x:O.x+r*Math.cos(a1),y:O.y-r*Math.sin(a1)};
+ const B={x:O.x+r*Math.cos(a2),y:O.y-r*Math.sin(a2)};
+ $('angleArc').setAttribute('d',`M ${A.x} ${A.y} A ${r} ${r} 0 0 0 ${B.x} ${B.y}`);
+ const mid=(a1+a2)/2;
+ $('angleLabel').setAttribute('x',O.x+102*Math.cos(mid));$('angleLabel').setAttribute('y',O.y-102*Math.sin(mid)+4);
+ $('uLabel').setAttribute('x',U.x+12);$('uLabel').setAttribute('y',U.y+24);
+ $('vLabel').setAttribute('x',V.x+14);$('vLabel').setAttribute('y',V.y-14);
+ const vLen=Math.hypot(V.x-O.x,V.y-O.y)||1;
+ const nx=-(V.y-O.y)/vLen, ny=(V.x-O.x)/vLen;
+ const midP={x:(O.x+P.x)/2,y:(O.y+P.y)/2};
+ $('projectionLabel').setAttribute('text-anchor','middle');
+ $('projectionLabel').setAttribute('x',midP.x+nx*34);$('projectionLabel').setAttribute('y',midP.y+ny*34);
+ // Right-angle square, constructed using unit directions along v and perpendicular to v.
+ const vx=3/Math.sqrt(58),vy=7/Math.sqrt(58),px=7/Math.sqrt(58),py=-3/Math.sqrt(58),d=15;
+ const q1={x:P.x+vx*d,y:P.y-vy*d};
+ const q2={x:q1.x+px*d,y:q1.y+py*d};
+ const q3={x:P.x+px*d,y:P.y+py*d};
+ $('rightAngle').setAttribute('d',`M ${q1.x} ${q1.y} L ${q2.x} ${q2.y} L ${q3.x} ${q3.y}`);
+ const steps=[
+  {ids:['uVector','uHead','uLabel'],msg:'1. Draw u = (5, 1) in blue: move 5 units right and 1 unit up.'},
+  {ids:['vVector','vHead','vLabel'],msg:'2. Draw v = (3, 7) in red: move 3 units right and 7 units up.'},
+  {ids:['angleArc','angleLabel'],msg:'3. The angle between u and v is θ ≈ 55.5°. Since it is acute, cos θ is positive.'},
+  {ids:['perpendicular','projectionVector','projHead','projectionPoint','rightAngle','projectionLabel'],msg:'4. Drop a perpendicular from the tip of u to the direction of v. The green arrow is the projection of u onto v; the dashed segment is perpendicular to v.'}
+ ];
+ let index=0,timer=null;
+ const all=['uVector','uHead','uLabel','vVector','vHead','vLabel','angleArc','angleLabel','perpendicular','projectionVector','projHead','projectionPoint','rightAngle','projectionLabel'];
+ function show(ids){ids.forEach(id=>{const el=$(id);if(el)el.classList.remove('vec-hide');});}
+ function hideAll(){all.forEach(id=>{const el=$(id);if(el)el.classList.add('vec-hide');});}
+ function stop(){if(timer){clearInterval(timer);timer=null;}}
+ function reset(){stop();index=0;hideAll();$('play').textContent='▶ Play animation';$('status').textContent='Press Play to build the picture: draw u and v, then drop the perpendicular projection of u onto v.';}
+ function advance(){if(index>=steps.length){stop();return;}const s=steps[index++];show(s.ids);$('status').textContent=s.msg;if(index===steps.length){stop();$('play').textContent='↻ Replay';}}
+ function toggle(){if(index===steps.length)reset();if(timer){stop();$('play').textContent='▶ Resume';return;}$('play').textContent='Ⅱ Pause';timer=setInterval(advance,1850);}
+ $('play').addEventListener('click',toggle);
+ $('next').addEventListener('click',()=>{stop();$('play').textContent='▶ Play';advance();});
+ $('reset').addEventListener('click',reset);
+ reset();
+})();
+</script>
+</body>
+</html>

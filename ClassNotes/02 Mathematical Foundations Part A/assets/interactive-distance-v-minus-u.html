@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="qm-embed.css">
+<script src="qm-embed-resize.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Distance between u and v</title>
+<style>
+:root{--blue:#2563c7;--green:#25883d;--orange:#e58a16;--red:#dc3e3e;--ink:#1e293b;--muted:#64748b}
+html.qm-embed body{padding:8px}
+html.qm-embed main{padding:12px;box-shadow:none}
+html.qm-embed h1{font-size:1.15rem}
+*{box-sizing:border-box}
+body{margin:0;padding:18px;background:linear-gradient(135deg,#edf3ff,#f9fafc 58%,#fff8ef);font-family:Arial,sans-serif;color:var(--ink)}
+main{max-width:1040px;margin:auto;background:#fff;border:1px solid #e4eaf2;border-radius:20px;padding:20px;box-shadow:0 14px 42px #24395816}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+h1{font-size:clamp(20px,3vw,26px);margin:0 0 6px;line-height:1.25}
+.subtitle{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
+.pill{background:#eaf1ff;color:#2458a8;border-radius:99px;padding:8px 12px;font-size:13px;font-weight:700}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(268px,320px);gap:14px;align-items:start}
+.plot{border:1px solid #e6ecf4;border-radius:16px;padding:8px;background:#fcfdff}
+svg{display:block;width:100%;height:auto}
+.side{display:flex;flex-direction:column;gap:10px;font-size:14px;line-height:1.55}
+.card{border-radius:14px;padding:12px 14px;border:2px solid #e7edf4}
+.card h2{font-size:14px;margin:0 0 8px}
+.card.blue{border-color:#b8ccf5;background:#f5f9ff}
+.card.green{border-color:#a7e3b8;background:#f0fdf4}
+.card.purple{border-color:#d4b8e8;background:#faf5ff}
+.math{font-family:"Cambria Math",Georgia,"Times New Roman",serif}
+.controls{display:flex;flex-wrap:wrap;gap:9px;margin:14px 0 10px}
+button{border:0;border-radius:10px;padding:11px 16px;background:#245fc5;color:#fff;font-weight:700;cursor:pointer}
+button.secondary{background:#edf2f9;color:#26364e}
+.status{background:#f0f5fc;border-left:4px solid #2865c5;border-radius:0 12px 12px 0;padding:13px 15px;line-height:1.55;min-height:58px}
+.conclusion{margin-top:12px;padding:12px 16px;border-radius:12px;background:#fef3e7;border:1px solid #f0c9a0;font-weight:700;color:#9a3412;text-align:center}
+.vec-hide{opacity:0;visibility:hidden;pointer-events:none}
+.blue{color:var(--blue)}.green{color:var(--green)}.orange{color:var(--orange)}.red{color:var(--red)}
+.note{color:var(--muted);font-size:12px;margin:6px 0 0}
+@media(max-width:760px){body{padding:8px}main{padding:12px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+ <div>
+  <h1>Distance between <b>u</b> and <b>v</b>: movement <b>v &minus; u</b> has length 5</h1>
+  <p class="subtitle">Displacement from start to destination; distance is the length of that movement.</p>
+ </div>
+ <span class="pill">Vector subtraction cartoon</span>
+</header>
+<section class="layout">
+ <div class="plot">
+  <svg viewBox="0 0 480 380" role="img" aria-label="Points u and v with displacement v minus u">
+   <g stroke="#e9edf3" stroke-width="1">
+    <path d="M50 50V350 M90 50V350 M130 50V350 M170 50V350 M210 50V350 M250 50V350 M290 50V350"/>
+    <path d="M30 350H310 M30 310H310 M30 270H310 M30 230H310 M30 190H310 M30 150H310 M30 110H310 M30 70H310"/>
+   </g>
+   <g stroke="#586779" stroke-width="1.8">
+    <line x1="30" y1="350" x2="302" y2="350"/>
+    <line x1="50" y1="380" x2="50" y2="36"/>
+    <polygon points="310,350 298,345 298,355" fill="#586779"/>
+    <polygon points="50,28 45,40 55,40" fill="#586779"/>
+   </g>
+   <g fill="#586779" font-size="13"><text x="306" y="356">x</text><text x="58" y="30">y</text></g>
+   <line id="posU" class="vec-hide" x1="50" y1="350" x2="50" y2="350" stroke="#aab2bf" stroke-width="2" stroke-dasharray="6 4"/>
+   <line id="posV" class="vec-hide" x1="50" y1="350" x2="50" y2="350" stroke="#aab2bf" stroke-width="2" stroke-dasharray="6 4"/>
+   <polygon id="posUHead" class="vec-hide" fill="#aab2bf" points="0,0 0,0 0,0"/>
+   <polygon id="posVHead" class="vec-hide" fill="#aab2bf" points="0,0 0,0 0,0"/>
+   <line id="moveVec" class="vec-hide" x1="50" y1="350" x2="50" y2="350" stroke="#e58a16" stroke-width="4" stroke-linecap="round"/>
+   <polygon id="moveHead" class="vec-hide" fill="#e58a16" stroke="#e58a16" points="0,0 0,0 0,0"/>
+   <line id="legX" class="vec-hide" x1="90" y1="310" x2="210" y2="310" stroke="#25883d" stroke-width="2.2" stroke-dasharray="5 4"/>
+   <line id="legY" class="vec-hide" x1="210" y1="310" x2="210" y2="150" stroke="#25883d" stroke-width="2.2" stroke-dasharray="5 4"/>
+   <path id="rightAngle" class="vec-hide" d="M202 302 L202 310 L210 310" fill="none" stroke="#555" stroke-width="1.2"/>
+   <circle cx="50" cy="350" r="4" fill="#222"/>
+   <circle id="dotU" class="vec-hide" cx="90" cy="310" r="5.5" fill="#2563c7"/>
+   <circle id="dotV" class="vec-hide" cx="210" cy="150" r="5.5" fill="#2563c7"/>
+   <text id="labelO" x="38" y="368" font-size="12" font-weight="700">O</text>
+   <text id="labelU" class="vec-hide" x="52" y="318" fill="#2563c7" font-size="13" font-weight="700">u = (1, 1)</text>
+   <text id="labelV" class="vec-hide" x="218" y="142" fill="#2563c7" font-size="13" font-weight="700">v = (4, 5)</text>
+   <text id="labelMove" class="vec-hide" x="122" y="248" fill="#e58a16" font-size="13" font-weight="700">v &minus; u = (3, 4)</text>
+   <text id="labelX" class="vec-hide" x="138" y="328" fill="#25883d" font-size="12" font-weight="700">3 right</text>
+   <text id="labelY" class="vec-hide" x="218" y="238" fill="#25883d" font-size="12" font-weight="700">4 up</text>
+  </svg>
+ </div>
+ <aside class="side">
+  <div class="card blue">
+   <h2 class="blue">Movement from u to v</h2>
+   <p>The displacement (movement) from <b>u</b> to <b>v</b> is</p>
+   <p class="math orange"><b>v &minus; u</b> = (4, 5) &minus; (1, 1) = <b>(3, 4)</b></p>
+  </div>
+  <div class="card green">
+   <h2 class="green">Length (distance) between u and v</h2>
+   <p class="math">&#8214;v &minus; u&#8214; = <span class="rad">&#8730;</span>(3<sup>2</sup> + 4<sup>2</sup>)</p>
+   <p class="math">= <span class="rad">&#8730;</span>(9 + 16) = <span class="rad">&#8730;</span>25 = <span class="red"><b>5</b></span></p>
+  </div>
+  <div class="card purple">
+   <h2 class="purple">Checks and related facts</h2>
+   <ul style="margin:6px 0 0;padding-left:1.15rem">
+    <li><b>u</b> + (<b>v</b> &minus; <b>u</b>) = <b>v</b></li>
+    <li>Distance = &#8214;<b>v</b> &minus; <b>u</b>&#8214; = 5</li>
+    <li><b>u</b> &minus; <b>v</b> = (&minus;3, &minus;4) has the same length 5</li>
+   </ul>
+  </div>
+ </aside>
+</section>
+<div class="controls">
+ <button id="play">▶ Play animation</button>
+ <button id="next" class="secondary">Next step</button>
+ <button id="reset" class="secondary">↺ Reset</button>
+</div>
+<div class="status" id="status" aria-live="polite">Press Play: position vectors from O, then the movement v &minus; u.</div>
+<p class="conclusion">Conclusion: The distance between u and v is 5, which is the length of the vector v &minus; u.</p>
+<p class="note">Gray dashed arrows are position vectors from the origin O (not the movement).</p>
+</main>
+<script>
+(()=>{
+ const $=id=>document.getElementById(id);
+ const O={x:50,y:350,s:40};
+ const pt=(x,y)=>({x:O.x+x*O.s,y:O.y-y*O.s});
+ const pu=pt(1,1),pv=pt(4,5);
+ function setArrow(lineId,headId,a,b,len=9,halfW=4.5){
+  const line=$(lineId), head=headId?$(headId):null;
+  const dx=b.x-a.x, dy=b.y-a.y, mag=Math.hypot(dx,dy)||1;
+  const ux=dx/mag, uy=dy/mag;
+  const bx=b.x-ux*len, by=b.y-uy*len;
+  line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);
+  line.setAttribute('x2',bx);line.setAttribute('y2',by);
+  if(head){const px=-uy, py=ux;head.setAttribute('points',`${b.x},${b.y} ${bx+px*halfW},${by+py*halfW} ${bx-px*halfW},${by-py*halfW}`);}
+ }
+ setArrow('posU','posUHead',O,pu,8,3.5);
+ setArrow('posV','posVHead',O,pv,8,3.5);
+ setArrow('moveVec','moveHead',pu,pv,10,5);
+ $('legX').setAttribute('x1',pu.x);$('legX').setAttribute('y1',pu.y);
+ $('legX').setAttribute('x2',pv.x);$('legX').setAttribute('y2',pu.y);
+ $('legY').setAttribute('x1',pv.x);$('legY').setAttribute('y1',pu.y);
+ $('legY').setAttribute('x2',pv.x);$('legY').setAttribute('y2',pv.y);
+ const steps=[
+  {ids:['dotU','labelU','posU','posUHead'],msg:'1. Start at u = (1, 1). Gray dashed: position vector from O to u.'},
+  {ids:['dotV','labelV','posV','posVHead'],msg:'2. Destination v = (4, 5). Gray dashed: position vector from O to v.'},
+  {ids:['moveVec','moveHead','labelMove'],msg:'3. Movement from u to v is v &minus; u = (3, 4) (orange arrow from u to v).'},
+  {ids:['legX','legY','rightAngle','labelX','labelY'],msg:'4. The movement splits into 3 right and 4 up (green legs). Pythagoras gives length 5.'}
+ ];
+ const all=['posU','posUHead','posV','posVHead','moveVec','moveHead','legX','legY','rightAngle','dotU','dotV','labelU','labelV','labelMove','labelX','labelY'];
+ let index=0,timer=null;
+ const show=ids=>ids.forEach(id=>{const el=$(id);if(el)el.classList.remove('vec-hide');});
+ const hideAll=()=>all.forEach(id=>{const el=$(id);if(el)el.classList.add('vec-hide');});
+ const stop=()=>{if(timer){clearInterval(timer);timer=null;}};
+ const reset=()=>{stop();index=0;hideAll();$('play').textContent='▶ Play animation';$('status').textContent='Press Play: position vectors from O, then the movement v &minus; u.';};
+ const advance=()=>{if(index>=steps.length){stop();return;}const s=steps[index++];show(s.ids);$('status').textContent=s.msg;if(index===steps.length){stop();$('play').textContent='↻ Replay';}};
+ const toggle=()=>{if(index===steps.length)reset();if(timer){stop();$('play').textContent='▶ Resume';return;}$('play').textContent='Ⅱ Pause';timer=setInterval(advance,2000);};
+ $('play').addEventListener('click',toggle);
+ $('next').addEventListener('click',()=>{stop();$('play').textContent='▶ Play';advance();});
+ $('reset').addEventListener('click',reset);
+ reset();
+})();
+</script>
+</body>
+</html>

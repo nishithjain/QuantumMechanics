@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="qm-embed.css">
+<script src="qm-embed-resize.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Two bases: standard and Hadamard</title>
+<style>
+:root{--red:#dc3e3e;--green:#25883d;--blue:#2563c7;--purple:#7b3fa0;--ink:#1e293b;--muted:#64748b}
+html.qm-embed body{padding:8px}
+html.qm-embed main{padding:12px;box-shadow:none}
+html.qm-embed h1{font-size:1.2rem}
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:linear-gradient(135deg,#edf3ff,#f9fafc 55%,#f3effa);font-family:Arial,sans-serif;color:var(--ink)}
+main{max-width:1060px;margin:auto;background:#fff;border:1px solid #e4eaf2;border-radius:20px;padding:22px;box-shadow:0 14px 42px #24395816}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+h1{font-size:clamp(21px,3vw,27px);margin:0 0 6px;line-height:1.25}
+.subtitle{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
+.pill{background:#eaf1ff;color:#2458a8;border-radius:99px;padding:8px 12px;font-size:13px;font-weight:700}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,340px);gap:14px;align-items:start}
+.plot{border:1px solid #e6ecf4;border-radius:16px;padding:8px;background:#fcfdff}
+svg{display:block;width:100%;height:auto}
+.side{display:flex;flex-direction:column;gap:10px;font-size:14px;line-height:1.6;min-width:0}
+.card{border-radius:14px;padding:12px 14px;border:2px solid #e7edf4}
+.card h2{font-size:14px;margin:0 0 8px;line-height:1.35}
+.card p{margin:0.4em 0}
+.math{font-family:"Cambria Math","Segoe UI",Georgia,"Times New Roman",serif;letter-spacing:.01em}
+.math .rad{font-family:"Cambria Math","Segoe UI Symbol",serif}
+.card.blue{border-color:#b8ccf5;background:#f5f9ff}
+.card.yellow{border-color:#e8d48a;background:#fffbeb}
+.card.purple{border-color:#d4b8e8;background:#faf5ff}
+.controls{display:flex;flex-wrap:wrap;gap:9px;margin:14px 0 10px}
+button{border:0;border-radius:10px;padding:11px 16px;background:#245fc5;color:#fff;font-weight:700;cursor:pointer}
+button.secondary{background:#edf2f9;color:#26364e}
+.status{background:#f0f5fc;border-left:4px solid #2865c5;border-radius:0 12px 12px 0;padding:13px 15px;line-height:1.55;min-height:58px}
+.conclusion{margin-top:12px;padding:12px 16px;border-radius:12px;background:#ecfdf3;border:1px solid #a7e3b8;font-weight:700;color:#166534;text-align:center}
+.vec-hide{opacity:0;visibility:hidden;pointer-events:none}
+.red{color:var(--red)}.green{color:var(--green)}.blue{color:var(--blue)}.purple{color:var(--purple)}
+.note{color:var(--muted);font-size:12px;margin:4px 0 0}
+@media(max-width:760px){body{padding:8px}main{padding:12px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+ <div>
+  <h1>Two bases of the same plane: {e<sub>1</sub>, e<sub>2</sub>} and {h<sub>+</sub>, h<sub>&minus;</sub>}</h1>
+  <p class="subtitle">The same arrow can have different coordinate labels depending on which basis you use.</p>
+ </div>
+ <span class="pill">Change-of-basis cartoon</span>
+</header>
+<section class="layout">
+ <div class="plot">
+  <svg viewBox="0 0 420 360" role="img" aria-label="Standard basis e1 e2 and Hadamard basis h plus h minus">
+   <g stroke="#e9edf3" stroke-width="1">
+    <path d="M20 50V320 M65 50V320 M110 50V320 M155 50V320 M200 50V320 M245 50V320 M290 50V320 M335 50V320"/>
+    <path d="M20 320H380 M20 275H380 M20 230H380 M20 185H380 M20 140H380 M20 95H380"/>
+   </g>
+   <g stroke="#888" stroke-width="1.6">
+    <line x1="20" y1="270" x2="372" y2="270"/>
+    <line x1="120" y1="340" x2="120" y2="36"/>
+    <polygon points="380,270 368,265 368,275" fill="#888"/>
+    <polygon points="120,28 115,40 125,40" fill="#888"/>
+   </g>
+   <path id="rightAngle" class="vec-hide" d="M129 261 L139 270 L129 279" fill="none" stroke="#555" stroke-width="1.2"/>
+   <line id="dashHp" class="vec-hide" x1="205" y1="185" x2="290" y2="270" stroke="#aab2bf" stroke-width="1.8" stroke-dasharray="5 4"/>
+   <line id="dashHm" class="vec-hide" x1="205" y1="355" x2="290" y2="270" stroke="#aab2bf" stroke-width="1.8" stroke-dasharray="5 4"/>
+   <line id="e1" class="vec-hide" x1="120" y1="270" x2="120" y2="270" stroke="#dc3e3e" stroke-width="4" stroke-linecap="round"/>
+   <line id="e2" class="vec-hide" x1="120" y1="270" x2="120" y2="270" stroke="#25883d" stroke-width="4" stroke-linecap="round"/>
+   <line id="hp" class="vec-hide" x1="120" y1="270" x2="120" y2="270" stroke="#2563c7" stroke-width="4" stroke-linecap="round"/>
+   <line id="hm" class="vec-hide" x1="120" y1="270" x2="120" y2="270" stroke="#7b3fa0" stroke-width="4" stroke-linecap="round"/>
+   <g class="arrow-heads">
+    <polygon id="e1Head" class="vec-hide" fill="#dc3e3e" stroke="#dc3e3e" points="0,0 0,0 0,0"/>
+    <polygon id="e2Head" class="vec-hide" fill="#25883d" stroke="#25883d" points="0,0 0,0 0,0"/>
+    <polygon id="hpHead" class="vec-hide" fill="#2563c7" stroke="#2563c7" points="0,0 0,0 0,0"/>
+    <polygon id="hmHead" class="vec-hide" fill="#7b3fa0" stroke="#7b3fa0" points="0,0 0,0 0,0"/>
+   </g>
+   <circle cx="120" cy="270" r="4" fill="#222"/>
+   <circle id="dotHp" class="vec-hide" cx="205" cy="185" r="4" fill="#2563c7"/>
+   <circle id="dotHm" class="vec-hide" cx="205" cy="355" r="4" fill="#7b3fa0"/>
+   <text id="le1" class="vec-hide" x="298" y="275" fill="#dc3e3e" font-size="15" font-weight="700" font-family="Arial,sans-serif">e<tspan baseline-shift="sub" font-size="11">1</tspan></text>
+   <text id="le2" class="vec-hide" x="128" y="98" fill="#25883d" font-size="15" font-weight="700" font-family="Arial,sans-serif">e<tspan baseline-shift="sub" font-size="11">2</tspan></text>
+   <text id="lhp" class="vec-hide" x="248" y="138" fill="#2563c7" font-size="15" font-weight="700" font-family="Arial,sans-serif">h<tspan baseline-shift="sub" font-size="11">+</tspan></text>
+   <text id="lhm" class="vec-hide" x="248" y="348" fill="#7b3fa0" font-size="15" font-weight="700" font-family="Arial,sans-serif">h<tspan baseline-shift="sub" font-size="11">&minus;</tspan></text>
+   <text id="lHpHalf" class="vec-hide" x="168" y="178" fill="#2563c7" font-size="11" font-weight="700" font-family="Arial,sans-serif">(1/<tspan font-family="Cambria Math,serif">&#8730;</tspan>2)h<tspan baseline-shift="sub" font-size="9">+</tspan></text>
+   <text id="lHmHalf" class="vec-hide" x="168" y="368" fill="#7b3fa0" font-size="11" font-weight="700" font-family="Arial,sans-serif">(1/<tspan font-family="Cambria Math,serif">&#8730;</tspan>2)h<tspan baseline-shift="sub" font-size="9">&minus;</tspan></text>
+  </svg>
+ </div>
+ <aside class="side">
+  <div class="card blue">
+   <h2 class="blue">The rotated (Hadamard) basis</h2>
+   <p class="math"><span class="blue">h<sub>+</sub></span> = (1/<span class="rad">&#8730;</span>2)(1, 1)</p>
+   <p class="math"><span class="purple">h<sub>&minus;</sub></span> = (1/<span class="rad">&#8730;</span>2)(1, &minus;1)</p>
+   <p class="note">Both have length 1 and are perpendicular.</p>
+  </div>
+  <div class="card yellow">
+   <h2>Same vector, different coordinates</h2>
+   <p class="math"><span class="red">e<sub>1</sub></span> in {e<sub>1</sub>, e<sub>2</sub>}: (1, 0)</p>
+   <p class="math"><span class="red">e<sub>1</sub></span> in {h<sub>+</sub>, h<sub>&minus;</sub>}: (1/<span class="rad">&#8730;</span>2, 1/<span class="rad">&#8730;</span>2)</p>
+   <p class="math"><span class="green">e<sub>2</sub></span> in {h<sub>+</sub>, h<sub>&minus;</sub>}: (1/<span class="rad">&#8730;</span>2, &minus;1/<span class="rad">&#8730;</span>2)</p>
+  </div>
+  <div class="card purple">
+   <h2 class="purple">Change of basis (both directions)</h2>
+   <p class="math"><span class="red">e<sub>1</sub></span> = (h<sub>+</sub> + h<sub>&minus;</sub>)/<span class="rad">&#8730;</span>2</p>
+   <p class="math"><span class="green">e<sub>2</sub></span> = (h<sub>+</sub> &minus; h<sub>&minus;</sub>)/<span class="rad">&#8730;</span>2</p>
+   <p class="math">For <b>v</b> = (&alpha;, &beta;):</p>
+   <p class="math">coords in {h<sub>+</sub>, h<sub>&minus;</sub>} =<br>((&alpha;+&beta;)/<span class="rad">&#8730;</span>2, (&alpha;&minus;&beta;)/<span class="rad">&#8730;</span>2)</p>
+  </div>
+ </aside>
+</section>
+<div class="controls">
+ <button id="play">▶ Play animation</button>
+ <button id="next" class="secondary">Next step</button>
+ <button id="reset" class="secondary">↺ Reset</button>
+</div>
+<div class="status" id="status" aria-live="polite">Press Play to compare the standard basis and the Hadamard basis.</div>
+<p class="conclusion">{e<sub>1</sub>, e<sub>2</sub>} and {h<sub>+</sub>, h<sub>&minus;</sub>} are two different bases for the same plane.</p>
+<p class="note" style="margin:10px 2px 0">Real cartoon: the entries happen to be real, so we can draw it.</p>
+</main>
+<script>
+(()=>{
+ const $=id=>document.getElementById(id);
+ const O={x:120,y:270,s:170};
+ const pt=(x,y)=>({x:O.x+x*O.s,y:O.y-y*O.s});
+ const r=Math.SQRT1_2;
+ const pe1=pt(1,0),pe2=pt(0,1),php=pt(r,r),phm=pt(r,-r);
+ function setArrow(lineId,headId,a,b,len=10,halfW=5){
+  const line=$(lineId), head=headId?$(headId):null;
+  const dx=b.x-a.x, dy=b.y-a.y, mag=Math.hypot(dx,dy)||1;
+  const ux=dx/mag, uy=dy/mag;
+  const bx=b.x-ux*len, by=b.y-uy*len;
+  line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);
+  line.setAttribute('x2',bx);line.setAttribute('y2',by);
+  if(head){const px=-uy, py=ux;head.setAttribute('points',`${b.x},${b.y} ${bx+px*halfW},${by+py*halfW} ${bx-px*halfW},${by-py*halfW}`);}
+ }
+ setArrow('e1','e1Head',O,pe1);
+ setArrow('e2','e2Head',O,pe2);
+ setArrow('hp','hpHead',O,php);
+ setArrow('hm','hmHead',O,phm);
+ const steps=[
+  {ids:['e1','e1Head','le1','e2','e2Head','le2'],msg:'1. Start with the standard basis: e1 = (1, 0) and e2 = (0, 1).'},
+  {ids:['hp','hpHead','lhp','hm','hmHead','lhm','rightAngle'],msg:'2. A second orthonormal basis: h+ and h- have length 1, are perpendicular, and are rotated 45 degrees.'},
+  {ids:['dotHp','dotHm','lHpHalf','lHmHalf','dashHp','dashHm'],msg:'3. e1 equals (1/sqrt(2)) h+ + (1/sqrt(2)) h-. The dashed legs complete the parallelogram to the red arrow.'},
+  {ids:[],msg:'4. Same geometric arrow, two coordinate systems. Read the side panel for coordinates in each basis.'},
+  {ids:[],msg:'5. Use the purple box formulas to convert any v = (α, β) between the two bases.'}
+ ];
+ const all=['e1','e1Head','e2','e2Head','hp','hpHead','hm','hmHead','dashHp','dashHm','dotHp','dotHm','le1','le2','lhp','lhm','lHpHalf','lHmHalf','rightAngle'];
+ let index=0,timer=null;
+ const show=ids=>ids.forEach(id=>{const el=$(id);if(el)el.classList.remove('vec-hide');});
+ const hideAll=()=>all.forEach(id=>{const el=$(id);if(el)el.classList.add('vec-hide');});
+ const stop=()=>{if(timer){clearInterval(timer);timer=null;}};
+ const reset=()=>{stop();index=0;hideAll();$('play').textContent='▶ Play animation';$('status').textContent='Press Play to compare the standard basis and the Hadamard basis.';};
+ const advance=()=>{if(index>=steps.length){stop();return;}const s=steps[index++];show(s.ids);$('status').textContent=s.msg;if(index===steps.length){stop();$('play').textContent='↻ Replay';}};
+ const toggle=()=>{if(index===steps.length)reset();if(timer){stop();$('play').textContent='▶ Resume';return;}$('play').textContent='Ⅱ Pause';timer=setInterval(advance,2200);};
+ $('play').addEventListener('click',toggle);
+ $('next').addEventListener('click',()=>{stop();$('play').textContent='▶ Play';advance();});
+ $('reset').addEventListener('click',reset);
+ reset();
+})();
+</script>
+</body>
+</html>

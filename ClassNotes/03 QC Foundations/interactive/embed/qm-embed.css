@@ -1,0 +1,236 @@
+/* Compact layout when shown inside Markdown preview iframes */
+html.qm-embed {
+  height: auto;
+}
+html.qm-embed body {
+  overflow: visible;
+  margin: 0;
+  padding: 4px 6px !important;
+  background: #fff !important;
+  min-height: 0;
+}
+html.qm-embed main,
+html.qm-embed .container {
+  margin: 0 !important;
+  padding: 10px 12px !important;
+  max-width: none !important;
+  box-shadow: none !important;
+  border-radius: 10px;
+}
+html.qm-embed .container {
+  text-align: left;
+}
+html.qm-embed h2 {
+  font-size: 1.05rem !important;
+  margin: 0 0 6px !important;
+  line-height: 1.25 !important;
+}
+html.qm-embed h3 {
+  font-size: 0.95rem !important;
+  margin: 10px 0 6px !important;
+}
+html.qm-embed .diagram,
+html.qm-embed .controls {
+  margin: 8px auto !important;
+}
+html.qm-embed .result,
+html.qm-embed .explanation,
+html.qm-embed .info {
+  margin-top: 8px !important;
+  padding: 8px 10px !important;
+  font-size: 13px;
+  line-height: 1.45;
+}
+html.qm-embed table {
+  font-size: 13px;
+  margin: 8px auto 0;
+}
+html.qm-embed th,
+html.qm-embed td {
+  padding: 6px 8px !important;
+}
+html.qm-embed canvas {
+  display: block;
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto;
+}
+html.qm-embed:not(.qm-embed-wide) .stage {
+  grid-template-columns: 1fr !important;
+  gap: 8px !important;
+  margin-top: 8px !important;
+}
+html.qm-embed.qm-embed-wide .stage {
+  grid-template-columns: minmax(0, 1fr) minmax(200px, 250px) !important;
+  gap: 8px !important;
+  margin-top: 8px !important;
+}
+html.qm-embed .footer {
+  font-size: 11px;
+  line-height: 1.4;
+  margin-top: 8px !important;
+}
+html.qm-embed .sliderbox {
+  padding: 8px 10px !important;
+  margin: 8px 0 !important;
+}
+html.qm-embed h1 {
+  font-size: 1.05rem !important;
+  margin: 0 0 4px !important;
+  line-height: 1.25 !important;
+}
+html.qm-embed .subtitle {
+  font-size: 12px;
+  line-height: 1.35;
+  margin: 0;
+}
+html.qm-embed header {
+  margin-bottom: 8px !important;
+  gap: 8px !important;
+}
+html.qm-embed .pill,
+html.qm-embed .tag {
+  padding: 4px 8px;
+  font-size: 11px;
+}
+html.qm-embed:not(.qm-embed-wide) .layout {
+  grid-template-columns: 1fr !important;
+  gap: 8px !important;
+  margin-top: 8px !important;
+}
+html.qm-embed.qm-embed-wide .layout {
+  grid-template-columns: minmax(0, 1.25fr) minmax(220px, 0.85fr) !important;
+  gap: 8px !important;
+  margin-top: 8px !important;
+}
+html.qm-embed .panels {
+  gap: 8px !important;
+  margin-top: 8px !important;
+}
+html.qm-embed:not(.qm-embed-wide) .panels {
+  grid-template-columns: 1fr !important;
+}
+html.qm-embed.qm-embed-wide .panels {
+  grid-template-columns: 1fr 1fr !important;
+}
+html.qm-embed:not(.qm-embed-wide) .bottom,
+html.qm-embed:not(.qm-embed-wide) .explain {
+  grid-template-columns: 1fr !important;
+}
+html.qm-embed.qm-embed-wide .bottom,
+html.qm-embed.qm-embed-wide .explain {
+  grid-template-columns: 1fr 1fr !important;
+}
+html.qm-embed .plot,
+html.qm-embed .panel {
+  padding: 4px !important;
+}
+html.qm-embed .controls {
+  margin: 8px 0 6px !important;
+  gap: 6px !important;
+}
+html.qm-embed button {
+  padding: 8px 12px;
+  font-size: 13px;
+}
+html.qm-embed .status,
+html.qm-embed #explain {
+  min-height: 0 !important;
+  padding: 8px 10px !important;
+  font-size: 13px;
+  line-height: 1.45;
+}
+html.qm-embed .bottom,
+html.qm-embed .explain {
+  gap: 8px !important;
+  margin-top: 8px !important;
+}
+html.qm-embed .side .card,
+html.qm-embed .card {
+  padding: 8px 10px;
+}
+html.qm-embed .side .card ol,
+html.qm-embed .side .card ul {
+  margin: 4px 0 0;
+  padding-left: 1.15rem;
+  font-size: 12px;
+  line-height: 1.45;
+}
+html.qm-embed .side .card p {
+  font-size: 12px;
+  line-height: 1.45;
+}
+html.qm-embed .conclusion {
+  margin-top: 8px !important;
+  padding: 8px 12px !important;
+  font-size: 13px;
+}
+html.qm-embed .note {
+  margin: 6px 0 0 !important;
+  font-size: 11px;
+  line-height: 1.4;
+}
+html.qm-embed .math,
+html.qm-embed .formula {
+  line-height: 1.5;
+}
+html.qm-embed .intro {
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 0 0 8px !important;
+}
+html.qm-embed .equation {
+  font-size: 14px !important;
+  font-weight: 700;
+  margin: 6px 0 !important;
+  line-height: 1.45;
+}
+html.qm-embed main > svg {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 0 0 4px;
+}
+html.qm-embed .panel,
+html.qm-embed .card {
+  padding: 10px 12px !important;
+  margin: 8px 0 !important;
+}
+html.qm-embed main p,
+html.qm-embed .panel p,
+html.qm-embed .card p {
+  margin: 6px 0 !important;
+  font-size: 13px;
+  line-height: 1.45;
+}
+html.qm-embed .formula {
+  font-size: 15px !important;
+  margin: 6px 0 !important;
+}
+html.qm-embed .signal,
+html.qm-embed .branches {
+  font-size: 13px;
+}
+html.qm-embed .plots svg,
+html.qm-embed .chart-card svg {
+  min-height: 200px;
+}
+html.qm-embed .panel h2,
+html.qm-embed .card h2 {
+  font-size: 0.95rem !important;
+  margin: 0 0 6px !important;
+}
+html.qm-embed:not(.qm-embed-wide) .plots,
+html.qm-embed:not(.qm-embed-wide) .controls,
+html.qm-embed:not(.qm-embed-wide) .pair,
+html.qm-embed:not(.qm-embed-wide) .grid {
+  grid-template-columns: 1fr !important;
+}
+html.qm-embed.qm-embed-wide .plots {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) !important;
+  gap: 10px !important;
+}
+html.qm-embed.qm-embed-wide section.card .plots {
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) !important;
+}

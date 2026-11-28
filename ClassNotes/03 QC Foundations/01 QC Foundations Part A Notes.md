@@ -254,7 +254,13 @@ In formulas, a phase rotation is written $e^{i\phi}$ (Euler’s form). For a qub
 
 **Interactive phasor explorer** (one arrow, one tone): open [`interactive/phasor-explorer.html`](interactive/phasor-explorer.html) or use the frame below.
 
-<iframe src="interactive/phasor-explorer.html" title="Phase and phasor explorer" width="100%" height="900" style="max-width:1080px;border:1px solid #dce3ef;border-radius:16px;display:block;margin:16px auto;"></iframe>
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe scrolling="no" src="interactive/phasor-explorer.html" title="Phase and phasor explorer" width="100%" height="2000" loading="lazy" style="border:1px solid #dce3ef;border-radius:16px;max-width:1080px;display:block;margin:16px auto;overflow:hidden;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open phasor explorer in full page](interactive/phasor-explorer.html) if the embed does not appear in your Markdown preview.
 
 *Phase is an angle; for interference, **relative** phase between two contributions matters (§9.2–9.3).*
 
@@ -266,7 +272,13 @@ The lecture’s **two-speaker** picture is about **timing**: the same steady ton
 
 **Interactive model** (waves + phasors + presets): [`interactive/speaker-phase-corrected.html`](interactive/speaker-phase-corrected.html) — or the frame below if your preview supports it.
 
-<iframe src="interactive/speaker-phase-corrected.html" title="Two speakers: shared and extra delay" width="100%" height="1050" style="max-width:1080px;border:1px solid #d7e0ed;border-radius:12px;display:block;margin:16px auto;"></iframe>
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe scrolling="no" src="interactive/speaker-phase-corrected.html" title="Two speakers: shared and extra delay" width="100%" height="2000" loading="lazy" style="border:1px solid #d7e0ed;border-radius:12px;max-width:1080px;display:block;margin:16px auto;overflow:hidden;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open speaker phase model in full page](interactive/speaker-phase-corrected.html) if the embed does not appear in your Markdown preview.
 
 **Try the three presets in the explorer:**
 
@@ -609,3 +621,7 @@ $$
 ---
 
 *End of Part A notes. Part B continues in the next lecture file and recording.*
+
+<!-- markdownlint-disable MD033 -->
+<script src="../02 Mathematical Foundations Part A/assets/markdown-embed-parent.js"></script>
+<!-- markdownlint-enable MD033 -->

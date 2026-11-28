@@ -158,7 +158,7 @@ Explain it to yourself like this:
 
 <!-- markdownlint-disable MD033 -->
 <div class="demo-frame">
-<iframe src="assets/interactive-or-gate.html" title="Interactive OR gate" width="100%" height="560" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms" style="border:1px solid #dce3ef;border-radius:12px;max-width:720px;display:block;margin:12px 0;"></iframe>
+<iframe scrolling="no" src="assets/interactive-or-gate.html" title="Interactive OR gate" width="100%" height="720" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:720px;display:block;margin:12px 0;overflow:hidden;"></iframe>
 </div>
 <!-- markdownlint-enable MD033 -->
 
@@ -181,7 +181,7 @@ Explain it to yourself like this:
 
 <!-- markdownlint-disable MD033 -->
 <div class="demo-frame">
-<iframe src="assets/interactive-matrix-vector.html" title="Matrix U vector transformation" width="100%" height="640" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms" style="border:1px solid #dce3ef;border-radius:12px;max-width:900px;display:block;margin:12px 0;"></iframe>
+<iframe scrolling="no" src="assets/interactive-matrix-vector.html" title="Matrix U vector transformation" width="100%" height="640" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms" style="border:1px solid #dce3ef;border-radius:12px;max-width:900px;display:block;margin:12px 0;overflow:hidden;"></iframe>
 </div>
 <!-- markdownlint-enable MD033 -->
 
@@ -304,7 +304,7 @@ You can draw it as a point on a flat plane. The first number is the **x coordina
 
 <!-- markdownlint-disable MD033 -->
 <div class="demo-frame">
-<iframe src="assets/interactive-vector-5-3-plane.html" title="Plotting (5, 3) on the x-y plane" width="100%" height="600" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms" style="border:1px solid #dce3ef;border-radius:12px;max-width:720px;display:block;margin:12px 0;"></iframe>
+<iframe scrolling="no" src="assets/interactive-vector-5-3-plane.html" title="Plotting (5, 3) on the x-y plane" width="100%" height="720" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:720px;display:block;margin:12px 0;overflow:hidden;"></iframe>
 </div>
 <!-- markdownlint-enable MD033 -->
 
@@ -391,7 +391,7 @@ And here is the picture. Each blue dot is one of the points from the table, on t
 
 <!-- markdownlint-disable MD033 -->
 <div class="demo-frame">
-<iframe src="assets/interactive-parabola-x-squared-plus-1.html" title="Parabola y = x² + 1 and the line y = 0" width="100%" height="720" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:760px;display:block;margin:12px 0;"></iframe>
+<iframe scrolling="no" src="assets/interactive-parabola-x-squared-plus-1.html" title="Parabola y = x² + 1 and the line y = 0" width="100%" height="720" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:760px;display:block;margin:12px 0;overflow:hidden;"></iframe>
 </div>
 <!-- markdownlint-enable MD033 -->
 
@@ -693,7 +693,7 @@ Here is the example from section 5.1 drawn on the complex plane. The blue arrow 
 
 <!-- markdownlint-disable MD033 -->
 <div class="demo-frame">
-<iframe src="assets/interactive-complex-number-addition.html" title="Adding complex numbers as vectors: (3+2i)+(1-4i)" width="100%" height="680" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:900px;display:block;margin:12px 0;"></iframe>
+<iframe scrolling="no" src="assets/interactive-complex-number-addition.html" title="Adding complex numbers as vectors: (3+2i)+(1-4i)" width="100%" height="680" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:900px;display:block;margin:12px 0;overflow:hidden;"></iframe>
 </div>
 <!-- markdownlint-enable MD033 -->
 
@@ -800,7 +800,7 @@ Think of the real axis as a **mirror**. Place $z = 3 + 2i$ above the mirror, and
 
 <!-- markdownlint-disable MD033 -->
 <div class="demo-frame">
-<iframe src="assets/interactive-complex-conjugate-reflection.html" title="Complex conjugate as reflection across the real axis" width="100%" height="680" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:900px;display:block;margin:12px 0;"></iframe>
+<iframe scrolling="no" src="assets/interactive-complex-conjugate-reflection.html" title="Complex conjugate as reflection across the real axis" width="100%" height="680" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:900px;display:block;margin:12px 0;overflow:hidden;"></iframe>
 </div>
 <!-- markdownlint-enable MD033 -->
 
@@ -829,7 +829,7 @@ The picture below shows why. Go $3$ to the right (the real part $a$) and $4$ up 
 
 <!-- markdownlint-disable MD033 -->
 <div class="demo-frame">
-<iframe src="assets/interactive-modulus-pythagoras.html" title="Modulus of 3 + 4i via Pythagoras on the complex plane" width="100%" height="720" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:900px;display:block;margin:12px 0;"></iframe>
+<iframe scrolling="no" src="assets/interactive-modulus-pythagoras.html" title="Modulus of 3 + 4i via Pythagoras on the complex plane" width="100%" height="920" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:900px;display:block;margin:12px 0;overflow:hidden;"></iframe>
 </div>
 <!-- markdownlint-enable MD033 -->
 
@@ -1129,7 +1129,7 @@ In the same way, look at left and right. Quadrants I and IV are the **right half
 
 <!-- markdownlint-disable MD033 -->
 <div class="demo-frame">
-<iframe src="assets/interactive-trig-quadrants.html" title="Four quadrants: signs of sin θ and cos θ on the unit circle" width="100%" height="820" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;"></iframe>
+<iframe scrolling="no" src="assets/interactive-trig-quadrants.html" title="Four quadrants: signs of sin θ and cos θ on the unit circle" width="100%" height="1000" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;overflow:hidden;"></iframe>
 </div>
 <!-- markdownlint-enable MD033 -->
 
@@ -1590,7 +1590,7 @@ In the picture below, $z_1$ has length $2$ at $20^\circ$ and $z_2$ has length $1
 
 <!-- markdownlint-disable MD033 -->
 <div class="demo-frame">
-<iframe src="assets/interactive-multiplication-lengths-angles.html" title="Complex multiplication: lengths multiply, angles add" width="100%" height="840" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;"></iframe>
+<iframe scrolling="no" src="assets/interactive-multiplication-lengths-angles.html" title="Complex multiplication: lengths multiply, angles add" width="100%" height="840" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;overflow:hidden;"></iframe>
 </div>
 <!-- markdownlint-enable MD033 -->
 
@@ -1614,7 +1614,7 @@ The length is still $r_1$ (multiplying by $1$ changes nothing) and the angle has
 
 <!-- markdownlint-disable MD033 -->
 <div class="demo-frame">
-<iframe src="assets/interactive-multiply-unit-rotation.html" title="Multiplying by e^(iφ): rotation without changing length" width="100%" height="840" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;"></iframe>
+<iframe scrolling="no" src="assets/interactive-multiply-unit-rotation.html" title="Multiplying by e^(iφ): rotation without changing length" width="100%" height="840" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;overflow:hidden;"></iframe>
 </div>
 <!-- markdownlint-enable MD033 -->
 
@@ -1646,7 +1646,7 @@ The picture uses $z = 3 + 4i$. The **blue arrow** is $z$, the **green arrow** is
 
 <!-- markdownlint-disable MD033 -->
 <div class="demo-frame">
-<iframe src="assets/interactive-multiply-by-i-90.html" title="Multiplying by i: 90 degree rotation of 3 + 4i" width="100%" height="840" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;"></iframe>
+<iframe scrolling="no" src="assets/interactive-multiply-by-i-90.html" title="Multiplying by i: 90 degree rotation of 3 + 4i" width="100%" height="840" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;overflow:hidden;"></iframe>
 </div>
 <!-- markdownlint-enable MD033 -->
 
@@ -1701,7 +1701,7 @@ Here is the picture. The **blue arrow** is $z$ (length $2$, angle $18^\circ$). T
 
 <!-- markdownlint-disable MD033 -->
 <div class="demo-frame">
-<iframe src="assets/interactive-complex-multiplication-lengths-angles-add.html" title="Multiplying z and w: lengths multiply, angles add" width="100%" height="840" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;"></iframe>
+<iframe scrolling="no" src="assets/interactive-complex-multiplication-lengths-angles-add.html" title="Multiplying z and w: lengths multiply, angles add" width="100%" height="840" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;overflow:hidden;"></iframe>
 </div>
 <!-- markdownlint-enable MD033 -->
 
@@ -1718,7 +1718,7 @@ Think of it as a two-step move starting from $z$: **stretch** $z$ by a factor of
 
 <!-- markdownlint-disable MD033 -->
 <div class="demo-frame">
-<iframe src="assets/interactive-multiply-4i-rotate-stretch.html" title="Multiplying by 4i: rotate then stretch" width="100%" height="880" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;"></iframe>
+<iframe scrolling="no" src="assets/interactive-multiply-4i-rotate-stretch.html" title="Multiplying by 4i: rotate then stretch" width="100%" height="880" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;overflow:hidden;"></iframe>
 </div>
 <!-- markdownlint-enable MD033 -->
 
@@ -2188,3 +2188,7 @@ $$
 $$
 
 Geometrically, you complete a **parallelogram**, and the sum is the diagonal. Complex numbers add the same way, as you will see.
+
+<!-- markdownlint-disable MD033 -->
+<script src="assets/markdown-embed-parent.js"></script>
+<!-- markdownlint-enable MD033 -->
