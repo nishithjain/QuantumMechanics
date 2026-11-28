@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vector addition of complex numbers</title>
+<script>if (window.self !== window.top) document.documentElement.classList.add("qm-embed");</script>
+<style>
+html.qm-embed body { padding: 8px; }
+html.qm-embed main { padding: 12px; box-shadow: none; }
+html.qm-embed h1 { font-size: 1.15rem; }
+*{box-sizing:border-box} body{margin:0;padding:20px;background:#f4f6fa;color:#182235;font-family:Arial,sans-serif}
+main{max-width:850px;margin:auto;background:#fff;padding:20px;border-radius:16px;box-shadow:0 5px 24px #17233b12}
+h1{font-size:25px;margin:0 0 7px}.intro{margin:0 0 14px;color:#586579}
+svg{display:block;width:100%;height:auto;border:1px solid #e7ebf1;border-radius:12px;background:#fff}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0}
+button{border:0;border-radius:9px;padding:10px 15px;font-weight:700;background:#245fc5;color:white;cursor:pointer}
+button.alt{background:#e9eef7;color:#26354d}
+#explain{padding:12px 14px;background:#f1f5fb;border-radius:10px;line-height:1.5;min-height:48px}
+.formula{margin:14px 0 2px;font-size:19px;font-weight:700}
+.small{font-size:13px;color:#647086;margin-top:5px}
+@media(max-width:560px){body{padding:8px}main{padding:11px}h1{font-size:21px}.formula{font-size:16px}}
+</style>
+</head>
+<body>
+<main>
+<h1>Adding complex numbers using vectors</h1>
+<p class="intro">Follow the parallelogram construction for (3 + 2i) + (1 − 4i).</p>
+<svg viewBox="0 0 680 470" role="img" aria-label="Complex plane: blue vector from origin to (3,2), red vector from origin to (1,-4), dashed translated sides, and green resultant to (4,-2)">
+<defs></defs>
+<!-- grid -->
+<g stroke="#e6e9ee" stroke-width="1">
+ <path d="M80 30V430 M130 30V430 M180 30V430 M230 30V430 M280 30V430 M330 30V430 M380 30V430 M430 30V430 M480 30V430 M530 30V430 M580 30V430 M630 30V430"/>
+ <path d="M60 50H640 M60 100H640 M60 150H640 M60 200H640 M60 250H640 M60 300H640 M60 350H640 M60 400H640"/>
+</g>
+<!-- axes, origin O=(130,200), 50 px per unit -->
+<g stroke="#222" stroke-width="2">
+ <line x1="48" y1="200" x2="642" y2="200"/>
+ <line x1="130" y1="435" x2="130" y2="33"/>
+ <polygon points="650,200 638,195 638,205" fill="#222"/>
+ <polygon points="130,25 125,37 135,37" fill="#222"/>
+</g>
+<g fill="#555" font-size="13">
+ <text x="654" y="193">Real axis</text><text x="140" y="24">Imaginary axis</text>
+ <text x="123" y="218">0</text>
+ <text x="178" y="218">1</text><text x="228" y="218">2</text><text x="278" y="218">3</text><text x="328" y="218">4</text><text x="378" y="218">5</text>
+ <text x="95" y="155">i</text><text x="88" y="105">2i</text><text x="88" y="55">3i</text>
+ <text x="83" y="255">−i</text><text x="76" y="305">−2i</text><text x="76" y="355">−3i</text><text x="76" y="405">−4i</text>
+</g>
+<!-- coordinates: O=(130,200), z=(280,100), w=(180,400), sum=(330,300) -->
+<polygon id="fill" points="130,200 280,100 330,300 180,400" fill="#9b83e8" opacity="0"/>
+<!-- vectors -->
+<line id="z" x1="130" y1="200" x2="280" y2="100" stroke="#2166d1" stroke-width="5" stroke-linecap="round" opacity="0"/>
+<polygon id="zHead" fill="#2166d1" opacity="0"/>
+<line id="w" x1="130" y1="200" x2="180" y2="400" stroke="#df3030" stroke-width="5" stroke-linecap="round" opacity="0"/>
+<polygon id="wHead" fill="#df3030" opacity="0"/>
+<!-- translated w: from tip of z to final point -->
+<line id="redDash" x1="280" y1="100" x2="330" y2="300" stroke="#df3030" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="8 7" opacity="0"/>
+<polygon id="redDashHead" fill="#df3030" opacity="0"/>
+<!-- translated z: from tip of w to final point -->
+<line id="blueDash" x1="180" y1="400" x2="330" y2="300" stroke="#2166d1" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="8 7" opacity="0"/>
+<polygon id="blueDashHead" fill="#2166d1" opacity="0"/>
+<!-- resultant -->
+<line id="result" x1="130" y1="200" x2="330" y2="300" stroke="#238b38" stroke-width="6" stroke-linecap="round" opacity="0"/>
+<polygon id="resultHead" fill="#238b38" opacity="0"/>
+<g font-size="17" font-weight="700">
+ <text id="zText" x="291" y="91" fill="#2166d1" opacity="0">z = 3 + 2i</text>
+ <text id="wText" x="188" y="420" fill="#df3030" opacity="0">w = 1 − 4i</text>
+ <text id="sumText" x="343" y="309" fill="#238b38" opacity="0">z + w = 4 − 2i</text>
+</g>
+<circle cx="130" cy="200" r="4.5" fill="#222"/>
+</svg>
+<div class="controls">
+ <button id="play">▶ Play</button><button id="next" class="alt">Next step</button><button id="reset" class="alt">↺ Reset</button>
+</div>
+<div id="explain" aria-live="polite">Press Play to see the two vectors and their sum.</div>
+<div class="formula">(3 + 2i) + (1 − 4i) = 4 − 2i</div>
+<div class="small">Add real parts: 3 + 1 = 4. Add imaginary parts: 2 − 4 = −2.</div>
+</main>
+<script>
+(()=>{
+ const ids=['z','zHead','w','wHead','redDash','redDashHead','blueDash','blueDashHead','fill','result','resultHead','zText','wText','sumText'];
+ function vectorArrow(lineId, headId, len=11, halfW=5){
+  const line=document.getElementById(lineId), head=document.getElementById(headId);
+  const x1=+line.getAttribute('x1'), y1=+line.getAttribute('y1');
+  const x2=+line.getAttribute('x2'), y2=+line.getAttribute('y2');
+  const dx=x2-x1, dy=y2-y1, mag=Math.hypot(dx,dy)||1;
+  const ux=dx/mag, uy=dy/mag;
+  const bx=x2-ux*len, by=y2-uy*len;
+  const px=-uy, py=ux;
+  head.setAttribute('points',`${x2},${y2} ${bx+px*halfW},${by+py*halfW} ${bx-px*halfW},${by-py*halfW}`);
+  line.setAttribute('x2', String(bx));
+  line.setAttribute('y2', String(by));
+ }
+ [['z','zHead'],['w','wHead'],['redDash','redDashHead'],['blueDash','blueDashHead'],['result','resultHead']].forEach(([l,h])=>vectorArrow(l,h));
+ const steps=[
+  {show:['z','zHead','zText'],msg:'1. Draw z = 3 + 2i from the origin: 3 units right and 2 units up.'},
+  {show:['w','wHead','wText'],msg:'2. Draw w = 1 − 4i from the same origin: 1 unit right and 4 units down.'},
+  {show:['redDash','redDashHead'],msg:'3. Translate a copy of w to the tip of z. This dashed red side is parallel and equal to w.'},
+  {show:['blueDash','blueDashHead','fill'],msg:'4. Translate a copy of z to the tip of w. The dashed blue side is parallel and equal to z. Together they complete the parallelogram.'},
+  {show:['result','resultHead','sumText'],msg:'5. The green diagonal from the origin is the sum: its endpoint is (4, −2), so z + w = 4 − 2i.'}
+ ];
+ let index=0,timer=null;
+ const explain=document.getElementById('explain'),play=document.getElementById('play');
+ function reset(){if(timer)clearInterval(timer);timer=null;index=0;ids.forEach(id=>document.getElementById(id).style.opacity=0);play.textContent='▶ Play';explain.textContent='Press Play to see the two vectors and their sum.';}
+ function advance(){if(index>=steps.length){stop();return;}const s=steps[index++];s.show.forEach(id=>document.getElementById(id).style.opacity=1);explain.textContent=s.msg;if(index===steps.length){stop();play.textContent='↻ Replay';}}
+ function stop(){if(timer){clearInterval(timer);timer=null;}}
+ function toggle(){if(index===steps.length)reset();if(timer){stop();play.textContent='▶ Resume';return;}play.textContent='Ⅱ Pause';timer=setInterval(advance,1550);}
+ play.addEventListener('click',toggle);
+ document.getElementById('next').addEventListener('click',()=>{stop();play.textContent='▶ Play';advance();});
+ document.getElementById('reset').addEventListener('click',reset);
+ reset();
+})();
+</script>
+</body>
+</html>

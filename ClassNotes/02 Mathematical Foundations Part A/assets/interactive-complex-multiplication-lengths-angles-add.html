@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Complex Multiplication — Lengths Multiply, Angles Add</title>
+<script>if (window.self !== window.top) document.documentElement.classList.add("qm-embed");</script>
+<style>
+html.qm-embed body { padding: 8px; }
+html.qm-embed main { padding: 12px; box-shadow: none; }
+html.qm-embed h1 { font-size: 1.2rem; }
+html.qm-embed .layout { grid-template-columns: 1fr; }
+:root{--blue:#2563c7;--red:#dc3e3e;--green:#25883d;--ink:#1d2939;--muted:#64748b}
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:linear-gradient(135deg,#edf3ff,#f8fafc 60%,#eff7f0);font-family:Arial,sans-serif;color:var(--ink)}
+main{max-width:1000px;margin:auto;background:#fff;border:1px solid #e5ebf3;border-radius:20px;padding:22px;box-shadow:0 14px 42px #24395816}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+h1{font-size:clamp(22px,3vw,29px);margin:0 0 7px}.subtitle{margin:0;color:var(--muted);line-height:1.5}
+.pill{background:#eaf1ff;color:#2458a8;padding:8px 12px;border-radius:99px;font-size:13px;font-weight:700}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:15px;margin-top:18px}
+.plot{border:1px solid #e7edf4;border-radius:15px;background:#fcfdff;padding:7px;min-width:0}
+svg{display:block;width:100%;height:auto}
+.side{display:flex;flex-direction:column;gap:11px}
+.card{border:1px solid #e7edf4;border-radius:14px;padding:13px 14px;background:#fff}
+.card h2{font-size:14px;margin:0 0 7px}.card p{font-size:14px;line-height:1.45;margin:4px 0}
+.blue{color:var(--blue)}.red{color:var(--red)}.green{color:var(--green)}
+.result{background:#f7f9fd}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin:15px 0 10px}
+button{border:0;border-radius:10px;padding:11px 16px;background:#245fc5;color:white;font-weight:700;cursor:pointer}
+button.secondary{background:#edf2f9;color:#26364e}
+button:focus-visible{outline:3px solid #9ac0ff;outline-offset:2px}
+.status{background:#f0f5fc;border-left:4px solid #2865c5;border-radius:0 12px 12px 0;padding:13px 15px;line-height:1.55;min-height:58px}
+.math{border:1px solid #e7edf4;border-radius:14px;padding:14px 16px;margin-top:13px;line-height:1.85}
+.math strong{font-size:16px}.note{font-size:13px;color:var(--muted);line-height:1.5;margin:12px 2px 0}
+@media(max-width:760px){body{padding:9px}main{padding:12px}.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}.result{grid-column:1/-1}}
+@media(max-width:430px){.side{grid-template-columns:1fr}.result{grid-column:auto}}
+</style>
+</head>
+<body>
+<main>
+<header>
+ <div><h1>Multiplying complex numbers: lengths multiply, angles add</h1><p class="subtitle">Explore z = 2e<sup>iπ/10</sup> and w = 4e<sup>iπ/2</sup>.</p></div>
+ <span class="pill">Interactive polar-form animation</span>
+</header>
+<section class="layout">
+ <div class="plot">
+ <svg viewBox="0 0 720 540" role="img" aria-label="Complex plane showing z with length 2 and angle 18 degrees, w with length 4 and angle 90 degrees, and product zw with length 8 and angle 108 degrees">
+ <defs></defs>
+ <!-- grid; origin (300,420), scale 37.5 px per unit -->
+ <g stroke="#edf0f5" stroke-width="1">
+  <path d="M75 45V480 M150 45V480 M225 45V480 M300 45V480 M375 45V480 M450 45V480 M525 45V480 M600 45V480 M675 45V480"/>
+  <path d="M45 45H685 M45 120H685 M45 195H685 M45 270H685 M45 345H685 M45 420H685"/>
+ </g>
+ <g stroke="#596779" stroke-width="2">
+  <line x1="45" y1="420" x2="682" y2="420"/>
+  <line x1="300" y1="490" x2="300" y2="33"/>
+  <polygon points="690,420 678,415 678,425" fill="#596779"/>
+  <polygon points="300,25 295,37 305,37" fill="#596779"/>
+ </g>
+ <g fill="#596779" font-size="14"><text x="694" y="426">Real axis</text><text x="311" y="26">Imaginary axis</text><text x="285" y="440">0</text></g>
+ <!-- product circle radius 8 -->
+ <circle id="radiusCircle" cx="300" cy="420" r="300" fill="none" stroke="#9aa3b1" stroke-width="1.6" stroke-dasharray="6 6" opacity="0"/>
+ <text id="circleLabel" x="468" y="82" fill="#6b7280" font-size="13" opacity="0">Product length = 8</text>
+ <!-- angle arcs: theta1 18°, theta2 90° from real axis, total 108° -->
+ <path id="theta1Arc" d="" fill="none" stroke="#2563c7" stroke-width="3.2" stroke-linecap="round" opacity="0"/>
+ <path id="theta2Arc" d="" fill="none" stroke="#dc3e3e" stroke-width="3.2" stroke-linecap="round" opacity="0"/>
+ <path id="totalArc" d="" fill="none" stroke="#25883d" stroke-width="3.2" stroke-dasharray="7 5" stroke-linecap="round" opacity="0"/>
+ <!-- vectors -->
+ <line id="zVector" x1="300" y1="420" x2="300" y2="420" stroke="#2563c7" stroke-width="5" stroke-linecap="round" opacity="0"/>
+ <polygon id="zHead" fill="#2563c7" opacity="0"/>
+ <line id="wVector" x1="300" y1="420" x2="300" y2="420" stroke="#dc3e3e" stroke-width="5" stroke-linecap="round" opacity="0"/>
+ <polygon id="wHead" fill="#dc3e3e" opacity="0"/>
+ <line id="productVector" x1="300" y1="420" x2="300" y2="420" stroke="#25883d" stroke-width="6" stroke-linecap="round" opacity="0"/>
+ <polygon id="productHead" fill="#25883d" opacity="0"/>
+ <circle cx="300" cy="420" r="4.5" fill="#26364e"/>
+ <g font-size="16" font-weight="700">
+  <text id="zLabel" x="0" y="0" fill="#2563c7" opacity="0">z = 2e<tspan baseline-shift="super" font-size="11">iπ/10</tspan></text>
+  <text id="zDetail" x="0" y="0" fill="#2563c7" font-size="13" opacity="0">length 2, angle 18°</text>
+  <text id="wLabel" x="0" y="0" fill="#dc3e3e" opacity="0">w = 4e<tspan baseline-shift="super" font-size="11">iπ/2</tspan></text>
+  <text id="wDetail" x="0" y="0" fill="#dc3e3e" font-size="13" opacity="0">length 4, angle 90°</text>
+  <text id="productLabel" x="0" y="0" fill="#25883d" opacity="0">zw = 8e<tspan baseline-shift="super" font-size="11">i3π/5</tspan></text>
+  <text id="productDetail" x="0" y="0" fill="#25883d" font-size="13" opacity="0">length 8, angle 108°</text>
+  <text id="theta1Label" x="0" y="0" fill="#2563c7" opacity="0">θ₁ = 18°</text>
+  <text id="theta2Label" x="0" y="0" fill="#dc3e3e" opacity="0">θ₂ = 90°</text>
+  <text id="totalLabel" x="0" y="0" fill="#25883d" opacity="0">θ₁ + θ₂ = 108°</text>
+ </g>
+ </svg>
+ </div>
+ <aside class="side">
+  <div class="card">
+   <h2 class="blue">First number: z</h2>
+   <p><b>z = 2e<sup>iπ/10</sup></b></p><p>Length = 2</p><p>θ₁ = π/10 = 18°</p>
+  </div>
+  <div class="card">
+   <h2 class="red">Second number: w</h2>
+   <p><b>w = 4e<sup>iπ/2</sup></b></p><p>Length = 4</p><p>θ₂ = π/2 = 90°</p>
+  </div>
+  <div class="card result">
+   <h2 class="green">Product: zw</h2>
+   <p><b>zw = 8e<sup>i3π/5</sup></b></p><p>Length = 8</p><p>Angle = 108°</p>
+  </div>
+ </aside>
+</section>
+<div class="controls">
+ <button id="play">▶ Play animation</button>
+ <button id="next" class="secondary">Next step</button>
+ <button id="reset" class="secondary">↺ Reset</button>
+</div>
+<div class="status" id="status" aria-live="polite">Press Play to see the two complex numbers and their product.</div>
+<div class="math">
+ <strong>Multiply the lengths:</strong> 2 × 4 = 8<br>
+ <strong>Add the angles:</strong> π/10 + π/2 = π/10 + 5π/10 = 6π/10 = 3π/5 = 108°<br>
+ <strong class="green">Product:</strong> zw = 8e<sup>i3π/5</sup>
+</div>
+<p class="note">The vectors are drawn from the origin to show each complex number in polar form. The green product vector is not the geometric sum of the blue and red arrows: multiplication uses length multiplication and angle addition.</p>
+</main>
+<script>
+(()=>{
+ const $=id=>document.getElementById(id);
+ const O={x:300,y:420},S=37.5;
+ const polar=(len,deg)=>({x:O.x+S*len*Math.cos(deg*Math.PI/180),y:O.y-S*len*Math.sin(deg*Math.PI/180)});
+ const pz=polar(2,18),pw=polar(4,90),pp=polar(8,108);
+ function vectorArrow(lineId,headId,p,len=11,halfW=5){
+  const line=$(lineId), head=headId?$(headId):null;
+  const x1=+line.getAttribute('x1'), y1=+line.getAttribute('y1');
+  const dx=p.x-x1, dy=p.y-y1, mag=Math.hypot(dx,dy)||1;
+  const ux=dx/mag, uy=dy/mag;
+  const bx=p.x-ux*len, by=p.y-uy*len;
+  line.setAttribute('x2',bx);line.setAttribute('y2',by);
+  if(head){const px=-uy, py=ux;head.setAttribute('points',`${p.x},${p.y} ${bx+px*halfW},${by+py*halfW} ${bx-px*halfW},${by-py*halfW}`);}
+ }
+ const show=ids=>ids.forEach(id=>$(id).style.opacity=1);
+ const hide=ids=>ids.forEach(id=>$(id).style.opacity=0);
+ function arcPath(radius,a1,a2){
+  const a=polar(radius/S,a1),b=polar(radius/S,a2);
+  return `M ${a.x} ${a.y} A ${radius} ${radius} 0 0 0 ${b.x} ${b.y}`;
+ }
+ vectorArrow('zVector','zHead',pz);vectorArrow('wVector','wHead',pw);vectorArrow('productVector','productHead',pp,12,5.5);
+ $('radiusCircle').setAttribute('r',S*8);
+ $('theta1Arc').setAttribute('d',arcPath(48,0,18));
+ $('theta2Arc').setAttribute('d',arcPath(78,0,90));
+ $('totalArc').setAttribute('d',arcPath(112,0,108));
+ // Label layout: all five steps stay visible at the end — spread along arcs and away from the axes
+ const arcLabel=(r,deg,dx=0,dy=0)=>{
+  const rad=deg*Math.PI/180;
+  return {x:O.x+r*Math.cos(rad)+dx,y:O.y-r*Math.sin(rad)+dy};
+ };
+ const t1=arcLabel(56,9);
+ const t2=arcLabel(86,48);
+ $('zLabel').setAttribute('x',pz.x+16);$('zLabel').setAttribute('y',pz.y+26);
+ $('zDetail').setAttribute('x',pz.x+16);$('zDetail').setAttribute('y',pz.y+42);
+ $('wLabel').setAttribute('x',pw.x+20);$('wLabel').setAttribute('y',pw.y+4);
+ $('wDetail').setAttribute('x',pw.x+20);$('wDetail').setAttribute('y',pw.y+20);
+ $('productLabel').setAttribute('text-anchor','end');
+ $('productDetail').setAttribute('text-anchor','end');
+ $('productLabel').setAttribute('x',pp.x-18);$('productLabel').setAttribute('y',pp.y-14);
+ $('productDetail').setAttribute('x',pp.x-18);$('productDetail').setAttribute('y',pp.y+4);
+ $('theta1Label').setAttribute('x',t1.x);$('theta1Label').setAttribute('y',t1.y);
+ $('theta2Label').setAttribute('x',t2.x);$('theta2Label').setAttribute('y',t2.y);
+ $('totalLabel').setAttribute('text-anchor','end');
+ $('totalLabel').setAttribute('x',pp.x+8);$('totalLabel').setAttribute('y',pp.y+72);
+ const steps=[
+  {ids:['zVector','zHead','zLabel','zDetail','theta1Arc','theta1Label'],msg:'1. First number z: length 2 and angle θ₁ = π/10 = 18°. The blue arrow represents z.'},
+  {ids:['wVector','wHead','wLabel','wDetail','theta2Arc','theta2Label'],msg:'2. Second number w: length 4 and angle θ₂ = π/2 = 90°. The red arrow represents w.'},
+  {ids:['radiusCircle','circleLabel'],msg:'3. Multiply the lengths: 2 × 4 = 8. The product vector must have length 8.'},
+  {ids:['totalArc','totalLabel'],msg:'4. Add the angles: π/10 + π/2 = π/10 + 5π/10 = 6π/10 = 3π/5 = 108°.'},
+  {ids:['productVector','productHead','productLabel','productDetail'],msg:'5. The green product vector has length 8 and angle 108°. Therefore zw = 8e<sup>i3π/5</sup>.'}
+ ];
+ let index=0,timer=null;
+ function stop(){if(timer){clearInterval(timer);timer=null;}}
+ function reset(){stop();index=0;['zVector','zHead','wVector','wHead','productVector','productHead','radiusCircle','circleLabel','theta1Arc','theta2Arc','totalArc','zLabel','zDetail','wLabel','wDetail','productLabel','productDetail','theta1Label','theta2Label','totalLabel'].forEach(id=>hide([id]));$('play').textContent='▶ Play animation';$('status').textContent='Press Play to see the two complex numbers and their product.';}
+ function advance(){if(index>=steps.length){stop();return;}const s=steps[index++];show(s.ids);$('status').innerHTML=s.msg;if(index===steps.length){stop();$('play').textContent='↻ Replay';}}
+ function toggle(){if(index===steps.length)reset();if(timer){stop();$('play').textContent='▶ Resume';return;}$('play').textContent='Ⅱ Pause';timer=setInterval(advance,1650);}
+ $('play').addEventListener('click',toggle);
+ $('next').addEventListener('click',()=>{stop();$('play').textContent='▶ Play';advance();});
+ $('reset').addEventListener('click',reset);
+ reset();
+})();
+</script>
+</body>
+</html>

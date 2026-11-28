@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multiplying by 4i — Rotate, Then Stretch</title>
+<script>if (window.self !== window.top) document.documentElement.classList.add("qm-embed");</script>
+<style>
+html.qm-embed body { padding: 8px; }
+html.qm-embed main { padding: 12px; box-shadow: none; }
+html.qm-embed h1 { font-size: 1.2rem; }
+html.qm-embed .layout { grid-template-columns: 1fr; }
+:root{--blue:#2563c7;--red:#dc3e3e;--orange:#e58a16;--green:#25883d;--ink:#1d2939;--muted:#64748b}
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:linear-gradient(135deg,#edf3ff,#f8fafc 60%,#eff7f0);font-family:Arial,sans-serif;color:var(--ink)}
+main{max-width:1000px;margin:auto;background:#fff;border:1px solid #e5ebf3;border-radius:20px;padding:22px;box-shadow:0 14px 42px #24395816}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+h1{font-size:clamp(22px,3vw,29px);margin:0 0 7px}.subtitle{margin:0;color:var(--muted);line-height:1.5}
+.pill{background:#eaf1ff;color:#2458a8;padding:8px 12px;border-radius:99px;font-size:13px;font-weight:700}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 245px;gap:15px;margin-top:18px}
+.plot{border:1px solid #e7edf4;border-radius:15px;background:#fcfdff;padding:7px;min-width:0}
+svg{display:block;width:100%;height:auto}
+.side{display:flex;flex-direction:column;gap:10px}
+.card{border:1px solid #e7edf4;border-radius:14px;padding:13px 14px;background:#fff}
+.card h2{font-size:14px;margin:0 0 7px}.card p{font-size:14px;line-height:1.45;margin:4px 0}
+.blue{color:var(--blue)}.red{color:var(--red)}.orange{color:var(--orange)}.green{color:var(--green)}
+.result{background:#f7f9fd}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin:15px 0 10px}
+button{border:0;border-radius:10px;padding:11px 16px;background:#245fc5;color:white;font-weight:700;cursor:pointer}
+button.secondary{background:#edf2f9;color:#26364e}
+button:focus-visible{outline:3px solid #9ac0ff;outline-offset:2px}
+.status{background:#f0f5fc;border-left:4px solid #2865c5;border-radius:0 12px 12px 0;padding:13px 15px;line-height:1.55;min-height:62px}
+.math{border:1px solid #e7edf4;border-radius:14px;padding:14px 16px;margin-top:13px;line-height:1.85}
+.math strong{font-size:16px}.note{font-size:13px;color:var(--muted);line-height:1.5;margin:12px 2px 0}
+@media(max-width:760px){body{padding:9px}main{padding:12px}.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}.result{grid-column:1/-1}}
+@media(max-width:430px){.side{grid-template-columns:1fr}.result{grid-column:auto}}
+</style>
+</head>
+<body>
+<main>
+<header>
+ <div>
+  <h1>Multiplying by 4i: rotate by 90°, then stretch by 4</h1>
+  <p class="subtitle">The product (4i)z can be understood as two simple operations, performed one after the other.</p>
+ </div>
+ <span class="pill">Step-by-step complex-plane animation</span>
+</header>
+<section class="layout">
+ <div class="plot">
+ <svg viewBox="0 0 720 550" role="img" aria-label="Complex plane showing z of length 2 at 18 degrees, multiplication by i rotating it to iz of length 2 at 108 degrees, then stretching by 4 to produce 4iz of length 8 at 108 degrees">
+ <defs></defs>
+ <!-- grid: origin (320,410), scale 35 px per unit -->
+ <g stroke="#edf0f5" stroke-width="1">
+  <path d="M40 55V500 M75 55V500 M110 55V500 M145 55V500 M180 55V500 M215 55V500 M250 55V500 M285 55V500 M320 55V500 M355 55V500 M390 55V500 M425 55V500 M460 55V500 M495 55V500 M530 55V500 M565 55V500 M600 55V500 M635 55V500 M670 55V500"/>
+  <path d="M40 55H680 M40 90H680 M40 125H680 M40 160H680 M40 195H680 M40 230H680 M40 265H680 M40 300H680 M40 335H680 M40 370H680 M40 405H680 M40 440H680 M40 475H680"/>
+ </g>
+ <g stroke="#596779" stroke-width="2">
+  <line x1="40" y1="410" x2="682" y2="410"/>
+  <line x1="320" y1="505" x2="320" y2="33"/>
+  <polygon points="690,410 678,405 678,415" fill="#596779"/>
+  <polygon points="320,25 315,37 325,37" fill="#596779"/>
+ </g>
+ <g fill="#596779" font-size="14"><text x="695" y="416">Real</text><text x="331" y="27">Im</text><text x="304" y="430">0</text></g>
+ <!-- Radius-2 guide circle: z and iz have the same length -->
+ <circle id="smallCircle" cx="320" cy="410" r="70" fill="none" stroke="#aab2bf" stroke-width="1.5" stroke-dasharray="5 5" opacity="0"/>
+ <!-- Radius-8 guide circle: final length after stretching -->
+ <circle id="largeCircle" cx="320" cy="410" r="280" fill="none" stroke="#aab2bf" stroke-width="1.5" stroke-dasharray="6 6" opacity="0"/>
+ <!-- angle arcs -->
+ <path id="thetaArc" d="" fill="none" stroke="#2563c7" stroke-width="3" opacity="0"/>
+ <path id="rotationArc" d="" fill="none" stroke="#e58a16" stroke-width="3.5" stroke-linecap="round" opacity="0"/>
+ <path id="finalArc" d="" fill="none" stroke="#25883d" stroke-width="3" stroke-dasharray="6 4" opacity="0"/>
+ <!-- multiplier w=4i, straight up -->
+ <line id="wVector" x1="320" y1="410" x2="320" y2="410" stroke="#dc3e3e" stroke-width="4.5" stroke-linecap="round" opacity="0"/>
+ <polygon id="wHead" fill="#dc3e3e" opacity="0"/>
+ <!-- original z, intermediate iz, final 4iz -->
+ <line id="zVector" x1="320" y1="410" x2="320" y2="410" stroke="#2563c7" stroke-width="5" stroke-linecap="round" opacity="0"/>
+ <polygon id="zHead" fill="#2563c7" opacity="0"/>
+ <line id="izVector" x1="320" y1="410" x2="320" y2="410" stroke="#e58a16" stroke-width="5.5" stroke-linecap="round" opacity="0"/>
+ <polygon id="izHead" fill="#e58a16" opacity="0"/>
+ <line id="finalVector" x1="320" y1="410" x2="320" y2="410" stroke="#25883d" stroke-width="6" stroke-linecap="round" opacity="0"/>
+ <polygon id="finalHead" fill="#25883d" opacity="0"/>
+ <circle cx="320" cy="410" r="4.5" fill="#26364e"/>
+ <g font-size="15" font-weight="700">
+  <text id="zLabel" x="0" y="0" fill="#2563c7" opacity="0">z: length 2, angle 18°</text>
+  <text id="wLabel" x="0" y="0" fill="#dc3e3e" opacity="0">w = 4i = 4e<tspan baseline-shift="super" font-size="10">iπ/2</tspan></text>
+  <text id="izLabel" x="0" y="0" fill="#e58a16" opacity="0">iz: length 2, angle 108°</text>
+  <text id="stretchLabel" x="0" y="0" fill="#25883d" opacity="0">stretch by 4</text>
+  <text id="finalLabel" x="0" y="0" fill="#25883d" opacity="0">4iz = 4i z: length 8, angle 108°</text>
+  <text id="angle18Label" x="0" y="0" fill="#2563c7" opacity="0">18°</text>
+  <text id="angle90Label" x="0" y="0" fill="#e58a16" opacity="0">rotate by 90°</text>
+  <text id="angle108Label" x="0" y="0" fill="#25883d" opacity="0">108°</text>
+ </g>
+ </svg>
+ </div>
+ <aside class="side">
+  <div class="card">
+   <h2 class="blue">Start: z</h2>
+   <p><b>z = 2e<sup>iπ/10</sup></b></p><p>Length = 2</p><p>Angle = 18°</p>
+  </div>
+  <div class="card">
+   <h2 class="red">Multiplier: 4i</h2>
+   <p><b>4i = 4e<sup>iπ/2</sup></b></p><p>Length = 4</p><p>Angle = 90°</p>
+  </div>
+  <div class="card">
+   <h2 class="orange">After multiplying by i</h2>
+   <p><b>iz</b></p><p>Length = 2 (unchanged)</p><p>Angle = 18° + 90° = 108°</p>
+  </div>
+  <div class="card result">
+   <h2 class="green">Final result: 4iz</h2>
+   <p><b>Length = 8</b></p><p>Angle = 108°</p>
+  </div>
+ </aside>
+</section>
+<div class="controls">
+ <button id="play">▶ Play animation</button>
+ <button id="next" class="secondary">Next step</button>
+ <button id="reset" class="secondary">↺ Reset</button>
+</div>
+<div class="status" id="status" aria-live="polite">Press Play to follow the two operations: rotate first, then stretch.</div>
+<div class="math">
+ <strong>Step 1 — Multiply by i (rotate):</strong> z → iz<br>
+ Length stays 2; angle changes from 18° to 18° + 90° = 108°.<br>
+ <strong>Step 2 — Multiply by 4 (stretch):</strong> iz → 4iz<br>
+ Length changes from 2 to 2 × 4 = 8; angle stays 108°.<br>
+ <strong class="green">Final:</strong> (4i)z = 8e<sup>i3π/5</sup>, with length 8 and angle 108°.
+</div>
+<p class="note">The orange vector is the intermediate result after rotation by i. It has the same length as the blue vector. The green vector is four times longer but points in exactly the same direction as the orange vector. The red vector shows the multiplier 4i itself.</p>
+</main>
+<script>
+(()=>{
+ const $=id=>document.getElementById(id);
+ const O={x:320,y:410},S=35,L=2,theta=18,rotated=108;
+ const polar=(len,deg)=>({x:O.x+S*len*Math.cos(deg*Math.PI/180),y:O.y-S*len*Math.sin(deg*Math.PI/180)});
+ const pz=polar(2,theta),piz=polar(2,rotated),pf=polar(8,rotated),pw=polar(4,90);
+ function vectorArrow(lineId,headId,p,len=11,halfW=5){
+  const line=$(lineId), head=headId?$(headId):null;
+  const x1=+line.getAttribute('x1'), y1=+line.getAttribute('y1');
+  const dx=p.x-x1, dy=p.y-y1, mag=Math.hypot(dx,dy)||1;
+  const ux=dx/mag, uy=dy/mag;
+  const bx=p.x-ux*len, by=p.y-uy*len;
+  line.setAttribute('x2',bx);line.setAttribute('y2',by);
+  if(head){const px=-uy, py=ux;head.setAttribute('points',`${p.x},${p.y} ${bx+px*halfW},${by+py*halfW} ${bx-px*halfW},${by-py*halfW}`);}
+ }
+ const heads={zVector:'zHead',wVector:'wHead',izVector:'izHead',finalVector:'finalHead'};
+ const show=ids=>ids.forEach(id=>$(id).style.opacity=1);
+ const hide=ids=>ids.forEach(id=>$(id).style.opacity=0);
+ function arcPath(radius,a1,a2){
+  const a=polar(radius/S,a1),b=polar(radius/S,a2);
+  return `M ${a.x} ${a.y} A ${radius} ${radius} 0 0 0 ${b.x} ${b.y}`;
+ }
+ vectorArrow('zVector','zHead',pz);vectorArrow('wVector','wHead',pw);
+ $('smallCircle').setAttribute('r',S*2);$('largeCircle').setAttribute('r',S*8);
+ $('thetaArc').setAttribute('d',arcPath(43,0,theta));
+ $('rotationArc').setAttribute('d',arcPath(83,theta,rotated));
+ $('finalArc').setAttribute('d',arcPath(118,0,rotated));
+ const arcLabel=(r,deg)=>{const rad=deg*Math.PI/180;return {x:O.x+r*Math.cos(rad),y:O.y-r*Math.sin(rad)};};
+ const t18=arcLabel(52,9),t90=arcLabel(96,58);
+ $('zLabel').setAttribute('x',pz.x+16);$('zLabel').setAttribute('y',pz.y+24);
+ $('wLabel').setAttribute('x',pw.x+20);$('wLabel').setAttribute('y',pw.y+6);
+ $('izLabel').setAttribute('text-anchor','end');
+ $('izLabel').setAttribute('x',piz.x-14);$('izLabel').setAttribute('y',piz.y-8);
+ $('stretchLabel').setAttribute('text-anchor','middle');
+ $('stretchLabel').setAttribute('x',(piz.x+pf.x)/2);$('stretchLabel').setAttribute('y',(piz.y+pf.y)/2-10);
+ $('finalLabel').setAttribute('text-anchor','end');
+ $('finalLabel').setAttribute('x',pf.x-16);$('finalLabel').setAttribute('y',pf.y-14);
+ $('angle18Label').setAttribute('x',t18.x);$('angle18Label').setAttribute('y',t18.y+4);
+ $('angle90Label').setAttribute('x',t90.x);$('angle90Label').setAttribute('y',t90.y);
+ $('angle108Label').setAttribute('text-anchor','end');
+ $('angle108Label').setAttribute('x',pf.x+10);$('angle108Label').setAttribute('y',pf.y+58);
+ const steps=[
+  {ids:['zVector','zHead','zLabel','thetaArc','angle18Label'],msg:'1. Start with z. Its length is 2 and its angle is 18°.'},
+  {ids:['wVector','wHead','wLabel'],msg:'2. The multiplier is 4i = 4e^(iπ/2). Think of it as i (a 90° rotation) followed by 4 (a stretch by a factor of 4).'},
+  {ids:['smallCircle'],msg:'3. First multiply by i. This rotates z counterclockwise by 90° but does not change its length. The orange intermediate vector will stay on the radius-2 circle.'},
+  {rotate:true,msg:'4. Watch z rotate by 90° to become iz. Its new angle is 18° + 90° = 108°, and its length is still 2.'},
+  {ids:['largeCircle','stretchLabel'],msg:'5. Now multiply by 4. This stretches the intermediate vector outward along the same 108° direction, making its length four times larger.'},
+  {stretch:true,msg:'6. The vector stretches from length 2 to length 8. Its angle stays 108°. The green vector is the final product (4i)z.'},
+  {ids:['finalArc','angle108Label'],msg:'7. Final result: length 2 × 4 = 8, angle 18° + 90° = 108° = 3π/5. Therefore (4i)z = 8e^(i3π/5).'}
+ ];
+ let index=0,timer=null,raf=null;
+ function stop(){if(timer){clearInterval(timer);timer=null;}if(raf){cancelAnimationFrame(raf);raf=null;}}
+ function animateVector(id,fromDeg,toDeg,len,duration,done){
+  const begin=performance.now();
+  function frame(now){
+   const t=Math.min(1,(now-begin)/duration),ease=t*t*(3-2*t);
+   const q=polar(len,fromDeg+(toDeg-fromDeg)*ease);vectorArrow(id,heads[id],q,id==='izVector'?12:11,5.5);
+   if(t<1)raf=requestAnimationFrame(frame);else{raf=null;if(done)done();}
+  }
+  raf=requestAnimationFrame(frame);
+ }
+ function animateStretch(){
+  const begin=performance.now(),duration=1600;
+  function frame(now){
+   const t=Math.min(1,(now-begin)/duration),ease=t*t*(3-2*t);
+   const q=polar(2+6*ease,rotated);vectorArrow('finalVector','finalHead',q,12,5.5);
+   if(t<1)raf=requestAnimationFrame(frame);else{raf=null;show(['finalLabel','finalHead']);}
+  }
+  raf=requestAnimationFrame(frame);
+ }
+ function reset(){
+  stop();index=0;
+  ['zVector','zHead','wVector','wHead','izVector','izHead','finalVector','finalHead','smallCircle','largeCircle','thetaArc','rotationArc','finalArc','zLabel','wLabel','izLabel','stretchLabel','finalLabel','angle18Label','angle90Label','angle108Label'].forEach(id=>hide([id]));
+  vectorArrow('izVector','izHead',pz);vectorArrow('finalVector','finalHead',piz,12,5.5);
+  $('play').textContent='▶ Play animation';
+  $('status').textContent='Press Play to follow the two operations: rotate first, then stretch.';
+ }
+ function advance(){
+  if(index>=steps.length){stop();return;}
+  const s=steps[index++];
+  if(s.rotate){
+   show(['izVector','izHead','izLabel','rotationArc','angle90Label']);
+   vectorArrow('izVector','izHead',pz,12,5.5);
+   animateVector('izVector',theta,rotated,2,1500);
+  }else if(s.stretch){
+   show(['finalVector','finalHead']);vectorArrow('finalVector','finalHead',piz,12,5.5);animateStretch();
+  }else show(s.ids);
+  $('status').innerHTML=s.msg;
+  if(index===steps.length){stop();$('play').textContent='↻ Replay';}
+ }
+ function toggle(){
+  if(index===steps.length)reset();
+  if(timer||raf){stop();$('play').textContent='▶ Resume';return;}
+  $('play').textContent='Ⅱ Pause';timer=setInterval(advance,2100);
+ }
+ $('play').addEventListener('click',toggle);
+ $('next').addEventListener('click',()=>{stop();$('play').textContent='▶ Play';advance();});
+ $('reset').addEventListener('click',reset);
+ reset();
+})();
+</script>
+</body>
+</html>

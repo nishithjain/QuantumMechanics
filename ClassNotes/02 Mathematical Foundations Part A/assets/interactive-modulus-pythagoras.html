@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Modulus of a Complex Number — Pythagoras</title>
+<script>if (window.self !== window.top) document.documentElement.classList.add("qm-embed");</script>
+<style>
+html.qm-embed body { padding: 8px; }
+html.qm-embed main { padding: 12px; box-shadow: none; }
+html.qm-embed h1 { font-size: 1.15rem; }
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:#f4f6fa;color:#182235;font-family:Arial,sans-serif}
+main{max-width:860px;margin:auto;background:#fff;padding:20px;border-radius:16px;box-shadow:0 5px 24px #17233b12}
+h1{font-size:25px;margin:0 0 6px}
+.intro{margin:0 0 15px;color:#5b687b}
+svg{width:100%;height:auto;display:block;border:1px solid #e7ebf1;border-radius:12px;background:#fff}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0}
+button{border:0;border-radius:9px;padding:10px 15px;background:#245fc5;color:#fff;font-weight:700;cursor:pointer}
+button.alt{background:#e9eef7;color:#26354d}
+#explain{padding:12px 14px;background:#f1f5fb;border-radius:10px;line-height:1.5;min-height:50px}
+.equation{font-size:19px;font-weight:700;margin:14px 0 5px}
+.note{font-size:14px;color:#5e6a7d;line-height:1.5}
+@media(max-width:560px){body{padding:8px}main{padding:11px}h1{font-size:21px}.equation{font-size:16px}}
+</style>
+</head>
+<body>
+<main>
+<h1>Modulus = distance from the origin</h1>
+<p class="intro">For z = 3 + 4i, watch how the real and imaginary parts form a right triangle.</p>
+<svg viewBox="0 0 700 500" role="img" aria-label="Complex plane with z equals 3 plus 4i at coordinate 3,4. Horizontal leg is 3, vertical leg is 4, and hypotenuse modulus is 5.">
+<defs></defs>
+<!-- Grid: origin=(100,400), scale=50 px/unit -->
+<g stroke="#e7eaf0" stroke-width="1">
+ <path d="M100 40V430 M150 40V430 M200 40V430 M250 40V430 M300 40V430 M350 40V430 M400 40V430 M450 40V430 M500 40V430 M550 40V430 M600 40V430 M650 40V430"/>
+ <path d="M55 400H660 M55 350H660 M55 300H660 M55 250H660 M55 200H660 M55 150H660 M55 100H660 M55 50H660"/>
+</g>
+<g stroke="#222" stroke-width="2.5">
+ <line x1="45" y1="400" x2="657" y2="400"/>
+ <line x1="100" y1="450" x2="100" y2="33"/>
+ <polygon points="665,400 653,395 653,405" fill="#222"/>
+ <polygon points="100,25 95,37 105,37" fill="#222"/>
+</g>
+<g fill="#555" font-size="14">
+ <text x="670" y="393">Real axis</text><text x="112" y="24">Imaginary axis</text>
+ <text x="93" y="420">0</text>
+ <text x="146" y="420">1</text><text x="196" y="420">2</text><text x="246" y="420">3</text><text x="296" y="420">4</text><text x="346" y="420">5</text>
+ <text x="72" y="355">i</text><text x="65" y="305">2i</text><text x="65" y="255">3i</text><text x="65" y="205">4i</text><text x="65" y="155">5i</text>
+</g>
+<!-- triangle legs and hypotenuse: origin (100,400), foot (250,400), top (250,200) -->
+<polygon id="triangleFill" points="100,400 250,400 250,200" fill="#e8efff" opacity="0"/>
+<line id="realLeg" x1="100" y1="400" x2="250" y2="400" stroke="#e58a18" stroke-width="6" stroke-linecap="round" opacity="0"/>
+<line id="imagLeg" x1="250" y1="400" x2="250" y2="200" stroke="#e58a18" stroke-width="5" stroke-dasharray="9 7" opacity="0"/>
+<line id="hypotenuse" x1="100" y1="400" x2="250" y2="200" stroke="#2166d1" stroke-width="6" stroke-linecap="round" opacity="0"/>
+<polygon id="hypotenuseHead" fill="#2166d1" opacity="0"/>
+<circle id="tip" cx="250" cy="200" r="6" fill="#2166d1" opacity="0"/>
+<path id="rightAngle" d="M250 400 h-12 v-12" fill="none" stroke="#555" stroke-width="2" opacity="0"/>
+<g font-size="18" font-weight="700">
+ <text id="aLabel" x="150" y="435" fill="#d8790c" opacity="0">a = 3 (real part)</text>
+ <text id="bLabel" x="265" y="305" fill="#d8790c" opacity="0">b = 4 (imaginary part)</text>
+ <text id="zLabel" x="267" y="192" fill="#2166d1" opacity="0">z = 3 + 4i</text>
+ <text id="coordLabel" x="267" y="215" fill="#2166d1" font-size="15" opacity="0">(3, 4)</text>
+ <text id="modLabel" x="130" y="285" fill="#2166d1" opacity="0">|z| = 5</text>
+</g>
+<circle cx="100" cy="400" r="4.5" fill="#222"/>
+</svg>
+<div class="controls">
+ <button id="play">▶ Play animation</button>
+ <button id="next" class="alt">Next step</button>
+ <button id="reset" class="alt">↺ Reset</button>
+</div>
+<div id="explain" aria-live="polite">Press Play to build the right triangle and calculate the modulus.</div>
+<div class="equation">|z|² = a² + b² = 3² + 4² = 9 + 16 = 25</div>
+<div class="equation">|z| = √25 = 5</div>
+<div class="note">The modulus (also called magnitude or absolute value) is the length of the vector from the origin to the point (3, 4).</div>
+</main>
+<script>
+(()=>{
+ const $=id=>document.getElementById(id);
+ const steps=[
+  {ids:['realLeg','aLabel'],msg:'1. The real part is 3. Draw the horizontal side 3 units to the right from the origin.'},
+  {ids:['imagLeg','bLabel'],msg:'2. The imaginary part is 4. From the point (3, 0), go 4 units upward to reach (3, 4).'},
+  {ids:['rightAngle','triangleFill'],msg:'3. These two sides meet at a right angle, so they form a right triangle.'},
+  {ids:['hypotenuse','hypotenuseHead','tip','zLabel','coordLabel'],msg:'4. Draw z = 3 + 4i from the origin to (3, 4). This diagonal is the distance we want: the modulus |z|.'},
+  {ids:['modLabel'],msg:'5. Use Pythagoras: |z|² = 3² + 4² = 9 + 16 = 25. Therefore |z| = √25 = 5.'}
+ ];
+ let index=0,timer=null;
+ function reveal(ids){ids.forEach(id=>$(id).style.opacity=1)}
+ function stop(){if(timer){clearInterval(timer);timer=null;}}
+ function reset(){stop();index=0;['realLeg','imagLeg','hypotenuse','hypotenuseHead','tip','rightAngle','triangleFill','aLabel','bLabel','zLabel','coordLabel','modLabel'].forEach(id=>$(id).style.opacity=0);$('play').textContent='▶ Play animation';$('explain').textContent='Press Play to build the right triangle and calculate the modulus.';}
+ function vectorArrow(lineId, headId, len=11, halfW=5){
+  const line=$(lineId), head=$(headId);
+  const x1=+line.getAttribute('x1'), y1=+line.getAttribute('y1');
+  const x2=+line.getAttribute('x2'), y2=+line.getAttribute('y2');
+  const dx=x2-x1, dy=y2-y1, mag=Math.hypot(dx,dy)||1;
+  const ux=dx/mag, uy=dy/mag;
+  const bx=x2-ux*len, by=y2-uy*len;
+  const px=-uy, py=ux;
+  head.setAttribute('points',`${x2},${y2} ${bx+px*halfW},${by+py*halfW} ${bx-px*halfW},${by-py*halfW}`);
+  line.setAttribute('x2', String(bx));
+  line.setAttribute('y2', String(by));
+ }
+ vectorArrow('hypotenuse','hypotenuseHead');
+ function advance(){if(index>=steps.length){stop();return;}const s=steps[index++];reveal(s.ids);$('explain').textContent=s.msg;if(index===steps.length){stop();$('play').textContent='↻ Replay';}}
+ function toggle(){if(index===steps.length)reset();if(timer){stop();$('play').textContent='▶ Resume';return;}$('play').textContent='Ⅱ Pause';timer=setInterval(advance,1600);}
+ $('play').addEventListener('click',toggle);
+ $('next').addEventListener('click',()=>{stop();$('play').textContent='▶ Play';advance();});
+ $('reset').addEventListener('click',reset);
+ reset();
+})();
+</script>
+</body>
+</html>

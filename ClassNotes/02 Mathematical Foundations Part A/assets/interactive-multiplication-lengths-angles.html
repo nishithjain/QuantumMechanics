@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Complex Multiplication — Lengths Multiply, Angles Add</title>
+<script>if (window.self !== window.top) document.documentElement.classList.add("qm-embed");</script>
+<style>
+html.qm-embed body { padding: 8px; }
+html.qm-embed main { padding: 12px; box-shadow: none; }
+html.qm-embed h1 { font-size: 1.2rem; }
+html.qm-embed .layout { grid-template-columns: 1fr; }
+:root{--blue:#2463c7;--green:#21864b;--red:#dc343d;--ink:#1c293a;--muted:#65748a}
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:linear-gradient(135deg,#eef3ff,#f8fafc 60%,#eff7f1);font-family:Arial, sans-serif;color:var(--ink)}
+main{max-width:960px;margin:auto;background:#fff;padding:22px;border-radius:20px;border:1px solid #e5ebf3;box-shadow:0 14px 40px #1e355414}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;flex-wrap:wrap}
+h1{font-size:clamp(22px,3vw,29px);margin:0 0 7px;letter-spacing:-.4px}
+.sub{margin:0;color:var(--muted);line-height:1.5}
+.tag{background:#eaf1ff;color:#2458a8;border-radius:99px;padding:8px 12px;font-size:13px;font-weight:700}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:15px;margin-top:18px}
+.plot{border:1px solid #e6ecf4;border-radius:15px;background:#fcfdff;padding:7px;min-width:0}
+svg{display:block;width:100%;height:auto}
+.side{display:flex;flex-direction:column;gap:11px}
+.factor{border-radius:14px;padding:13px 14px;border:1px solid #e7edf5;background:#fff}
+.factor h2{font-size:14px;margin:0 0 7px}
+.factor p{margin:3px 0;font-size:14px;line-height:1.45}
+.blue{color:var(--blue)}.green{color:var(--green)}.red{color:var(--red)}
+.result{background:#f7f9fd}
+.status{background:#f0f5fc;border-left:4px solid #2865c5;border-radius:0 12px 12px 0;padding:13px 15px;min-height:62px;line-height:1.5;margin-top:14px}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0 10px}
+button{border:0;border-radius:10px;padding:11px 16px;background:#245fc5;color:white;font-weight:700;cursor:pointer}
+button.secondary{background:#edf2f9;color:#26364e}
+button:focus-visible{outline:3px solid #9ac0ff;outline-offset:2px}
+.math{border:1px solid #e7edf5;border-radius:14px;padding:14px 16px;margin-top:13px;line-height:1.8}
+.math strong{font-size:17px}
+.note{color:var(--muted);font-size:13px;line-height:1.5;margin:12px 2px 0}
+@media(max-width:740px){body{padding:9px}main{padding:12px}.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}.result{grid-column:1/-1}}
+@media(max-width:430px){.side{grid-template-columns:1fr}.result{grid-column:auto}}
+</style>
+</head>
+<body>
+<main>
+<header>
+ <div>
+  <h1>Complex multiplication: lengths multiply, angles add</h1>
+  <p class="sub">See how two complex numbers in polar form produce a new length and a new angle.</p>
+ </div>
+ <span class="tag">Interactive animation</span>
+</header>
+<section class="layout">
+ <div class="plot">
+ <svg viewBox="0 0 700 500" role="img" aria-label="Complex plane showing z1 with length 2 and angle 20 degrees, z2 with length 1.5 and angle 60 degrees, and product z1 z2 with length 3 and angle 80 degrees">
+ <defs></defs>
+ <!-- axes and faint grid -->
+ <g stroke="#edf0f5" stroke-width="1">
+  <path d="M100 45V445 M190 45V445 M280 45V445 M370 45V445 M460 45V445 M550 45V445 M640 45V445"/>
+  <path d="M45 370H660 M45 280H660 M45 190H660 M45 100H660"/>
+ </g>
+ <g stroke="#596779" stroke-width="2">
+  <line x1="45" y1="370" x2="657" y2="370"/>
+  <line x1="100" y1="445" x2="100" y2="33"/>
+  <polygon points="665,370 653,365 653,375" fill="#596779"/>
+  <polygon points="100,25 95,37 105,37" fill="#596779"/>
+ </g>
+ <g fill="#596779" font-size="14"><text x="670" y="376">Re</text><text x="110" y="27">Im</text><text x="88" y="389">0</text></g>
+ <!-- faint circle of radius 3 for product length -->
+ <circle cx="100" cy="370" r="270" fill="none" stroke="#aab2bf" stroke-width="1.5" stroke-dasharray="5 6" opacity=".0" id="outerCircle"/>
+ <!-- z1 and z2 vectors -->
+ <line id="z1" x1="100" y1="370" x2="100" y2="370" stroke="#2463c7" stroke-width="5" stroke-linecap="round" opacity="0"/>
+ <polygon id="z1Head" fill="#2463c7" opacity="0"/>
+ <line id="z2" x1="100" y1="370" x2="100" y2="370" stroke="#21864b" stroke-width="5" stroke-linecap="round" opacity="0"/>
+ <polygon id="z2Head" fill="#21864b" opacity="0"/>
+ <!-- product vector -->
+ <line id="product" x1="100" y1="370" x2="100" y2="370" stroke="#dc343d" stroke-width="6" stroke-linecap="round" opacity="0"/>
+ <polygon id="productHead" fill="#dc343d" opacity="0"/>
+ <!-- product's angle arc from 20 to 80 degrees -->
+ <path id="angleArc" d="" fill="none" stroke="#dc343d" stroke-width="3.5" stroke-linecap="round" opacity="0"/>
+ <path id="z1AngleArc" d="" fill="none" stroke="#2463c7" stroke-width="2.5" opacity="0"/>
+  <!-- z2 angle: 60 degrees measured from the positive real axis -->
+  <path id="z2AngleArc" d="" fill="none" stroke="#21864b" stroke-width="3.5" stroke-linecap="round" opacity="0"/>
+ <g font-size="16" font-weight="700">
+  <text id="z1label" x="280" y="320" fill="#2463c7" opacity="0">z₁</text>
+  <text id="z2label" x="175" y="240" fill="#21864b" opacity="0">z₂</text>
+  <text id="prodlabel" x="0" y="0" fill="#dc343d" opacity="0">z₁z₂</text>
+  <text id="theta1label" x="0" y="0" fill="#2463c7" opacity="0">θ₁ = 20°</text>
+  <text id="theta2label" x="0" y="0" fill="#21864b" opacity="0">θ₂ = 60°</text>
+  <text id="sumAngleLabel" x="0" y="0" fill="#dc343d" opacity="0">θ₁ + θ₂ = 80°</text>
+  <text id="lengthLabel" x="0" y="0" fill="#dc343d" opacity="0">length = 3</text>
+ </g>
+ <circle cx="100" cy="370" r="4.5" fill="#26364e"/>
+ </svg>
+ </div>
+ <aside class="side">
+  <div class="factor">
+   <h2 class="blue">First number</h2>
+   <p><b>z₁</b>: length = 2</p><p>angle θ₁ = 20°</p>
+  </div>
+  <div class="factor">
+   <h2 class="green">Second number</h2>
+   <p><b>z₂</b>: length = 1.5</p><p>angle θ₂ = 60°</p>
+  </div>
+  <div class="factor result">
+   <h2 class="red">Product</h2>
+   <p><b>z₁z₂</b>: length = 3</p><p>angle = 80°</p>
+  </div>
+ </aside>
+</section>
+<div class="controls">
+ <button id="play">▶ Play animation</button>
+ <button id="next" class="secondary">Next step</button>
+ <button id="reset" class="secondary">↺ Reset</button>
+</div>
+<div class="status" id="status" aria-live="polite">Press Play to see the two factors and how their lengths and angles combine.</div>
+<div class="math">
+ <strong>Multiply the lengths:</strong> 2 × 1.5 = 3<br>
+ <strong>Add the angles:</strong> 20° + 60° = 80°<br>
+ <strong class="red">Therefore: z₁z₂ = 3 ∠ 80°</strong>
+</div>
+<p class="note">The red product vector is not the vector sum z₁ + z₂. It is constructed by multiplying the moduli and adding the arguments. The green vector shows the second factor's own length and angle; its 60° angle is the amount added to z₁'s 20° direction.</p>
+</main>
+<script>
+(()=>{
+ const $=id=>document.getElementById(id);
+ const O={x:100,y:370},S=90;
+ const point=(len,deg)=>({x:O.x+S*len*Math.cos(deg*Math.PI/180),y:O.y-S*len*Math.sin(deg*Math.PI/180)});
+ const p1=point(2,20),p2=point(1.5,60),pProd=point(3,80);
+ function setLine(lineId,headId,p,len=11,halfW=5){
+  const line=$(lineId), head=headId?$(headId):null;
+  const x1=+line.getAttribute('x1'), y1=+line.getAttribute('y1');
+  const dx=p.x-x1, dy=p.y-y1, mag=Math.hypot(dx,dy)||1;
+  const ux=dx/mag, uy=dy/mag;
+  const bx=p.x-ux*len, by=p.y-uy*len;
+  line.setAttribute('x2',bx);line.setAttribute('y2',by);
+  if(head){
+   const px=-uy, py=ux;
+   head.setAttribute('points',`${p.x},${p.y} ${bx+px*halfW},${by+py*halfW} ${bx-px*halfW},${by-py*halfW}`);
+  }
+ }
+ function visible(ids,on=true){ids.forEach(id=>$(id).style.opacity=on?1:0);}
+ function arcPath(radius,a1,a2){const pA={x:O.x+radius*Math.cos(a1*Math.PI/180),y:O.y-radius*Math.sin(a1*Math.PI/180)},pB={x:O.x+radius*Math.cos(a2*Math.PI/180),y:O.y-radius*Math.sin(a2*Math.PI/180)};return `M ${pA.x} ${pA.y} A ${radius} ${radius} 0 0 0 ${pB.x} ${pB.y}`;}
+ setLine('z1','z1Head',p1);setLine('z2','z2Head',p2);setLine('product','productHead',pProd);
+ $('outerCircle').setAttribute('r',S*3);
+ $('z1AngleArc').setAttribute('d',arcPath(48,0,20));
+ $('z2AngleArc').setAttribute('d',arcPath(88,0,60));
+ $('angleArc').setAttribute('d',arcPath(125,0,80));
+ $('z1label').setAttribute('x',p1.x+12);$('z1label').setAttribute('y',p1.y+2);
+ $('z2label').setAttribute('x',p2.x+10);$('z2label').setAttribute('y',p2.y-5);
+ $('prodlabel').setAttribute('x',pProd.x+12);$('prodlabel').setAttribute('y',pProd.y-8);
+ $('theta1label').setAttribute('x',O.x+60);$('theta1label').setAttribute('y',O.y-13);
+ $('theta2label').setAttribute('x',O.x+82);$('theta2label').setAttribute('y',O.y-55);
+ (function(){
+  const mid=40, rad=125, pad=14;
+  $('sumAngleLabel').setAttribute('x',O.x+(rad+pad)*Math.cos(mid*Math.PI/180));
+  $('sumAngleLabel').setAttribute('y',O.y-(rad+pad)*Math.sin(mid*Math.PI/180)+5);
+ })();
+ $('lengthLabel').setAttribute('x',O.x+15);$('lengthLabel').setAttribute('y',O.y-250);
+ const steps=[
+  {ids:['z1','z1Head','z1label','z1AngleArc','theta1label'],msg:'1. Start with z₁: its length is 2 and its direction is 20° above the positive real axis.'},
+  {ids:['z2','z2Head','z2label','z2AngleArc','theta2label'],msg:'2. Show z₂: its length is 1.5 and its direction is 60°. This is the second factor, not a vector to add to z₁.'},
+  {ids:['outerCircle','lengthLabel'],msg:'3. Multiply the lengths: 2 × 1.5 = 3. The product must have length 3.'},
+  {ids:['angleArc','sumAngleLabel'],msg:'4. Add the angles: 20° + 60° = 80° from the positive real axis. The red arc runs from the Re axis to the product direction.'},
+  {ids:['product','productHead','prodlabel'],msg:'5. Draw the product: length 3 at angle 80°. So z₁z₂ = 3 ∠ 80°.'}
+ ];
+ let index=0,timer=null;
+ function stop(){if(timer){clearInterval(timer);timer=null;}}
+ function reset(){stop();index=0;['z1','z1Head','z2','z2Head','product','productHead','outerCircle','z1AngleArc','z2AngleArc','angleArc','z1label','z2label','prodlabel','theta1label','theta2label','sumAngleLabel','lengthLabel'].forEach(id=>visible([id],false));$('play').textContent='▶ Play animation';$('status').textContent='Press Play to see the two factors and how their lengths and angles combine.';}
+ function advance(){if(index>=steps.length){stop();return;}const step=steps[index++];visible(step.ids);$('status').textContent=step.msg;if(index===steps.length){stop();$('play').textContent='↻ Replay';}}
+ function toggle(){if(index===steps.length)reset();if(timer){stop();$('play').textContent='▶ Resume';return;}$('play').textContent='Ⅱ Pause';timer=setInterval(advance,1600);}
+ $('play').addEventListener('click',toggle);
+ $('next').addEventListener('click',()=>{stop();$('play').textContent='▶ Play';advance();});
+ $('reset').addEventListener('click',reset);
+ reset();
+})();
+</script>
+</body>
+</html>

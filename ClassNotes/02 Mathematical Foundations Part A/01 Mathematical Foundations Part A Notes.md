@@ -689,9 +689,15 @@ $$
 
 This is **exactly** vector addition. If $z$ is the point $(a, b)$ and $w$ is the point $(c, d)$, complete the parallelogram. The sum $z + w$ is the **diagonal**.
 
-Here is the example from section 5.1 drawn on the complex plane. The blue arrow is $z = 3 + 2i$ and the red arrow is $w = 1 - 4i$. The dashed lines complete the parallelogram, and the green arrow along the diagonal is the sum $z + w = 4 - 2i$:
+Here is the example from section 5.1 drawn on the complex plane. The blue arrow is $z = 3 + 2i$ and the red arrow is $w = 1 - 4i$. The dashed lines complete the parallelogram, and the green arrow along the diagonal is the sum $z + w = 4 - 2i$. Use **Play** or **Next step** to build the diagram:
 
-![Adding the complex numbers 3 + 2i and 1 - 4i as vectors: the parallelogram diagonal is 4 - 2i](assets/adding-complex-numbers.svg)
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe src="assets/interactive-complex-number-addition.html" title="Adding complex numbers as vectors: (3+2i)+(1-4i)" width="100%" height="680" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:900px;display:block;margin:12px 0;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open complex-number addition animation in full page](assets/interactive-complex-number-addition.html) if the embed does not appear in your Markdown preview.
 
 Compare with the plain vectors from the lecture: $(5, 1) + (1, 4) = (6, 5)$. Same operation.
 
@@ -790,9 +796,15 @@ $$
 
 **Geometry:** conjugating **reflects** the point across the real (horizontal) axis. The lecturer's words: "if this is your complex number, its conjugate geometrically sort of flips it... you get its reflection in the real axis."
 
-Think of the real axis as a **mirror**. Place $z = 3 + 2i$ above the mirror, and its conjugate $3 - 2i$ is its mirror image below. The two points have the same real part, opposite imaginary parts, and the same distance from the origin:
+Think of the real axis as a **mirror**. Place $z = 3 + 2i$ above the mirror, and its conjugate $3 - 2i$ is its mirror image below. The two points have the same real part, opposite imaginary parts, and the same distance from the origin. **Play** or **Next step** to see the reflection:
 
-![The complex number 3 + 2i and its conjugate 3 - 2i drawn as mirror images across the real axis](assets/complex-conjugate-reflection.svg)
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe src="assets/interactive-complex-conjugate-reflection.html" title="Complex conjugate as reflection across the real axis" width="100%" height="680" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:900px;display:block;margin:12px 0;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open conjugate reflection animation in full page](assets/interactive-complex-conjugate-reflection.html) if the embed does not appear in your Markdown preview.
 
 | $z$ | $\bar z$ |
 |---|---|
@@ -813,9 +825,15 @@ This is just Pythagoras on the point $(a, b)$. The lecturer's reminder: "if a po
 
 **Example:** $\lvert 3 + 4i\rvert = \sqrt{9 + 16} = 5$.
 
-The picture below shows why. Go $3$ to the right (the real part $a$) and $4$ up (the imaginary part $b$). The straight line from the origin to $3 + 4i$ is the **hypotenuse** of a right-angled triangle with sides $3$ and $4$, so its length is $\sqrt{3^2 + 4^2} = 5$. The last line of the picture is the identity $z\,\bar z = \lvert z\rvert^2$ from section 8.3, checked with numbers:
+The picture below shows why. Go $3$ to the right (the real part $a$) and $4$ up (the imaginary part $b$). The straight line from the origin to $3 + 4i$ is the **hypotenuse** of a right-angled triangle with sides $3$ and $4$, so its length is $\sqrt{3^2 + 4^2} = 5$. **Play** or **Next step** to build the triangle and see $|z| = 5$:
 
-![The complex number 3 + 4i drawn as the hypotenuse of a right triangle with legs 3 and 4, so its modulus is 5](assets/modulus-pythagoras.svg)
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe src="assets/interactive-modulus-pythagoras.html" title="Modulus of 3 + 4i via Pythagoras on the complex plane" width="100%" height="720" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:900px;display:block;margin:12px 0;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open modulus animation in full page](assets/interactive-modulus-pythagoras.html) if the embed does not appear in your Markdown preview.
 
 Other names: **absolute value**, **magnitude**, **norm**. Also called $r$.
 
@@ -1109,9 +1127,15 @@ The two axes cut the plane into four **quadrants**. They are numbered **anticloc
 
 In the same way, look at left and right. Quadrants I and IV are the **right half**, where the $x$-coordinate is positive, so $\cos\theta > 0$. Quadrants II and III are the **left half**, where $x$ is negative, so $\cos\theta < 0$.
 
-![The unit circle with the plane split into quadrants I to IV. The top half (quadrants I and II) is shaded blue and has sin positive; the bottom half is grey and has sin negative. Two sample points at 50 degrees and 130 degrees show cos as the sideways distance and sin as the height](assets/trig-quadrants-top-half.svg)
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe src="assets/interactive-trig-quadrants.html" title="Four quadrants: signs of sin θ and cos θ on the unit circle" width="100%" height="820" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
 
-In the picture, the green segment is $\sin\theta$ (the height) and the red segment is $\cos\theta$ (the sideways distance). At $50^\circ$ the red segment points right (cos positive). At $130^\circ$ it points left (cos negative), but the green segment still points up, because $130^\circ$ is also in the top half.
+[Open quadrants animation in full page](assets/interactive-trig-quadrants.html) if the embed does not appear in your Markdown preview.
+
+In the animation, the green segment is $\sin\theta$ (the height) and the red segment is $\cos\theta$ (the sideways distance). Try **50°** and **130°** (or drag the slider): at $50^\circ$ the red segment points right (cos positive); at $130^\circ$ it points left (cos negative), but the green segment still points up because $130^\circ$ is in the top half.
 
 | Quadrant | $\cos\theta$ (sideways) | $\sin\theta$ (height) |
 |---|---|---|
@@ -1562,9 +1586,15 @@ Putting the pieces together gives the rule above. This is the whole reason for w
 - Its **angle** from the real axis is $\theta_1 + \theta_2$.
 - Its **length** is $r_1 r_2$, the product of the two lengths.
 
-In the picture below, $z_1$ has length $2$ at $20^\circ$ and $z_2$ has length $1.5$ at $60^\circ$. The product $z_1 z_2$ (red) has length $2 \times 1.5 = 3$ and sits at angle $20^\circ + 60^\circ = 80^\circ$. The red arc measures the angle $\theta_1 + \theta_2$ from the real axis; the dashed circle has radius $3$ and shows that the tip of the product lies at distance $r_1 r_2$ from the origin.
+In the picture below, $z_1$ has length $2$ at $20^\circ$ and $z_2$ has length $1.5$ at $60^\circ$. The product $z_1 z_2$ (red) has length $2 \times 1.5 = 3$ and sits at angle $20^\circ + 60^\circ = 80^\circ$. The red arc measures the angle $\theta_1 + \theta_2$ from the real axis; the dashed circle has radius $3$ and shows that the tip of the product lies at distance $r_1 r_2$ from the origin. Use **Play** or **Next step** in the animation:
 
-![Two arrows z1 (length 2, angle 20 degrees) and z2 (length 1.5, angle 60 degrees) and their product, a red arrow of length 3 at angle 80 degrees, with the angle arcs theta 1, theta 2 and theta 1 plus theta 2 from the real axis](assets/multiplication-rule-lengths-angles.svg)
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe src="assets/interactive-multiplication-lengths-angles.html" title="Complex multiplication: lengths multiply, angles add" width="100%" height="840" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open multiplication animation in full page](assets/interactive-multiplication-lengths-angles.html) if the embed does not appear in your Markdown preview.
 
 His point: "if I tell you where the initial two complex numbers were, you can figure out where the new complex number is." You never have to expand brackets. You just read off the two lengths and the two angles, multiply the lengths, and add the angles. (The picture for a specific example is in section 13.4.)
 
@@ -1580,9 +1610,15 @@ $$
 zw = (r_1\cdot 1)\, e^{i(\theta_1 + \phi)} = r_1\, e^{i(\theta_1 + \phi)}
 $$
 
-The length is still $r_1$ (multiplying by $1$ changes nothing) and the angle has grown by $\phi$. In the picture, $z$ has length $2.6$ at $25^\circ$ and $w = e^{i\,45^\circ}$ is the short purple arrow of length $1$. The product $zw$ is the same length as $z$ (it stays on the dashed circle) but is turned by $45^\circ$ anticlockwise, to $25^\circ + 45^\circ = 70^\circ$.
+The length is still $r_1$ (multiplying by $1$ changes nothing) and the angle has grown by $\phi$. In the picture, $z$ has length $2.6$ at $25^\circ$ and $w = e^{i\,45^\circ}$ is the short purple arrow of length $1$. The product $zw$ is the same length as $z$ (it stays on the dashed circle) but is turned by $45^\circ$ anticlockwise, to $25^\circ + 45^\circ = 70^\circ$. **Play** the animation to see the rotation:
 
-![The arrow z of length 2.6 at 25 degrees is turned by 45 degrees along a dashed circle to zw, which has the same length at 70 degrees; w is a short arrow of length 1 at 45 degrees](assets/multiplication-by-unit-number-rotates.svg)
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe src="assets/interactive-multiply-unit-rotation.html" title="Multiplying by e^(iφ): rotation without changing length" width="100%" height="840" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open unit-rotation animation in full page](assets/interactive-multiply-unit-rotation.html) if the embed does not appear in your Markdown preview.
 
 (Section 13.3 below is the special case $\phi = 90^\circ$, that is $w = i$.)
 
@@ -1606,9 +1642,15 @@ $$
 
 A turn with no change in size is a **rotation**. So multiplying by $i$ **rotates a complex number anticlockwise by $90^\circ$**. If you want to carry a number $z$ to the spot $z'$ that is a quarter-turn away, you multiply it by $i$.
 
-The picture uses $z = 3 + 4i$. The **blue arrow** is $z$, the **green arrow** is $iz$ (the result), and the **red arc** is the $90^\circ$ turn between them. Both arrows end on the dashed circle, which shows that the length stays the same:
+The picture uses $z = 3 + 4i$. The **blue arrow** is $z$, the **green arrow** is $iz$ (the result), and the **red arc** is the $90^\circ$ turn between them. Both arrows end on the dashed circle, which shows that the length stays the same. **Play** the animation to see the rotation:
 
-![Multiplying z = 3 + 4i by i rotates it anticlockwise by 90 degrees to iz = -4 + 3i, keeping the length 5](assets/multiply-by-i-rotates-90.svg)
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe src="assets/interactive-multiply-by-i-90.html" title="Multiplying by i: 90 degree rotation of 3 + 4i" width="100%" height="840" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open multiply-by-i animation in full page](assets/interactive-multiply-by-i-90.html) if the embed does not appear in your Markdown preview.
 
 Notice the numbers: $(3, 4)$ becomes $(-4, 3)$. In general, $i(a + bi) = ai + bi^2 = -b + ai$, so $(a, b) \to (-b, a)$. That is exactly a quarter-turn.
 
@@ -1655,9 +1697,15 @@ $$
 zw = 8\,e^{i\,3\pi/5}
 $$
 
-Here is the picture. The **blue arrow** is $z$ (length $2$, angle $18^\circ$). The **red arrow** is $w$ (length $4$, pointing straight up at $90^\circ$). The **green arrow** is the product $zw$. It is $8$ long, and it points at $108^\circ$, which is the blue angle plus the red angle (the green dashed arc covers both):
+Here is the picture. The **blue arrow** is $z$ (length $2$, angle $18^\circ$). The **red arrow** is $w$ (length $4$, pointing straight up at $90^\circ$). The **green arrow** is the product $zw$. It is $8$ long, and it points at $108^\circ$, which is the blue angle plus the red angle (the green dashed arc covers both). **Play** the animation to step through lengths and angles:
 
-![Multiplying z equals 2 e to the i pi over 10 by w equals 4 e to the i pi over 2: the product is an arrow of length 8 at angle 3 pi over 5, which is the sum of the two angles](assets/multiplication-lengths-multiply-angles-add.svg)
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe src="assets/interactive-complex-multiplication-lengths-angles-add.html" title="Multiplying z and w: lengths multiply, angles add" width="100%" height="840" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open z × w multiplication animation in full page](assets/interactive-complex-multiplication-lengths-angles-add.html) if the embed does not appear in your Markdown preview.
 
 Think of it as a two-step move starting from $z$: **stretch** $z$ by a factor of $4$ (the length of $w$), and then **rotate** it by $90^\circ$ (the angle of $w$). Starting from the blue arrow at $18^\circ$ with length $2$, the stretch makes it $8$ long, and the rotation takes it from $18^\circ$ to $108^\circ$. That is the green arrow. The lecturer: "that is what it means to multiply."
 
@@ -1666,7 +1714,15 @@ Think of it as a two-step move starting from $z$: **stretch** $z$ by a factor of
 1. **Multiply by $i$:** rotate $z$ by $90^\circ$ (the length stays $2$, the angle goes from $18^\circ$ to $108^\circ$). This is the orange arrow below.
 2. **Multiply by $4$:** stretch the result by a factor of $4$ (the angle stays $108^\circ$, the length goes from $2$ to $8$). This is the green arrow.
 
-![Recap: multiplying z by 4i first rotates z by 90 degrees to iz, then stretches it by 4 to get zw with length 8 at angle 108 degrees](assets/recap-rotate-then-stretch.svg)
+**Play** the step-by-step animation (rotate by $i$, then stretch by $4$):
+
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe src="assets/interactive-multiply-4i-rotate-stretch.html" title="Multiplying by 4i: rotate then stretch" width="100%" height="880" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:1000px;display:block;margin:12px 0;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open 4i rotate-then-stretch animation in full page](assets/interactive-multiply-4i-rotate-stretch.html) if the embed does not appear in your Markdown preview.
 
 The order of the two moves does not matter (stretching first and then rotating gives the same arrow), because multiplication of numbers can be done in either order. Either way the arrow ends at "somewhere here": the point whose distance from the origin is $8$ and whose angle is $\dfrac{3\pi}{5}$. This is exactly what the lecturer means by "that is what it means to multiply."
 

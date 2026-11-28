@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Complex Conjugate — Reflection in the Real Axis</title>
+<script>if (window.self !== window.top) document.documentElement.classList.add("qm-embed");</script>
+<style>
+html.qm-embed body { padding: 8px; }
+html.qm-embed main { padding: 12px; box-shadow: none; }
+html.qm-embed h1 { font-size: 1.15rem; }
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:#f4f6fa;color:#182235;font-family:Arial,sans-serif}
+main{max-width:850px;margin:auto;background:#fff;padding:20px;border-radius:16px;box-shadow:0 5px 24px #17233b12}
+h1{font-size:25px;margin:0 0 6px}
+.intro{color:#5c687b;margin:0 0 15px}
+svg{display:block;width:100%;height:auto;border:1px solid #e7ebf1;border-radius:12px;background:white}
+.controls{display:flex;flex-wrap:wrap;gap:9px;margin:14px 0}
+button{border:0;border-radius:9px;padding:10px 15px;background:#245fc5;color:#fff;font-weight:700;cursor:pointer}
+button.alt{background:#e9eef7;color:#26354d}
+#explain{padding:12px 14px;background:#f1f5fb;border-radius:10px;line-height:1.5;min-height:48px}
+.formula{font-size:19px;font-weight:700;margin:14px 0 4px}
+.note{font-size:14px;color:#5e6a7d}
+@media(max-width:560px){body{padding:8px}main{padding:11px}h1{font-size:21px}.formula{font-size:16px}}
+</style>
+</head>
+<body>
+<main>
+<h1>Complex conjugate = reflection in the real axis</h1>
+<p class="intro">Watch the point for z = 3 + 2i reflect across the real axis to become its conjugate.</p>
+<svg viewBox="0 0 680 440" role="img" aria-label="Complex plane showing z equals 3 plus 2i at coordinate 3,2 and its conjugate 3 minus 2i at coordinate 3, minus 2, reflected across the real axis">
+<defs>
+</defs>
+<!-- Grid: origin (100,205), 60 px per unit -->
+<g stroke="#e7eaf0" stroke-width="1">
+ <path d="M100 35V375 M160 35V375 M220 35V375 M280 35V375 M340 35V375 M400 35V375 M460 35V375 M520 35V375 M580 35V375 M640 35V375"/>
+ <path d="M55 85H640 M55 145H640 M55 205H640 M55 265H640 M55 325H640"/>
+</g>
+<!-- Axes -->
+<g stroke="#222" stroke-width="2.5">
+ <line x1="45" y1="205" x2="642" y2="205"/>
+ <line x1="100" y1="390" x2="100" y2="33"/>
+ <polygon points="650,205 638,200 638,210" fill="#222"/>
+ <polygon points="100,25 95,37 105,37" fill="#222"/>
+</g>
+<g fill="#555" font-size="14">
+ <text x="654" y="198">Real axis</text><text x="112" y="25">Imaginary axis</text>
+ <text x="93" y="224">0</text><text x="156" y="224">1</text><text x="216" y="224">2</text><text x="276" y="224">3</text><text x="336" y="224">4</text><text x="396" y="224">5</text>
+ <text x="69" y="150">i</text><text x="62" y="90">2i</text><text x="62" y="270">−i</text><text x="55" y="330">−2i</text>
+ <text x="565" y="229" font-size="12">(the mirror)</text>
+</g>
+<!-- Real axis mirror emphasis -->
+<line id="mirrorGlow" x1="48" y1="205" x2="645" y2="205" stroke="#f2c94c" stroke-width="8" opacity="0"/>
+<!-- dashed vertical guide from z to conjugate -->
+<line id="guide" x1="280" y1="85" x2="280" y2="325" stroke="#777" stroke-width="2.5" stroke-dasharray="8 7" opacity="0"/>
+<!-- original vector -->
+<line id="zVector" x1="100" y1="205" x2="280" y2="85" stroke="#2166d1" stroke-width="5.5" stroke-linecap="round" opacity="0"/>
+<polygon id="zVectorHead" fill="#2166d1" opacity="0"/>
+<!-- reflected vector -->
+<line id="conjVector" x1="100" y1="205" x2="280" y2="325" stroke="#df3030" stroke-width="5.5" stroke-linecap="round" opacity="0"/>
+<polygon id="conjVectorHead" fill="#df3030" opacity="0"/>
+<!-- moving reflected point -->
+<circle id="movingPoint" cx="280" cy="85" r="7" fill="#df3030" stroke="white" stroke-width="2" opacity="0"/>
+<!-- points -->
+<circle id="zPoint" cx="280" cy="85" r="5" fill="#2166d1" opacity="0"/>
+<circle id="cPoint" cx="280" cy="325" r="5" fill="#df3030" opacity="0"/>
+<g font-size="17" font-weight="700">
+ <text id="zLabel" x="294" y="72" fill="#2166d1" opacity="0">z = 3 + 2i</text>
+ <text id="zCoord" x="294" y="92" fill="#2166d1" font-size="14" opacity="0">(3, 2)</text>
+ <text id="cLabel" x="294" y="329" fill="#df3030" opacity="0">conjugate = 3 − 2i</text>
+ <text id="cCoord" x="294" y="350" fill="#df3030" font-size="14" opacity="0">(3, −2)</text>
+</g>
+<path id="rightAngle" d="M280 205 h-11 v-11" fill="none" stroke="#777" stroke-width="1.5" opacity="0"/>
+<circle cx="100" cy="205" r="4.5" fill="#222"/>
+</svg>
+<div class="controls">
+ <button id="play">▶ Play animation</button>
+ <button id="next" class="alt">Next step</button>
+ <button id="reset" class="alt">↺ Reset</button>
+</div>
+<div id="explain" aria-live="polite">Press Play to see the complex number reflected across the real axis.</div>
+<div class="formula">z = 3 + 2i &nbsp; → &nbsp; z̄ = 3 − 2i</div>
+<div class="note">The real part stays 3. The imaginary part changes sign: +2 becomes −2. The distance from the origin stays the same.</div>
+</main>
+<script>
+(()=>{
+ const $=id=>document.getElementById(id);
+ function vectorArrow(lineId, headId, len=12, halfW=5.5){
+  const line=$(lineId), head=$(headId);
+  const x1=+line.getAttribute('x1'), y1=+line.getAttribute('y1');
+  const x2=+line.getAttribute('x2'), y2=+line.getAttribute('y2');
+  const dx=x2-x1, dy=y2-y1, mag=Math.hypot(dx,dy)||1;
+  const ux=dx/mag, uy=dy/mag;
+  const bx=x2-ux*len, by=y2-uy*len;
+  const px=-uy, py=ux;
+  head.setAttribute('points',`${x2},${y2} ${bx+px*halfW},${by+py*halfW} ${bx-px*halfW},${by-py*halfW}`);
+  line.setAttribute('x2', String(bx));
+  line.setAttribute('y2', String(by));
+ }
+ vectorArrow('zVector','zVectorHead');
+ vectorArrow('conjVector','conjVectorHead');
+ const steps=[
+  {ids:['zVector','zVectorHead','zPoint','zLabel','zCoord'],msg:'1. Start with z = 3 + 2i. Its point is (3, 2): 3 units right and 2 units up.'},
+  {ids:['mirrorGlow'],msg:'2. The real axis is the mirror. Reflection across this horizontal line keeps the horizontal position unchanged.'},
+  {ids:['guide','rightAngle'],msg:'3. The dashed guide shows the point directly above and below the same real coordinate, x = 3.'},
+  {move:true,msg:'4. Reflect the point downward across the real axis. Its height changes from +2 to −2, while x remains 3.'},
+  {ids:['conjVector','conjVectorHead','cPoint','cLabel','cCoord'],msg:'5. The reflected point is (3, −2), so the conjugate is 3 − 2i. Both vectors have the same length.'}
+ ];
+ let index=0,timer=null,raf=null;
+ function reveal(ids){ids.forEach(id=>$(id).style.opacity=1)}
+ function reset(){
+  stop();index=0;
+  ['zVector','zVectorHead','zPoint','zLabel','zCoord','mirrorGlow','guide','rightAngle','conjVector','conjVectorHead','cPoint','cLabel','cCoord','movingPoint'].forEach(id=>$(id).style.opacity=0);
+  $('movingPoint').setAttribute('cy','85');
+  $('play').textContent='▶ Play animation';
+  $('explain').textContent='Press Play to see the complex number reflected across the real axis.';
+ }
+ function reflectPoint(){
+  const duration=1100,start=performance.now();
+  $('movingPoint').style.opacity=1;
+  function frame(now){
+   const t=Math.min(1,(now-start)/duration);
+   const eased=t*t*(3-2*t);
+   $('movingPoint').setAttribute('cy',String(85+240*eased));
+   if(t<1)raf=requestAnimationFrame(frame);
+   else {$('movingPoint').style.opacity=0;reveal(['conjVector','conjVectorHead','cPoint','cLabel','cCoord']);}
+  }
+  raf=requestAnimationFrame(frame);
+ }
+ function stop(){if(timer){clearInterval(timer);timer=null;}if(raf){cancelAnimationFrame(raf);raf=null;}}
+ function advance(){
+  if(index>=steps.length){stop();return;}
+  const s=steps[index++];if(s.move)reflectPoint();else reveal(s.ids);
+  $('explain').textContent=s.msg;
+  if(index===steps.length){stop();$('play').textContent='↻ Replay';}
+ }
+ function toggle(){
+  if(index===steps.length)reset();
+  if(timer){stop();$('play').textContent='▶ Resume';return;}
+  $('play').textContent='Ⅱ Pause';
+  timer=setInterval(advance,1750);
+ }
+ $('play').addEventListener('click',toggle);
+ $('next').addEventListener('click',()=>{stop();$('play').textContent='▶ Play';advance();});
+ $('reset').addEventListener('click',reset);
+ reset();
+})();
+</script>
+</body>
+</html>
