@@ -3,7 +3,7 @@
 [Home](README.md) · [Roadmap](00-learning-roadmap.md)
 
 | Term | Plain-language meaning |
-|---|---|
+| --- | --- |
 | **Scalar** | A single number, with no direction. Speed is a scalar. |
 | **Vector** | A quantity with size and direction. Velocity is a vector. Written as a column of numbers. |
 | **Ket** $\lvert v\rangle$ | Dirac name for a column vector. Also stands for a quantum state. |

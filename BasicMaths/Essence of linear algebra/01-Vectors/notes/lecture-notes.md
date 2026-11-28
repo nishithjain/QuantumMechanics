@@ -31,8 +31,8 @@ Imagine standing on a field. Someone gives you these instructions:
 
 If I draw that instruction as an arrow, the arrow contains two pieces of information:
 
-- **Length**: how far to go — five metres.
-- **Direction**: where to go — east.
+* **Length**: how far to go — five metres.
+* **Direction**: where to go — east.
 
 That is the physics view of a vector. An arrow pointing northeast can represent a different motion from an equally long arrow pointing southeast, because their **directions** are different.
 
@@ -42,8 +42,8 @@ For example, an arrow representing "go two steps right and one step up" means th
 
 Then distinguishes two cases:
 
-- **2D (two-dimensional)** arrows live in a flat plane, such as a sheet of paper.
-- **3D (three-dimensional)** arrows live in ordinary space, where we can move left/right, forward/backward, and up/down.
+* **2D (two-dimensional)** arrows live in a flat plane, such as a sheet of paper.
+* **3D (three-dimensional)** arrows live in ordinary space, where we can move left/right, forward/backward, and up/down.
 
 **Beginner note:** The *dimension* tells us how many independent coordinate directions we need to describe the vector. It does **not** tell us how long the arrow is.
 
@@ -67,8 +67,8 @@ $$
 
 Read this as:
 
-- First entry: **2,600** square feet.
-- Second entry: **300,000** dollars.
+* First entry: **2,600** square feet.
+* Second entry: **300,000** dollars.
 
 Why is the order important? Because
 
@@ -90,8 +90,8 @@ In computer science, we often call each value a **feature**: one measurable fact
 
 **Two different uses of the word "length":**
 
-- **List length:** the number of entries. Our house list has two entries, so its dimension is 2.
-- **Arrow length:** the physical size of an arrow in a diagram. This is a different idea.
+* **List length:** the number of entries. Our house list has two entries, so its dimension is 2.
+* **Arrow length:** the physical size of an arrow in a diagram. This is a different idea.
 
 a vector a "fancy word for a list" in this particular computer-science setting. More precisely, it is an **ordered numerical list** that can participate in vector operations.
 
@@ -108,8 +108,8 @@ The two operations are:
 
 For the moment, think of these as ordinary questions:
 
-- If I combine one movement with another, what is the overall movement?
-- If I double or halve one movement, what happens to its arrow?
+* If I combine one movement with another, what is the overall movement?
+* If I double or halve one movement, what happens to its arrow?
 
 The formal mathematical definition is intentionally **postponed** in the lecture. Mathematicians also require these operations to follow certain rules, but those rules are not introduced here. We will first learn the operations with arrows and numbers.
 
@@ -131,8 +131,8 @@ This is a **convenient representation**, not a denial of the earlier physics vie
 
 Imagine placing a large sheet of graph paper on a table. Draw two perpendicular lines:
 
-- A **horizontal** line, called the **x-axis**.
-- A **vertical** line, called the **y-axis**.
+* A **horizontal** line, called the **x-axis**.
+* A **vertical** line, called the **y-axis**.
 
 Where they cross is the **origin**. Its coordinates are
 
@@ -188,9 +188,9 @@ Notice that the two-part walk is only a way to **find the arrow's tip**. The vec
 
 **Language to remember:**
 
-- **Tail**: the beginning of the arrow, at (0, 0).
-- **Tip** or **head**: the point at the arrowhead.
-- **Component**: one of the numbers used to describe the vector. Here, 3 is the x-component and 2 is the y-component.
+* **Tail**: the beginning of the arrow, at (0, 0).
+* **Tip** or **head**: the point at the arrowhead.
+* **Component**: one of the numbers used to describe the vector. Here, 3 is the x-component and 2 is the y-component.
 
 Use **vertical square brackets** to write a vector:
 
@@ -232,8 +232,8 @@ means two right and three down.
 
 Once the axes, unit distances, and origin have been fixed:
 
-- Each ordered pair of numbers picks out **one specific arrow starting at the origin**.
-- Each arrow starting at the origin has **one specific ordered pair**.
+* Each ordered pair of numbers picks out **one specific arrow starting at the origin**.
+* Each arrow starting at the origin has **one specific ordered pair**.
 
 That is why we can freely translate between a **picture** and **numbers**.
 
@@ -318,8 +318,8 @@ We now arrive at the first of the two operations this lesson promised earlier.
 
 Think of two arrows:
 
-- **u** points up and a little to the right.
-- **v** points mainly right and a little down.
+* **u** points up and a little to the right.
+* **v** points mainly right and a little down.
 
 What does it mean to **add** them?
 
@@ -345,8 +345,8 @@ The source does not want us to memorize a drawing rule blindly. He asks **why** 
 
 Imagine you are walking:
 
-- First, take the journey described by **u**.
-- From where you now stand, take the journey described by **v**.
+* First, take the journey described by **u**.
+* From where you now stand, take the journey described by **v**.
 
 Where you finish is exactly where you would finish if you had travelled along the single resultant arrow, $\mathbf u+\mathbf v$, directly from the starting point.
 
@@ -386,11 +386,11 @@ $$
 
 Before calculating, interpret the first vector:
 
-- u means **1 right** and **2 up**.
+* u means **1 right** and **2 up**.
 
 And interpret the second vector:
 
-- v means **3 right** and **1 down**.
+* v means **3 right** and **1 down**.
 
 Now perform the two movements in sequence. You can imagine the route in four smaller steps:
 
@@ -494,9 +494,9 @@ Start with the example. The stages show both vectors at the origin, the head-to-
 
 ### Common mistakes in vector addition
 
-- **Mistake:** Add a vector's x-component to the other's y-component. **Correction:** x goes with x; y goes with y.
-- **Mistake:** Move the second arrow *and* rotate it. **Correction:** For addition, translate it without rotating or changing its length.
-- **Mistake:** Add the lengths of the arrows and assume that is the length of their sum. **Correction:** Different directions can reinforce or cancel; follow the coordinate or tip-to-tail rule.
+* **Mistake:** Add a vector's x-component to the other's y-component. **Correction:** x goes with x; y goes with y.
+* **Mistake:** Move the second arrow *and* rotate it. **Correction:** For addition, translate it without rotating or changing its length.
+* **Mistake:** Add the lengths of the arrows and assume that is the length of their sum. **Correction:** Different directions can reinforce or cancel; follow the coordinate or tip-to-tail rule.
 
 ---
 
@@ -597,9 +597,9 @@ $$
 2\mathbf v,
 $$
 
-- $2$ is the **scalar**.
-- $\mathbf v$ is the **vector**.
-- $2\mathbf v$ is the **scaled vector**.
+* $2$ is the **scalar**.
+* $\mathbf v$ is the **vector**.
+* $2\mathbf v$ is the **scaled vector**.
 
 Numbers such as $2$, $\frac13$, and $-1.8$ are scalars when we use them to multiply a vector.
 
@@ -654,9 +654,9 @@ Select **× 2**, **× ⅓**, and **× −1.8** in that order. Watch how the arro
 
 ### Common mistakes in scalar multiplication
 
-- **Mistake:** Multiply only the x-component. **Correction:** Multiply *every* component.
-- **Mistake:** Assume that a negative scalar always makes the vector shorter. **Correction:** The sign controls direction; the magnitude $|k|$ controls its length.
-- **Mistake:** Think that a scalar must be a whole number. **Correction:** It can be a fraction, decimal, negative number, or zero.
+* **Mistake:** Multiply only the x-component. **Correction:** Multiply *every* component.
+* **Mistake:** Assume that a negative scalar always makes the vector shorter. **Correction:** The sign controls direction; the magnitude $|k|$ controls its length.
+* **Mistake:** Think that a scalar must be a whole number. **Correction:** It can be a fraction, decimal, negative number, or zero.
 
 ---
 
@@ -691,8 +691,8 @@ A data analyst may start with many lists of numbers: house area and price, measu
 
 Here is a simple way to connect the ideas:
 
-- **Numbers** make information precise and ready for calculations.
-- **Pictures** make the relationships between those numbers easier for a human to understand.
+* **Numbers** make information precise and ready for calculations.
+* **Pictures** make the relationships between those numbers easier for a human to understand.
 
 The lecture does not develop a specific data-analysis algorithm yet; it explains why this change of viewpoint is useful.
 
@@ -722,9 +722,9 @@ then the programmer knows the final displacement is four units horizontally and 
 
 Concludes this introductory chapter by saying the next topics will include:
 
-- **Span**.
-- **Basis** (plural: **bases**).
-- **Linear dependence**.
+* **Span**.
+* **Basis** (plural: **bases**).
+* **Linear dependence**.
 
 Those concepts are **not taught in this lecture**, so we will not jump ahead here. For now, being comfortable with coordinates, adding two arrows, and scaling a vector is enough to prepare for them.
 

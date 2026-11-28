@@ -1,4 +1,5 @@
 # Core Algorithms — Part B
+
 ## Complete beginner-friendly notes, following the lecture in order
 
 **Before starting:** If `|ψ⟩`, `⊕`, or `H` look unfamiliar, see the [tiny notation refresher](#a-tiny-notation-refresher). You can read the notes normally, then return to it as needed.
@@ -1480,7 +1481,7 @@ These are *reference notes*, placed at the end to preserve the lecturer's teachi
 
 | Symbol | Meaning in beginner language |
 |---|---|
-| `|0⟩`, `|1⟩` | Basic one-qubit quantum states |
+| `|0⟩`,`|1⟩` | Basic one-qubit quantum states |
 | `|101⟩` | Three qubits in the computational basis state 1, 0, 1 |
 | `|0^n⟩` | n zero bits: `00…0` |
 | `|ψ⟩` | A general quantum state (ket notation) |

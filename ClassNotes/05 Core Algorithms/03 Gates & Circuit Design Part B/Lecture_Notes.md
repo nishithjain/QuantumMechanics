@@ -178,9 +178,9 @@ $$
 
 | Symbol | Name | Simple action | On basis states |
 |---|---|---|---|
-| `X` | bit-flip or Pauli X | Exchanges `|0⟩` and `|1⟩` | `X|0⟩=|1⟩`, `X|1⟩=|0⟩` |
-| `Z` | phase-flip or Pauli Z | Changes sign of `|1⟩` amplitude | `Z|0⟩=|0⟩`, `Z|1⟩=−|1⟩` |
-| `H` | Hadamard | Changes between Z and X bases | `H|0⟩=|+⟩`, `H|1⟩=|−⟩` |
+| `X` | bit-flip or Pauli X | Exchanges `|0⟩` and `|1⟩` | `X|0⟩=|1⟩`,`X|1⟩=|0⟩` |
+| `Z` | phase-flip or Pauli Z | Changes sign of `|1⟩` amplitude | `Z|0⟩=|0⟩`,`Z|1⟩=−|1⟩` |
+| `H` | Hadamard | Changes between Z and X bases | `H|0⟩=|+⟩`,`H|1⟩=|−⟩` |
 | `CNOT` or `CX` | controlled NOT | Flips target **only if** control is `1` | `00→00`, `01→01`, `10→11`, `11→10` |
 
 **What is a phase?** The minus sign in `(|0⟩−|1⟩)/√2` is a *relative phase* between the two components. Measuring immediately in the Z basis gives 50–50 for both `|+⟩` and `|−⟩`, but a later `H` distinguishes them. A minus sign multiplying the **whole** state, `−|ψ⟩`, is instead a *global phase* and cannot change outcome probabilities.
@@ -437,10 +437,10 @@ which is false. Thus **no single perfect unitary cloner can handle this pair**.
 
 | Pair | Can one suitably chosen machine copy both? | Why? |
 |---|---|---|
-| (A) `|0⟩`, `|1⟩` | **Yes** | Orthogonal; use CNOT with blank `|0⟩` |
-| (B) `|+⟩`, `|−⟩` | **Yes** | Orthogonal; change basis with H, copy, change both outputs back |
-| (C) `|0⟩`, `|+⟩` | **No** | Nonorthogonal: `⟨0|+⟩=1/√2` |
-| (D) `|ψ⟩`, `−|ψ⟩` | **Physically yes** | They represent the **same physical state** (global phase only); global phase is unobservable |
+| (A) `|0⟩`,`|1⟩` | **Yes** | Orthogonal; use CNOT with blank `|0⟩` |
+| (B) `|+⟩`,`|−⟩` | **Yes** | Orthogonal; change basis with H, copy, change both outputs back |
+| (C) `|0⟩`,`|+⟩` | **No** | Nonorthogonal: `⟨0|+⟩=1/√2` |
+| (D) `|ψ⟩`,`−|ψ⟩` | **Physically yes** | They represent the **same physical state** (global phase only); global phase is unobservable |
 
 For option **B**, the complete circuit is **H on the input → CNOT into a blank → H on both outputs**:
 
@@ -1512,7 +1512,7 @@ Each file is standalone HTML with **Play, Pause, Step, Reset** controls, labeled
 | # | Interactive file | What to try |
 |---:|---|---|
 | 01 | [Bell Circuit Backwards](animations/animation_01.html) | Select each of the four Bell states and watch CNOT → H → bits |
-| 02 | [CNOT and the Copying Trap](animations/animation_02.html) | Compare input `|0⟩`, `|1⟩`, `|+⟩`, and `|−⟩` |
+| 02 | [CNOT and the Copying Trap](animations/animation_02.html) | Compare input `|0⟩`,`|1⟩`,`|+⟩`, and`|−⟩` |
 | 03 | [No-Cloning Overlap Explorer](animations/animation_03.html) | Change the angle between two states, compare `z` and `z²` |
 | 04 | [Quantum Teleportation — All Four Corrections](animations/animation_04.html) | Change the prepared state, choose Alice's outcome, apply correction |
 | 05 | [Deferred Measurement](animations/animation_05.html) | Compare measured classical feed-forward with coherent CNOT/CZ |
@@ -1526,4 +1526,3 @@ Each file is standalone HTML with **Play, Pause, Step, Reset** controls, labeled
 These notes follow the lecture's teaching sequence and preserve the professor's major applications, numerical comparisons, the full problem set, programming discussion, and capstone context. Several spoken terms were corrected using the slides (e.g. *CNOT*, *Bell pair*, *Pauli*, *Hadamard*, *phase flip*). The transcript occasionally uses informal shortcuts such as “information changes instantaneously” or “quantum cryptography cannot be broken.” These notes distinguish **nonclassical correlations** from **controllable signalling**, and explain the assumptions needed for cryptographic security. The source's display-order conventions for superdense-code output are also made explicit rather than silently reversing bits.
 
 **Slides:** Relevant numbered lecture slides are identified throughout. The original PDF has 19 **physical pages** because most pages contain several incremental versions of slide images; its slide footer enumerates **31 lecture slides**. The slide numbering in these notes refers to the professor's slide-footer numbers, **not** the PDF page numbers.
-

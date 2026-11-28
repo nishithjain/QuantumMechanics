@@ -721,7 +721,7 @@ Every basis for the same space has the same number of vectors.
 
 **The whole story in one line.** In a vector space we form **linear combinations**. All their possible results form a **span**. That span is a **subspace**. If the chosen vectors have no redundancy, they are **independent**. If they also cover the whole space, they form a **basis**. Count the basis vectors to get the **dimension**.
 
-## 7.7 The standard basis of $\mathbb{C}^n$ 
+## 7.7 The standard basis of $\mathbb{C}^n$
 
 $$
 \mathbf{e}_1 = (1, 0, \dots, 0)^T,\ \dots,\ \mathbf{e}_n = (0, \dots, 0, 1)^T, \qquad\text{so}\quad \dim_{\mathbb{C}}\mathbb{C}^n = n
@@ -1027,7 +1027,6 @@ For a one-page **memory map** of vector space, span, basis, coordinates, and the
 
 ---
 
-
 # 9. Core ideas at a glance
 
 After sections 3–8, these eight ideas fit together. Use this table as a **memory map** before practice problems and the inner-product half of the lecture. Details and proofs are in the sections cited in the last column.
@@ -1090,6 +1089,7 @@ Try these first, then check the solutions.
 **"Why use real vectors for the basis with complex coordinates?"** The examples are drawn with real numbers. In the course itself we only deal with complex numbers.
 
 ---
+
 # 11. The dot product (real numbers)
 
 Back to **high-school maths**. The dot product takes **two vectors** and gives you **one number**.

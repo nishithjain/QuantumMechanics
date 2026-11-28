@@ -1,7 +1,7 @@
 # Chapter 12 — Cramer's Rule, Explained Geometrically
 
-**Series:** Essence of Linear Algebra 
-**Source:** Provided lecture (approximately 12 minutes 12 seconds) and accompanying transcript. 
+**Series:** Essence of Linear Algebra
+**Source:** Provided lecture (approximately 12 minutes 12 seconds) and accompanying transcript.
 **Study goal:** Understand *why* the determinant ratios in Cramer's rule recover the unknown coordinates, rather than memorizing a formula.
 
 > **How to read:** Work through the sections in order; they follow the teaching sequence. `Lecture example` means the example appears in the source. `Extra beginner explanation` or `Extra practice` identifies added teaching support. Original diagrams appear immediately after relevant discussions. Open the linked HTML files in any browser to interact with the geometry.
@@ -380,25 +380,25 @@ Close by asking yourself to **pause and reason through the generalization yourse
 
 ### Check your understanding
 
-**1.** Why does `det(A)=0` prevent division in Cramer's rule? 
-**2.** Which matrix column is replaced to calculate `y` in a 2×2 system? 
-**3.** For `A=[[2,-1],[0,1]]`, what is the determinant? 
-**4.** What signed area equals the input coordinate `x`? 
-**5.** Does an arbitrary shear preserve dot products? 
-**6.** Why does Cramer's rule involve a ratio of determinants? 
-**7.** What happens to oriented area if `det(A)=-3`? 
+**1.** Why does `det(A)=0` prevent division in Cramer's rule?
+**2.** Which matrix column is replaced to calculate `y` in a 2×2 system?
+**3.** For `A=[[2,-1],[0,1]]`, what is the determinant?
+**4.** What signed area equals the input coordinate `x`?
+**5.** Does an arbitrary shear preserve dot products?
+**6.** Why does Cramer's rule involve a ratio of determinants?
+**7.** What happens to oriented area if `det(A)=-3`?
 **8.** What does a determinant represent in 3D?
 
 <details>
 <summary>Answers</summary>
 
-1. The denominator is zero, and the transformation is noninvertible. 
-2. The second. 
-3. `2`. 
-4. `det([v,ĵ])`. 
-5. No. 
-6. One determinant measures the transformed coordinate area, and the other measures the common scale factor. 
-7. Its magnitude triples and its sign reverses. 
+1. The denominator is zero, and the transformation is noninvertible.
+2. The second.
+3. `2`.
+4. `det([v,ĵ])`.
+5. No.
+6. One determinant measures the transformed coordinate area, and the other measures the common scale factor.
+7. Its magnitude triples and its sign reverses.
 8. Signed volume scaling.
 
 </details>

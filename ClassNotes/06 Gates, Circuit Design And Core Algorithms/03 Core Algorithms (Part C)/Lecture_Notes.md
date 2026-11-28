@@ -63,7 +63,7 @@ If $k$ bits are available, there are $N=2^k$ possible binary strings. Conversely
 
 A single qubit can be written
 
-$$|\psi\rangle=\alpha|0\rangle+\beta|1\rangle.$$ 
+$$|\psi\rangle=\alpha|0\rangle+\beta|1\rangle.$$
 
 The vertical bars and angle brackets form **ket notation**, a compact label for a quantum state. $\alpha$ and $\beta$ are **complex amplitudes**, not probabilities themselves. The measurement probabilities in the $\{|0\rangle,|1\rangle\}$ basis are $|\alpha|^2$ and $|\beta|^2$. Therefore,
 

@@ -1,3 +1,6 @@
+# Local markdownlint install (optional dev helper)
+.mlint/
+
 # OS / editor
 .DS_Store
 Thumbs.db

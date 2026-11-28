@@ -1,6 +1,6 @@
 # Chapter 03 — Linear Transformations and Matrices
 
-**Series:** Essence of Linear Algebra · **Chapter:** 03 — Linear Transformations and Matrices (transcript, ~11 minutes) 
+**Series:** Essence of Linear Algebra · **Chapter:** 03 — Linear Transformations and Matrices (transcript, ~11 minutes)
 **Level:** First-time learner · **Approach:** follow this lesson order, with clearly marked beginner explanations.
 
 > **The central idea of this lecture:** A matrix is not merely a rectangular arrangement of numbers. It is a compact description of **how a linear transformation moves space**. Each column tells us where one standard basis vector ends up.

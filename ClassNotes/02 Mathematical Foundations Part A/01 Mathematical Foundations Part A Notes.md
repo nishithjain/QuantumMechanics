@@ -261,7 +261,7 @@ Input vector ──> │  Matrix U    │──▶ Output vector
    > - **It never changes the length of a vector.** A quantum state must keep length $1$ so that probabilities add up to $100\%$. A unitary gate preserves that. A random matrix might stretch or shrink the vector and would break the probabilities.
    > - **It is always reversible.** You can always undo a unitary gate by applying $U^\dagger$. For $X$, applying it twice returns the original state. Compare with the classical OR gate above, which loses information and cannot be undone.
 
-3. **Measuring** a quantum system does not give a plain yes/no. It gives outcomes with probabilities. To compute those probabilities you need the **inner product** of vectors.
+1. **Measuring** a quantum system does not give a plain yes/no. It gives outcomes with probabilities. To compute those probabilities you need the **inner product** of vectors.
 
 ## 2.3 The $2^n$ remark
 
@@ -1258,7 +1258,7 @@ $$
 1 + i = \sqrt2\left(\cos\frac{\pi}{4} + i\sin\frac{\pi}{4}\right)
 $$
 
-4. **Euler's formula.** The bracket is exactly the left-hand side of Euler's formula with $\theta = \pi/4$, so it equals $e^{i\pi/4}$:
+1. **Euler's formula.** The bracket is exactly the left-hand side of Euler's formula with $\theta = \pi/4$, so it equals $e^{i\pi/4}$:
 
 $$
 \cos\frac{\pi}{4} + i\sin\frac{\pi}{4} = e^{i\pi/4}
@@ -1426,7 +1426,7 @@ $$
 32\left(\cos\frac{5\pi}{2} + i\sin\frac{5\pi}{2}\right)
 $$
 
-Now $\dfrac{5\pi}{2} = 2\pi + \dfrac{\pi}{2}$, so it is the same as $\dfrac{\pi}{2}$ after one full turn: $\cos = 0$, $\sin = 1$. 
+Now $\dfrac{5\pi}{2} = 2\pi + \dfrac{\pi}{2}$, so it is the same as $\dfrac{\pi}{2}$ after one full turn: $\cos = 0$, $\sin = 1$.
 
 $$
 (1 + i)^{10} = 32\,i
@@ -1764,7 +1764,7 @@ $$
 
 > **Lecturer's closing remark:** "So this allows you to solve for all the roots of unity. That's another utility of this. These things we will come to when we get to them. These are again some problems you can try; I will not do this. So this is my summary of complex numbers." Practice problems on this topic are in the "Practice problems with answers" section near the end of these notes.
 
-Quick check for a 10th root $z = e^{i2\pi/10}$: $z^{10} = e^{i\,2\pi} = 1$. 
+Quick check for a 10th root $z = e^{i2\pi/10}$: $z^{10} = e^{i\,2\pi} = 1$.
 
 ## 14.4 Solving $z^n = c$ in general
 
@@ -1778,7 +1778,7 @@ $$
 z \in \left\{\,2^{1/4},\ \ i\cdot2^{1/4},\ \ -2^{1/4},\ \ -i\cdot2^{1/4}\,\right\}
 $$
 
-Check one: $\left(i\cdot2^{1/4}\right)^4 = i^4\cdot 2 = 2$. 
+Check one: $\left(i\cdot2^{1/4}\right)^4 = i^4\cdot 2 = 2$.
 
 This is the general rule: a degree-$n$ equation has $n$ solutions in $\mathbb{C}$.
 

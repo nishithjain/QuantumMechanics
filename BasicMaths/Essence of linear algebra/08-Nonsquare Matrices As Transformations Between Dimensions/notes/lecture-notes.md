@@ -1,8 +1,8 @@
 # 08 — Nonsquare Matrices as Transformations Between Dimensions
 
-**Series:** Essence of Linear Algebra 
-**Learning level:** Complete beginner 
-**Sources:** The attached Chapter 08 lecture and its transcript. The lecture also shows the concrete $2\times3$ and $1\times2$ matrices used below, even though their numerical entries are not stated in the transcript. 
+**Series:** Essence of Linear Algebra
+**Learning level:** Complete beginner
+**Sources:** The attached Chapter 08 lecture and its transcript. The lecture also shows the concrete $2\times3$ and $1\times2$ matrices used below, even though their numerical entries are not stated in the transcript.
 **Aim:** Understand *what a rectangular matrix does to space*, instead of just memorizing how to multiply its numbers.
 
 > **Big idea:** A matrix with **$m$ rows and $n$ columns** represents a linear transformation from **$n$-dimensional input** to **$m$-dimensional output**:

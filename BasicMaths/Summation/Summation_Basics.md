@@ -161,6 +161,7 @@ $$
 ## 3.1 Multiplication is not the same as a power
 
 These expressions mean different things:
+
 | Expression | Meaning | Example when $i=3$ |
 |---|---|---:|
 | $2i$ | $2\times i$ | 6 |
@@ -205,10 +206,12 @@ $$
 \sum_{i=1}^{3}(2i^2+1)
 $$
 Calculate the entire expression for each value of $i$:
+
 - When $i=1$: $2(1)^2+1=3$
 - When $i=2$: $2(2)^2+1=9$
 - When $i=3$: $2(3)^2+1=19$
 Then add:
+
 $$
 3+9+19=31
 $$
@@ -227,6 +230,7 @@ Suppose:
 
 - $j$ can be 1 or 2.
 The possible pairs are:
+
 $$
 (1,1),\ (1,2),\ (2,1),\ (2,2)
 $$
@@ -239,11 +243,13 @@ Consider:
 $$
 \sum_{i=1}^{2}\sum_{j=1}^{2}(i+j)
 $$
+
 - The outer summation changes $i$.
 - For each fixed value of $i$, the inner summation runs through all values of $j$.
 - Calculate $i+j$ for every pair.
 - Add all the results.
 For $i=1$:
+
 $$
 (1+1)+(1+2)=2+3=5
 $$
@@ -271,6 +277,7 @@ $$
 \sum_{i=1}^{2}\sum_{j=1}^{3}ij
 $$
 List every pair:
+
 | $i$ | $j$ | $ij$ |
 |---:|---:|---:|
 | 1 | 1 | 1 |
@@ -280,6 +287,7 @@ List every pair:
 | 2 | 2 | 4 |
 | 2 | 3 | 6 |
 Add the terms:
+
 $$
 1+2+3+2+4+6=18
 $$
@@ -304,6 +312,7 @@ $$
 i^2=-1
 $$
 **Important:** The letter $i$ can have two different jobs in mathematics:
+
 - In a summation such as $\sum_{i=1}^{4}i$, it is an ordinary index variable.
 - In a complex number such as $3+2i$, it is the imaginary unit.
 The meaning comes from the context.
@@ -396,6 +405,7 @@ This lesson connects summation to the basis states of qubits.
 
 A binary string is a sequence made only of 0s and 1s.
 Examples:
+
 - `0` has length 1.
 - `10` has length 2.
 - `101` has length 3.
@@ -557,6 +567,7 @@ $$
 \frac{i}{2}|11\rangle
 $$
 The amplitudes are:
+
 | Basis state | Amplitude |
 |---|---|
 | $\lvert 00\rangle$ | $1/2$ |
@@ -953,7 +964,6 @@ renderQuiz();
 &lt;/html&gt;">
 </iframe>
 </div>
-
 
 ---
 

@@ -1,6 +1,8 @@
 # Quantum Computing Notes
 
-These notes turn OneNote material into a simple, ordered path through the math behind quantum computing. They are written for complete beginners: every idea is explained in everyday language first, then connected to the symbols and formulas you will see later.
+These notes turn OneNote material into a simple, ordered path through the math behind
+quantum computing. They are written for complete beginners: every idea is explained in
+everyday language first, then connected to the symbols and formulas you will see later.
 
 ## Table of contents
 

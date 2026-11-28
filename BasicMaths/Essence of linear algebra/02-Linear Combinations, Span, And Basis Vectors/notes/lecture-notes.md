@@ -180,7 +180,7 @@ The letters $a$ and $b$ are numbers we must find. Substituting the arrow coordin
 $$
 \begin{aligned}
 \begin{bmatrix}3\cr -2\end{bmatrix}
-&=a\begin{bmatrix}1\cr 1\end{bmatrix}+b\begin{bmatrix}1\cr -1\end{bmatrix}\cr 
+&=a\begin{bmatrix}1\cr 1\end{bmatrix}+b\begin{bmatrix}1\cr -1\end{bmatrix}\cr
 &=\begin{bmatrix}a+b\cr a-b\end{bmatrix}.
 \end{aligned}
 $$
@@ -263,8 +263,8 @@ choose $a=2$ and $b=1$. Then
 $$
 \begin{aligned}
 2\mathbf u+1\mathbf w
-&=2\begin{bmatrix}1\cr 1\end{bmatrix}+\begin{bmatrix}1\cr -1\end{bmatrix}\cr 
-&=\begin{bmatrix}2\cr 2\end{bmatrix}+\begin{bmatrix}1\cr -1\end{bmatrix}\cr 
+&=2\begin{bmatrix}1\cr 1\end{bmatrix}+\begin{bmatrix}1\cr -1\end{bmatrix}\cr
+&=\begin{bmatrix}2\cr 2\end{bmatrix}+\begin{bmatrix}1\cr -1\end{bmatrix}\cr
 &=\boxed{\begin{bmatrix}3\cr 1\end{bmatrix}}.
 \end{aligned}
 $$
@@ -342,7 +342,7 @@ A general combination becomes
 $$
 \begin{aligned}
 a\mathbf u+b\mathbf w
-&=a\mathbf u+b(3\mathbf u)\cr 
+&=a\mathbf u+b(3\mathbf u)\cr
 &=(a+3b)\mathbf u.
 \end{aligned}
 $$
@@ -524,7 +524,7 @@ What happens if we try using all three?
 $$
 \begin{aligned}
 a\mathbf u+b\mathbf w+c\mathbf t
-&=a\mathbf u+b\mathbf w+c(p\mathbf u+q\mathbf w)\cr 
+&=a\mathbf u+b\mathbf w+c(p\mathbf u+q\mathbf w)\cr
 &=(a+cp)\mathbf u+(b+cq)\mathbf w.
 \end{aligned}
 $$

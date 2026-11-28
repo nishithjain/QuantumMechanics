@@ -1975,6 +1975,8 @@ $$
 
 Think of **PLUS** and **MINUS** labels on each possible input $x$ in the superposition:
 
+<!-- markdownlint-disable MD033 -->
+
 <iframe src="../animations/parity-phase-signs.html" title="Parity phases become +1 and −1 amplitude signs" width="100%" height="220" loading="eager" style="border:1px solid #dce3ef;border-radius:12px;max-width:100%;display:block;margin:10px 0 8px;"></iframe>
 
 #### 7.6.5 Example: Bernstein–Vazirani
@@ -1996,6 +1998,8 @@ using the secret as its mask.
 Use **Next input** to step through the four classical queries (one bit of $s$ per standard basis input):
 
 <iframe src="../animations/bernstein-vazirani-secret-box.html" title="Bernstein–Vazirani secret function box — s = 1011" width="100%" height="860" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:100%;display:block;margin:12px 0 10px;"></iframe>
+
+<!-- markdownlint-enable MD033 -->
 
 Those outputs line up with the secret bits in the standard Bernstein–Vazirani setup. A classical machine needs **one query per bit** in the worst case ($n$ queries for $n$ bits). The quantum version, under the algorithm’s promise, can recover $s$ with **one** oracle call — which is why the mask, parity, and $(-1)^{s\cdot x}$ phase story is worth keeping straight.
 
@@ -3417,6 +3421,7 @@ Pick mask $a\in\{00,01,10,11\}$ and see each input’s sign and $S(a)$.
 **Big picture:** predictable sign patterns explain how unwanted contributions **cancel** — groundwork for Deutsch and beyond.
 
 ---
+
 ## 13. Deutsch's problem: one query instead of two
 
 **The big idea:** You get a mystery box that takes one bit and returns one bit. You are promised the box is either **constant** (same answer every time) or **balanced** (different answers for $0$ and $1$). Classically, you may need **two** questions to be sure. Deutsch's quantum circuit answers with **one** oracle call $U_f$, using superposition (§8–§9) and interference (§12).
@@ -3700,6 +3705,7 @@ The circuit does **not** output both $f(0)$ and $f(1)$; it outputs one classific
 **One sentence:** superposition asks both inputs at once; phase kickback marks same vs different; the last Hadamard turns that mark into a reliable 0 or 1.
 
 ---
+
 ## 14. Deutsch–Jozsa: the next problem
 
 Let's understand Deutsch–Jozsa **step by step**. This is an extension of Deutsch's problem (§13).
@@ -3947,6 +3953,8 @@ The Deutsch–Jozsa **quantum** algorithm (next session) decides constant vs bal
 
 **Question:** Can you conclude the function is constant?
 
+<!-- markdownlint-disable MD033 -->
+
 <details>
 <summary><strong>Check answer</strong></summary>
 
@@ -3962,6 +3970,8 @@ $$
 $$
 
 </details>
+
+<!-- markdownlint-enable MD033 -->
 
 ### 14.10 Big picture
 

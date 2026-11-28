@@ -2,11 +2,13 @@
 
 [Home](../README.md) · [Roadmap](../00-learning-roadmap.md) · [Glossary](../glossary.md)
 
-**Previous:** [Scalars and vectors](01-scalars-and-vectors.md) · **Next:** [Matrix multiplication](03-matrix-multiplication.md)
+**Previous:** [Scalars and vectors](01-scalars-and-vectors.md) · **Next:** [Matrix
+multiplication](03-matrix-multiplication.md)
 
 ---
 
-Quantum notes do not usually write $\vec{v}$. They use **Dirac notation**, also called **bra-ket** notation. It looks unusual at first. It is only a nickname for the same column of numbers you already know.
+Quantum notes do not usually write $\vec{v}$. They use **Dirac notation**, also called **bra-ket** notation.
+It looks unusual at first. It is only a nickname for the same column of numbers you already know.
 
 The notation is built from an angle bracket and a vertical bar:
 
@@ -15,9 +17,11 @@ The notation is built from an angle bracket and a vertical bar:
 
 ## What a ket is
 
-A ket $|v\rangle$ is a vector $v$. In the math, it lives in a vector space $V$. In the physics, it stands for a *state* of a quantum system: “this is how the system is right now.”
+A ket $|v\rangle$ is a vector $v$. In the math, it lives in a vector space $V$.
+In the physics, it stands for a *state* of a quantum system: “this is how the system is right now.”
 
-For one bit (and later, one qubit), two special kets are the starting points. Think of them as two arrows that are at right angles: one along the horizontal axis, one along the vertical axis.
+For one bit (and later, one qubit), two special kets are the starting points. Think of them as two arrows that are at
+right angles: one along the horizontal axis, one along the vertical axis.
 
 ![2D vector space with |0> along the x-axis and |1> along the y-axis](../assets/images/two-dimensional-complex-vector-space.png)
 
@@ -36,7 +40,8 @@ Read $|0\rangle$ as “ket zero” and $|1\rangle$ as “ket one.”
 - $|0\rangle$ means “all of the vector is in the first slot, none in the second.”
 - $|1\rangle$ means “none in the first slot, all in the second.”
 
-These two arrows are the **standard basis**. Any other 2-number column can be built by mixing them. That mixing is how superposition will appear later.
+These two arrows are the **standard basis**. Any other 2-number column can be built by mixing them. That mixing is how
+superposition will appear later.
 
 A general ket is just a column of amplitudes:
 
@@ -46,7 +51,8 @@ $$
 
 Kets follow the same rules as ordinary vectors: you can add them and multiply them by numbers.
 
-These two special kets are **orthogonal**: they point at right angles. The overlap of two orthogonal vectors is zero. We will write that overlap with a bra and a ket in a moment:
+These two special kets are **orthogonal**: they point at right angles. The overlap of two orthogonal vectors is zero. We
+will write that overlap with a bra and a ket in a moment:
 
 $$
 \langle 0|1\rangle = 0
@@ -70,7 +76,8 @@ If $x$ is an ordinary real number, then $x^* = x$.
 
 ## What a bra is
 
-A bra $\langle b|$ is the conjugate transpose of the ket $|b\rangle$: turn the column into a row, *and* conjugate each entry.
+A bra $\langle b|$ is the conjugate transpose of the ket $|b\rangle$: turn the column into a row,
+*and* conjugate each entry.
 
 $$
 \langle b|
@@ -92,7 +99,8 @@ $$
 
 ## Inner product (bra-ket)
 
-Write a bra next to a ket and you get a *single number*, the **inner product**. It answers “how much do these two states overlap?”
+Write a bra next to a ket and you get a *single number*, the **inner product**. It answers “how much do these two states
+overlap?”
 
 $$
 \langle b|a\rangle
@@ -100,7 +108,8 @@ $$
 b_0^* a_0 + b_1^* a_1
 $$
 
-Your notes also wrote this as $a_0 b_0^* + a_1 b_1^*$, which is the same because ordinary numbers (and complex numbers) multiply in either order.
+Your notes also wrote this as $a_0 b_0^* + a_1 b_1^*$,
+which is the same because ordinary numbers (and complex numbers) multiply in either order.
 
 A useful fact:
 
@@ -137,11 +146,12 @@ Inner product = number. Outer product = grid of numbers. Both are legal; they ju
 ## A tiny dictionary
 
 | Everyday idea | Linear algebra | Dirac notation |
-|---|---|---|
+| --- | --- | --- |
 | Arrow along $x$ | $\begin{bmatrix} 1 \\\\ 0 \end{bmatrix}$ | $\lvert 0\rangle$ |
 | Arrow along $y$ | $\begin{bmatrix} 0 \\\\ 1 \end{bmatrix}$ | $\lvert 1\rangle$ |
 | A general state | a column vector | $\lvert\psi\rangle$ (often read “ket psi”) |
 
 ---
 
-**Previous:** [Scalars and vectors](01-scalars-and-vectors.md) · **Next:** [Matrix multiplication](03-matrix-multiplication.md)
+**Previous:** [Scalars and vectors](01-scalars-and-vectors.md) · **Next:** [Matrix
+multiplication](03-matrix-multiplication.md)

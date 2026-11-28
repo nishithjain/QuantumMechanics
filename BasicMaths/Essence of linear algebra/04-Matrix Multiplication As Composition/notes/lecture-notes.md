@@ -1,7 +1,7 @@
 # 04 — Matrix Multiplication as Composition
 
-**Essence of Linear Algebra · Chapter 4 · Beginner-friendly lecture notes** 
-**Based on:** the supplied Chapter 04 lecture and transcript (approximately 10 minutes). 
+**Essence of Linear Algebra · Chapter 4 · Beginner-friendly lecture notes**
+**Based on:** the supplied Chapter 04 lecture and transcript (approximately 10 minutes).
 **Study approach:** Follow the lecture in order, stopping at the diagrams and animations. Mathematical extensions and extra examples are explicitly labelled **Beginner's extra explanation**.
 
 > **The central question:** What does multiplying *two matrices* actually *mean*? The answer is not “multiply rows by columns.” It is **perform one linear transformation, then another**.

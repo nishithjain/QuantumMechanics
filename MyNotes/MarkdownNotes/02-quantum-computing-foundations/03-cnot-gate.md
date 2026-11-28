@@ -19,13 +19,14 @@ Rule in plain language:
 The control itself never changes.
 
 | Input | Output |
-|---|---|
+| --- | --- |
 | $\lvert 00\rangle$ | $\lvert 00\rangle$ |
 | $\lvert 01\rangle$ | $\lvert 01\rangle$ |
 | $\lvert 10\rangle$ | $\lvert 11\rangle$ |
 | $\lvert 11\rangle$ | $\lvert 10\rangle$ |
 
-That is a permutation of the four two-bit states, so it is reversible. Doing CNOT twice returns you to the start, so this particular gate *is* its own inverse.
+That is a permutation of the four two-bit states, so it is reversible. Doing CNOT twice returns you to the start, so
+this particular gate *is* its own inverse.
 
 ## The matrix
 
@@ -40,7 +41,8 @@ C
 \end{bmatrix}
 $$
 
-The top-left $2\times 2$ block is “do nothing” on $|00\rangle$ and $|01\rangle$. The bottom-right block swaps $|10\rangle$ and $|11\rangle$.
+The top-left $2\times 2$ block is “do nothing” on $|00\rangle$ and $|01\rangle$.
+The bottom-right block swaps $|10\rangle$ and $|11\rangle$.
 
 ## Four calculations
 
@@ -152,7 +154,10 @@ $$
 
 Ordinary computers can be built from **NAND** gates. NAND is *not* reversible: it throws information away.
 
-CNOT is a basic two-bit *reversible* gate, and you use it as a brick for larger reversible circuits. It is **not** a drop-in replacement for NAND. You cannot make every classical function from CNOT alone. The reversible gate that can play the role NAND plays classically is the **Toffoli** gate (a controlled-controlled-NOT on three bits). That is a topic for a later note.
+CNOT is a basic two-bit *reversible* gate, and you use it as a brick for larger reversible circuits. It is **not** a
+drop-in replacement for NAND. You cannot make every classical function from CNOT alone. The reversible gate that can
+play the role NAND plays classically is the **Toffoli** gate (a controlled-controlled-NOT on three bits). That is a
+topic for a later note.
 
 ---
 

@@ -2,11 +2,13 @@
 
 [Home](../README.md) · [Roadmap](../00-learning-roadmap.md) · [Glossary](../glossary.md)
 
-**Previous:** [Tensor products](../01-mathematical-foundations/05-tensor-products.md) · **Next:** [The qubit](04-the-qubit.md)
+**Previous:** [Tensor products](../01-mathematical-foundations/05-tensor-products.md) · **Next:** [The
+qubit](04-the-qubit.md)
 
 ---
 
-A **classical bit** (cbit) is an ordinary computer bit: it is either $0$ or $1$. We will write those two values as the same two kets you already met:
+A **classical bit** (cbit) is an ordinary computer bit: it is either $0$ or $1$.
+We will write those two values as the same two kets you already met:
 
 $$
 |0\rangle = \begin{bmatrix} 1 \\ 0 \end{bmatrix},
@@ -23,9 +25,12 @@ An operation is **reversible** if, given the operation and the output, you can u
 In matrix language: if $A x = B$, and you know $A$ and $B$, there is only one $x$. That happens when $A$ has an inverse.
 
 - Operations that only **permute** (shuffle) values are reversible.
-- Operations that **erase** or **overwrite** are not reversible. Two different inputs get smashed into the same output, so you cannot tell which input it was.
+- Operations that **erase** or **overwrite** are not reversible. Two different inputs get smashed into the same output,
+  so you cannot tell which input it was.
 
-Quantum computers use only reversible operations. In linear algebra they are the **unitary** matrices from the previous notes. The inverse of a quantum gate $U$ is $U^\dagger$. That inverse is *not* always the same matrix as $U$ itself.
+Quantum computers use only reversible operations.
+In linear algebra they are the **unitary** matrices from the previous notes.
+The inverse of a quantum gate $U$ is $U^\dagger$. That inverse is *not* always the same matrix as $U$ itself.
 
 ## Four operations on one cbit
 
@@ -71,7 +76,8 @@ $$
 \begin{bmatrix} 1 \\ 0 \end{bmatrix}
 $$
 
-If you see a $1$ come out, you know a $0$ went in, and vice versa. This matrix is also its own inverse: apply NOT twice and you are back.
+If you see a $1$ come out, you know a $0$ went in, and vice versa.
+This matrix is also its own inverse: apply NOT twice and you are back.
 
 ### Set-0 — not reversible
 
@@ -125,4 +131,5 @@ From here on we only care about reversible operations, because those are the one
 
 ---
 
-**Previous:** [Tensor products](../01-mathematical-foundations/05-tensor-products.md) · **Next:** [The qubit](04-the-qubit.md)
+**Previous:** [Tensor products](../01-mathematical-foundations/05-tensor-products.md) · **Next:** [The
+qubit](04-the-qubit.md)
