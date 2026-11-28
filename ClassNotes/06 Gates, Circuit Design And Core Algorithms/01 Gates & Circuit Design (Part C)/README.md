@@ -72,7 +72,7 @@ The uploaded materials **do not contain** the professor's earlier complete `adde
 
 - **HTML animations:** Standard modern web browser only. No internet, CDN, external fonts, accounts, or libraries.
 - **SVG images:** Standard image/SVG-capable viewer.
-- **Markdown:** A viewer with LaTeX support is recommended to render the `\[...\]` and `\(...\)` equations properly.
+- **Markdown:** A viewer with LaTeX support is recommended to render the `\[...\]` and `$...$` equations properly.
 - **Qiskit:** Not required to read notes or run offline HTML animations; required only if you separately run the professor's actual Jupyter lab assignments.
 - Nothing in the package sends information over the network. Interactive states and random-number seeds stay in your browser.
 

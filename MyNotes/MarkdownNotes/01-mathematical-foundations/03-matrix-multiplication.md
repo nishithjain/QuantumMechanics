@@ -19,7 +19,7 @@ $$
 \begin{bmatrix} ax + by \\ cx + dy \end{bmatrix}
 $$
 
-The top output uses the top row: \(a\) with \(x\), and \(b\) with \(y\). The bottom output uses the bottom row: \(c\) with \(x\), and \(d\) with \(y\).
+The top output uses the top row: $a$ with $x$, and $b$ with $y$. The bottom output uses the bottom row: $c$ with $x$, and $d$ with $y$.
 
 ## 3-by-3 matrix times a 3-vector
 
@@ -58,7 +58,7 @@ Sizes must fit: the number of columns on the left must equal the number of rows 
 
 ## The identity matrix: “do nothing”
 
-The **identity** matrix has \(1\)s on the main diagonal (top-left to bottom-right) and \(0\)s everywhere else. Multiplying by it leaves a vector unchanged. It is the matrix version of multiplying a number by \(1\).
+The **identity** matrix has $1$s on the main diagonal (top-left to bottom-right) and $0$s everywhere else. Multiplying by it leaves a vector unchanged. It is the matrix version of multiplying a number by $1$.
 
 $$
 \begin{bmatrix}
@@ -73,9 +73,9 @@ $$
 
 ## A permutation matrix: “shuffle, do not erase”
 
-A **permutation** matrix has a single \(1\) in each row and each column, and \(0\)s elsewhere. It only rearranges the entries of a vector. That kind of shuffle can be undone, so it is reversible.
+A **permutation** matrix has a single $1$ in each row and each column, and $0$s elsewhere. It only rearranges the entries of a vector. That kind of shuffle can be undone, so it is reversible.
 
-This example takes the vector with a \(1\) in the second slot and moves that \(1\) to the third slot:
+This example takes the vector with a $1$ in the second slot and moves that $1$ to the third slot:
 
 $$
 \begin{bmatrix}
@@ -89,7 +89,7 @@ $$
 \begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}
 $$
 
-Check: the input vector is “pick the second column of the matrix.” That second column is \(\begin{bmatrix} 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}\), which is the output.
+Check: the input vector is “pick the second column of the matrix.” That second column is $\begin{bmatrix} 0 \\\\ 0 \\\\ 1 \\\\ 0 \end{bmatrix}$, which is the output.
 
 Identity and permutation matrices are the linear-algebra picture of “I can always get the input back from the output.” The next notes connect that idea to complex numbers and to quantum gates.
 

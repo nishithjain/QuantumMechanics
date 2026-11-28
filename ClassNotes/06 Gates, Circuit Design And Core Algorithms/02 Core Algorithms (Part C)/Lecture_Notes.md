@@ -1125,21 +1125,21 @@ The professor closes by emphasizing that the ideas remain the same—**hidden sy
 | Formula | Symbols and meaning | When to use it | Mini-example |
 |---|---|---|---|
 | $a\cdot x=\bigoplus_i a_ix_i$ | XOR parity of selected bit positions | Binary masks and Simon clues | $101\cdot110=1$ |
-| $H^{\otimes n}|x\rangle=2^{-n/2}\sum_z(-1)^{x\cdot z}|z\rangle$ | Hadamard on all $n$ qubits; parity controls sign | Expand Hadamard outputs | $H^{\otimes2}|00\rangle$: all 4 signs positive |
-| $|\psi_f\rangle=2^{-n/2}\sum_x(-1)^{f(x)}|x\rangle$ | Single-bit oracle values encoded as phases | Deutsch–Jozsa/BV | $f=0$: all positive phases |
+| $H^{\otimes n}\lvert x\rangle=2^{-n/2}\sum_z(-1)^{x\cdot z}\lvert z\rangle$ | Hadamard on all $n$ qubits; parity controls sign | Expand Hadamard outputs | $H^{\otimes2}\lvert 00\rangle$: all 4 signs positive |
+| $\lvert \psi_f\rangle=2^{-n/2}\sum_x(-1)^{f(x)}\lvert x\rangle$ | Single-bit oracle values encoded as phases | Deutsch–Jozsa/BV | $f=0$: all positive phases |
 | $A(0^n)=2^{-n}\sum_x(-1)^{f(x)}$ | Amplitude at all zeros after the final H layer | Deutsch–Jozsa constant vs balanced | balanced $\Rightarrow A=0$ |
-| $U_f|x,y\rangle=|x,y\oplus f(x)\rangle$ | Reversible oracle with output register | Simon and other oracles | $y=0\Rightarrow$ writes $f(x)$ |
-| $|\Psi_3\rangle=(|x_0\rangle+|x_0\oplus s\rangle)/\sqrt2$ | Paired inputs after measuring oracle output | Simon's interference | $s=110,x_0=001$: pair 001/111 |
+| $U_f\lvert x,y\rangle=\lvert x,y\oplus f(x)\rangle$ | Reversible oracle with output register | Simon and other oracles | $y=0\Rightarrow$ writes $f(x)$ |
+| $\lvert \Psi_3\rangle=(\lvert x_0\rangle+\lvert x_0\oplus s\rangle)/\sqrt2$ | Paired inputs after measuring oracle output | Simon's interference | $s=110,x_0=001$: pair 001/111 |
 | $P(z)=2^{-(n-1)}$ if $s\cdot z=0$, else 0 | Uniform distribution on the perpendicular subspace | Interpret Simon measurements | $n=3$: 4 possible results, each 1/4 |
 | $Ms=0\pmod2$ | Classical equations from measured $z$'s | Recover Simon's secret | rows 001,110 imply $s=110$ under promise |
-| $|F_\gamma\rangle=2^{-n/2}\sum_x(-1)^{\gamma\cdot x}|x\rangle$ | Hadamard/Fourier basis vector indexed by $\gamma$ | Change basis | $F_{01}=|+-\rangle$ |
+| $\lvert F_\gamma\rangle=2^{-n/2}\sum_x(-1)^{\gamma\cdot x}\lvert x\rangle$ | Hadamard/Fourier basis vector indexed by $\gamma$ | Change basis | $F_{01}=\lvert +-\rangle$ |
 | $\widehat g(\gamma)=2^{-n/2}\sum_x(-1)^{\gamma\cdot x}g_x$ | Normalized Fourier coefficient of amplitudes $g_x$ | Extract a parity-weighted pattern | $\widehat g(0)=\sum_xg_x/\sqrt{2^n}$ |
 | $\chi_\gamma(x)=(-1)^{\gamma\cdot x}$ | XOR character, maps addition to multiplication | Factor hidden-shift phases | $\chi_\gamma(x\oplus s)=\chi_\gamma(x)\chi_\gamma(s)$ |
 | $a+b\pmod N$ | Integer addition with wraparound | Cyclic group $\mathbb Z_N$ | $5+6=3\pmod8$ |
 | $\omega_N=e^{2\pi i/N}$ | Primitive $N$-th root of unity | Waves in $\mathbb Z_N$ | $\omega_4=i$ |
 | $\chi_r(x)=\omega_N^{rx}$ | Character indexed by frequency $r$ | Complex Fourier basis | $\chi_2(1)=-1$ for $N=4$ |
 | $\sum_{x=0}^{N-1}\omega_N^{rx}=N$ if $r=0$, else 0 | Roots-of-unity cancellation for $r\bmod N$ | Fourier orthogonality | $1+i-1-i=0$ |
-| $\mathrm{QFT}_N|x\rangle=N^{-1/2}\sum_y\omega_N^{xy}|y\rangle$ | **Preview**, cyclic Fourier transform | Next lecture: period finding | $N=4,x=1$: phases $1,i,-1,-i$ |
+| $\mathrm{QFT}_N\lvert x\rangle=N^{-1/2}\sum_y\omega_N^{xy}\lvert y\rangle$ | **Preview**, cyclic Fourier transform | Next lecture: period finding | $N=4,x=1$: phases $1,i,-1,-i$ |
 
 ## 5. Key Concepts Summary
 
@@ -1155,7 +1155,7 @@ For later numerical problems, addition is modulo $N$ instead of bitwise XOR. The
 |---|---|---|
 | Amplitude | Complex weight of a basis state | Squared magnitude gives measurement probability |
 | Basis | Independent reference directions | Coordinates—and thus meaningful measured patterns—depend on it |
-| Computational basis | States $|0\rangle,|1\rangle$ and their bit-string products | Standard input and measurement labels |
+| Computational basis | States $\lvert 0\rangle,\lvert 1\rangle$ and their bit-string products | Standard input and measurement labels |
 | Hadamard gate | Converts 0/1 states into +/− combinations | Creates and reveals parity interference |
 | Tensor product | Combining separate quantum registers | Builds multi-qubit states and gates |
 | XOR | Bitwise addition modulo 2 | Defines Simon's hidden shift |

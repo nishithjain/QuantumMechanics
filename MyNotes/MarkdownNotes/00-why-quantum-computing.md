@@ -55,7 +55,7 @@ Your 2022 notes said “quantum supremacy expected this year.” That phrase mea
 ### Famous algorithms (the textbook reasons)
 
 - **Shor’s algorithm (1994).** Factors large whole numbers efficiently, in theory. That threatens **RSA** encryption, which relies on factoring being hard for classical computers. Practical, large-scale factoring on today’s machines is not here yet. The idea still drives research in both quantum hardware and post-quantum cryptography.
-- **Grover’s algorithm (1996).** Searches an unstructured list of \(n\) items in about \(\sqrt{n}\) steps instead of about \(n\). That is a quadratic speedup, not an exponential one, but it is still a genuine quantum trick.
+- **Grover’s algorithm (1996).** Searches an unstructured list of $n$ items in about $\sqrt{n}$ steps instead of about $n$. That is a quadratic speedup, not an exponential one, but it is still a genuine quantum trick.
 - **Simulating quantum systems.** Molecules and materials *are* quantum. A quantum computer is a natural tool for approximating them. People hope this will help **drug design** and materials science, where classical simulation gets expensive fast.
 
 ### Broader application list from the notes
@@ -75,7 +75,7 @@ Quantum mechanics is outside everyday intuition. Learning this subject is a way 
 
 ## Bit versus qubit, in one page
 
-**Classical computing** stores a **bit**: strictly \(0\) or \(1\) during a calculation. Physically that might be a voltage (\(+5\,\mathrm{V}\) versus \(0\,\mathrm{V}\)) or a magnetic spot on a disk.
+**Classical computing** stores a **bit**: strictly $0$ or $1$ during a calculation. Physically that might be a voltage ($+5\,\mathrm{V}$ versus $0\,\mathrm{V}$) or a magnetic spot on a disk.
 
 **Quantum computing** stores a **qubit**. Physically it might be an atom, a photon, a superconducting circuit, and so on. Mathematically it is a vector, written with **Dirac (ket) notation**, which the next notes teach from scratch.
 

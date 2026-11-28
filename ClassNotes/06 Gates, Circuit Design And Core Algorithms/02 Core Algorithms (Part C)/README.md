@@ -43,7 +43,7 @@ Lecture_Notes/
 
 ## Viewing mathematical equations
 
-The main notes use standard Markdown math delimiters `\(...\)` and `\[...\]`. A Markdown editor that supports math will render them as equations. If your editor shows the raw LaTeX source, enable its equation-rendering feature or use a different local Markdown previewer. You do not need any online image service. The **HTML animations themselves use browser-native Unicode mathematical labels**, so no math-rendering library is needed for them.
+The main notes use standard Markdown math delimiters `$...$` and `\[...\]`. A Markdown editor that supports math will render them as equations. If your editor shows the raw LaTeX source, enable its equation-rendering feature or use a different local Markdown previewer. You do not need any online image service. The **HTML animations themselves use browser-native Unicode mathematical labels**, so no math-rendering library is needed for them.
 
 ## Reading the diagrams
 

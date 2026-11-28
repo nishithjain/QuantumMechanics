@@ -58,7 +58,7 @@ Now we move to the next stage. **Instead of single numbers, we deal with vectors
 
 For real numbers, the vector is simply **a list of real numbers**.
 
-- $\mathbf{v}$ with **two** numbers is in $\mathbb{R}^2$. In the slide, $\mathbf{v} = \begin{pmatrix} 2 \\ 1 \end{pmatrix}$.
+- $\mathbf{v}$ with **two** numbers is in $\mathbb{R}^2$. In the slide, $\mathbf{v} = \begin{pmatrix} 2 \\\\ 1 \end{pmatrix}$.
 - A list of **three** numbers is in $\mathbb{R}^3$.
 - A list of **four** numbers is in $\mathbb{R}^4$. The example is ($2.3,\ -6,\ 3,\ 5.1$).
 

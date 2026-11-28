@@ -138,9 +138,9 @@ Inner product = number. Outer product = grid of numbers. Both are legal; they ju
 
 | Everyday idea | Linear algebra | Dirac notation |
 |---|---|---|
-| Arrow along $x$ | $\begin{bmatrix} 1 \\ 0 \end{bmatrix}$ | $|0\rangle$ |
-| Arrow along $y$ | $\begin{bmatrix} 0 \\ 1 \end{bmatrix}$ | $|1\rangle$ |
-| A general state | a column vector | $|\psi\rangle$ (often read “ket psi”) |
+| Arrow along $x$ | $\begin{bmatrix} 1 \\\\ 0 \end{bmatrix}$ | $\lvert 0\rangle$ |
+| Arrow along $y$ | $\begin{bmatrix} 0 \\\\ 1 \end{bmatrix}$ | $\lvert 1\rangle$ |
+| A general state | a column vector | $\lvert\psi\rangle$ (often read “ket psi”) |
 
 ---
 

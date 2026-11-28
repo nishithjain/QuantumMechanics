@@ -6,7 +6,7 @@
 
 ---
 
-The **Hadamard** gate \(H\) is the usual way to take a definite \(0\) or \(1\) and turn it into an **equal superposition**. It is also its own inverse: apply \(H\) twice and you return to where you started.
+The **Hadamard** gate $H$ is the usual way to take a definite $0$ or $1$ and turn it into an **equal superposition**. It is also its own inverse: apply $H$ twice and you return to where you started.
 
 ## The matrix
 
@@ -45,17 +45,17 @@ H|1\rangle
 \begin{bmatrix} 1/\sqrt{2} \\ -1/\sqrt{2} \end{bmatrix}
 $$
 
-Both of these measure as a fair coin: probability \(1/2\) for \(0\) and \(1/2\) for \(1\). They are *not* the same state. The minus sign in the second vector is a relative phase. If you measure in the \(0/1\) basis you will not see the difference, but later gates can.
+Both of these measure as a fair coin: probability $1/2$ for $0$ and $1/2$ for $1$. They are *not* the same state. The minus sign in the second vector is a relative phase. If you measure in the $0/1$ basis you will not see the difference, but later gates can.
 
 ## Why the minus sign is required
 
-If the bottom-right entry were \(+1/\sqrt{2}\) as well, then \(H|0\rangle\) and \(H|1\rangle\) would be the identical vector. Two different inputs, one output: not reversible. Quantum gates must be unitary, so they must stay reversible. The minus sign keeps the two outputs distinct.
+If the bottom-right entry were $+1/\sqrt{2}$ as well, then $H|0\rangle$ and $H|1\rangle$ would be the identical vector. Two different inputs, one output: not reversible. Quantum gates must be unitary, so they must stay reversible. The minus sign keeps the two outputs distinct.
 
 ## From superposition back to bits
 
-Because \(H\) is its own inverse, the same gate undoes superposition.
+Because $H$ is its own inverse, the same gate undoes superposition.
 
-Starting from \(H|0\rangle\):
+Starting from $H|0\rangle$:
 
 $$
 H
@@ -72,7 +72,7 @@ H
 = |0\rangle
 $$
 
-Starting from \(H|1\rangle\):
+Starting from $H|1\rangle$:
 
 $$
 H
@@ -91,7 +91,7 @@ $$
 
 ## Geometry
 
-On the real unit circle, \(H\) sends the \(x\)-axis states to the diagonal superpositions, and sends \(|1\rangle\) to the other diagonal.
+On the real unit circle, $H$ sends the $x$-axis states to the diagonal superpositions, and sends $|1\rangle$ to the other diagonal.
 
 ![Hadamard gate moving states on the unit circle](../assets/images/hadamard-unit-circle.jpg)
 
@@ -100,9 +100,9 @@ On the real unit circle, \(H\) sends the \(x\)-axis states to the diagonal super
 Many textbook circuits do something like this:
 
 1. start from classical bits
-2. use \(H\) to create superposition
+2. use $H$ to create superposition
 3. apply quantum operations
-4. use \(H\) (or measurement) so the interesting answer becomes a definite \(0\) or \(1\)
+4. use $H$ (or measurement) so the interesting answer becomes a definite $0$ or $1$
 
 Not every algorithm looks like that, and the last step is not magic: if you measure too soon, you destroy the superposition you needed.
 

@@ -6,7 +6,7 @@
 
 ---
 
-A **tensor product** (symbol \(\otimes\)) is a rule for gluing two small vectors into one bigger vector. If each small system has \(2\) numbers, two systems together have \(2 \times 2 = 4\) numbers. Three systems have \(2^3 = 8\) numbers. In general, \(n\) two-level systems make a vector of size \(2^n\).
+A **tensor product** (symbol $\otimes$) is a rule for gluing two small vectors into one bigger vector. If each small system has $2$ numbers, two systems together have $2 \times 2 = 4$ numbers. Three systems have $2^3 = 8$ numbers. In general, $n$ two-level systems make a vector of size $2^n$.
 
 Everyday picture: one light switch has two positions. Two switches have four combined positions: off-off, off-on, on-off, on-on. The tensor product is how we write that “combined list” as one column.
 
@@ -46,7 +46,7 @@ $$
 
 ## Three vectors
 
-Do the same thing again: tensor the first pair, then tensor with the third vector. The eight entries are every product \(x_i y_j z_k\) in a fixed order:
+Do the same thing again: tensor the first pair, then tensor with the third vector. The eight entries are every product $x_i y_j z_k$ in a fixed order:
 
 $$
 \begin{bmatrix} x_0 \\ x_1 \end{bmatrix}
@@ -67,7 +67,7 @@ x_1 y_1 z_1
 \end{bmatrix}
 $$
 
-Numbers (this one is \(|1\rangle \otimes |1\rangle \otimes |0\rangle\)):
+Numbers (this one is $|1\rangle \otimes |1\rangle \otimes |0\rangle$):
 
 $$
 \begin{bmatrix} 0 \\ 1 \end{bmatrix}
@@ -79,7 +79,7 @@ $$
 \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}
 $$
 
-Only the product \(x_1 y_1 z_0 = 1 \cdot 1 \cdot 1\) is nonzero, and that product sits in the seventh slot.
+Only the product $x_1 y_1 z_0 = 1 \cdot 1 \cdot 1$ is nonzero, and that product sits in the seventh slot.
 
 ## Product states
 

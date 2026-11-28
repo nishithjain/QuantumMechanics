@@ -13,17 +13,17 @@
 
 Rule in plain language:
 
-- if the control is \(0\), leave the target alone
-- if the control is \(1\), flip the target
+- if the control is $0$, leave the target alone
+- if the control is $1$, flip the target
 
 The control itself never changes.
 
 | Input | Output |
 |---|---|
-| \(|00\rangle\) | \(|00\rangle\) |
-| \(|01\rangle\) | \(|01\rangle\) |
-| \(|10\rangle\) | \(|11\rangle\) |
-| \(|11\rangle\) | \(|10\rangle\) |
+| $\lvert 00\rangle$ | $\lvert 00\rangle$ |
+| $\lvert 01\rangle$ | $\lvert 01\rangle$ |
+| $\lvert 10\rangle$ | $\lvert 11\rangle$ |
+| $\lvert 11\rangle$ | $\lvert 10\rangle$ |
 
 That is a permutation of the four two-bit states, so it is reversible. Doing CNOT twice returns you to the start, so this particular gate *is* its own inverse.
 
@@ -40,11 +40,11 @@ C
 \end{bmatrix}
 $$
 
-The top-left \(2\times 2\) block is “do nothing” on \(|00\rangle\) and \(|01\rangle\). The bottom-right block swaps \(|10\rangle\) and \(|11\rangle\).
+The top-left $2\times 2$ block is “do nothing” on $|00\rangle$ and $|01\rangle$. The bottom-right block swaps $|10\rangle$ and $|11\rangle$.
 
 ## Four calculations
 
-### Control \(1\), target \(0\) \(\rightarrow\) flip to \(1\)
+### Control $1$, target $0$ $\rightarrow$ flip to $1$
 
 $$
 C|10\rangle
@@ -72,7 +72,7 @@ C\left(
 |11\rangle
 $$
 
-### Control \(1\), target \(1\) \(\rightarrow\) flip to \(0\)
+### Control $1$, target $1$ $\rightarrow$ flip to $0$
 
 $$
 C|11\rangle
@@ -100,7 +100,7 @@ C\left(
 |10\rangle
 $$
 
-### Control \(0\), target \(0\) \(\rightarrow\) no change
+### Control $0$, target $0$ $\rightarrow$ no change
 
 $$
 C|00\rangle
@@ -124,7 +124,7 @@ C\left(
 |00\rangle
 $$
 
-### Control \(0\), target \(1\) \(\rightarrow\) no change
+### Control $0$, target $1$ $\rightarrow$ no change
 
 $$
 C|01\rangle

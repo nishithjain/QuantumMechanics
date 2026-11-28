@@ -10,19 +10,19 @@ Quantum amplitudes are allowed to be **complex numbers**, not only ordinary real
 
 ## Complex numbers in one sentence
 
-A complex number has two parts: a real part and an imaginary part. The imaginary unit \(i\) is defined by
+A complex number has two parts: a real part and an imaginary part. The imaginary unit $i$ is defined by
 
 $$
 i^2 = -1
 $$
 
-Examples: \(1 - i\) and \(1 + i\). The **complex conjugate** of a number flips the sign of the imaginary part: the conjugate of \(1 - i\) is \(1 + i\).
+Examples: $1 - i$ and $1 + i$. The **complex conjugate** of a number flips the sign of the imaginary part: the conjugate of $1 - i$ is $1 + i$.
 
 ## Length 1: why a circle appears
 
-A 2-number real vector \(\begin{bmatrix} x \\ y \end{bmatrix}\) has length \(\sqrt{x^2 + y^2}\). If that length is \(1\), the tip of the arrow sits on a circle of radius \(1\).
+A 2-number real vector $\begin{bmatrix} x \\\\ y \end{bmatrix}$ has length $\sqrt{x^2 + y^2}$. If that length is $1$, the tip of the arrow sits on a circle of radius $1$.
 
-Quantum states are written so that this length (more precisely, a complex version of it) stays \(1\). That is what keeps probabilities adding up to \(100\%\).
+Quantum states are written so that this length (more precisely, a complex version of it) stays $1$. That is what keeps probabilities adding up to $100\%$.
 
 ![Unit circle of radius 1 with labeled column vectors](../assets/images/unit-circle-vectors.jpg)
 
@@ -44,7 +44,7 @@ $$
 \begin{bmatrix} \frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}} \end{bmatrix}
 $$
 
-Each of those has length \(1\). For the first diagonal point:
+Each of those has length $1$. For the first diagonal point:
 
 $$
 \left(\frac{1}{\sqrt{2}}\right)^2 + \left(\frac{1}{\sqrt{2}}\right)^2 = \frac{1}{2} + \frac{1}{2} = 1
@@ -52,10 +52,10 @@ $$
 
 ## What “unitary” means
 
-A **unitary** matrix \(U\) is a **square** matrix of complex numbers whose inverse is its **conjugate transpose**.
+A **unitary** matrix $U$ is a **square** matrix of complex numbers whose inverse is its **conjugate transpose**.
 
-- **Transpose** \(U^T\): rows become columns.
-- **Conjugate transpose** \(U^\dagger\) (your notes also wrote \(U^H\)): transpose, *and* conjugate every entry.
+- **Transpose** $U^T$: rows become columns.
+- **Conjugate transpose** $U^\dagger$ (your notes also wrote $U^H$): transpose, *and* conjugate every entry.
 
 The test is multiplication, not addition:
 
@@ -63,9 +63,9 @@ $$
 U^\dagger U = I
 $$
 
-where \(I\) is the identity matrix. If this holds, then \(U^\dagger = U^{-1}\): the conjugate transpose *is* the inverse. So the operation is reversible, and it preserves the length of state vectors.
+where $I$ is the identity matrix. If this holds, then $U^\dagger = U^{-1}$: the conjugate transpose *is* the inverse. So the operation is reversible, and it preserves the length of state vectors.
 
-A matrix equal to its own conjugate transpose (\(A^\dagger = A\)) is called **Hermitian**. That is a different idea. \(U^\dagger\) is always “the conjugate transpose of \(U\).” It is Hermitian only if it equals \(U\).
+A matrix equal to its own conjugate transpose ($A^\dagger = A$) is called **Hermitian**. That is a different idea. $U^\dagger$ is always “the conjugate transpose of $U$.” It is Hermitian only if it equals $U$.
 
 ## Worked example
 
@@ -99,7 +99,7 @@ U^\dagger = \frac{1}{2}
 \end{bmatrix}
 $$
 
-Now multiply (the two factors of \(\frac{1}{2}\) become \(\frac{1}{4}\)):
+Now multiply (the two factors of $\frac{1}{2}$ become $\frac{1}{4}$):
 
 $$
 U^\dagger U
@@ -129,7 +129,7 @@ $$
 \end{align*}
 $$
 
-The off-diagonal entries cancel to \(0\). The bottom-right entry is also \(4\). So
+The off-diagonal entries cancel to $0$. The bottom-right entry is also $4$. So
 
 $$
 U^\dagger U
@@ -141,9 +141,9 @@ U^\dagger U
 = I
 $$
 
-Therefore this \(U\) is unitary.
+Therefore this $U$ is unitary.
 
-Every quantum gate is a unitary matrix. That is why quantum operations are reversible. They are *not* all equal to their own inverse. Some gates (NOT, CNOT, Hadamard) happen to be; many others (phase gates, most rotations) are not. The inverse is always \(U^\dagger\), which may or may not equal \(U\).
+Every quantum gate is a unitary matrix. That is why quantum operations are reversible. They are *not* all equal to their own inverse. Some gates (NOT, CNOT, Hadamard) happen to be; many others (phase gates, most rotations) are not. The inverse is always $U^\dagger$, which may or may not equal $U$.
 
 ---
 
