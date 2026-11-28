@@ -2,7 +2,7 @@
 
 ## What this package is
 
-**QC Foundations [4/4]: Entanglement as a Resource**, based on the complete lecture transcript and PDF slides for *03 Gates & Circuit Design Part B* (Prof. Kolin Paul, IIT Delhi; slide date 15 November 2026).
+**QC Foundations [4/4]: Entanglement as a Resource**, based on the complete lecture lecture and PDF slides for *03 Gates & Circuit Design Part B* (Prof. Kolin Paul, IIT Delhi; slide date 15 November 2026).
 
 The lesson is intentionally written for someone starting quantum mechanics and quantum computing without a strong mathematics background. Every major idea is introduced in everyday language, then explained with its equations, a worked example, common pitfalls, and understanding checks.
 
@@ -21,19 +21,19 @@ Lecture_Notes/
 ├── README.md
 ├── Lecture_Notes.md
 ├── animations/
-│   ├── animation_01.html  ... animation_09.html
+│ ├── animation_01.html... animation_09.html
 ├── images/
-│   ├── diagram_01_entanglement_resource.svg
-│   ├── diagram_02_bell_reverse_circuit.svg
-│   ├── diagram_03_cnot_copy_vs_entangle.svg
-│   ├── diagram_04_teleportation_circuit.svg
-│   ├── diagram_05_superdense_circuit.svg
-│   ├── diagram_06_chsh_axes.svg
-│   ├── diagram_07_chsh_referee.svg
-│   ├── diagram_08_teleport_vs_dense.svg
-│   └── diagram_09_deferred_measurement.svg
+│ ├── diagram_01_entanglement_resource.svg
+│ ├── diagram_02_bell_reverse_circuit.svg
+│ ├── diagram_03_cnot_copy_vs_entangle.svg
+│ ├── diagram_04_teleportation_circuit.svg
+│ ├── diagram_05_superdense_circuit.svg
+│ ├── diagram_06_chsh_axes.svg
+│ ├── diagram_07_chsh_referee.svg
+│ ├── diagram_08_teleport_vs_dense.svg
+│ └── diagram_09_deferred_measurement.svg
 └── practice/
-    └── practice_questions.md
+ └── practice_questions.md
 ```
 
 ## Special instructions
@@ -51,7 +51,7 @@ Start at §2 of `Lecture_Notes.md` for the prerequisite mathematics. Then follow
 
 ## Sources and accuracy
 
-These notes were prepared from the **user-provided** complete lecture transcription and lecture PDF slides; the source material itself is not redistributed in this ZIP. The original PDF contains 19 physical pages with 31 numbered lecture slides. Typographical transcription errors and minor bit-order ambiguities have been corrected or explicitly noted in `Lecture_Notes.md`.
+These notes were prepared from the **user-provided** complete lecture and lecture PDF slides; the source material itself is not redistributed in this ZIP. The original PDF contains 19 physical pages with 31 numbered lecture slides. Typographical recording errors and minor bit-order ambiguities have been corrected or explicitly noted in `Lecture_Notes.md`.
 
 ## Verification completed for this package
 

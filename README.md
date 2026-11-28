@@ -45,7 +45,7 @@ Personal study material bundled in one place:
 
 | | |
 | --- | --- |
-| **Content** | Transcript- and slide-aligned course packs, *Essence of Linear Algebra* chapter notes, pre-course linear algebra refreshers, beginner-friendly articles |
+| **Content** | Lecture- and slide-aligned course packs, *Essence of Linear Algebra* chapter notes, pre-course linear algebra refreshers, beginner-friendly articles |
 | **Formats** | Markdown (~85 files), offline HTML interactives (~166), images (PNG, JPG, SVG) co-located with the notes that reference them |
 | **Layout** | Each module keeps notes, figures, and interactives together so relative links keep working after clone or download |
 
@@ -69,23 +69,23 @@ Suggested order for the course arc: work through **ClassNotes `01` → `06`**. U
 
 ```mermaid
 flowchart LR
-  subgraph prep["Preparation"]
-    M01["01 Pre-course\nlinear algebra"]
-    BM["BasicMaths\noptional depth"]
-  end
-  subgraph course["ClassNotes arc"]
-    M02["02 Math foundations A"]
-    M03["03 QC foundations"]
-    M04["04 QC foundations\ncontinued"]
-    M05["05 Core algorithms"]
-    M06["06 Gates & algorithms C"]
-  end
-  subgraph personal["Personal track"]
-    MY["MyNotes\nbeginner path"]
-  end
-  M01 --> M02 --> M03 --> M04 --> M05 --> M06
-  BM -.-> M02
-  MY -.-> M02
+ subgraph prep["Preparation"]
+ M01["01 Pre-course\nlinear algebra"]
+ BM["BasicMaths\noptional depth"]
+ end
+ subgraph course["ClassNotes arc"]
+ M02["02 Math foundations A"]
+ M03["03 QC foundations"]
+ M04["04 QC foundations\ncontinued"]
+ M05["05 Core algorithms"]
+ M06["06 Gates & algorithms C"]
+ end
+ subgraph personal["Personal track"]
+ MY["MyNotes\nbeginner path"]
+ end
+ M01 --> M02 --> M03 --> M04 --> M05 --> M06
+ BM -.-> M02
+ MY -.-> M02
 ```
 
 ---
@@ -94,10 +94,10 @@ flowchart LR
 
 ```
 QuantumMechanics-Notes/
-├── ClassNotes/          # Course modules 01–06 (main arc)
-├── BasicMaths/          # Essence of linear algebra + Products + Summation
-├── MyNotes/             # Beginner Markdown path + glossary
-└── README.md            # You are here
+├── ClassNotes/ # Course modules 01–06 (main arc)
+├── BasicMaths/ # Essence of linear algebra + Products + Summation
+├── MyNotes/ # Beginner Markdown path + glossary
+└── README.md # You are here
 ```
 
 | Folder | Role |
@@ -174,10 +174,10 @@ Full TOC: [MyNotes README](MyNotes/MarkdownNotes/README.md).
 | `README.md` in a pack | Entry point + animation index |
 | `practice/practice_questions.md` | Extra problems (several Part B/C packs) |
 
-[`.gitignore`](.gitignore) keeps bulk exports (`.txt`, `.pdf`, transcript dumps) out of the repo. When adding material, keep image and animation folders next to the Markdown files that link to them.
+[`.gitignore`](.gitignore) keeps bulk exports (`.txt`, `.pdf`, raw export files) out of the repo. When adding material, keep image and animation folders next to the Markdown files that link to them.
 
 ---
 
 <p align="center">
-  <sub>Clone the repo, install <a href="https://md-reader.github.io/install/">Markdown Reader</a>, open any linked note, and read.</sub>
+ <sub>Clone the repo, install <a href="https://md-reader.github.io/install/">Markdown Reader</a>, open any linked note, and read.</sub>
 </p>

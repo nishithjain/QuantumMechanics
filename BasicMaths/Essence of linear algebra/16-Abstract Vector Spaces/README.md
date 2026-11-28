@@ -2,7 +2,7 @@
 
 ## Contents
 
-- `notes/lecture-notes.md` — detailed beginner-friendly notes following the transcript's teaching sequence.
+- `notes/lecture-notes.md` — detailed beginner-friendly notes following the lecture's teaching sequence.
 - `images/concept-01-abstract-vector-spaces.png` — original educational infographic.
 - `animations/animation-01-functions-as-vectors.html` — interactively add and scale functions and compare their graphs.
 - `animations/animation-02-derivative-matrix.html` — see how the infinite derivative matrix acts on polynomial coefficient vectors (using a finite displayed truncation).
@@ -17,4 +17,4 @@
 
 ## Source fidelity
 
-The notes follow the supplied Lecture 16 transcript. The transcript says the eight axioms are shown on screen but does not transcribe their exact wording. The notes therefore label the listed eight rules as a standard formulation for real vector spaces, rather than claiming that the transcript itself supplied their exact on-screen phrasing.
+The notes follow the supplied Lecture 16 lecture. The lecture says the eight axioms are shown on screen but does not spell out their exact wording. The notes therefore label the listed eight rules as a standard formulation for real vector spaces, rather than claiming that the lecture itself supplied their exact on-screen phrasing.

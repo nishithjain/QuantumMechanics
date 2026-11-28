@@ -2,11 +2,11 @@
 
 **Who these notes are for:** someone new to quantum computing who wants the maths explained slowly, with every step shown.
 
-> **How to read this.** The lecture had two halves. **Part I** is a big-picture tour of quantum computing. **Part II** is the actual maths: complex numbers. Most of these notes are about Part II, because that is the foundation everything else is built on. **The notes follow the same order as the transcript**, so you can read them alongside the transcript. Anything that was *not* said in the lecture (extra examples, practice problems, a maths refresher) is labelled as an addition or placed in the Appendix at the end.
+> **How to read this.** The lecture had two halves. **Part I** is a big-picture tour of quantum computing. **Part II** is the actual maths: complex numbers. Most of these notes are about Part II, because that is the foundation everything else is built on. **The notes follow the same order as the lecture**, so you can read them alongside the recording. Anything that was *not* said in the lecture (extra examples, practice problems, a maths refresher) is labelled as an addition or placed in the Appendix at the end.
 
-**Follow-along map: transcript heading and the matching section of these notes**
+**Follow-along map: lecture topics and matching sections in these notes**
 
-| Heading in the transcript | Section here |
+| Lecture topic | Section here |
 |---|---|
 | Part I: Programme Introduction and Quantum Computing Overview | 1.1 to 1.5 |
 | Part II: Beginning the Mathematics Session (bits vs qubits, gates, measurement, $2^n$) | 2.1 to 2.3 |
@@ -154,112 +154,114 @@ Explain it to yourself like this:
 
 1. **Gates in classical computing** take bits in and give bits out. An OR gate follows a rule table: both inputs $0$ gives $0$, otherwise $1$.
 
-   Here is an OR gate with its two input bits ($A$ and $B$) on the left and its one output bit on the right:
+   Here is an OR gate with its two input bits ($A$ and $B$) on the left and its one output bit on the right. Use the buttons for **A** and **B** to change inputs and see the output and wires update.
 
-   ```
-    Input A (0 or 1) ────┐   ┌────────┐
-                         ├───┤   OR   ├──── Output (0 or 1)
-    Input B (0 or 1) ────┘   └────────┘
-   ```
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe src="assets/interactive-or-gate.html" title="Interactive OR gate" width="100%" height="560" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms" style="border:1px solid #dce3ef;border-radius:12px;max-width:720px;display:block;margin:12px 0;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+   [Open interactive OR gate in full page](assets/interactive-or-gate.html) if the embed does not appear in your Markdown preview.
 
    **Truth table** (every possible input, and the output the gate gives):
 
-   | Input $A$ | Input $B$ | Output ($A$ OR $B$) |
-   |---|---|---|
-   | 0 | 0 | **0** |
-   | 0 | 1 | **1** |
-   | 1 | 0 | **1** |
-   | 1 | 1 | **1** |
+ | Input $A$ | Input $B$ | Output ($A$ OR $B$) |
+ |---|---|---|
+ | 0 | 0 | **0** |
+ | 0 | 1 | **1** |
+ | 1 | 0 | **1** |
+ | 1 | 1 | **1** |
 
-   In words: the output is $1$ if **at least one** input is $1$. It is $0$ only when **both** inputs are $0$. Notice two bits go in but only one bit comes out, so you cannot always work backwards from the output to the inputs (an output of $1$ could have come from three different input pairs). This will matter when we compare with quantum gates, which are always reversible.
+ In words: the output is $1$ if **at least one** input is $1$. It is $0$ only when **both** inputs are $0$. Notice two bits go in but only one bit comes out, so you cannot always work backwards from the output to the inputs (an output of $1$ could have come from three different input pairs). This will matter when we compare with quantum gates, which are always reversible.
 
 2. **Gates in quantum computing** take a vector in and give a vector out. The tool that turns one vector into another is a **matrix**. Not every matrix is allowed: only special ones called **unitary** matrices.
 
-   Here is a quantum gate drawn the same way as the OR gate. It has **one vector going in** (a list of numbers) and **one vector coming out**, and a **matrix** $U$ sits in the box:
+   Here is a quantum gate drawn the same way as the OR gate. It has **one vector going in** (a list of numbers) and **one vector coming out**, and a **matrix** $U$ sits in the box. Step through the animation to see input vector → matrix $U$ → output vector.
 
-```
-                 ┌──────────────┐
-                 │              │
-Input vector ──> │  Matrix U    │──▶ Output vector
-(list of         │              │    (list of
- numbers)        └──────────────┘     numbers)
-```
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe src="assets/interactive-matrix-vector.html" title="Matrix U vector transformation" width="100%" height="640" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms" style="border:1px solid #dce3ef;border-radius:12px;max-width:900px;display:block;margin:12px 0;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+   [Open matrix–vector diagram in full page](assets/interactive-matrix-vector.html) if the embed does not appear in your Markdown preview.
 
    Simplified, the rule is just one line:
 
-   $$
-   \text{output vector} = U \times \text{input vector}
-   $$
+ $$
+ \text{output vector} = U \times \text{input vector}
+ $$
 
-   **Dont worry if you dont understand the below now**
+ **Dont worry if you dont understand the below now**
 
-   > **A concrete example: the quantum NOT gate (called the Pauli-X gate).** Its matrix is
-   >
-   > $$
-   > X = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}
-   > $$
-   >
-   > The two basic qubit states are the vectors
-   >
-   > $$
-   > |0\rangle = \begin{bmatrix} 1 \\ 0 \end{bmatrix}
-   > \qquad
-   > |1\rangle = \begin{bmatrix} 0 \\ 1 \end{bmatrix}
-   > $$
-   >
-   > Multiplying the matrix by the vector (row times column) gives the **"truth table" of the quantum gate**. Here are the two calculations:
-   >
-   > **Input $\lvert 0\rangle$:**
-   >
-   > $$
-   > \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}
-   > \begin{bmatrix} 1 \\ 0 \end{bmatrix}
-   > =
-   > \begin{bmatrix} 0\cdot1 + 1\cdot0 \\ 1\cdot1 + 0\cdot0 \end{bmatrix}
-   > =
-   > \begin{bmatrix} 0 \\ 1 \end{bmatrix}
-   > = \lvert 1\rangle
-   > $$
-   >
-   > **Input $\lvert 1\rangle$:**
-   >
-   > $$
-   > \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}
-   > \begin{bmatrix} 0 \\ 1 \end{bmatrix}
-   > =
-   > \begin{bmatrix} 0\cdot0 + 1\cdot1 \\ 1\cdot0 + 0\cdot1 \end{bmatrix}
-   > =
-   > \begin{bmatrix} 1 \\ 0 \end{bmatrix}
-   > = \lvert 0\rangle
-   > $$
-   >
-   > And the summary (the "truth table" of the X gate):
-   >
-   > $$
-   > \begin{array}{c|c}
-   > \text{Input state} & \text{Output state} \\
-   > \hline
-   > \lvert 0\rangle & \lvert 1\rangle \\
-   > \lvert 1\rangle & \lvert 0\rangle
-   > \end{array}
-   > $$
-   >
-   > In one line: $X\lvert 0\rangle = \lvert 1\rangle$ and $X\lvert 1\rangle = \lvert 0\rangle$.
-   >
-   > So $X$ turns $0$ into $1$ and $1$ into $0$, just like a classical NOT gate. The matrix simply **swaps the two entries** of the vector.
-   >
-   > A second example, the **Hadamard gate** $H$, does something with no classical equivalent. It takes a definite $0$ and produces a *mix* of $0$ and $1$ (a superposition):
-   >
-   > $$
-   > H = \frac{1}{\sqrt2}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}
-   > \qquad
-   > H\begin{bmatrix} 1 \\ 0 \end{bmatrix} = \frac{1}{\sqrt2}\begin{bmatrix} 1 \\ 1 \end{bmatrix}
-   > $$
-   >
-   > **What "unitary" means in plain words.** A matrix $U$ is unitary if it satisfies $U^\dagger U = I$, where $U^\dagger$ means "flip rows and columns, then take the conjugate of each entry" and $I$ is the identity matrix (the "do nothing" matrix). You do not need to master this yet; it is covered in a later class. For now, remember the two practical consequences:
-   >
-   > - **It never changes the length of a vector.** A quantum state must keep length $1$ so that probabilities add up to $100\%$. A unitary gate preserves that. A random matrix might stretch or shrink the vector and would break the probabilities.
-   > - **It is always reversible.** You can always undo a unitary gate by applying $U^\dagger$. For $X$, applying it twice returns the original state. Compare with the classical OR gate above, which loses information and cannot be undone.
+ > **A concrete example: the quantum NOT gate (called the Pauli-X gate).** Its matrix is
+ >
+ > $$
+ > X = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}
+ > $$
+ >
+ > The two basic qubit states are the vectors
+ >
+ > $$
+ > |0\rangle = \begin{bmatrix} 1 \\ 0 \end{bmatrix}
+ > \qquad
+ > |1\rangle = \begin{bmatrix} 0 \\ 1 \end{bmatrix}
+ > $$
+ >
+ > Multiplying the matrix by the vector (row times column) gives the **"truth table" of the quantum gate**. Here are the two calculations:
+ >
+ > **Input $\lvert 0\rangle$:**
+ >
+ > $$
+ > \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}
+ > \begin{bmatrix} 1 \\ 0 \end{bmatrix}
+ > =
+ > \begin{bmatrix} 0\cdot1 + 1\cdot0 \\ 1\cdot1 + 0\cdot0 \end{bmatrix}
+ > =
+ > \begin{bmatrix} 0 \\ 1 \end{bmatrix}
+ > = \lvert 1\rangle
+ > $$
+ >
+ > **Input $\lvert 1\rangle$:**
+ >
+ > $$
+ > \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}
+ > \begin{bmatrix} 0 \\ 1 \end{bmatrix}
+ > =
+ > \begin{bmatrix} 0\cdot0 + 1\cdot1 \\ 1\cdot0 + 0\cdot1 \end{bmatrix}
+ > =
+ > \begin{bmatrix} 1 \\ 0 \end{bmatrix}
+ > = \lvert 0\rangle
+ > $$
+ >
+ > And the summary (the "truth table" of the X gate):
+ >
+ > $$
+ > \begin{array}{c|c}
+ > \text{Input state} & \text{Output state} \\
+ > \hline
+ > \lvert 0\rangle & \lvert 1\rangle \\
+ > \lvert 1\rangle & \lvert 0\rangle
+ > \end{array}
+ > $$
+ >
+ > In one line: $X\lvert 0\rangle = \lvert 1\rangle$ and $X\lvert 1\rangle = \lvert 0\rangle$.
+ >
+ > So $X$ turns $0$ into $1$ and $1$ into $0$, just like a classical NOT gate. The matrix simply **swaps the two entries** of the vector.
+ >
+ > A second example, the **Hadamard gate** $H$, does something with no classical equivalent. It takes a definite $0$ and produces a *mix* of $0$ and $1$ (a superposition):
+ >
+ > $$
+ > H = \frac{1}{\sqrt2}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}
+ > \qquad
+ > H\begin{bmatrix} 1 \\ 0 \end{bmatrix} = \frac{1}{\sqrt2}\begin{bmatrix} 1 \\ 1 \end{bmatrix}
+ > $$
+ >
+ > **What "unitary" means in plain words.** A matrix $U$ is unitary if it satisfies $U^\dagger U = I$, where $U^\dagger$ means "flip rows and columns, then take the conjugate of each entry" and $I$ is the identity matrix (the "do nothing" matrix). You do not need to master this yet; it is covered in a later class. For now, remember the two practical consequences:
+ >
+ > - **It never changes the length of a vector.** A quantum state must keep length $1$ so that probabilities add up to $100\%$. A unitary gate preserves that. A random matrix might stretch or shrink the vector and would break the probabilities.
+ > - **It is always reversible.** You can always undo a unitary gate by applying $U^\dagger$. For $X$, applying it twice returns the original state. Compare with the classical OR gate above, which loses information and cannot be undone.
 
 1. **Measuring** a quantum system does not give a plain yes/no. It gives outcomes with probabilities. To compute those probabilities you need the **inner product** of vectors.
 
@@ -286,7 +288,7 @@ The lecturer gave the plan for the day like this:
 | First two hours | 1. Complex numbers. 2. Vector spaces. 3. Inner products. 4. Linear maps (matrices). |
 | Last hour | Eigenvalues (he said he would "talk a little bit" about them). |
 
-This transcript covers topic 1, complex numbers. The other topics follow in the next part of the lecture.
+This section covers topic 1, complex numbers. The other topics follow in the next part of the lecture.
 
 He also said that the $2^n$ remark above is something not to worry about yet: "This will become clear as we go on."
 
@@ -298,17 +300,15 @@ This is the part where the lecturer explains **what $\mathbb{R}^2$ means** and w
 
 $\mathbb{R}$ means "the real numbers". $\mathbb{R}^2$ means "all vectors with **two** real coordinates". The lecturer's example: the vector with coordinates five and three, written $(5, 3)$.
 
-You can draw it as a point on a flat plane. The first number is the **x coordinate** (how far across) and the second is the **y coordinate** (how far up):
+You can draw it as a point on a flat plane. The first number is the **x coordinate** (how far across) and the second is the **y coordinate** (how far up). Step through the animation to see how $(5, 3)$ is reached from the origin:
 
-```
- y
- 4 |
- 3 |                   *  (5, 3)
- 2 |                   :
- 1 |                   :
- 0 +---+---+---+---+---+---+--> x
-   0   1   2   3   4   5   6
-```
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe src="assets/interactive-vector-5-3-plane.html" title="Plotting (5, 3) on the x-y plane" width="100%" height="600" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms" style="border:1px solid #dce3ef;border-radius:12px;max-width:720px;display:block;margin:12px 0;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open x-y plane diagram in full page](assets/interactive-vector-5-3-plane.html) if the embed does not appear in your Markdown preview.
 
 - Its **x coordinate is 5**: go 5 steps to the right.
 - Its **y coordinate is 3**: go 3 steps up.
@@ -316,9 +316,9 @@ You can draw it as a point on a flat plane. The first number is the **x coordina
 
 The same picture, drawn to scale. The blue arrow is the vector from the origin $(0, 0)$ to the point $(5, 3)$; the orange dashed lines show its two coordinates:
 
-![The vector (5, 3) drawn as an arrow from the origin in the real x-y plane](images/vector-5-3-real-plane.svg)
+![The vector (5, 3) drawn as an arrow from the origin in the real x-y plane](assets/vector-5-3-real-plane.svg)
 
-> **Transcript note:** the transcript says "draw them in the complex plane like this". Here the lecturer is drawing the ordinary **real** x-y plane (the complex plane comes later, in section 4).
+> **Note:** the lecture says "draw them in the complex plane like this". Here the lecturer is drawing the ordinary **real** x-y plane (the complex plane comes later, in section 4).
 
 Three real numbers, such as $(5, 3, 1)$, make a point in ordinary 3-D space. You can still draw that. You cannot draw four or more.
 
@@ -357,7 +357,7 @@ A student asked: *why are qubits, which are physical things, described by someth
 
 He said he would come back to this later.
 
-> **Transcript note:** in this part the transcription twice says "quantum numbers" or "quantum, sorry, numbers". From context the lecturer means **complex numbers**.
+> **Note:** in this part the recording twice says "quantum numbers" or "quantum, sorry, numbers". From context the lecturer means **complex numbers**.
 
 ---
 
@@ -387,9 +387,15 @@ Here are some values of $x^2 + 1$:
 |---|---|---|---|---|---|---|---|
 | $x^2 + 1$ | 10 | 5 | 2 | 1 | 2 | 5 | 10 |
 
-And here is the picture. Each blue dot is one of the points from the table, on the curve $y = x^2 + 1$. Solving $x^2 + 1 = 0$ means asking where the curve touches the red line $y = 0$ (the horizontal axis). It never does; its lowest point is $y = 1$ (at $x = 0$):
+And here is the picture. Each blue dot is one of the points from the table, on the curve $y = x^2 + 1$. Solving $x^2 + 1 = 0$ means asking where the curve touches the red line $y = 0$ (the horizontal axis). Step through the animation to see why it never does; the lowest point is $y = 1$ (at $x = 0$):
 
-![Graph of y = x squared plus 1. The blue curve stays above the red x-axis (y = 0), with its lowest point at (0, 1), so x squared plus 1 equals 0 has no real solution](images/parabola-x-squared-plus-1.svg)
+<!-- markdownlint-disable MD033 -->
+<div class="demo-frame">
+<iframe src="assets/interactive-parabola-x-squared-plus-1.html" title="Parabola y = x² + 1 and the line y = 0" width="100%" height="720" loading="lazy" style="border:1px solid #dce3ef;border-radius:12px;max-width:760px;display:block;margin:12px 0;"></iframe>
+</div>
+<!-- markdownlint-enable MD033 -->
+
+[Open parabola animation in full page](assets/interactive-parabola-x-squared-plus-1.html) if the embed does not appear in your Markdown preview.
 
 The curve stays above the line $y = 0$, so **there is no real solution**.
 
@@ -408,7 +414,7 @@ Key points from the lecture:
 
 With $i$ in hand, the equation $x^2 + 1 = 0$ now has solutions. (There are actually two of them, $x = i$ and $x = -i$, because $(-i)^2 = i^2 = -1$ as well.) On the complex plane (section 4), they sit one step above and one step below the origin:
 
-![The two solutions of x squared equals minus 1 on the complex plane: i, one unit above the origin on the imaginary axis, and minus i, one unit below](images/solutions-of-x-squared-equals-minus-1.svg)
+![The two solutions of x squared equals minus 1 on the complex plane: i, one unit above the origin on the imaginary axis, and minus i, one unit below](assets/solutions-of-x-squared-equals-minus-1.svg)
 
 ## 3.3 Why quantum computing needs complex numbers
 
@@ -438,7 +444,7 @@ The lecturer then zoomed out: inventing $i$ is not unusual. It is the **latest s
 
 He went through the number systems one at a time. For each one he pointed to an equation on his slide ("an equation like this") and said that the old numbers could not solve it, so a new kind of number was invented.
 
-> **About the equations below.** The slides are not part of the transcript, so the equations on the slides are not recorded. The equations here are the **standard textbook example for each step** and they match what the lecturer describes in words. They are my reconstruction, not a quote. If your slides use slightly different examples (for example $x + 1 = 0$ instead of $x + 5 = 0$), the idea is identical.
+> **About the equations below.** The slides are not part of the spoken lecture, so the equations on the slides are not recorded. The equations here are the **standard textbook example for each step** and they match what the lecturer describes in words. They are my reconstruction, not a quote. If your slides use slightly different examples (for example $x + 1 = 0$ instead of $x + 5 = 0$), the idea is identical.
 
 ### The ladder at a glance
 
@@ -552,7 +558,7 @@ That is the lecturer's point: complex numbers are not strange. They are one more
 
 Each new system **contains** the previous one. Picture them as boxes inside boxes:
 
-![Number systems drawn as boxes inside boxes: the natural numbers N sit inside the integers Z, which sit inside the rational numbers Q, inside the real numbers R, inside the complex numbers C](images/number-systems-nested.svg)
+![Number systems drawn as boxes inside boxes: the natural numbers N sit inside the integers Z, which sit inside the rational numbers Q, inside the real numbers R, inside the complex numbers C](assets/number-systems-nested.svg)
 
 Another way to see the story is on the number line. Each step fills a gap or adds a new direction:
 
@@ -654,7 +660,7 @@ This picture is called the **Argand diagram**. It is the best tool for *seeing* 
 
 Here is $3 + 2i$ drawn as an arrow from the origin. Compare it with the picture of the vector $(5, 3)$ in section 2.5: it is the same kind of picture, but the horizontal axis is now the **real part** and the vertical axis is the **imaginary part**:
 
-![The complex number 3 + 2i drawn as an arrow from the origin on the complex plane](images/complex-plane-3-plus-2i.svg)
+![The complex number 3 + 2i drawn as an arrow from the origin on the complex plane](assets/complex-plane-3-plus-2i.svg)
 
 When the lecturer says "$\mathbb{C}$ is like $\mathbb{R}^2$", he means exactly this: each complex number corresponds to a pair of real numbers. Likewise:
 
@@ -685,7 +691,7 @@ This is **exactly** vector addition. If $z$ is the point $(a, b)$ and $w$ is the
 
 Here is the example from section 5.1 drawn on the complex plane. The blue arrow is $z = 3 + 2i$ and the red arrow is $w = 1 - 4i$. The dashed lines complete the parallelogram, and the green arrow along the diagonal is the sum $z + w = 4 - 2i$:
 
-![Adding the complex numbers 3 + 2i and 1 - 4i as vectors: the parallelogram diagonal is 4 - 2i](images/adding-complex-numbers.svg)
+![Adding the complex numbers 3 + 2i and 1 - 4i as vectors: the parallelogram diagonal is 4 - 2i](assets/adding-complex-numbers.svg)
 
 Compare with the plain vectors from the lecture: $(5, 1) + (1, 4) = (6, 5)$. Same operation.
 
@@ -786,7 +792,7 @@ $$
 
 Think of the real axis as a **mirror**. Place $z = 3 + 2i$ above the mirror, and its conjugate $3 - 2i$ is its mirror image below. The two points have the same real part, opposite imaginary parts, and the same distance from the origin:
 
-![The complex number 3 + 2i and its conjugate 3 - 2i drawn as mirror images across the real axis](images/complex-conjugate-reflection.svg)
+![The complex number 3 + 2i and its conjugate 3 - 2i drawn as mirror images across the real axis](assets/complex-conjugate-reflection.svg)
 
 | $z$ | $\bar z$ |
 |---|---|
@@ -809,7 +815,7 @@ This is just Pythagoras on the point $(a, b)$. The lecturer's reminder: "if a po
 
 The picture below shows why. Go $3$ to the right (the real part $a$) and $4$ up (the imaginary part $b$). The straight line from the origin to $3 + 4i$ is the **hypotenuse** of a right-angled triangle with sides $3$ and $4$, so its length is $\sqrt{3^2 + 4^2} = 5$. The last line of the picture is the identity $z\,\bar z = \lvert z\rvert^2$ from section 8.3, checked with numbers:
 
-![The complex number 3 + 4i drawn as the hypotenuse of a right triangle with legs 3 and 4, so its modulus is 5](images/modulus-pythagoras.svg)
+![The complex number 3 + 4i drawn as the hypotenuse of a right triangle with legs 3 and 4, so its modulus is 5](assets/modulus-pythagoras.svg)
 
 Other names: **absolute value**, **magnitude**, **norm**. Also called $r$.
 
@@ -1007,7 +1013,7 @@ There is another way to give directions to the same point. Instead of walking ac
 
 These two numbers $(r, \theta)$ are the **polar coordinates** of $z$. Here is the same picture for the lecturer's example $z = 2 + 3i$:
 
-![The complex number 2 + 3i with its length r equal to the square root of 13, its angle theta of about 56.3 degrees, and the right triangle with sides a and b](images/polar-form-r-theta.svg)
+![The complex number 2 + 3i with its length r equal to the square root of 13, its angle theta of about 56.3 degrees, and the right triangle with sides a and b](assets/polar-form-r-theta.svg)
 
 Reading the picture:
 
@@ -1033,7 +1039,7 @@ Take the right-angled triangle from the picture above and look at it by itself. 
 - the side **next to** the angle $\theta$ is $a$ (it runs along the real axis);
 - the side **opposite** the angle $\theta$ is $b$ (it is the vertical side, on the far side from the angle).
 
-![A right-angled triangle with angle theta, the side a next to the angle, the side b opposite it, and the hypotenuse r, with the formulas cos theta equals a over r and sin theta equals b over r](images/trig-triangle-a-b-r.svg)
+![A right-angled triangle with angle theta, the side a next to the angle, the side b opposite it, and the hypotenuse r, with the formulas cos theta equals a over r and sin theta equals b over r](assets/trig-triangle-a-b-r.svg)
 
 Recall from trigonometry (appendix A.5): $\cos\theta$ is the side **next to** the angle divided by the hypotenuse, and $\sin\theta$ is the side **opposite** the angle divided by the hypotenuse. In our triangle that gives (the lecturer: "this is all you need to know"):
 
@@ -1103,7 +1109,7 @@ The two axes cut the plane into four **quadrants**. They are numbered **anticloc
 
 In the same way, look at left and right. Quadrants I and IV are the **right half**, where the $x$-coordinate is positive, so $\cos\theta > 0$. Quadrants II and III are the **left half**, where $x$ is negative, so $\cos\theta < 0$.
 
-![The unit circle with the plane split into quadrants I to IV. The top half (quadrants I and II) is shaded blue and has sin positive; the bottom half is grey and has sin negative. Two sample points at 50 degrees and 130 degrees show cos as the sideways distance and sin as the height](images/trig-quadrants-top-half.svg)
+![The unit circle with the plane split into quadrants I to IV. The top half (quadrants I and II) is shaded blue and has sin positive; the bottom half is grey and has sin negative. Two sample points at 50 degrees and 130 degrees show cos as the sideways distance and sin as the height](assets/trig-quadrants-top-half.svg)
 
 In the picture, the green segment is $\sin\theta$ (the height) and the red segment is $\cos\theta$ (the sideways distance). At $50^\circ$ the red segment points right (cos positive). At $130^\circ$ it points left (cos negative), but the green segment still points up, because $130^\circ$ is also in the top half.
 
@@ -1148,14 +1154,14 @@ Five angles appear again and again in quantum computing. Here are their sine and
 
 Here are the same five points on the unit circle. Each point is $(\cos\theta, \sin\theta)$, so the table can be read straight off the picture:
 
-![The first quarter of the unit circle with the points for 0, 30, 45, 60 and 90 degrees labelled with their radians and their coordinates (cos, sin)](images/trig-special-angles-circle.svg)
+![The first quarter of the unit circle with the points for 0, 30, 45, 60 and 90 degrees labelled with their radians and their coordinates (cos, sin)](assets/trig-special-angles-circle.svg)
 
 **Why are these values what they are?** They come from two familiar shapes (you can rebuild the table from them if you forget it):
 
 - **Half of a square** with side $1$: it is a right triangle with two equal legs of length $1$ and two angles of $45^\circ$. By Pythagoras the hypotenuse is $\sqrt{1^2 + 1^2} = \sqrt2$. So $\sin 45^\circ = \dfrac{\text{opposite}}{\text{hypotenuse}} = \dfrac{1}{\sqrt2} = \dfrac{\sqrt2}{2}$, and $\cos 45^\circ$ is the same.
 - **Half of an equilateral triangle** with side $2$: cut it down the middle. You get a right triangle with hypotenuse $2$, short leg $1$ (half of the base) and long leg $\sqrt{2^2 - 1^2} = \sqrt3$. The angles are $30^\circ$ (opposite the short leg) and $60^\circ$. So $\sin 30^\circ = \tfrac12$, $\cos 30^\circ = \tfrac{\sqrt3}{2}$, $\sin 60^\circ = \tfrac{\sqrt3}{2}$, $\cos 60^\circ = \tfrac12$.
 
-![A 45-45-90 triangle with sides 1, 1 and root 2, and a 30-60-90 triangle with sides 1, root 3 and 2, each with the sine and cosine values read off](images/trig-special-triangles.svg)
+![A 45-45-90 triangle with sides 1, 1 and root 2, and a 30-60-90 triangle with sides 1, root 3 and 2, each with the sine and cosine values read off](assets/trig-special-triangles.svg)
 
 (The values for $0^\circ$ and $90^\circ$ come from the circle: at $0^\circ$ the point is $(1, 0)$ and at $90^\circ$ it is $(0, 1)$.)
 
@@ -1190,7 +1196,7 @@ Back to the lecturer's two questions. In polar form, a **power** just raises the
 
 The lecturer's example: "if I give you a complex number $1 + i$, how will I know what $r$ and $\theta$ are?" Here are the steps, together with a picture:
 
-![The complex number 1 + i as a point at (1, 1), with length r equal to the square root of 2 and angle theta equal to 45 degrees or pi over 4 radians](images/polar-form-1-plus-i.svg)
+![The complex number 1 + i as a point at (1, 1), with length r equal to the square root of 2 and angle theta equal to 45 degrees or pi over 4 radians](assets/polar-form-1-plus-i.svg)
 
 **Step 1: plot the point.** $1 + i = 1 + 1\cdot i$, so both the real part and the imaginary part are $1$. The point is $(1, 1)$. (The lecturer: "both the coordinates are 1 and 1".)
 
@@ -1218,7 +1224,7 @@ $$
 
 **Check.** $\cos(\pi/4) = \sin(\pi/4) = 1/\sqrt2$. So $\sqrt2\cdot\tfrac{1}{\sqrt2}(1 + i) = 1\cdot(1 + i) = 1 + i$. It matches the number we started with.
 
-> **Transcript note:** the transcript says "this length here will be square $\sqrt{2}$". It means "the square root of 2", $\sqrt2$.
+> **Note:** the lecture says "this length here will be square $\sqrt{2}$". It means "the square root of 2", $\sqrt2$.
 
 The lecturer pointed out the obvious complaint: this looks *more* complicated than $1 + i$. The payoff comes next.
 
@@ -1345,7 +1351,7 @@ How to read it:
 
 So $z = r\,e^{i\theta}$ means "**stretch** by $r$, **pointing** at angle $\theta$".
 
-> **Transcript note:** the last sentence of this passage in the transcript is garbled ("$e^{i\theta}$ is essentially denoting $\cos\theta$ plus $i$ $z$ is equal to $\cos\theta$ plus $i$"). It is the lecturer repeating Euler's formula, $e^{i\theta} = \cos\theta + i\sin\theta$.
+> **Note:** the last sentence of this passage in the recording is garbled ("$e^{i\theta}$ is essentially denoting $\cos\theta$ plus $i$ $z$ is equal to $\cos\theta$ plus $i$"). It is the lecturer repeating Euler's formula, $e^{i\theta} = \cos\theta + i\sin\theta$.
 
 ### More examples
 
@@ -1477,7 +1483,7 @@ A number of length $1$ is exactly $1$ unit away from the origin. All the points 
 
 You reach it by starting at the point $1$ on the real axis and walking along the circle, **anticlockwise**, until the angle is $\theta$. The lecturer: "I always start measuring from the real axis."
 
-![The unit circle with e to the i theta marked at angles 0, 45 degrees, 90 degrees, 180 degrees and 270 degrees. For 45 degrees, the right triangle with sides cos theta and sin theta is drawn](images/unit-circle-e-i-theta.svg)
+![The unit circle with e to the i theta marked at angles 0, 45 degrees, 90 degrees, 180 degrees and 270 degrees. For 45 degrees, the right triangle with sides cos theta and sin theta is drawn](assets/unit-circle-e-i-theta.svg)
 
 ### Reading the picture: the examples from the lecture
 
@@ -1494,7 +1500,7 @@ How to remember the angles: $\pi$ radians is $180^\circ$, a half turn. So $\pi/2
 
 **Why $e^{i\pi} = -1$.** After a half turn you are at the left end of the circle, the point $(-1, 0)$, which is the number $-1$. Check with the formula: $e^{i\pi} = \cos\pi + i\sin\pi = -1 + i\cdot 0 = -1$. This is Euler's identity from section 11.5.
 
-> **Transcript note:** the transcript garbles this passage ("this is $e$ to the $i$, this is $e$ to the $i$ $3i\pi/2$ because that is $270$ degrees"). The lecturer is naming the points in order: $e^{i\pi/2}$ at $90^\circ$, $e^{i\pi}$ at $180^\circ$, $e^{i3\pi/2}$ at $270^\circ$, and then $e^{i0}$ is "back to the starting point".
+> **Note:** the lecture garbles this passage ("this is $e$ to the $i$, this is $e$ to the $i$ $3i\pi/2$ because that is $270$ degrees"). The lecturer is naming the points in order: $e^{i\pi/2}$ at $90^\circ$, $e^{i\pi}$ at $180^\circ$, $e^{i3\pi/2}$ at $270^\circ$, and then $e^{i0}$ is "back to the starting point".
 
 ## 12.4 Going around the circle
 
@@ -1558,11 +1564,11 @@ Putting the pieces together gives the rule above. This is the whole reason for w
 
 In the picture below, $z_1$ has length $2$ at $20^\circ$ and $z_2$ has length $1.5$ at $60^\circ$. The product $z_1 z_2$ (red) has length $2 \times 1.5 = 3$ and sits at angle $20^\circ + 60^\circ = 80^\circ$. The red arc measures the angle $\theta_1 + \theta_2$ from the real axis; the dashed circle has radius $3$ and shows that the tip of the product lies at distance $r_1 r_2$ from the origin.
 
-![Two arrows z1 (length 2, angle 20 degrees) and z2 (length 1.5, angle 60 degrees) and their product, a red arrow of length 3 at angle 80 degrees, with the angle arcs theta 1, theta 2 and theta 1 plus theta 2 from the real axis](images/multiplication-rule-lengths-angles.svg)
+![Two arrows z1 (length 2, angle 20 degrees) and z2 (length 1.5, angle 60 degrees) and their product, a red arrow of length 3 at angle 80 degrees, with the angle arcs theta 1, theta 2 and theta 1 plus theta 2 from the real axis](assets/multiplication-rule-lengths-angles.svg)
 
 His point: "if I tell you where the initial two complex numbers were, you can figure out where the new complex number is." You never have to expand brackets. You just read off the two lengths and the two angles, multiply the lengths, and add the angles. (The picture for a specific example is in section 13.4.)
 
-> **Transcript note:** the transcript says "its angle will be theta plus 1". It means $\theta_1 + \theta_2$.
+> **Note:** the lecture says "its angle will be theta plus 1". It means $\theta_1 + \theta_2$.
 
 ## 13.2 Multiplying by a number on the unit circle only rotates
 
@@ -1576,7 +1582,7 @@ $$
 
 The length is still $r_1$ (multiplying by $1$ changes nothing) and the angle has grown by $\phi$. In the picture, $z$ has length $2.6$ at $25^\circ$ and $w = e^{i\,45^\circ}$ is the short purple arrow of length $1$. The product $zw$ is the same length as $z$ (it stays on the dashed circle) but is turned by $45^\circ$ anticlockwise, to $25^\circ + 45^\circ = 70^\circ$.
 
-![The arrow z of length 2.6 at 25 degrees is turned by 45 degrees along a dashed circle to zw, which has the same length at 70 degrees; w is a short arrow of length 1 at 45 degrees](images/multiplication-by-unit-number-rotates.svg)
+![The arrow z of length 2.6 at 25 degrees is turned by 45 degrees along a dashed circle to zw, which has the same length at 70 degrees; w is a short arrow of length 1 at 45 degrees](assets/multiplication-by-unit-number-rotates.svg)
 
 (Section 13.3 below is the special case $\phi = 90^\circ$, that is $w = i$.)
 
@@ -1602,11 +1608,11 @@ A turn with no change in size is a **rotation**. So multiplying by $i$ **rotates
 
 The picture uses $z = 3 + 4i$. The **blue arrow** is $z$, the **green arrow** is $iz$ (the result), and the **red arc** is the $90^\circ$ turn between them. Both arrows end on the dashed circle, which shows that the length stays the same:
 
-![Multiplying z = 3 + 4i by i rotates it anticlockwise by 90 degrees to iz = -4 + 3i, keeping the length 5](images/multiply-by-i-rotates-90.svg)
+![Multiplying z = 3 + 4i by i rotates it anticlockwise by 90 degrees to iz = -4 + 3i, keeping the length 5](assets/multiply-by-i-rotates-90.svg)
 
 Notice the numbers: $(3, 4)$ becomes $(-4, 3)$. In general, $i(a + bi) = ai + bi^2 = -b + ai$, so $(a, b) \to (-b, a)$. That is exactly a quarter-turn.
 
-> The transcript says "rotate it by 8"; this is a recognition error for "90 degrees".
+> The lecture says "rotate it by 8"; this is a recognition error for "90 degrees".
 
 **Check with numbers.** Take $z = 3 + 4i$. Then $iz = 3i + 4i^2 = -4 + 3i$. The point moved from $(3, 4)$ to $(-4, 3)$: a quarter turn anticlockwise, same length $5$.
 
@@ -1627,7 +1633,7 @@ Read off the two lengths and the two angles:
 | | Length | Angle |
 |---|---|---|
 | $z = 2\,e^{i\pi/10}$ | $2$ | $\dfrac{\pi}{10}$ (that is $18^\circ$). "makes angle $\pi/10$ with the real axis, its length is two" |
-| $w = 4\,e^{i\pi/2}$ | $4$ | $\dfrac{\pi}{2}$ (that is $90^\circ$). "sitting here ... length 4, angle $\pi/2$" |
+| $w = 4\,e^{i\pi/2}$ | $4$ | $\dfrac{\pi}{2}$ (that is $90^\circ$). "sitting here... length 4, angle $\pi/2$" |
 
 **Step 1: multiply the lengths.**
 
@@ -1651,7 +1657,7 @@ $$
 
 Here is the picture. The **blue arrow** is $z$ (length $2$, angle $18^\circ$). The **red arrow** is $w$ (length $4$, pointing straight up at $90^\circ$). The **green arrow** is the product $zw$. It is $8$ long, and it points at $108^\circ$, which is the blue angle plus the red angle (the green dashed arc covers both):
 
-![Multiplying z equals 2 e to the i pi over 10 by w equals 4 e to the i pi over 2: the product is an arrow of length 8 at angle 3 pi over 5, which is the sum of the two angles](images/multiplication-lengths-multiply-angles-add.svg)
+![Multiplying z equals 2 e to the i pi over 10 by w equals 4 e to the i pi over 2: the product is an arrow of length 8 at angle 3 pi over 5, which is the sum of the two angles](assets/multiplication-lengths-multiply-angles-add.svg)
 
 Think of it as a two-step move starting from $z$: **stretch** $z$ by a factor of $4$ (the length of $w$), and then **rotate** it by $90^\circ$ (the angle of $w$). Starting from the blue arrow at $18^\circ$ with length $2$, the stretch makes it $8$ long, and the rotation takes it from $18^\circ$ to $108^\circ$. That is the green arrow. The lecturer: "that is what it means to multiply."
 
@@ -1660,7 +1666,7 @@ Think of it as a two-step move starting from $z$: **stretch** $z$ by a factor of
 1. **Multiply by $i$:** rotate $z$ by $90^\circ$ (the length stays $2$, the angle goes from $18^\circ$ to $108^\circ$). This is the orange arrow below.
 2. **Multiply by $4$:** stretch the result by a factor of $4$ (the angle stays $108^\circ$, the length goes from $2$ to $8$). This is the green arrow.
 
-![Recap: multiplying z by 4i first rotates z by 90 degrees to iz, then stretches it by 4 to get zw with length 8 at angle 108 degrees](images/recap-rotate-then-stretch.svg)
+![Recap: multiplying z by 4i first rotates z by 90 degrees to iz, then stretches it by 4 to get zw with length 8 at angle 108 degrees](assets/recap-rotate-then-stretch.svg)
 
 The order of the two moves does not matter (stretching first and then rotating gives the same arrow), because multiplication of numbers can be done in either order. Either way the arrow ends at "somewhere here": the point whose distance from the origin is $8$ and whose angle is $\dfrac{3\pi}{5}$. This is exactly what the lecturer means by "that is what it means to multiply."
 
@@ -1691,7 +1697,7 @@ The lecturer asks: **why is the unit-circle picture useful?** One answer: it let
 
 The natural question: **where are these $n$ solutions?** With real numbers you find only one or two: for $x^3 = 1$ you find just $x = 1$, and the other two cube roots are invisible. Once you know complex numbers, you can find all of them, and the unit circle shows you exactly where they are.
 
-> **Transcript note:** the lecturer says "three roots of unity" and "solution to $z$ cube is equal to one" for $n = 3$. He means the *cube* roots of unity.
+> **Note:** the lecturer says "three roots of unity" and "solution to $z$ cube is equal to one" for $n = 3$. He means the *cube* roots of unity.
 
 ## 14.2 The picture that solves it
 
@@ -1708,7 +1714,7 @@ $$
 
 Here are the ten cut points. The orange dot at $0^\circ$ is the number $1$. The red dot is the first point, $z = e^{i2\pi/10}$:
 
-![The unit circle divided into 10 equal slices of 36 degrees; the ten cut points form a regular decagon and are the ten solutions of z to the power 10 equals 1](images/roots-of-unity-10th.svg)
+![The unit circle divided into 10 equal slices of 36 degrees; the ten cut points form a regular decagon and are the ten solutions of z to the power 10 equals 1](assets/roots-of-unity-10th.svg)
 
 Now take the red point $z$ (angle $\theta = 36^\circ$) and ask: what is $z^{10}$?
 
@@ -1718,9 +1724,9 @@ Now take the red point $z$ (angle $\theta = 36^\circ$) and ask: what is $z^{10}$
 
 So $z^{10} = 1$. In symbols: $z^{10} = \left(e^{i2\pi/10}\right)^{10} = e^{i\,2\pi} = 1$. The picture below shows the ten steps. You start at $1$ and every multiplication by $z$ hops $36^\circ$ anticlockwise: $z, z^2, z^3, \dots$ until $z^{10}$ lands back on $1$:
 
-![Starting at 1, each multiplication by z turns 36 degrees anticlockwise: z, z squared, up to z to the power 10 which lands back on 1 after a full 360 degree turn](images/roots-of-unity-powers-of-z.svg)
+![Starting at 1, each multiplication by z turns 36 degrees anticlockwise: z, z squared, up to z to the power 10 which lands back on 1 after a full 360 degree turn](assets/roots-of-unity-powers-of-z.svg)
 
-**And the other nine points?** The same argument works for each of them. The second point is at $72^\circ$, so ten rotations take you $10\times72^\circ = 720^\circ = 2$ full turns, back at $1$. The third is at $108^\circ$, so $1080^\circ = 3$ full turns, and so on. Every one of the ten cut points returns to $1$ after $10$ multiplications, so **all ten are solutions**. These are "the 10 roots of unity", and the lecturer's reason for saying "if you rotate this ... you will come back to the starting".
+**And the other nine points?** The same argument works for each of them. The second point is at $72^\circ$, so ten rotations take you $10\times72^\circ = 720^\circ = 2$ full turns, back at $1$. The third is at $108^\circ$, so $1080^\circ = 3$ full turns, and so on. Every one of the ten cut points returns to $1$ after $10$ multiplications, so **all ten are solutions**. These are "the 10 roots of unity", and the lecturer's reason for saying "if you rotate this... you will come back to the starting".
 
 **General rule.** We need to land back at the point $1$, which is angle $0$, or any whole number of full turns: $n\theta = 2\pi k$.
 
@@ -1740,11 +1746,11 @@ $$
 
 Here are the first few cases side by side. In each picture the unit circle is cut into $n$ equal slices, and the red arc is the slice angle $360^\circ/n$:
 
-![Roots of unity for n = 2, 3 and 4: two points at 1 and minus 1, a triangle of three points 120 degrees apart, and a square of four points 90 degrees apart](images/roots-of-unity-small-n.svg)
+![Roots of unity for n = 2, 3 and 4: two points at 1 and minus 1, a triangle of three points 120 degrees apart, and a square of four points 90 degrees apart](assets/roots-of-unity-small-n.svg)
 
 **Square roots of unity** ($n = 2$): divide the circle into $2$ parts of $180^\circ$. Angles $0$ and $\pi$ give $1$ and $-1$. This matches the school answer to $x^2 = 1$.
 
-**Cube roots of unity** ($n = 3$): the lecturer says "divide the unit circle into three equal parts: this is one part, second part, third part". Each part has angle $\dfrac{2\pi}{3} = 120^\circ$ (the transcript says "2π by three, 120 degrees"). So the three roots are at $0,\ 2\pi/3,\ 4\pi/3$ (that is $0^\circ, 120^\circ, 240^\circ$):
+**Cube roots of unity** ($n = 3$): the lecturer says "divide the unit circle into three equal parts: this is one part, second part, third part". Each part has angle $\dfrac{2\pi}{3} = 120^\circ$ (the lecture says "2π by three, 120 degrees"). So the three roots are at $0,\ 2\pi/3,\ 4\pi/3$ (that is $0^\circ, 120^\circ, 240^\circ$):
 
 $$
 1,\qquad
@@ -2101,7 +2107,7 @@ $$
 
 More on this (the four quadrants, the signs of $\cos$ and $\sin$, and the values for $30^\circ$, $45^\circ$, $60^\circ$) is in section 10.3, "Trigonometry basics".
 
-> **Note on the transcript:** the lecturer briefly said "cos θ is b by h" and then corrected himself. The correct statement, with $a$ next to the angle, is $\cos\theta = a/r$.
+> **Note:** the lecturer briefly said "cos θ is b by h" and then corrected himself. The correct statement, with $a$ next to the angle, is $\cos\theta = a/r$.
 
 ## A.6 Factorials
 

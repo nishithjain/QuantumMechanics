@@ -1,6 +1,6 @@
 # 01 — Vectors | Interactive Lecture Notes
 
-Beginner-friendly study material based on the supplied **01-Vectors** transcript from the *Essence of Linear Algebra* series.
+Beginner-friendly study material based on the supplied **01-Vectors** lecture from the *Essence of Linear Algebra* series.
 
 ## Start here
 
@@ -18,22 +18,22 @@ Beginner-friendly study material based on the supplied **01-Vectors** transcript
 lecture-notes/
 ├── README.md
 ├── notes/
-│   └── lecture-notes.md
+│ └── lecture-notes.md
 ├── images/
-│   ├── concept-01.png   Three perspectives on vectors
-│   ├── concept-02.png   Free arrows vs arrows rooted at the origin
-│   ├── concept-03.png   Reading 2D coordinates
-│   ├── concept-04.png   Negative coordinates
-│   ├── concept-05.png   3D vector with x, y, z components
-│   ├── concept-06.png   Tip-to-tail addition
-│   ├── concept-07.png   Adding movements on a number line
-│   ├── concept-08.png   Numerical example (1,2) + (3,−1)
-│   ├── concept-09.png   Scaling by 2, 1/3, −1.8
-│   └── concept-10.png   Translating numbers ↔ geometry
+│ ├── concept-01.png Three perspectives on vectors
+│ ├── concept-02.png Free arrows vs arrows rooted at the origin
+│ ├── concept-03.png Reading 2D coordinates
+│ ├── concept-04.png Negative coordinates
+│ ├── concept-05.png 3D vector with x, y, z components
+│ ├── concept-06.png Tip-to-tail addition
+│ ├── concept-07.png Adding movements on a number line
+│ ├── concept-08.png Numerical example (1,2) + (3,−1)
+│ ├── concept-09.png Scaling by 2, 1/3, −1.8
+│ └── concept-10.png Translating numbers ↔ geometry
 └── animations/
-    ├── animation-01.html    Coordinates: horizontal, vertical, arrow
-    ├── animation-02.html    Vector addition: tip-to-tail
-    └── animation-03.html    Scalar multiplication
+ ├── animation-01.html Coordinates: horizontal, vertical, arrow
+ ├── animation-02.html Vector addition: tip-to-tail
+ └── animation-03.html Scalar multiplication
 ```
 
 ## Which animation should I open?
@@ -46,10 +46,10 @@ lecture-notes/
 
 ## Troubleshooting
 
-- **Mathematical formulas appear as raw `$$ ... $$`:** Open the `.md` in VS Code's Markdown Preview or another Markdown reader with mathematical notation support. The `.html` animations work normally in any current Chrome, Edge, or Firefox browser.
+- **Mathematical formulas appear as raw `$$... $$`:** Open the `.md` in VS Code's Markdown Preview or another Markdown reader with mathematical notation support. The `.html` animations work normally in any current Chrome, Edge, or Firefox browser.
 - **Images are missing:** Keep the entire extracted `lecture-notes` directory together. Relative paths depend on the `notes/`, `images/`, and `animations/` folders remaining side by side.
 - **Animation doesn't respond:** Open the file in a current browser with JavaScript enabled. No internet is needed.
 
 ## Source fidelity
 
-The supplied transcript (about 9 minutes 51 seconds) anchors the notes. The notes preserve the order and main examples of the lecture. Extra analogies, additional coordinate examples, the zero-scalar case, worked exercises, illustrations, and HTML demonstrations are identified as instructional additions where appropriate. The three-dimensional worked example is `[2,1,3]`, and the addition example is `[1,2] + [3,−1]`.
+The supplied lecture (about 9 minutes 51 seconds) anchors the notes. The notes preserve the order and main examples of the lecture. Extra analogies, additional coordinate examples, the zero-scalar case, worked exercises, illustrations, and HTML demonstrations are identified as instructional additions where appropriate. The three-dimensional worked example is `[2,1,3]`, and the addition example is `[1,2] + [3,−1]`.

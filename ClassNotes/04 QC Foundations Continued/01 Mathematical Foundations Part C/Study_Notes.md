@@ -1,6 +1,6 @@
 # Mathematical Foundations Part C
 
-**Linear Algebra for Quantum Computing, Part 3**  
+**Linear Algebra for Quantum Computing, Part 3** 
 
 | If you’re revising… | Start with |
 | --- | --- |
@@ -4487,4 +4487,4 @@ The professor encourages students to try the exercises before the next lecture. 
 4. The probability is $2/3$. The surviving, normalized state is $(\lvert10\rangle+\lvert11\rangle)/\sqrt2=\lvert1\rangle\otimes\lvert+\rangle$.
 5. The images are $(3,0)$, $(0,2)$ and $(3,-2)$. The first is an eigenvector with eigenvalue $+1$, the second has eigenvalue $-1$, and the third changes line.
 
-*Sources. The supplied corrected transcript sets the sequence. The original TXT provides a cross-check on the spoken discussion, and the PDF provides slide references, formulas and the worked partial-measurement example. The diagrams, animations and practice questions were redrawn or written for these notes.*
+*Sources. The supplied corrected lecture sets the sequence. The original TXT provides a cross-check on the spoken discussion, and the PDF provides slide references, formulas and the worked partial-measurement example. The diagrams, animations and practice questions were redrawn or written for these notes.*

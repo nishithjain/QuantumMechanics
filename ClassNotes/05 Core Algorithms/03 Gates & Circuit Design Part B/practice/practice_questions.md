@@ -1,6 +1,6 @@
 # Practice Workbook — Entanglement as a Resource
 
-**Companion to:** [Full beginner-friendly lecture notes](../Lecture_Notes.md)  
+**Companion to:** [Full beginner-friendly lecture notes](../Lecture_Notes.md) 
 **How to study:** First try **Part A–D**, then scroll to **Part E: Detailed Answers**. All **eight problems from the professor's slide 29** appear in **Part A**. All new exercises are labeled *Extra*.
 
 ---
@@ -99,72 +99,72 @@ Use the states `|v₀(φ)⟩=cosφ|0⟩+sinφ|1⟩` and `|v₁(φ)⟩=−sinφ|0
 
 **M1.** Which is the correct formula for the Bell state `|Φ+⟩`?
 
-A. `( |00⟩ + |11⟩ )/√2`  
-B. `( |01⟩ + |10⟩ )/√2`  
-C. `( |0⟩ + |1⟩ )/2`  
+A. `( |00⟩ + |11⟩ )/√2` 
+B. `( |01⟩ + |10⟩ )/√2` 
+C. `( |0⟩ + |1⟩ )/2` 
 D. `|00⟩`
 
 **M2.** Bell decoding is:
 
-A. H then CNOT.  
-B. CNOT then H on the first qubit.  
-C. X on both qubits.  
+A. H then CNOT. 
+B. CNOT then H on the first qubit. 
+C. X on both qubits. 
 D. Measure, then CNOT.
 
 **M3.** CNOT with input `|+⟩|0⟩` gives:
 
-A. `|+⟩|+⟩`.  
-B. `|00⟩`.  
-C. `|Φ+⟩`.  
+A. `|+⟩|+⟩`. 
+B. `|00⟩`. 
+C. `|Φ+⟩`. 
 D. `|11⟩`.
 
 **M4.** Which pair can **not** be copied perfectly by the same universal unitary tailored to the two states?
 
-A. `|0⟩` and `|1⟩`.  
-B. `|+⟩` and `|−⟩`.  
-C. `|0⟩` and `|+⟩`.  
+A. `|0⟩` and `|1⟩`. 
+B. `|+⟩` and `|−⟩`. 
+C. `|0⟩` and `|+⟩`. 
 D. Two identical known states.
 
 **M5.** If Alice's teleportation measurement is `m₁m₂=10`, Bob should apply:
 
-A. X.  
-B. Z.  
-C. H.  
+A. X. 
+B. Z. 
+C. H. 
 D. Nothing.
 
 **M6.** Which resource equation correctly describes ideal teleportation?
 
-A. One unknown qubit → two clones.  
-B. One Bell pair + two classical bits → one qubit state transferred.  
-C. One qubit transmitted → two independent qubits.  
+A. One unknown qubit → two clones. 
+B. One Bell pair + two classical bits → one qubit state transferred. 
+C. One qubit transmitted → two independent qubits. 
 D. Only classical communication, no entanglement → arbitrary unknown state transferred.
 
 **M7.** To send message `01` using the dense-code convention in the notes, Alice applies:
 
-A. X.  
-B. H.  
-C. Z.  
+A. X. 
+B. H. 
+C. Z. 
 D. CNOT to Bob's qubit.
 
 **M8.** The standard CHSH win condition is:
 
-A. `a+b=x+y`.  
-B. `a⊕b=x∧y`.  
-C. `a∧b=x⊕y`.  
+A. `a+b=x+y`. 
+B. `a⊕b=x∧y`. 
+C. `a∧b=x⊕y`. 
 D. `a=b` for all questions.
 
 **M9.** The best classical CHSH winning probability (uniform inputs, no communication) is:
 
-A. 25%.  
-B. 50%.  
-C. 75%.  
+A. 25%. 
+B. 50%. 
+C. 75%. 
 D. 100%.
 
 **M10.** The quantum CHSH strategy in this lecture achieves approximately:
 
-A. 65.0%.  
-B. 75.0%.  
-C. 85.36%.  
+A. 65.0%. 
+B. 75.0%. 
+C. 85.36%. 
 D. 100%.
 
 ---

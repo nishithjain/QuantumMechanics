@@ -1,6 +1,6 @@
 # Core Algorithms (Part C) — Practice Questions and Fully Worked Answers
 
-> Source basis: the professor's lecture transcription. These exercises are **supplementary practice created to teach the lecture**, not a claim that the lecturer assigned this exact worksheet. All dot products of bit strings use **modulo 2**, and all measurements are in the computational basis unless stated otherwise.
+> Source basis: the professor's lecture. These exercises are **supplementary practice created to teach the lecture**, not a claim that the lecturer assigned this exact worksheet. All dot products of bit strings use **modulo 2**, and all measurements are in the computational basis unless stated otherwise.
 
 ## Part A — Conceptual Questions
 

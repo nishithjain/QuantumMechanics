@@ -485,7 +485,7 @@ These match the geometric interpretations discussed earlier.
 
 that a formula also exists for 3D determinants, but emphasizes that learning the meaning is more important than memorizing the calculation.
 
-this lesson does not spell out the full 3 × 3 calculation formula in the spoken transcript. Instead, practice practising with matrices if the calculation procedure is required, and mentions Sal Khan's worked examples as a possible practice resource.
+this lesson does not spell out the full 3 × 3 calculation formula in the spoken lecture. Instead, practice practising with matrices if the calculation procedure is required, and mentions Sal Khan's worked examples as a possible practice resource.
 
 The central conceptual point remains:
 

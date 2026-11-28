@@ -1,6 +1,6 @@
 # Chapter 03 — Linear Transformations and Matrices
 
-This is an offline-friendly companion to the 3Blue1Brown **Essence of Linear Algebra**, Chapter 03 lecture (approximately 10 min 58 sec). It is based on the supplied lecture materials and transcript.
+This is an offline-friendly companion to the 3Blue1Brown **Essence of Linear Algebra**, Chapter 03 lecture (approximately 10 min 58 sec). It is based on the supplied lecture materials and lecture.
 
 ## Start here
 
@@ -24,14 +24,14 @@ Every animation includes Play, Pause, Step, and Reset buttons, along with a prog
 lecture-notes/
 ├── README.md
 ├── notes/
-│   └── lecture-notes.md
+│ └── lecture-notes.md
 ├── images/
-│   ├── concept-01.png  ...  concept-11.png
+│ ├── concept-01.png... concept-11.png
 └── animations/
-    ├── animation-01.html
-    ├── animation-02.html
-    ├── animation-03.html
-    └── animation-04.html
+ ├── animation-01.html
+ ├── animation-02.html
+ ├── animation-03.html
+ └── animation-04.html
 ```
 
 ## Color key

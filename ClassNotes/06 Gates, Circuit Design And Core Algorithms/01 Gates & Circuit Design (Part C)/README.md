@@ -1,9 +1,9 @@
 # Gates & Circuit Design [2/3] — Beginner-Friendly Study Package
 
-**Lecture:** Universality and Cost  
-**Course:** IIT Delhi, Quantum Computing — CEP  
-**Instructor:** Prof. Kolin Paul  
-**Sources:** Uploaded `01 Gates & Circuit Design (Part C).txt` transcript and `01 Gates & Circuit Design (Part C).pdf` slides (November 2026)
+**Lecture:** Universality and Cost 
+**Course:** IIT Delhi, Quantum Computing — CEP 
+**Instructor:** Prof. Kolin Paul 
+**Sources:** `01 Gates & Circuit Design (Part C).pdf` slides and lecture notes (November 2026)
 
 This offline package turns the lecture into a self-contained tutorial for readers new to quantum computing. It includes **complete beginner-friendly Markdown notes, nine interactive HTML animations, ten original SVG diagrams, and a separate practice workbook with detailed answers**.
 
@@ -14,19 +14,19 @@ Lecture_Notes/
 ├── README.md
 ├── Lecture_Notes.md
 ├── animations/
-│   ├── animation_01.html  — Three meanings of universality and NAND XOR
-│   ├── animation_02.html  — ZYZ turns on the Bloch sphere
-│   ├── animation_03.html  — H, S, T rotation/matrix explorer
-│   ├── animation_04.html  — Controlled-Ry using the ABC trick
-│   ├── animation_05.html  — SWAP using three CNOTs
-│   ├── animation_06.html  — Clifford-only versus Clifford+T reachable states
-│   ├── animation_07.html  — Exact 15-gate Toffoli decomposition
-│   ├── animation_08.html  — Gate counts, circuit depth, and cost models
-│   └── animation_09.html  — Inject X/Z errors and measure fidelity
+│ ├── animation_01.html — Three meanings of universality and NAND XOR
+│ ├── animation_02.html — ZYZ turns on the Bloch sphere
+│ ├── animation_03.html — H, S, T rotation/matrix explorer
+│ ├── animation_04.html — Controlled-Ry using the ABC trick
+│ ├── animation_05.html — SWAP using three CNOTs
+│ ├── animation_06.html — Clifford-only versus Clifford+T reachable states
+│ ├── animation_07.html — Exact 15-gate Toffoli decomposition
+│ ├── animation_08.html — Gate counts, circuit depth, and cost models
+│ └── animation_09.html — Inject X/Z errors and measure fidelity
 ├── images/
-│   ├── diagram_01.svg ... diagram_10.svg
+│ ├── diagram_01.svg... diagram_10.svg
 └── practice/
-    └── practice_questions.md
+ └── practice_questions.md
 ```
 
 ## Recommended learning path
@@ -64,7 +64,7 @@ The `.svg` diagrams are original local vector files; they open in a browser, SVG
 
 ## Source and accuracy notes
 
-The transcript is the main narrative source. The PDF is used to verify mathematical notation, diagrams, formulas, numerical costs, and the lecture's examples. A few spoken slips and overly simplified physical descriptions are clearly flagged in `Lecture_Notes.md` rather than perpetuated.
+The lecture is the main narrative source. The PDF is used to verify mathematical notation, diagrams, formulas, numerical costs, and the lecture's examples. A few spoken slips and overly simplified physical descriptions are clearly flagged in `Lecture_Notes.md` rather than perpetuated.
 
 The uploaded materials **do not contain** the professor's earlier complete `adder_core()` source or the officially released graded Mini-Capstone starter `.ipynb`. Accordingly, the notes discuss the reported compiler counts and capstone goals, but do **not** claim to reproduce an autograded notebook implementation. Always follow the current starter notebook and LMS submission rules rather than example pseudocode.
 
@@ -78,9 +78,9 @@ The uploaded materials **do not contain** the professor's earlier complete `adde
 
 ## Troubleshooting
 
-**Equations show literal backslashes:** Your Markdown viewer has not enabled LaTeX/math support. Switch to a math-capable Markdown preview.  
-**Links do not open:** Verify that the ZIP was extracted and that `animations/`, `images/` and `practice/` remain alongside `Lecture_Notes.md`.  
-**Browser does not display SVG:** Try Chrome, Edge or Firefox with the SVG file itself.  
+**Equations show literal backslashes:** Your Markdown viewer has not enabled LaTeX/math support. Switch to a math-capable Markdown preview. 
+**Links do not open:** Verify that the ZIP was extracted and that `animations/`, `images/` and `practice/` remain alongside `Lecture_Notes.md`. 
+**Browser does not display SVG:** Try Chrome, Edge or Firefox with the SVG file itself. 
 **Noisy results change when adjusting controls:** This is intentional: the animation recomputes deterministic trials for the selected random seed and error probability.
 
 Happy studying! Work slowly through the ZYZ example and ABC controlled-rotation derivation: those two ideas unlock most of the lecture's later discussions of universality and compilation.

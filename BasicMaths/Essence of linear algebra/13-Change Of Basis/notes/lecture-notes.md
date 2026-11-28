@@ -35,12 +35,12 @@ In other words, scale the first basis vector by 3, scale the second by 2, and ad
 **Interactive:** Step through **Build the vector** to see $3\hat{\mathbf i}+2\hat{\mathbf j}$ assembled on the grid—first the horizontal contribution, then the vertical piece, then the result $(3,2)$.
 
 <iframe
-  src="../animations/animation-03-coordinates-basis-instructions.html"
-  title="Coordinates as instructions combining basis vectors"
-  width="100%"
-  height="1050"
-  style="max-width:1100px;border:1px solid #dce4ef;border-radius:12px;background:#f4f7fb;"
-  loading="lazy">
+ src="../animations/animation-03-coordinates-basis-instructions.html"
+ title="Coordinates as instructions combining basis vectors"
+ width="100%"
+ height="1050"
+ style="max-width:1100px;border:1px solid #dce4ef;border-radius:12px;background:#f4f7fb;"
+ loading="lazy">
 </iframe>
 
 <p><a href="../animations/animation-03-coordinates-basis-instructions.html">Open Animation 03 — coordinates and basis in full tab</a> if the embed does not load.</p>
@@ -195,12 +195,12 @@ $$
 **Interactive:** The dot $P$ stays fixed. Compare **Your route** $(3,2)$ via î and ĵ with **Jennifer’s route** $\left(\tfrac{5}{3},\tfrac{1}{3}\right)_J$ via $\mathbf b_1$ and $\mathbf b_2$, or play **Compare both** to see two paths to the same place.
 
 <iframe
-  src="../animations/animation-04-same-point-change-of-basis.html"
-  title="Same point P in standard and Jennifer coordinates"
-  width="100%"
-  height="920"
-  style="max-width:1100px;border:1px solid #dce4ef;border-radius:12px;background:#f4f7fb;"
-  loading="lazy">
+ src="../animations/animation-04-same-point-change-of-basis.html"
+ title="Same point P in standard and Jennifer coordinates"
+ width="100%"
+ height="920"
+ style="max-width:1100px;border:1px solid #dce4ef;border-radius:12px;background:#f4f7fb;"
+ loading="lazy">
 </iframe>
 
 <p><a href="../animations/animation-04-same-point-change-of-basis.html">Open Animation 04 — same point, two coordinate systems in full tab</a> if the embed does not load.</p>
@@ -359,12 +359,12 @@ In general, multiplying by $A$ performs the linear combination $a\mathbf b_1+b\m
 **Interactive:** Change Jennifer's coordinates $(a,b)$ and watch $A\mathbf c_J=(2a-b,\,a+b)$ produce the same vector as $a\mathbf b_1+b\mathbf b_2$ in standard coordinates. Try $(2,3)\to(1,5)$ or the §5 example $(-1,2)\to(-4,1)$.
 
 <iframe
-  src="../animations/animation-01-coordinate-converter.html"
-  title="Jennifer to standard coordinate converter"
-  width="100%"
-  height="720"
-  style="max-width:980px;border:1px solid #dce4ef;border-radius:12px;background:#f4f7fb;"
-  loading="lazy">
+ src="../animations/animation-01-coordinate-converter.html"
+ title="Jennifer to standard coordinate converter"
+ width="100%"
+ height="720"
+ style="max-width:980px;border:1px solid #dce4ef;border-radius:12px;background:#f4f7fb;"
+ loading="lazy">
 </iframe>
 
 <p><a href="../animations/animation-01-coordinate-converter.html">Open Animation 01 — coordinate converter in full tab</a> if the embed does not load.</p>

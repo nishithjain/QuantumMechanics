@@ -236,12 +236,12 @@ Here:
 - $\cos\theta$ tells us how aligned the vectors are.
 
 <iframe
-  src="assets/vector_directions_animation.html"
-  title="Animated vector directions: same, perpendicular, and opposite"
-  width="100%"
-  height="520"
-  style="border:1px solid #dbe3ef;border-radius:12px;max-width:850px;display:block"
-  loading="lazy">
+ src="assets/vector_directions_animation.html"
+ title="Animated vector directions: same, perpendicular, and opposite"
+ width="100%"
+ height="520"
+ style="border:1px solid #dbe3ef;border-radius:12px;max-width:850px;display:block"
+ loading="lazy">
 </iframe>
 
 *If the animation does not appear in preview, open [vector_directions_animation.html](assets/vector_directions_animation.html) in your browser.*
@@ -581,7 +581,7 @@ Quantum mechanics uses a compact notation:
 
 - Ket $|\psi\rangle$: a column vector.
 - Bra $\langle\psi|$: the conjugate transpose of the
-    ket.
+ ket.
 - Inner product $\langle\phi|\psi\rangle$: bra times ket, giving a number.
 - Outer product $|\psi\rangle\langle\phi|$: ket times bra, giving a matrix.
 
@@ -1996,12 +1996,12 @@ Select one answer per question, then choose **Check answers**. The page works
 offline; the source file is [quantum_maths_quiz.html](assets/quantum_maths_quiz.html).
 
 <iframe
-  src="assets/quantum_maths_quiz.html"
-  title="From Mathematics to Quantum Computing — Quiz"
-  width="100%"
-  height="900"
-  style="border:1px solid #dce2ed;border-radius:12px;max-width:850px;display:block"
-  loading="lazy">
+ src="assets/quantum_maths_quiz.html"
+ title="From Mathematics to Quantum Computing — Quiz"
+ width="100%"
+ height="900"
+ style="border:1px solid #dce2ed;border-radius:12px;max-width:850px;display:block"
+ loading="lazy">
 </iframe>
 
 *If the quiz does not appear in preview, open [quantum_maths_quiz.html](assets/quantum_maths_quiz.html) in your browser.*

@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plotting a Point on Cartesian Plane</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f3f6fb;
+  padding: 20px;
+  color: #263445;
+}
+.container {
+  max-width: 650px;
+  margin: auto;
+  background: white;
+  padding: 22px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 15px #0001;
+}
+h2 { color: #1e40af; }
+canvas {
+  width: 100%;
+  max-width: 550px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+button {
+  padding: 11px 22px;
+  margin: 6px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+button:disabled {
+  opacity: .4;
+  cursor: default;
+}
+.info {
+  background: #eff6ff;
+  padding: 15px;
+  border-radius: 9px;
+  margin-top: 15px;
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2>Plotting a Point: (5, 3)</h2>
+<p>Watch how we locate a point on the Cartesian coordinate plane.</p>
+
+<canvas id="canvas" width="550" height="440"></canvas>
+
+<div>
+<button type="button" id="prev">← Previous</button>
+<button type="button" id="next">Next →</button>
+<button type="button" id="btn-reset">Replay</button>
+</div>
+
+<div class="info">
+<strong id="stepTitle">Step 1: Start at the origin</strong>
+<p id="description">Begin at (0, 0), where the X and Y axes meet.</p>
+<strong id="coordinates">Current position: (0, 0)</strong>
+</div>
+</div>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+const originX = 65;
+const originY = 375;
+const scale = 65;
+
+let step = 0;
+let progress = 0;
+let animationFrame;
+
+const steps = [
+  {
+    title: "Step 1: Start at the origin",
+    description: "Start at (0, 0), where the X-axis and Y-axis intersect.",
+    x: 0, y: 0
+  },
+  {
+    title: "Step 2: Move along the X-axis",
+    description: "Move 5 units to the right. We reach (5, 0).",
+    x: 5, y: 0
+  },
+  {
+    title: "Step 3: Move along the Y direction",
+    description: "From (5, 0), move 3 units upward. We reach (5, 3).",
+    x: 5, y: 3
+  },
+  {
+    title: "Step 4: Point plotted!",
+    description: "The final point is (5, 3). Its X-coordinate is 5 and its Y-coordinate is 3.",
+    x: 5, y: 3
+  }
+];
+
+function X(x) { return originX + x * scale; }
+function Y(y) { return originY - y * scale; }
+
+function draw() {
+  ctx.clearRect(0, 0, 550, 440);
+
+  // Grid
+  ctx.strokeStyle = "#e5eaf1";
+  ctx.lineWidth = 1;
+
+  for (let i = 0; i <= 6; i++) {
+    ctx.beginPath();
+    ctx.moveTo(X(i), 30);
+    ctx.lineTo(X(i), originY);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(originX, Y(i));
+    ctx.lineTo(500, Y(i));
+    ctx.stroke();
+  }
+
+  // Axes
+  ctx.strokeStyle = "#263445";
+  ctx.lineWidth = 2.5;
+
+  ctx.beginPath();
+  ctx.moveTo(originX, 30);
+  ctx.lineTo(originX, originY);
+  ctx.lineTo(510, originY);
+  ctx.stroke();
+
+  // Arrowheads
+  ctx.fillStyle = "#263445";
+
+  ctx.beginPath();
+  ctx.moveTo(510, originY);
+  ctx.lineTo(500, originY - 6);
+  ctx.lineTo(500, originY + 6);
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(originX, 25);
+  ctx.lineTo(originX - 6, 36);
+  ctx.lineTo(originX + 6, 36);
+  ctx.fill();
+
+  // Axis labels and numbers
+  ctx.font = "15px Arial";
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#334155";
+
+  for (let i = 0; i <= 6; i++) {
+    ctx.fillText(i, X(i), originY + 22);
+    ctx.fillText(i, originX - 22, Y(i) + 5);
+  }
+
+  ctx.font = "bold 18px Arial";
+  ctx.fillText("x", 525, originY + 5);
+  ctx.fillText("y", originX - 5, 17);
+
+  // Current movement
+  const current = steps[step];
+
+  let px = current.x;
+  let py = current.y;
+
+  // Dashed guide lines
+  if (step >= 2) {
+    ctx.setLineDash([6, 5]);
+    ctx.strokeStyle = "#94a3b8";
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+    ctx.moveTo(X(5), Y(3));
+    ctx.lineTo(X(5), originY);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(originX, Y(3));
+    ctx.lineTo(X(5), Y(3));
+    ctx.stroke();
+
+    ctx.setLineDash([]);
+  }
+
+  // Horizontal movement
+  if (step === 1) {
+    px = 5 * progress;
+    py = 0;
+  }
+
+  // Vertical movement
+  if (step === 2) {
+    px = 5;
+    py = 3 * progress;
+  }
+
+  // Draw movement path
+  ctx.strokeStyle = "#16a34a";
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  ctx.moveTo(X(0), Y(0));
+  ctx.lineTo(X(px), Y(0));
+  if (py > 0) {
+    ctx.lineTo(X(px), Y(py));
+  }
+  ctx.stroke();
+
+  // Point
+  ctx.beginPath();
+  ctx.arc(X(px), Y(py), 8, 0, Math.PI * 2);
+  ctx.fillStyle = "#dc2626";
+  ctx.fill();
+
+  // Final point label
+  if (step === 3) {
+    ctx.font = "bold 17px Arial";
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#dc2626";
+    ctx.fillText("(5, 3)", X(5) + 14, Y(3) - 12);
+  }
+}
+
+function animate() {
+  progress = 0;
+  cancelAnimationFrame(animationFrame);
+
+  const start = performance.now();
+  const duration = 1300;
+
+  function frame(now) {
+    progress = Math.min((now - start) / duration, 1);
+    progress = 1 - Math.pow(1 - progress, 3);
+    draw();
+
+    if (progress < 1) {
+      animationFrame = requestAnimationFrame(frame);
+    }
+  }
+
+  animationFrame = requestAnimationFrame(frame);
+}
+
+function update() {
+  document.getElementById("stepTitle").textContent =
+    steps[step].title;
+
+  document.getElementById("description").textContent =
+    steps[step].description;
+
+  document.getElementById("coordinates").textContent =
+    "Current position: (" + steps[step].x + ", " +
+    steps[step].y + ")";
+
+  document.getElementById("prev").disabled = step === 0;
+  document.getElementById("next").disabled = step === 3;
+
+  if (step === 1 || step === 2) {
+    animate();
+  } else {
+    cancelAnimationFrame(animationFrame);
+    progress = 1;
+    draw();
+  }
+}
+
+function nextStep() {
+  if (step < 3) {
+    step++;
+    update();
+  }
+}
+
+function previousStep() {
+  if (step > 0) {
+    step--;
+    update();
+  }
+}
+
+function reset() {
+  step = 0;
+  update();
+}
+
+document.getElementById("prev").addEventListener("click", previousStep);
+document.getElementById("next").addEventListener("click", nextStep);
+document.getElementById("btn-reset").addEventListener("click", reset);
+
+update();
+</script>
+</body>
+</html>

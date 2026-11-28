@@ -7,44 +7,44 @@ is new.
 
 ## Recommended order
 
-1. [Why quantum computing?](00-why-quantum-computing.md)  
-   Why shrinking chips has limits, and which problems quantum ideas are aimed at.
+1. [Why quantum computing?](00-why-quantum-computing.md) 
+ Why shrinking chips has limits, and which problems quantum ideas are aimed at.
 
-1. [Scalars and vectors](01-mathematical-foundations/01-scalars-and-vectors.md)  
-   What a number is versus a list of numbers, and why quantum states are written as vectors.
+1. [Scalars and vectors](01-mathematical-foundations/01-scalars-and-vectors.md) 
+ What a number is versus a list of numbers, and why quantum states are written as vectors.
 
-1. [Vector notation and bra-ket](01-mathematical-foundations/02-vector-notation-and-bra-ket.md)  
-   How physicists write vectors with `|ψ⟩` and `⟨ψ|`, inner products, and outer products.
+1. [Vector notation and bra-ket](01-mathematical-foundations/02-vector-notation-and-bra-ket.md) 
+ How physicists write vectors with `|ψ⟩` and `⟨ψ|`, inner products, and outer products.
 
-1. [Matrix multiplication](01-mathematical-foundations/03-matrix-multiplication.md)  
-   How a grid of numbers can change a vector. This is the language of quantum gates.
+1. [Matrix multiplication](01-mathematical-foundations/03-matrix-multiplication.md) 
+ How a grid of numbers can change a vector. This is the language of quantum gates.
 
-1. [Complex numbers and unitary matrices](01-mathematical-foundations/04-complex-numbers-and-unitary-matrices.md)  
-   Why quantum amplitudes use complex numbers, and what it means for a gate to be “unitary.”
+1. [Complex numbers and unitary matrices](01-mathematical-foundations/04-complex-numbers-and-unitary-matrices.md) 
+ Why quantum amplitudes use complex numbers, and what it means for a gate to be “unitary.”
 
-1. [Tensor products](01-mathematical-foundations/05-tensor-products.md)  
-   How to combine two small systems into one larger system.
+1. [Tensor products](01-mathematical-foundations/05-tensor-products.md) 
+ How to combine two small systems into one larger system.
 
-1. [Classical bits and reversibility](02-quantum-computing-foundations/01-classical-bits-and-reversibility.md)  
-   Ordinary 0 and 1, and why quantum computers prefer operations you can undo.
+1. [Classical bits and reversibility](02-quantum-computing-foundations/01-classical-bits-and-reversibility.md) 
+ Ordinary 0 and 1, and why quantum computers prefer operations you can undo.
 
-1. [The qubit](02-quantum-computing-foundations/04-the-qubit.md)  
-   Superposition, normalization, and what measurement does.
+1. [The qubit](02-quantum-computing-foundations/04-the-qubit.md) 
+ Superposition, normalization, and what measurement does.
 
-1. [Pauli-X gate](02-quantum-computing-foundations/05-pauli-x-gate.md)  
-   Quantum NOT: swap the two amplitudes.
+1. [Pauli-X gate](02-quantum-computing-foundations/05-pauli-x-gate.md) 
+ Quantum NOT: swap the two amplitudes.
 
-1. [Hadamard gate](02-quantum-computing-foundations/06-hadamard-gate.md)  
-    The usual way to create (and undo) equal superposition.
+1. [Hadamard gate](02-quantum-computing-foundations/06-hadamard-gate.md) 
+ The usual way to create (and undo) equal superposition.
 
-1. [Combining X and H](02-quantum-computing-foundations/07-combining-x-and-h.md)  
-    Chain gates, read a circuit left to right, and see reversibility.
+1. [Combining X and H](02-quantum-computing-foundations/07-combining-x-and-h.md) 
+ Chain gates, read a circuit left to right, and see reversibility.
 
-1. [Representing multiple qubits](02-quantum-computing-foundations/02-representing-multiple-qubits.md)  
-    Two or more qubits as one vector, including a two-qubit superposition.
+1. [Representing multiple qubits](02-quantum-computing-foundations/02-representing-multiple-qubits.md) 
+ Two or more qubits as one vector, including a two-qubit superposition.
 
-1. [CNOT gate](02-quantum-computing-foundations/03-cnot-gate.md)  
-    A two-qubit gate that flips one bit depending on another.
+1. [CNOT gate](02-quantum-computing-foundations/03-cnot-gate.md) 
+ A two-qubit gate that flips one bit depending on another.
 
 ## How to use these notes
 

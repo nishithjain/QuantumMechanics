@@ -2,7 +2,7 @@
 
 ## Contents
 
-- `notes/lecture-notes.md` — beginner-friendly notes following the supplied transcript.
+- `notes/lecture-notes.md` — beginner-friendly notes following the supplied lecture.
 - `images/concept-01-change-of-basis.png` — educational infographic.
 - `animations/animation-01-coordinate-converter.html` — interactive converter between standard and Jennifer's coordinates.
 - `animations/animation-02-transformation-matrix.html` — interactive demonstration of the formula A⁻¹MA.

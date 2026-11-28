@@ -2,7 +2,7 @@
 
 ## Contents
 
-- `notes/lecture-notes.md` — detailed beginner-friendly notes following the transcript.
+- `notes/lecture-notes.md` — detailed beginner-friendly notes following the lecture.
 - `images/concept-01-cross-products-through-duality.png` — educational infographic.
 - `animations/animation-01-duality-determinant.html` — interactive calculator comparing the signed-volume determinant with the dot product using the dual vector.
 - `animations/animation-02-volume-geometry.html` — interactive geometric explorer for base area, perpendicular height, signed volume, and the dual vector.
@@ -16,4 +16,4 @@
 
 ## Scope
 
-The notes follow the supplied transcript: recap of the determinant mnemonic, duality, the signed-volume transformation, the computational derivation, the geometric base-area/perpendicular-height argument, and the conclusion that the dual vector is the cross product.
+The notes follow the supplied lecture: recap of the determinant mnemonic, duality, the signed-volume transformation, the computational derivation, the geometric base-area/perpendicular-height argument, and the conclusion that the dual vector is the cross product.

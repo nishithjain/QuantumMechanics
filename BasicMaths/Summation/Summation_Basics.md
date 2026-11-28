@@ -641,74 +641,74 @@ The quiz is **embedded below** in this document. Scroll down, answer the questio
 
 <div class="summation-quiz-embed">
 <iframe
-  title="Summation and quantum states quiz"
-  style="width:100%;min-height:1400px;border:1px solid #dce3ed;border-radius:12px;background:#f5f7fb;"
-  loading="lazy"
-  srcdoc="&lt;!DOCTYPE html&gt;
+ title="Summation and quantum states quiz"
+ style="width:100%;min-height:1400px;border:1px solid #dce3ed;border-radius:12px;background:#f5f7fb;"
+ loading="lazy"
+ srcdoc="&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;UTF-8&quot;&gt;
 &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
 &lt;title&gt;Summation and Quantum States — Quiz&lt;/title&gt;
 &lt;style&gt;
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    max-width: 850px;
-    margin: 30px auto;
-    padding: 0 18px;
-    background: #f5f7fb;
-    color: #202938;
-  }
-  h1, h2 { color: #183b66; }
-  .intro, .question, .result {
-    background: white;
-    border: 1px solid #dce3ed;
-    border-radius: 12px;
-    padding: 18px;
-    margin: 16px 0;
-  }
-  .question h3 { margin-top: 0; }
-  label {
-    display: block;
-    padding: 7px 9px;
-    margin: 5px 0;
-    border-radius: 7px;
-    cursor: pointer;
-  }
-  label:hover { background: #f0f5fc; }
-  input { margin-right: 8px; }
-  button {
-    border: 0;
-    border-radius: 8px;
-    padding: 11px 18px;
-    margin: 8px 6px 8px 0;
-    background: #1769aa;
-    color: white;
-    font-size: 15px;
-    cursor: pointer;
-  }
-  button.secondary { background: #596579; }
-  button:disabled { opacity: .5; cursor: not-allowed; }
-  .feedback { margin-top: 10px; padding: 10px; border-radius: 7px; }
-  .correct { background: #e5f7ec; color: #176536; }
-  .incorrect { background: #fff0ed; color: #9c3025; }
-  .muted { color: #667085; }
-  .result { display: none; }
-  code { background: #eef2f7; padding: 2px 5px; border-radius: 4px; }
+ body {
+ font-family: Arial, sans-serif;
+ line-height: 1.6;
+ max-width: 850px;
+ margin: 30px auto;
+ padding: 0 18px;
+ background: #f5f7fb;
+ color: #202938;
+ }
+ h1, h2 { color: #183b66; }
+.intro,.question,.result {
+ background: white;
+ border: 1px solid #dce3ed;
+ border-radius: 12px;
+ padding: 18px;
+ margin: 16px 0;
+ }
+.question h3 { margin-top: 0; }
+ label {
+ display: block;
+ padding: 7px 9px;
+ margin: 5px 0;
+ border-radius: 7px;
+ cursor: pointer;
+ }
+ label:hover { background: #f0f5fc; }
+ input { margin-right: 8px; }
+ button {
+ border: 0;
+ border-radius: 8px;
+ padding: 11px 18px;
+ margin: 8px 6px 8px 0;
+ background: #1769aa;
+ color: white;
+ font-size: 15px;
+ cursor: pointer;
+ }
+ button.secondary { background: #596579; }
+ button:disabled { opacity:.5; cursor: not-allowed; }
+.feedback { margin-top: 10px; padding: 10px; border-radius: 7px; }
+.correct { background: #e5f7ec; color: #176536; }
+.incorrect { background: #fff0ed; color: #9c3025; }
+.muted { color: #667085; }
+.result { display: none; }
+ code { background: #eef2f7; padding: 2px 5px; border-radius: 4px; }
 &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
 &lt;h1&gt;Summation and Quantum States&lt;/h1&gt;
 &lt;p class=&quot;muted&quot;&gt;Beginner quiz covering Lessons 1–7&lt;/p&gt;
 &lt;div class=&quot;intro&quot;&gt;
-  &lt;strong&gt;Instructions&lt;/strong&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Choose one answer for every question.&lt;/li&gt;
-    &lt;li&gt;Click “Check answers” to see explanations.&lt;/li&gt;
-    &lt;li&gt;Your final score will appear at the end.&lt;/li&gt;
-    &lt;li&gt;You can reset the quiz and try again.&lt;/li&gt;
-  &lt;/ul&gt;
+ &lt;strong&gt;Instructions&lt;/strong&gt;
+ &lt;ul&gt;
+ &lt;li&gt;Choose one answer for every question.&lt;/li&gt;
+ &lt;li&gt;Click “Check answers” to see explanations.&lt;/li&gt;
+ &lt;li&gt;Your final score will appear at the end.&lt;/li&gt;
+ &lt;li&gt;You can reset the quiz and try again.&lt;/li&gt;
+ &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div id=&quot;quiz&quot;&gt;&lt;/div&gt;
 &lt;button id=&quot;checkButton&quot; onclick=&quot;checkAnswers()&quot;&gt;Check answers&lt;/button&gt;
@@ -716,247 +716,247 @@ The quiz is **embedded below** in this document. Scroll down, answer the questio
 &lt;div id=&quot;result&quot; class=&quot;result&quot;&gt;&lt;/div&gt;
 &lt;script&gt;
 const questions = [
-  {
-    lesson: &quot;Lesson 1 — Basic summation&quot;,
-    question: &quot;What does the Sigma symbol (Σ) mean?&quot;,
-    options: [&quot;Multiply numbers&quot;, &quot;Add terms together&quot;, &quot;Divide terms&quot;],
-    answer: 1,
-    explanation: &quot;Sigma is the summation symbol. It tells us to add a collection of terms.&quot;
-  },
-  {
-    lesson: &quot;Lesson 1 — Basic summation&quot;,
-    question: &quot;Calculate: Σ from i = 1 to 4 of i.&quot;,
-    options: [&quot;10&quot;, &quot;4&quot;, &quot;8&quot;],
-    answer: 0,
-    explanation: &quot;Expand it: 1 + 2 + 3 + 4 = 10.&quot;
-  },
-  {
-    lesson: &quot;Lesson 2 — Variables and indices&quot;,
-    question: &quot;In Σ from i = 1 to 4 of 3i, what is i?&quot;,
-    options: [&quot;The final answer&quot;, &quot;The index or counter&quot;, &quot;Always the number 3&quot;],
-    answer: 1,
-    explanation: &quot;The index i takes the values 1, 2, 3 and 4.&quot;
-  },
-  {
-    lesson: &quot;Lesson 2 — Variables and indices&quot;,
-    question: &quot;What is Σ from i = 1 to 3 of 5?&quot;,
-    options: [&quot;5&quot;, &quot;10&quot;, &quot;15&quot;],
-    answer: 2,
-    explanation: &quot;The term 5 is added three times: 5 + 5 + 5 = 15.&quot;
-  },
-  {
-    lesson: &quot;Lesson 3 — Powers&quot;,
-    question: &quot;What is the value of 3²?&quot;,
-    options: [&quot;6&quot;, &quot;9&quot;, &quot;8&quot;],
-    answer: 1,
-    explanation: &quot;3² means 3 multiplied by itself: 3 × 3 = 9.&quot;
-  },
-  {
-    lesson: &quot;Lesson 3 — Powers&quot;,
-    question: &quot;Calculate: Σ from i = 1 to 3 of i².&quot;,
-    options: [&quot;6&quot;, &quot;14&quot;, &quot;9&quot;],
-    answer: 1,
-    explanation: &quot;1² + 2² + 3² = 1 + 4 + 9 = 14.&quot;
-  },
-  {
-    lesson: &quot;Lesson 3 — Powers&quot;,
-    question: &quot;Calculate: Σ from i = 1 to 2 of (i² + 2).&quot;,
-    options: [&quot;7&quot;, &quot;9&quot;, &quot;11&quot;],
-    answer: 1,
-    explanation: &quot;(1² + 2) + (2² + 2) = 3 + 6 = 9.&quot;
-  },
-  {
-    lesson: &quot;Lesson 4 — Double summation&quot;,
-    question: &quot;If i has 2 possible values and j has 3 possible values, how many pairs are there?&quot;,
-    options: [&quot;5&quot;, &quot;6&quot;, &quot;9&quot;],
-    answer: 1,
-    explanation: &quot;There are 2 × 3 = 6 combinations.&quot;
-  },
-  {
-    lesson: &quot;Lesson 4 — Double summation&quot;,
-    question: &quot;Calculate: Σ i=1..2 Σ j=1..2 (i+j).&quot;,
-    options: [&quot;10&quot;, &quot;12&quot;, &quot;14&quot;],
-    answer: 1,
-    explanation: &quot;(1+1) + (1+2) + (2+1) + (2+2) = 2 + 3 + 3 + 4 = 12.&quot;
-  },
-  {
-    lesson: &quot;Lesson 5 — Complex numbers&quot;,
-    question: &quot;What is i² for the imaginary unit?&quot;,
-    options: [&quot;1&quot;, &quot;-1&quot;, &quot;0&quot;],
-    answer: 1,
-    explanation: &quot;The imaginary unit is defined by i² = -1.&quot;
-  },
-  {
-    lesson: &quot;Lesson 5 — Complex numbers&quot;,
-    question: &quot;Calculate (2 + 3i) + (4 + 5i).&quot;,
-    options: [&quot;6 + 8i&quot;, &quot;6 + 15i&quot;, &quot;8 + 8i&quot;],
-    answer: 0,
-    explanation: &quot;Add real parts: 2 + 4 = 6. Add imaginary parts: 3i + 5i = 8i.&quot;
-  },
-  {
-    lesson: &quot;Lesson 5 — Complex numbers&quot;,
-    question: &quot;What is the magnitude squared of z = 3 + 4i?&quot;,
-    options: [&quot;5&quot;, &quot;25&quot;, &quot;7&quot;],
-    answer: 1,
-    explanation: &quot;|z|² = 3² + 4² = 9 + 16 = 25.&quot;
-  },
-  {
-    lesson: &quot;Lesson 6 — Binary strings&quot;,
-    question: &quot;What does {0,1}³ represent?&quot;,
-    options: [
-      &quot;Three values: 0, 1 and 3&quot;,
-      &quot;All binary strings of length 3&quot;,
-      &quot;Only 000 and 111&quot;
-    ],
-    answer: 1,
-    explanation: &quot;It represents all eight strings of length 3, from 000 to 111.&quot;
-  },
-  {
-    lesson: &quot;Lesson 6 — Binary strings&quot;,
-    question: &quot;How many strings are in {0,1}⁴?&quot;,
-    options: [&quot;4&quot;, &quot;8&quot;, &quot;16&quot;],
-    answer: 2,
-    explanation: &quot;There are 2⁴ = 16 binary strings of length 4.&quot;
-  },
-  {
-    lesson: &quot;Lesson 6 — Binary strings&quot;,
-    question: &quot;Expand Σ over x ∈ {0,1}² of f(x).&quot;,
-    options: [
-      &quot;f(00) + f(11)&quot;,
-      &quot;f(00) + f(01) + f(10) + f(11)&quot;,
-      &quot;f(0) + f(1)&quot;
-    ],
-    answer: 1,
-    explanation: &quot;The four binary strings of length 2 are 00, 01, 10 and 11.&quot;
-  },
-  {
-    lesson: &quot;Lesson 7 — Quantum state formula&quot;,
-    question: &quot;How many amplitudes are needed to describe a general pure state of 3 qubits?&quot;,
-    options: [&quot;3&quot;, &quot;6&quot;, &quot;8&quot;],
-    answer: 2,
-    explanation: &quot;There are 2³ = 8 computational basis states, each with an amplitude.&quot;
-  },
-  {
-    lesson: &quot;Lesson 7 — Quantum state formula&quot;,
-    question: &quot;In αₓ|x⟩, what does αₓ represent?&quot;,
-    options: [
-      &quot;The number of qubits&quot;,
-      &quot;The amplitude associated with basis state |x⟩&quot;,
-      &quot;The measurement result&quot;
-    ],
-    answer: 1,
-    explanation: &quot;αₓ is the complex amplitude associated with the basis state |x⟩.&quot;
-  },
-  {
-    lesson: &quot;Lesson 7 — Quantum state formula&quot;,
-    question: &quot;What does Σₓ |αₓ|² = 1 mean?&quot;,
-    options: [
-      &quot;All amplitudes must be equal&quot;,
-      &quot;The total probability of all measurement outcomes is 1&quot;,
-      &quot;There must be exactly one qubit&quot;
-    ],
-    answer: 1,
-    explanation: &quot;The squared magnitudes of all amplitudes are probabilities, and their sum must be 1.&quot;
-  },
-  {
-    lesson: &quot;Lesson 7 — Quantum state formula&quot;,
-    question: &quot;What does Σ over x ∈ {0,1}ⁿ of αₓ|x⟩ mean?&quot;,
-    options: [
-      &quot;Add every basis state multiplied by its corresponding amplitude&quot;,
-      &quot;Multiply all the binary strings&quot;,
-      &quot;Measure all basis states at once&quot;
-    ],
-    answer: 0,
-    explanation: &quot;The quantum state is a sum of all computational basis states, each weighted by its amplitude.&quot;
-  },
-  {
-    lesson: &quot;Lesson 7 — Measurement&quot;,
-    question: &quot;Does one computational-basis measurement reveal every amplitude?&quot;,
-    options: [
-      &quot;Yes, all amplitudes are returned&quot;,
-      &quot;No, one measurement returns one outcome&quot;,
-      &quot;Yes, if there are two qubits&quot;
-    ],
-    answer: 1,
-    explanation: &quot;A measurement returns one outcome. Repeated experiments and additional methods are needed to learn about the state.&quot;
-  }
+ {
+ lesson: &quot;Lesson 1 — Basic summation&quot;,
+ question: &quot;What does the Sigma symbol (Σ) mean?&quot;,
+ options: [&quot;Multiply numbers&quot;, &quot;Add terms together&quot;, &quot;Divide terms&quot;],
+ answer: 1,
+ explanation: &quot;Sigma is the summation symbol. It tells us to add a collection of terms.&quot;
+ },
+ {
+ lesson: &quot;Lesson 1 — Basic summation&quot;,
+ question: &quot;Calculate: Σ from i = 1 to 4 of i.&quot;,
+ options: [&quot;10&quot;, &quot;4&quot;, &quot;8&quot;],
+ answer: 0,
+ explanation: &quot;Expand it: 1 + 2 + 3 + 4 = 10.&quot;
+ },
+ {
+ lesson: &quot;Lesson 2 — Variables and indices&quot;,
+ question: &quot;In Σ from i = 1 to 4 of 3i, what is i?&quot;,
+ options: [&quot;The final answer&quot;, &quot;The index or counter&quot;, &quot;Always the number 3&quot;],
+ answer: 1,
+ explanation: &quot;The index i takes the values 1, 2, 3 and 4.&quot;
+ },
+ {
+ lesson: &quot;Lesson 2 — Variables and indices&quot;,
+ question: &quot;What is Σ from i = 1 to 3 of 5?&quot;,
+ options: [&quot;5&quot;, &quot;10&quot;, &quot;15&quot;],
+ answer: 2,
+ explanation: &quot;The term 5 is added three times: 5 + 5 + 5 = 15.&quot;
+ },
+ {
+ lesson: &quot;Lesson 3 — Powers&quot;,
+ question: &quot;What is the value of 3²?&quot;,
+ options: [&quot;6&quot;, &quot;9&quot;, &quot;8&quot;],
+ answer: 1,
+ explanation: &quot;3² means 3 multiplied by itself: 3 × 3 = 9.&quot;
+ },
+ {
+ lesson: &quot;Lesson 3 — Powers&quot;,
+ question: &quot;Calculate: Σ from i = 1 to 3 of i².&quot;,
+ options: [&quot;6&quot;, &quot;14&quot;, &quot;9&quot;],
+ answer: 1,
+ explanation: &quot;1² + 2² + 3² = 1 + 4 + 9 = 14.&quot;
+ },
+ {
+ lesson: &quot;Lesson 3 — Powers&quot;,
+ question: &quot;Calculate: Σ from i = 1 to 2 of (i² + 2).&quot;,
+ options: [&quot;7&quot;, &quot;9&quot;, &quot;11&quot;],
+ answer: 1,
+ explanation: &quot;(1² + 2) + (2² + 2) = 3 + 6 = 9.&quot;
+ },
+ {
+ lesson: &quot;Lesson 4 — Double summation&quot;,
+ question: &quot;If i has 2 possible values and j has 3 possible values, how many pairs are there?&quot;,
+ options: [&quot;5&quot;, &quot;6&quot;, &quot;9&quot;],
+ answer: 1,
+ explanation: &quot;There are 2 × 3 = 6 combinations.&quot;
+ },
+ {
+ lesson: &quot;Lesson 4 — Double summation&quot;,
+ question: &quot;Calculate: Σ i=1..2 Σ j=1..2 (i+j).&quot;,
+ options: [&quot;10&quot;, &quot;12&quot;, &quot;14&quot;],
+ answer: 1,
+ explanation: &quot;(1+1) + (1+2) + (2+1) + (2+2) = 2 + 3 + 3 + 4 = 12.&quot;
+ },
+ {
+ lesson: &quot;Lesson 5 — Complex numbers&quot;,
+ question: &quot;What is i² for the imaginary unit?&quot;,
+ options: [&quot;1&quot;, &quot;-1&quot;, &quot;0&quot;],
+ answer: 1,
+ explanation: &quot;The imaginary unit is defined by i² = -1.&quot;
+ },
+ {
+ lesson: &quot;Lesson 5 — Complex numbers&quot;,
+ question: &quot;Calculate (2 + 3i) + (4 + 5i).&quot;,
+ options: [&quot;6 + 8i&quot;, &quot;6 + 15i&quot;, &quot;8 + 8i&quot;],
+ answer: 0,
+ explanation: &quot;Add real parts: 2 + 4 = 6. Add imaginary parts: 3i + 5i = 8i.&quot;
+ },
+ {
+ lesson: &quot;Lesson 5 — Complex numbers&quot;,
+ question: &quot;What is the magnitude squared of z = 3 + 4i?&quot;,
+ options: [&quot;5&quot;, &quot;25&quot;, &quot;7&quot;],
+ answer: 1,
+ explanation: &quot;|z|² = 3² + 4² = 9 + 16 = 25.&quot;
+ },
+ {
+ lesson: &quot;Lesson 6 — Binary strings&quot;,
+ question: &quot;What does {0,1}³ represent?&quot;,
+ options: [
+ &quot;Three values: 0, 1 and 3&quot;,
+ &quot;All binary strings of length 3&quot;,
+ &quot;Only 000 and 111&quot;
+ ],
+ answer: 1,
+ explanation: &quot;It represents all eight strings of length 3, from 000 to 111.&quot;
+ },
+ {
+ lesson: &quot;Lesson 6 — Binary strings&quot;,
+ question: &quot;How many strings are in {0,1}⁴?&quot;,
+ options: [&quot;4&quot;, &quot;8&quot;, &quot;16&quot;],
+ answer: 2,
+ explanation: &quot;There are 2⁴ = 16 binary strings of length 4.&quot;
+ },
+ {
+ lesson: &quot;Lesson 6 — Binary strings&quot;,
+ question: &quot;Expand Σ over x ∈ {0,1}² of f(x).&quot;,
+ options: [
+ &quot;f(00) + f(11)&quot;,
+ &quot;f(00) + f(01) + f(10) + f(11)&quot;,
+ &quot;f(0) + f(1)&quot;
+ ],
+ answer: 1,
+ explanation: &quot;The four binary strings of length 2 are 00, 01, 10 and 11.&quot;
+ },
+ {
+ lesson: &quot;Lesson 7 — Quantum state formula&quot;,
+ question: &quot;How many amplitudes are needed to describe a general pure state of 3 qubits?&quot;,
+ options: [&quot;3&quot;, &quot;6&quot;, &quot;8&quot;],
+ answer: 2,
+ explanation: &quot;There are 2³ = 8 computational basis states, each with an amplitude.&quot;
+ },
+ {
+ lesson: &quot;Lesson 7 — Quantum state formula&quot;,
+ question: &quot;In αₓ|x⟩, what does αₓ represent?&quot;,
+ options: [
+ &quot;The number of qubits&quot;,
+ &quot;The amplitude associated with basis state |x⟩&quot;,
+ &quot;The measurement result&quot;
+ ],
+ answer: 1,
+ explanation: &quot;αₓ is the complex amplitude associated with the basis state |x⟩.&quot;
+ },
+ {
+ lesson: &quot;Lesson 7 — Quantum state formula&quot;,
+ question: &quot;What does Σₓ |αₓ|² = 1 mean?&quot;,
+ options: [
+ &quot;All amplitudes must be equal&quot;,
+ &quot;The total probability of all measurement outcomes is 1&quot;,
+ &quot;There must be exactly one qubit&quot;
+ ],
+ answer: 1,
+ explanation: &quot;The squared magnitudes of all amplitudes are probabilities, and their sum must be 1.&quot;
+ },
+ {
+ lesson: &quot;Lesson 7 — Quantum state formula&quot;,
+ question: &quot;What does Σ over x ∈ {0,1}ⁿ of αₓ|x⟩ mean?&quot;,
+ options: [
+ &quot;Add every basis state multiplied by its corresponding amplitude&quot;,
+ &quot;Multiply all the binary strings&quot;,
+ &quot;Measure all basis states at once&quot;
+ ],
+ answer: 0,
+ explanation: &quot;The quantum state is a sum of all computational basis states, each weighted by its amplitude.&quot;
+ },
+ {
+ lesson: &quot;Lesson 7 — Measurement&quot;,
+ question: &quot;Does one computational-basis measurement reveal every amplitude?&quot;,
+ options: [
+ &quot;Yes, all amplitudes are returned&quot;,
+ &quot;No, one measurement returns one outcome&quot;,
+ &quot;Yes, if there are two qubits&quot;
+ ],
+ answer: 1,
+ explanation: &quot;A measurement returns one outcome. Repeated experiments and additional methods are needed to learn about the state.&quot;
+ }
 ];
 const quiz = document.getElementById(&quot;quiz&quot;);
 function renderQuiz() {
-  quiz.innerHTML = &quot;&quot;;
-  questions.forEach((q, index) =&gt; {
-    const card = document.createElement(&quot;section&quot;);
-    card.className = &quot;question&quot;;
-    card.id = &quot;question-&quot; + index;
-    const heading = document.createElement(&quot;p&quot;);
-    heading.className = &quot;muted&quot;;
-    heading.textContent = q.lesson;
-    const title = document.createElement(&quot;h3&quot;);
-    title.textContent = (index + 1) + &quot;. &quot; + q.question;
-    card.appendChild(heading);
-    card.appendChild(title);
-    q.options.forEach((option, optionIndex) =&gt; {
-      const label = document.createElement(&quot;label&quot;);
-      const radio = document.createElement(&quot;input&quot;);
-      radio.type = &quot;radio&quot;;
-      radio.name = &quot;q&quot; + index;
-      radio.value = optionIndex;
-      label.appendChild(radio);
-      label.appendChild(document.createTextNode(option));
-      card.appendChild(label);
-    });
-    const feedback = document.createElement(&quot;div&quot;);
-    feedback.className = &quot;feedback&quot;;
-    feedback.id = &quot;feedback-&quot; + index;
-    feedback.hidden = true;
-    card.appendChild(feedback);
-    quiz.appendChild(card);
-  });
+ quiz.innerHTML = &quot;&quot;;
+ questions.forEach((q, index) =&gt; {
+ const card = document.createElement(&quot;section&quot;);
+ card.className = &quot;question&quot;;
+ card.id = &quot;question-&quot; + index;
+ const heading = document.createElement(&quot;p&quot;);
+ heading.className = &quot;muted&quot;;
+ heading.textContent = q.lesson;
+ const title = document.createElement(&quot;h3&quot;);
+ title.textContent = (index + 1) + &quot;. &quot; + q.question;
+ card.appendChild(heading);
+ card.appendChild(title);
+ q.options.forEach((option, optionIndex) =&gt; {
+ const label = document.createElement(&quot;label&quot;);
+ const radio = document.createElement(&quot;input&quot;);
+ radio.type = &quot;radio&quot;;
+ radio.name = &quot;q&quot; + index;
+ radio.value = optionIndex;
+ label.appendChild(radio);
+ label.appendChild(document.createTextNode(option));
+ card.appendChild(label);
+ });
+ const feedback = document.createElement(&quot;div&quot;);
+ feedback.className = &quot;feedback&quot;;
+ feedback.id = &quot;feedback-&quot; + index;
+ feedback.hidden = true;
+ card.appendChild(feedback);
+ quiz.appendChild(card);
+ });
 }
 function checkAnswers() {
-  let score = 0;
-  let unanswered = 0;
-  questions.forEach((q, index) =&gt; {
-    const selected = document.querySelector(
-      &#x27;input[name=&quot;q&#x27; + index + &#x27;&quot;]:checked&#x27;
-    );
-    const feedback = document.getElementById(&quot;feedback-&quot; + index);
-    feedback.hidden = false;
-    if (!selected) {
-      unanswered++;
-      feedback.className = &quot;feedback incorrect&quot;;
-      feedback.textContent = &quot;Not answered. &quot; + q.explanation;
-      return;
-    }
-    if (Number(selected.value) === q.answer) {
-      score++;
-      feedback.className = &quot;feedback correct&quot;;
-      feedback.textContent = &quot;Correct! &quot; + q.explanation;
-    } else {
-      feedback.className = &quot;feedback incorrect&quot;;
-      feedback.textContent =
-        &quot;Not quite. Correct answer: &quot; + q.options[q.answer] +
-        &quot;. &quot; + q.explanation;
-    }
-  });
-  const result = document.getElementById(&quot;result&quot;);
-  result.style.display = &quot;block&quot;;
-  result.innerHTML =
-    &quot;&lt;h2&gt;Your score: &quot; + score + &quot; / &quot; + questions.length + &quot;&lt;/h2&gt;&quot; +
-    &quot;&lt;p&gt;Unanswered questions: &quot; + unanswered + &quot;&lt;/p&gt;&quot; +
-    &quot;&lt;p&gt;&quot; +
-    (score &gt;= 18 ? &quot;Excellent work! You have a strong grasp of these concepts.&quot; :
-     score &gt;= 14 ? &quot;Good progress. Review the explanations for any mistakes.&quot; :
-     &quot;Keep practising. Revisit the relevant lessons and try again.&quot;) +
-    &quot;&lt;/p&gt;&quot;;
-  document.getElementById(&quot;checkButton&quot;).disabled = true;
-  window.scrollTo({ top: result.offsetTop, behavior: &quot;smooth&quot; });
+ let score = 0;
+ let unanswered = 0;
+ questions.forEach((q, index) =&gt; {
+ const selected = document.querySelector(
+ &#x27;input[name=&quot;q&#x27; + index + &#x27;&quot;]:checked&#x27;
+ );
+ const feedback = document.getElementById(&quot;feedback-&quot; + index);
+ feedback.hidden = false;
+ if (!selected) {
+ unanswered++;
+ feedback.className = &quot;feedback incorrect&quot;;
+ feedback.textContent = &quot;Not answered. &quot; + q.explanation;
+ return;
+ }
+ if (Number(selected.value) === q.answer) {
+ score++;
+ feedback.className = &quot;feedback correct&quot;;
+ feedback.textContent = &quot;Correct! &quot; + q.explanation;
+ } else {
+ feedback.className = &quot;feedback incorrect&quot;;
+ feedback.textContent =
+ &quot;Not quite. Correct answer: &quot; + q.options[q.answer] +
+ &quot;. &quot; + q.explanation;
+ }
+ });
+ const result = document.getElementById(&quot;result&quot;);
+ result.style.display = &quot;block&quot;;
+ result.innerHTML =
+ &quot;&lt;h2&gt;Your score: &quot; + score + &quot; / &quot; + questions.length + &quot;&lt;/h2&gt;&quot; +
+ &quot;&lt;p&gt;Unanswered questions: &quot; + unanswered + &quot;&lt;/p&gt;&quot; +
+ &quot;&lt;p&gt;&quot; +
+ (score &gt;= 18 ? &quot;Excellent work! You have a strong grasp of these concepts.&quot; :
+ score &gt;= 14 ? &quot;Good progress. Review the explanations for any mistakes.&quot; :
+ &quot;Keep practising. Revisit the relevant lessons and try again.&quot;) +
+ &quot;&lt;/p&gt;&quot;;
+ document.getElementById(&quot;checkButton&quot;).disabled = true;
+ window.scrollTo({ top: result.offsetTop, behavior: &quot;smooth&quot; });
 }
 function resetQuiz() {
-  document.getElementById(&quot;result&quot;).style.display = &quot;none&quot;;
-  document.getElementById(&quot;checkButton&quot;).disabled = false;
-  renderQuiz();
-  window.scrollTo({ top: 0, behavior: &quot;smooth&quot; });
+ document.getElementById(&quot;result&quot;).style.display = &quot;none&quot;;
+ document.getElementById(&quot;checkButton&quot;).disabled = false;
+ renderQuiz();
+ window.scrollTo({ top: 0, behavior: &quot;smooth&quot; });
 }
 renderQuiz();
 &lt;/script&gt;

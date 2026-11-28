@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matrix Vector Transformation</title>
+<style>
+* { box-sizing: border-box; }
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f3f6fb;
+  padding: 20px;
+  color: #243247;
+}
+
+.container {
+  max-width: 850px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px #0001;
+  text-align: center;
+}
+
+h2 { color: #1e40af; }
+
+.description {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 35px 0;
+}
+
+.vector-box {
+  min-width: 105px;
+  padding: 12px;
+  border: 2px solid #0d9488;
+  border-radius: 10px;
+  background: #f0fdfa;
+}
+
+.matrix-box {
+  padding: 18px;
+  border: 3px solid #2563eb;
+  border-radius: 12px;
+  background: #eff6ff;
+  min-width: 180px;
+}
+
+.matrix-title {
+  font-weight: bold;
+  color: #1d4ed8;
+  margin-bottom: 12px;
+  font-size: 20px;
+}
+
+.numbers {
+  display: grid;
+  gap: 9px;
+  justify-content: center;
+  font-family: monospace;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.matrix-numbers {
+  grid-template-columns: repeat(2, 45px);
+}
+
+.vector-numbers {
+  grid-template-columns: 1fr;
+}
+
+.num {
+  padding: 6px;
+  border-radius: 6px;
+  background: white;
+  border: 1px solid #cbd5e1;
+}
+
+.arrow {
+  font-size: 30px;
+  color: #64748b;
+}
+
+.signal {
+  display: inline-block;
+  font-size: 18px;
+  color: #16a34a;
+  opacity: 0;
+}
+
+.signal.animate {
+  animation: travel 1.2s ease-in-out infinite;
+}
+
+@keyframes travel {
+  0% { transform: translateX(0); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateX(30px); opacity: 0; }
+}
+
+.controls {
+  margin: 25px 0;
+}
+
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+  margin: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+.step {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  padding: 18px;
+  border-radius: 10px;
+  margin-top: 20px;
+  min-height: 100px;
+  text-align: left;
+  line-height: 1.8;
+}
+
+.formula {
+  font-family: monospace;
+  font-size: 18px;
+  background: #f1f5f9;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+
+.highlight {
+  color: #15803d;
+  font-weight: bold;
+}
+
+.label {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 8px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h2>How Does a Matrix Transform a Vector?</h2>
+<p class="description">
+A matrix takes an input vector, performs calculations,
+and produces a new output vector.
+</p>
+
+<div class="diagram">
+
+  <div>
+    <div class="vector-box">
+      <strong>Input vector</strong>
+      <div class="numbers vector-numbers" id="inputVector">
+        <div class="num">2</div>
+        <div class="num">1</div>
+      </div>
+    </div>
+    <div class="label">List of numbers</div>
+  </div>
+
+  <div class="arrow">→</div>
+
+  <div>
+    <div class="matrix-box">
+      <div class="matrix-title">Matrix U</div>
+      <div class="numbers matrix-numbers">
+        <div class="num">1</div>
+        <div class="num">2</div>
+        <div class="num">3</div>
+        <div class="num">1</div>
+      </div>
+    </div>
+    <div class="label">2 × 2 matrix</div>
+  </div>
+
+  <div class="arrow">→</div>
+
+  <div>
+    <div class="vector-box">
+      <strong>Output vector</strong>
+      <div class="numbers vector-numbers" id="outputVector">
+        <div class="num">?</div>
+        <div class="num">?</div>
+      </div>
+    </div>
+    <div class="label">New list of numbers</div>
+  </div>
+
+</div>
+
+<div class="controls">
+  <button type="button" id="prev">← Previous</button>
+  <button type="button" id="next">Next Step →</button>
+  <button type="button" id="btn-reset">Reset</button>
+</div>
+
+<div class="step">
+  <strong id="stepTitle">Step 1: Input vector</strong>
+  <div id="stepDescription">
+    We start with an input vector containing two numbers.
+  </div>
+  <div class="formula" id="calculation">
+    |ψ⟩ = [2, 1]ᵀ
+  </div>
+</div>
+
+</div>
+
+<script>
+let currentStep = 0;
+
+const steps = [
+  {
+    title: "Step 1: Input vector",
+    description: "We start with an input vector containing two numbers: 2 and 1.",
+    formula: "Input = [2, 1]ᵀ"
+  },
+  {
+    title: "Step 2: Enter matrix U",
+    description: "The input vector is supplied to matrix U. The matrix contains the numbers that determine how the input is transformed.",
+    formula: "U = [[1, 2], [3, 1]]"
+  },
+  {
+    title: "Step 3: First row calculation",
+    description: "Multiply the first row of U by the input vector. Multiply corresponding numbers and add the results.",
+    formula: "(1 × 2) + (2 × 1) = 4"
+  },
+  {
+    title: "Step 4: Second row calculation",
+    description: "Now multiply the second row of U by the input vector.",
+    formula: "(3 × 2) + (1 × 1) = 7"
+  },
+  {
+    title: "Step 5: Output vector",
+    description: "Combine both calculated results. The matrix has transformed the original vector into a new vector.",
+    formula: "Output = [4, 7]ᵀ"
+  }
+];
+
+function render() {
+  const step = steps[currentStep];
+
+  document.getElementById("stepTitle").textContent = step.title;
+  document.getElementById("stepDescription").textContent = step.description;
+  document.getElementById("calculation").textContent = step.formula;
+
+  document.getElementById("prev").disabled = currentStep === 0;
+  document.getElementById("next").disabled = currentStep === steps.length - 1;
+
+  const output = document.getElementById("outputVector");
+  if (currentStep < 4) {
+    output.innerHTML = '<div class="num">?</div><div class="num">?</div>';
+  } else {
+    output.innerHTML = '<div class="num highlight">4</div><div class="num highlight">7</div>';
+  }
+}
+
+function nextStep() {
+  if (currentStep < steps.length - 1) {
+    currentStep++;
+    render();
+  }
+}
+
+function previousStep() {
+  if (currentStep > 0) {
+    currentStep--;
+    render();
+  }
+}
+
+function reset() {
+  currentStep = 0;
+  render();
+}
+
+document.getElementById("prev").addEventListener("click", previousStep);
+document.getElementById("next").addEventListener("click", nextStep);
+document.getElementById("btn-reset").addEventListener("click", reset);
+
+render();
+</script>
+
+</body>
+</html>

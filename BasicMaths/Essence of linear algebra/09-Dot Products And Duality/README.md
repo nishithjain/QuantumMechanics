@@ -2,7 +2,7 @@
 
 ## Contents
 
-- `notes/lecture-notes.md` — detailed beginner-friendly notes following the transcript sequence.
+- `notes/lecture-notes.md` — detailed beginner-friendly notes following the lecture sequence.
 - `images/concept-01-dot-products-duality.png` — original educational infographic.
 - `animations/animation-01-dot-product-projection.html` — interactive angle/projection/dot-product explorer.
 - `animations/animation-02-duality-number-line.html` — interactive 2D-to-1D linear transformation and duality demonstration.

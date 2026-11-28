@@ -534,7 +534,7 @@ This is the power of abstraction: we do not need to rebuild linear algebra for e
 
 ## 14. The eight vector-space axioms
 
-there are eight axioms and describes them as a checklist for addition and scalar multiplication. The transcript does not reproduce the exact on-screen list, so the following is a standard formulation of the eight axioms for a vector space over the real numbers.
+there are eight axioms and describes them as a checklist for addition and scalar multiplication. The lecture does not reproduce the exact on-screen list, so the following is a standard formulation of the eight axioms for a vector space over the real numbers.
 
 Let $\mathbf u,\mathbf v,\mathbf w$ be vectors and $a,b$ be real scalars.
 

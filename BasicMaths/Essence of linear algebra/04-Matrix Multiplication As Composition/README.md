@@ -1,6 +1,6 @@
 # Chapter 04 — Matrix Multiplication as Composition
 
-This learning package was prepared using the supplied **04 — Matrix Multiplication as Composition** transcript. It preserves the sequence of the lecturer's explanations and adds beginner-friendly derivations, numerical checks, original diagrams, and standalone interactive animations.
+This learning package was prepared using the supplied **04 — Matrix Multiplication as Composition** lecture. It preserves the sequence of the lecturer's explanations and adds beginner-friendly derivations, numerical checks, original diagrams, and standalone interactive animations.
 
 ## Open the notes
 
@@ -24,16 +24,16 @@ Each animation includes **Play, Pause, Step, Reset**, plus x and y sliders for t
 lecture-notes/
 ├── README.md
 ├── notes/
-│   └── lecture-notes.md
+│ └── lecture-notes.md
 ├── images/
-│   ├── concept-01.png
-│   ├── ...
-│   └── concept-10.png
+│ ├── concept-01.png
+│ ├──...
+│ └── concept-10.png
 └── animations/
-    ├── animation-01.html
-    ├── animation-02.html
-    ├── animation-03.html
-    └── animation-04.html
+ ├── animation-01.html
+ ├── animation-02.html
+ ├── animation-03.html
+ └── animation-04.html
 ```
 
 For the best learning experience, study the material in chapter order. This chapter builds on vector addition, linear combinations, basis vectors, and the meaning of a single transformation matrix.

@@ -1,7 +1,7 @@
 # Chapter 12 — Cramer's Rule, Explained Geometrically
 
 **Series:** Essence of Linear Algebra
-**Source:** Provided lecture (approximately 12 minutes 12 seconds) and accompanying transcript.
+**Source:** Provided lecture (approximately 12 minutes 12 seconds).
 **Study goal:** Understand *why* the determinant ratios in Cramer's rule recover the unknown coordinates, rather than memorizing a formula.
 
 > **How to read:** Work through the sections in order; they follow the teaching sequence. `Lecture example` means the example appears in the source. `Extra beginner explanation` or `Extra practice` identifies added teaching support. Original diagrams appear immediately after relevant discussions. Open the linked HTML files in any browser to interact with the geometry.

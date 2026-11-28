@@ -43,10 +43,10 @@ Your notes recorded process size shrinking over time:
 Smaller switches mean more of them, and often more speed. But shrinking cannot go on forever in a simple way:
 
 - **Size.** Transistors are already a handful of atoms across. At that scale, electrons can leak through barriers (a
-  quantum effect called tunneling). The chip stops behaving like a clean “on/off” switch.
+ quantum effect called tunneling). The chip stops behaving like a clean “on/off” switch.
 - **Speed and heat.** Faster switching dumps more heat. You cannot cool an oven-sized hot plate inside a phone.
 - **Cores.** You can add more processor cores, but many problems do not split neatly, and moving data between cores has
-  its own cost.
+ its own cost.
 
 So classical computing continues, but “just wait two years for a free doubling” is no longer a complete strategy.
 
@@ -65,13 +65,13 @@ because the *possibility* of advantage is valuable even while hardware is noisy 
 ### Famous algorithms (the textbook reasons)
 
 - **Shor’s algorithm (1994).** Factors large whole numbers efficiently, in theory. That threatens **RSA** encryption,
-  which relies on factoring being hard for classical computers. Practical, large-scale factoring on today’s machines is
-  not here yet. The idea still drives research in both quantum hardware and post-quantum cryptography.
+ which relies on factoring being hard for classical computers. Practical, large-scale factoring on today’s machines is
+ not here yet. The idea still drives research in both quantum hardware and post-quantum cryptography.
 - **Grover’s algorithm (1996).** Searches an unstructured list of $n$ items in about $\sqrt{n}$ steps instead of about
-  $n$. That is a quadratic speedup, not an exponential one, but it is still a genuine quantum trick.
+ $n$. That is a quadratic speedup, not an exponential one, but it is still a genuine quantum trick.
 - **Simulating quantum systems.** Molecules and materials *are* quantum. A quantum computer is a natural tool for
-  approximating them. People hope this will help **drug design** and materials science, where classical simulation gets
-  expensive fast.
+ approximating them. People hope this will help **drug design** and materials science, where classical simulation gets
+ expensive fast.
 
 ### Broader application list from the notes
 

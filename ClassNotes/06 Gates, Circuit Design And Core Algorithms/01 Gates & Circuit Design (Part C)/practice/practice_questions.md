@@ -2,7 +2,7 @@
 
 **Lecture:** *Gates & Circuit Design [2/3] — Universality and Cost* (IIT Delhi, Prof. Kolin Paul)
 
-These questions use the lecture transcript and slides, expanded with additional beginner-level checks. Work through **Part A** before opening **Part B**. Answers are placed separately so you can test yourself honestly. A calculator is optional; use `π≈3.14159`, `√2≈1.4142`, and `√3≈1.7321` when needed.
+These questions use the lecture lecture and slides, expanded with additional beginner-level checks. Work through **Part A** before opening **Part B**. Answers are placed separately so you can test yourself honestly. A calculator is optional; use `π≈3.14159`, `√2≈1.4142`, and `√3≈1.7321` when needed.
 
 ---
 
@@ -111,26 +111,26 @@ using `T=diag(1,e^{iπ/4})`. Give an exact expression and approximate decimal va
 
 ## A4. Multiple-choice test
 
-**MCQ1.** Which claim is correct?  
-A. CNOT alone is exactly universal.  
-B. Any one-qubit unitary can be expressed by ZYZ rotations plus a global phase.  
-C. H and S reach every Bloch-sphere position exactly from `|0⟩`.  
+**MCQ1.** Which claim is correct? 
+A. CNOT alone is exactly universal. 
+B. Any one-qubit unitary can be expressed by ZYZ rotations plus a global phase. 
+C. H and S reach every Bloch-sphere position exactly from `|0⟩`. 
 D. T is a Clifford gate.
 
-**MCQ2.** `T†` contributes how much to T-count?  
-A. Zero  B. One  C. Two  D. It depends on measurement basis.
+**MCQ2.** `T†` contributes how much to T-count? 
+A. Zero B. One C. Two D. It depends on measurement basis.
 
-**MCQ3.** For `Rz(β)Ry(γ)Rz(δ)|ψ⟩`, which operation happens first?  
-A. `Rz(β)`  B. `Ry(γ)`  C. `Rz(δ)`  D. All simultaneously.
+**MCQ3.** For `Rz(β)Ry(γ)Rz(δ)|ψ⟩`, which operation happens first? 
+A. `Rz(β)` B. `Ry(γ)` C. `Rz(δ)` D. All simultaneously.
 
-**MCQ4.** Which is an exact Clifford+T construction according to the lecture?  
-A. `Rz(0.1)`  B. Generic continuously varying rotation  C. Textbook CCX / Toffoli  D. Every arbitrary unitary with one gate.
+**MCQ4.** Which is an exact Clifford+T construction according to the lecture? 
+A. `Rz(0.1)` B. Generic continuously varying rotation C. Textbook CCX / Toffoli D. Every arbitrary unitary with one gate.
 
-**MCQ5.** Which factor is often especially expensive on an error-corrected machine?  
-A. T-count  B. Global phase of a single isolated state  C. Comment lines in Qiskit  D. Circuit labels.
+**MCQ5.** Which factor is often especially expensive on an error-corrected machine? 
+A. T-count B. Global phase of a single isolated state C. Comment lines in Qiskit D. Circuit labels.
 
-**MCQ6.** A quantum state can have fidelity 1 with another state even when its ket equals the negative of the other ket. Why?  
-A. Measurement ignores relative phase always  B. Global phase is unobservable  C. X equals Z  D. A fidelity of 1 means bit flips have no effect.
+**MCQ6.** A quantum state can have fidelity 1 with another state even when its ket equals the negative of the other ket. Why? 
+A. Measurement ignores relative phase always B. Global phase is unobservable C. X equals Z D. A fidelity of 1 means bit flips have no effect.
 
 ---
 

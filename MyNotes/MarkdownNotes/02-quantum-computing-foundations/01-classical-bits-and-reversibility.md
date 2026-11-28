@@ -26,7 +26,7 @@ In matrix language: if $A x = B$, and you know $A$ and $B$, there is only one $x
 
 - Operations that only **permute** (shuffle) values are reversible.
 - Operations that **erase** or **overwrite** are not reversible. Two different inputs get smashed into the same output,
-  so you cannot tell which input it was.
+ so you cannot tell which input it was.
 
 Quantum computers use only reversible operations.
 In linear algebra they are the **unitary** matrices from the previous notes.

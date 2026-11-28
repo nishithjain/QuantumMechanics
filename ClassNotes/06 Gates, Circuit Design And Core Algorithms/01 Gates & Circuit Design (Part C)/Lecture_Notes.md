@@ -1,15 +1,15 @@
 # Gates & Circuit Design [2/3] — Universality and Cost
 
-**Course:** Quantum Computing — CEP, IIT Delhi  
-**Professor:** Kolin Paul, Department of Computer Science and Engineering  
-**Source materials:** *01 Gates & Circuit Design (Part C)*, full lecture transcript and 12-page slide PDF (20 distinct lecture-slide numbers, with progressively revealed slides).  
+**Course:** Quantum Computing — CEP, IIT Delhi 
+**Professor:** Kolin Paul, Department of Computer Science and Engineering 
+**Source materials:** *01 Gates & Circuit Design (Part C)*, full lecture lecture and 12-page slide PDF (20 distinct lecture-slide numbers, with progressively revealed slides). 
 **Learning level:** First-time learner of quantum computing. The explanations below follow the professor's teaching order, including the discussion after the break about physical noise and Mini-Capstone 1.
 
 > **Start here:** You do **not** need to understand quantum hardware or advanced linear algebra before reading. Begin with the prerequisites in Section 2. The animations require only a browser and run entirely offline.
 >
 > **How to use this document:** Read the intuition, work through every line of the mathematics with pencil and paper, then open the linked HTML visualization. Pause after each “Check Your Understanding.” Solutions for the large end-of-lecture practice set are in [`practice/practice_questions.md`](practice/practice_questions.md).
 >
-> **Notation and accuracy:** We use `CX` and `CNOT` for the *same* two-qubit gate, `CCX` for the three-qubit Toffoli, `T†` for inverse T, and `I` for the identity. Matrices act **right to left** on column vectors. Statements that were simplified or garbled in the transcription are clarified in **Source/precision notes** without changing the lecture's teaching sequence.
+> **Notation and accuracy:** We use `CX` and `CNOT` for the *same* two-qubit gate, `CCX` for the three-qubit Toffoli, `T†` for inverse T, and `I` for the identity. Matrices act **right to left** on column vectors. Statements that were simplified or garbled in the recording are clarified in **Source/precision notes** without changing the lecture's teaching sequence.
 
 ---
 
@@ -119,7 +119,7 @@ $$
 \begin{aligned}
 \langle\psi|\psi\rangle
 &=\begin{bmatrix}\alpha^*&\beta^*\end{bmatrix}
-  \begin{bmatrix}\alpha\\\\\beta\end{bmatrix}\\
+ \begin{bmatrix}\alpha\\\\\beta\end{bmatrix}\\
 &=\alpha^*\alpha+\beta^*\beta\\
 &=|\alpha|^2+|\beta|^2\\
 &=1.
@@ -184,7 +184,7 @@ $$
 U^{\dagger}(U|\psi\rangle)=(U^{\dagger}U)|\psi\rangle=I|\psi\rangle=|\psi\rangle.
 $$
 
-**Caution:** Having determinant 1 is **not** the full definition of unitary. In general, a unitary matrix has determinant of magnitude 1, but the important property is `U†U=I`. The transcript briefly treats the determinant as the only condition; the equation above is the precise rule.
+**Caution:** Having determinant 1 is **not** the full definition of unitary. In general, a unitary matrix has determinant of magnitude 1, but the important property is `U†U=I`. The lecture briefly treats the determinant as the only condition; the equation above is the precise rule.
 
 ### 2.7 The Bloch sphere — a map of single-qubit states
 
@@ -308,7 +308,7 @@ $$
 
 Here `ε` (epsilon) is the maximum error we are willing to tolerate. For example, `ε=0.001` asks for a closer match than `ε=0.1`.
 
-**Important clarification from the transcription:** CNOT **by itself** is **not** a universal quantum gate set. The correct slide theorem requires *arbitrary one-qubit gates together with CNOT*. We need arbitrary single-qubit rotations to generate nontrivial angles.
+**Important clarification from the recording:** CNOT **by itself** is **not** a universal quantum gate set. The correct slide theorem requires *arbitrary one-qubit gates together with CNOT*. We need arbitrary single-qubit rotations to generate nontrivial angles.
 
 ![Three distinct meanings of universality](images/diagram_03.svg)
 
@@ -598,9 +598,9 @@ $$
 \begin{aligned}
 ABC
 &=R_z(\beta)R_y(\gamma/2)R_y(-\gamma/2)
-  R_z(-[\delta+\beta]/2)R_z([\delta-\beta]/2)\\
+ R_z(-[\delta+\beta]/2)R_z([\delta-\beta]/2)\\
 &=R_z(\beta)\underbrace{R_y(0)}_{I}
-  R_z\!\left(\frac{-\delta-\beta+\delta-\beta}{2}\right)\\
+ R_z\!\left(\frac{-\delta-\beta+\delta-\beta}{2}\right)\\
 &=R_z(\beta)R_z(-\beta)\\
 &=R_z(0)=I.
 \end{aligned}
@@ -816,7 +816,7 @@ This formula chooses the global phase `α` that makes the matrices closest, then
 | 12 | 0.058 |
 | 16 | 0.0013 |
 
-Read the table this way: allowing more gates gives the search more candidate circuits. The best distance cannot get worse when the candidate set grows. The values are **results from the professor's notebook**, not universal constants. They depend on the precise gate alphabet, word-length rule, distance metric, global-phase treatment, and search algorithm; those full search details were not included in the transcript/slides, so we do not fabricate the exact gate strings.
+Read the table this way: allowing more gates gives the search more candidate circuits. The best distance cannot get worse when the candidate set grows. The values are **results from the professor's notebook**, not universal constants. They depend on the precise gate alphabet, word-length rule, distance metric, global-phase treatment, and search algorithm; those full search details were not included in the lecture/slides, so we do not fabricate the exact gate strings.
 
 **Solovay–Kitaev theorem, in the lecture's words:** With an appropriate finite universal gate set, any desired unitary can be approximated to any required accuracy, and the needed sequence length grows polylogarithmically as the requested error becomes smaller. In beginner's language: **we can ask for more accuracy without the required circuit length exploding as badly as repeatedly doubling digits might suggest**. The theorem is an existence/construction result, not a claim that a specific naive search is always optimal.
 
@@ -957,21 +957,21 @@ This is a constructive intuition for the decomposition. For the full exact 15-ga
 With wire order `a` (first control), `b` (second control), `t` (target), the following is an exact implementation:
 
 ```text
- 1.  H(t)
- 2.  CX(b, t)
- 3.  T†(t)
- 4.  CX(a, t)
- 5.  T(t)
- 6.  CX(b, t)
- 7.  T†(t)
- 8.  CX(a, t)
- 9.  T(b)
-10.  T(t)
-11.  H(t)
-12.  CX(a, b)
-13.  T(a)
-14.  T†(b)
-15.  CX(a, b)
+ 1. H(t)
+ 2. CX(b, t)
+ 3. T†(t)
+ 4. CX(a, t)
+ 5. T(t)
+ 6. CX(b, t)
+ 7. T†(t)
+ 8. CX(a, t)
+ 9. T(b)
+10. T(t)
+11. H(t)
+12. CX(a, b)
+13. T(a)
+14. T†(b)
+15. CX(a, b)
 ```
 
 Count by hand: `CX` appears at steps 2, 4, 6, 8, 12 and 15 (**six**); `T` at steps 5, 9, 10 and 13 (**four**); `T†` at steps 3, 7 and 14 (**three**); H at steps 1 and 11 (**two**). Those counts total 15. The phase of some intermediate branches is nontrivial; the full sequence has exactly Toffoli's required action.
@@ -1012,14 +1012,14 @@ An X fault exchanges the basis amplitudes. A Z fault changes the sign of one com
 
 **Decoherence and relaxation** are broader environmental processes. A realistic noisy state may no longer be describable by a single ket; it may require a **density matrix** describing a mixture. For example, *dephasing* reduces the ability of relative phases to produce interference, while *amplitude damping* can favor relaxation toward the lower-energy state `|0⟩`.
 
-**Precision note on the leaky-bucket description:** The transcript sometimes describes decoherence as “α decreases to zero or β decreases to zero, so the state collapses to 0 or 1.” That is a motivational simplification, **not** the general mathematical definition of decoherence. Ordinary decoherence does not always produce a single measurement outcome, and the Bloch-vector representation of a mixed state can move **inside** the sphere. Quantum error correction can also mitigate certain decoherence mechanisms when suitably encoded; it is not restricted to unintended perfect Pauli gates.
+**Precision note on the leaky-bucket description:** The lecture sometimes describes decoherence as “α decreases to zero or β decreases to zero, so the state collapses to 0 or 1.” That is a motivational simplification, **not** the general mathematical definition of decoherence. Ordinary decoherence does not always produce a single measurement outcome, and the Bloch-vector representation of a mixed state can move **inside** the sphere. Quantum error correction can also mitigate certain decoherence mechanisms when suitably encoded; it is not restricted to unintended perfect Pauli gates.
 
 #### 3.17.2 Why can't we simply copy the qubit three times?
 
 In classical communication, one simple error-correction technique sends a bit with two redundant copies:
 
 ```text
-Sent:     1 1 1
+Sent: 1 1 1
 Received: 1 0 1
 Majority: 1 (recover the intended bit)
 ```
@@ -1064,9 +1064,9 @@ The professor mentions using extra physical qubits to protect one logical qubit,
 **Step-by-step depth example:** Suppose we have three qubits and operations
 
 ```text
-Time 1: H on q0 AND X on q2       (can run simultaneously)
-Time 2: CNOT between q0 and q1   (shares q0 with the earlier H)
-Time 3: T on q0 AND T† on q2     (can run simultaneously)
+Time 1: H on q0 AND X on q2 (can run simultaneously)
+Time 2: CNOT between q0 and q1 (shares q0 with the earlier H)
+Time 3: T on q0 AND T† on q2 (can run simultaneously)
 ```
 
 There are **five operations** (H, X, CNOT, T, T†), so total gate count=5. But the operations are arranged into **three sequential layers**, so depth=3. T-count is `1+1=2`; because T and T† occur in the *same time slot*, T-depth=1.
@@ -1092,8 +1092,8 @@ The professor returns to the example from the opening slide, now that Toffoli de
 **As written:** Five CCX and five CNOT:
 
 ```python
-core = adder_core()               # the three-bit adder from earlier lecture
-print(core.count_ops())           # {'ccx': 5, 'cx': 5}
+core = adder_core() # the three-bit adder from earlier lecture
+print(core.count_ops()) # {'ccx': 5, 'cx': 5}
 ```
 
 **After compiling into the lecture's basis** of CNOT, H, T and T† (using the particular zero-optimization example):
@@ -1239,7 +1239,7 @@ Thus `P(target=1)=|1/2|²=1/4=25%` for the control-1 branch.
 
 ### 3.18 Mini-Capstone 1: simulate noise and measure fidelity
 
-After the break, the professor moves from the theory to the **capstone assessment**. This section retains the important procedural guidance from the transcript, even though the detailed project handout and starter notebook were *not* included among the two files uploaded here.
+After the break, the professor moves from the theory to the **capstone assessment**. This section retains the important procedural guidance from the lecture, even though the detailed project handout and starter notebook were *not* included among the two files uploaded here.
 
 #### 3.18.1 The core problem in simple language
 
@@ -1324,7 +1324,7 @@ The narrated project contains circuit builders and helper functions for:
 7. **Random Pauli noise injection** using X or Z faults.
 8. **Noisy repeats, counts and a noise-probability sweep** to see how outcomes and average fidelity change.
 
-The transcript describes the project as a **noise library/test harness** rather than an assignment to invent a completely new quantum algorithm.
+The lecture describes the project as a **noise library/test harness** rather than an assignment to invent a completely new quantum algorithm.
 
 #### 3.18.4 Simple pseudocode — teaching illustration, not the graded starter
 
@@ -1335,12 +1335,12 @@ ideal_state = statevector(ideal_circuit)
 
 fidelities = []
 for repeat in range(number_of_trials):
-    noisy_circuit = inject_random_x_or_z_faults(
-        ideal_circuit, probability=p
-    )
-    noisy_state = statevector(noisy_circuit)
-    fidelity = abs(inner_product(ideal_state, noisy_state)) ** 2
-    fidelities.append(fidelity)
+ noisy_circuit = inject_random_x_or_z_faults(
+ ideal_circuit, probability=p
+ )
+ noisy_state = statevector(noisy_circuit)
+ fidelity = abs(inner_product(ideal_state, noisy_state)) ** 2
+ fidelities.append(fidelity)
 
 average_fidelity = sum(fidelities) / len(fidelities)
 ```
@@ -1358,10 +1358,10 @@ The instructor's submission instructions are presented below **as statements fro
 - The lab notebooks from earlier sessions should be completed first because the capstone reuses those circuits and techniques.
 - The instructor described grading as **60 marks for the automatically evaluated notebook plus 40 marks in additional project/report criteria**, with tiers such as pass/good/excellent.
 - A short **PDF report, at most two A4 pages**, was requested in addition to the executed notebook. It should explain results and may include graphs from the notebook.
-- The transcript mentions a **7 December 2026** submission target and a late period until **11 December 2026**, with late submissions capped at **70 marks**. Verify these operational details on the LMS, because the final handout was said to be updated following class questions.
+- The lecture mentions a **7 December 2026** submission target and a late period until **11 December 2026**, with late submissions capped at **70 marks**. Verify these operational details on the LMS, because the final handout was said to be updated following class questions.
 - The professor repeatedly said this is **individual work**. The completed notebook and PDF should be placed in one ZIP for LMS upload.
 
-**Source uncertainty:** The transcript includes a brief verbal inconsistency about a “single one-page report,” followed by a clear answer that the limit is **two pages**. We retain the later explicit two-page limit and recommend checking the final handout. The actual starter notebook, grading test cases and exact function stubs are *not* included in the uploaded PDF/transcript; therefore no claim is made that the pseudocode above is the autograded solution.
+**Source uncertainty:** The lecture includes a brief verbal inconsistency about a “single one-page report,” followed by a clear answer that the limit is **two pages**. We retain the later explicit two-page limit and recommend checking the final handout. The actual starter notebook, grading test cases and exact function stubs are *not* included in the uploaded PDF/lecture; therefore no claim is made that the pseudocode above is the autograded solution.
 
 #### 3.18.6 What a useful experiment should show
 
@@ -1584,6 +1584,6 @@ The accompanying original diagrams are saved in [`images/`](images/) and are emb
 
 This document is grounded in the complete **`01 Gates & Circuit Design (Part C).txt`** and **`01 Gates & Circuit Design (Part C).pdf`**. Its section order follows the spoken lecture more closely than the PDF's compact slide order, including the return to controlled-`Ry` after the break and the spoken Mini-Capstone guidance. The PDF contains 12 pages with progressive slide builds and approximately 20 distinct numbered slides.
 
-To avoid carrying forward transcription errors: (1) the exact-universality gate set includes arbitrary one-qubit gates **and** CNOT, not CNOT alone; (2) `H|1⟩=|−⟩`, not `|+⟩`; (3) unitarity requires `U†U=I`, not merely a determinant condition; (4) Toffoli's exact 15-gate decomposition is distinct from relative-phase Toffoli; and (5) the professor's “leaky bucket” description is motivational and is supplemented by the correct pure-versus-mixed-state distinction. Where missing material prevents an exact reconstruction (the prior adder source and capstone starter notebook), that limitation is clearly identified rather than silently guessed.
+To avoid carrying forward recording errors: (1) the exact-universality gate set includes arbitrary one-qubit gates **and** CNOT, not CNOT alone; (2) `H|1⟩=|−⟩`, not `|+⟩`; (3) unitarity requires `U†U=I`, not merely a determinant condition; (4) Toffoli's exact 15-gate decomposition is distinct from relative-phase Toffoli; and (5) the professor's “leaky bucket” description is motivational and is supplemented by the correct pure-versus-mixed-state distinction. Where missing material prevents an exact reconstruction (the prior adder source and capstone starter notebook), that limitation is clearly identified rather than silently guessed.
 
 **Further reading referenced in the slides:** *Nielsen & Chuang*, Sections 4.2 (ZYZ), 4.3 (controlled operations and Toffoli), 4.5 (universal gates), 10.5.4 (Gottesman–Knill), 10.6.2 (fault-tolerant T), and Appendix 3 (Solovay–Kitaev). The slides also reference Qiskit's `OneQubitEulerDecomposer`, `TwoQubitBasisDecomposer`, `transpile`, and `rccx` examples.

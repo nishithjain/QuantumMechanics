@@ -2,7 +2,7 @@
 
 ## Contents
 
-- `notes/lecture-notes.md` — detailed beginner-friendly notes following the transcript's teaching sequence.
+- `notes/lecture-notes.md` — detailed beginner-friendly notes following the lecture's teaching sequence.
 - `images/concept-01-eigenvectors-eigenvalues.png` — original educational infographic.
 - `animations/animation-01-eigenvector-explorer.html` — interactive geometric explorer for the lecture's matrix.
 - `animations/animation-02-characteristic-equation.html` — interactive 2×2 characteristic polynomial and eigenvalue calculator.
@@ -17,4 +17,4 @@
 
 ## Scope and source fidelity
 
-The notes follow the supplied Lecture 14 transcript. The on-screen puzzle mentioned at the end is not included in the transcript text, so it is explicitly identified as unavailable rather than invented.
+The notes follow the supplied Lecture 14 lecture. The on-screen puzzle mentioned at the end is not included in the lecture text, so it is explicitly identified as unavailable rather than invented.

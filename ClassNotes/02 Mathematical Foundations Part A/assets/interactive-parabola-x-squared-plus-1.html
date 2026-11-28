@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Animation - Parabola y = x² + 1</title>
+<script>if (window.self !== window.top) document.documentElement.classList.add("qm-embed");</script>
+<style>
+html.qm-embed body { padding: 8px; }
+html.qm-embed .container { box-shadow: none; padding: 12px; }
+html.qm-embed h2 { font-size: 1.15rem; margin: 0.4em 0; }
+html.qm-embed p { font-size: 0.92rem; margin: 0.5em 0; }
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f3f6fb;
+  padding: 15px;
+  color: #263445;
+  margin: 0;
+}
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px #0001;
+  text-align: center;
+}
+h2 { color: #1e40af; }
+.graph-wrap {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 600px;
+  aspect-ratio: 600 / 460;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+}
+button {
+  padding: 11px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+}
+button:hover { background: #1d4ed8; }
+.info {
+  background: #eff6ff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  line-height: 1.6;
+  text-align: left;
+}
+#conclusion {
+  color: #dc2626;
+  font-weight: bold;
+  font-size: 17px;
+  margin-top: 8px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h2>Understanding the Graph: y = x² + 1</h2>
+<p>Full graph below; use <strong>Play Animation</strong> for a step-by-step build, or <strong>Replay</strong> to run it again.</p>
+
+<div class="graph-wrap">
+  <canvas id="graph" width="600" height="460" aria-label="Graph of y equals x squared plus 1"></canvas>
+</div>
+
+<div>
+  <button type="button" id="btn-play">▶ Play Animation</button>
+  <button type="button" id="btn-pause">⏸ Pause</button>
+  <button type="button" id="btn-reset">↻ Replay</button>
+</div>
+
+<div class="info">
+  <strong id="stage">Step 1: Draw the coordinate axes</strong>
+  <p id="description">
+    The horizontal line represents the X-axis and the vertical line represents the Y-axis.
+  </p>
+  <div id="conclusion"></div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  const canvas = document.getElementById("graph");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  const W = 600;
+  const H = 460;
+  const left = 55;
+  const right = 560;
+  const top = 35;
+  const bottom = 385;
+
+  const xmin = -3.5;
+  const xmax = 3.5;
+  const ymin = -0.5;
+  const ymax = 10.5;
+
+  function X(x) {
+    return left + ((x - xmin) / (xmax - xmin)) * (right - left);
+  }
+  function Y(y) {
+    return bottom - ((y - ymin) / (ymax - ymin)) * (bottom - top);
+  }
+
+  let progress = 1;
+  let playing = false;
+  let frame = 0;
+  let lastTime = 0;
+  const speed = 0.00035;
+
+  function drawAxes() {
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "#e5e7eb";
+
+    for (let x = -3; x <= 3; x++) {
+      ctx.beginPath();
+      ctx.moveTo(X(x), top);
+      ctx.lineTo(X(x), bottom);
+      ctx.stroke();
+    }
+
+    for (let y = 0; y <= 10; y++) {
+      ctx.beginPath();
+      ctx.moveTo(left, Y(y));
+      ctx.lineTo(right, Y(y));
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = "#222";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(X(0), top);
+    ctx.lineTo(X(0), bottom + 12);
+    ctx.stroke();
+
+    ctx.strokeStyle = "#dc2626";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(left, Y(0));
+    ctx.lineTo(right, Y(0));
+    ctx.stroke();
+
+    ctx.fillStyle = "#222";
+    ctx.beginPath();
+    ctx.moveTo(right + 10, Y(0));
+    ctx.lineTo(right - 3, Y(0) - 6);
+    ctx.lineTo(right - 3, Y(0) + 6);
+    ctx.fill();
+
+    ctx.fillStyle = "#222";
+    ctx.font = "italic 17px Arial";
+    ctx.fillText("x", right + 14, Y(0) + 5);
+    ctx.fillText("y", X(0) - 12, top - 12);
+
+    ctx.font = "14px Arial";
+    ctx.textAlign = "center";
+    for (let x = -3; x <= 3; x++) {
+      ctx.fillText(x, X(x), Y(0) + 21);
+    }
+
+    ctx.textAlign = "right";
+    for (let y = 0; y <= 10; y++) {
+      ctx.fillText(y, X(0) - 12, Y(y) + 5);
+    }
+
+    ctx.textAlign = "left";
+    ctx.font = "bold 14px Arial";
+    ctx.fillStyle = "#dc2626";
+    ctx.fillText("y = 0", left + 5, Y(0) - 9);
+  }
+
+  function drawCurve() {
+    if (progress <= 0) return;
+
+    const end = -3 + 6 * Math.min(progress, 1);
+
+    ctx.beginPath();
+    ctx.strokeStyle = "#2563eb";
+    ctx.lineWidth = 4;
+    ctx.lineJoin = "round";
+
+    for (let x = -3; x <= end; x += 0.02) {
+      const y = x * x + 1;
+      if (x === -3) ctx.moveTo(X(x), Y(y));
+      else ctx.lineTo(X(x), Y(y));
+    }
+    ctx.stroke();
+
+    const y = end * end + 1;
+    ctx.beginPath();
+    ctx.arc(X(end), Y(y), 4, 0, Math.PI * 2);
+    ctx.fillStyle = "#2563eb";
+    ctx.fill();
+  }
+
+  function drawVertex() {
+    if (progress < 0.5) return;
+
+    const x = 0;
+    const y = 1;
+
+    ctx.beginPath();
+    ctx.arc(X(x), Y(y), 7, 0, Math.PI * 2);
+    ctx.fillStyle = "#f97316";
+    ctx.fill();
+
+    ctx.strokeStyle = "#f97316";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(X(x), Y(y), 11, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.fillStyle = "#ea580c";
+    ctx.font = "bold 15px Arial";
+    ctx.textAlign = "left";
+    ctx.fillText("Lowest point", X(x) - 48, Y(y) - 45);
+    ctx.fillText("(0, 1)", X(x) - 18, Y(y) - 27);
+  }
+
+  function drawPoints() {
+    if (progress < 1) return;
+
+    ctx.fillStyle = "#2563eb";
+    for (let x = -3; x <= 3; x++) {
+      const y = x * x + 1;
+      ctx.beginPath();
+      ctx.arc(X(x), Y(y), 5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.fillStyle = "#2563eb";
+    ctx.font = "bold 18px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("y = x² + 1", X(0), Y(10) - 12);
+
+    ctx.fillStyle = "#dc2626";
+    ctx.font = "bold 14px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("The curve never touches the X-axis!", W / 2, H - 35);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    drawAxes();
+    drawCurve();
+    drawVertex();
+    drawPoints();
+  }
+
+  function updateText() {
+    const stage = document.getElementById("stage");
+    const desc = document.getElementById("description");
+    const conclusion = document.getElementById("conclusion");
+
+    if (progress < 0.25) {
+      stage.textContent = "Step 1: Coordinate axes";
+      desc.textContent =
+        "The horizontal X-axis represents y = 0. The vertical line is the Y-axis.";
+      conclusion.textContent = "";
+    } else if (progress < 0.5) {
+      stage.textContent = "Step 2: Drawing the parabola";
+      desc.textContent =
+        "For every X value, calculate y = x² + 1. Watch the blue curve appear.";
+      conclusion.textContent = "";
+    } else if (progress < 1) {
+      stage.textContent = "Step 3: Finding the lowest point";
+      desc.textContent =
+        "The lowest point is (0, 1). Notice that even the minimum Y value is 1, not 0.";
+      conclusion.textContent = "";
+    } else {
+      stage.textContent = "Step 4: Why are there no real solutions?";
+      desc.textContent =
+        "The equation x² + 1 = 0 means we need to find where y = 0. But the parabola stays above the X-axis.";
+      conclusion.textContent =
+        "No real solution! The curve never touches or crosses the X-axis.";
+    }
+  }
+
+  function animate(timestamp) {
+    if (!playing) return;
+
+    if (!lastTime) lastTime = timestamp;
+    progress = Math.min(1, progress + (timestamp - lastTime) * speed);
+    lastTime = timestamp;
+
+    draw();
+    updateText();
+
+    if (progress >= 1) {
+      playing = false;
+      lastTime = 0;
+      return;
+    }
+
+    frame = requestAnimationFrame(animate);
+  }
+
+  function play() {
+    if (progress >= 1) return;
+    if (!playing) {
+      playing = true;
+      lastTime = 0;
+      frame = requestAnimationFrame(animate);
+    }
+  }
+
+  function pause() {
+    playing = false;
+    cancelAnimationFrame(frame);
+    lastTime = 0;
+  }
+
+  function reset() {
+    pause();
+    progress = 0;
+    draw();
+    updateText();
+  }
+
+  function onPlay() {
+    if (progress >= 1 || progress === 0) {
+      reset();
+    }
+    play();
+  }
+
+  function init() {
+    document.getElementById("btn-play").addEventListener("click", onPlay);
+    document.getElementById("btn-pause").addEventListener("click", pause);
+    document.getElementById("btn-reset").addEventListener("click", function () {
+      reset();
+      play();
+    });
+    draw();
+    updateText();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+</body>
+</html>

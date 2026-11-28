@@ -806,8 +806,8 @@ h_then_s = QuantumCircuit(1)
 h_then_s.h(0)
 h_then_s.s(0)
 
-print(Statevector.from_instruction(s_then_h).data)  # [1, 1] / sqrt(2)
-print(Statevector.from_instruction(h_then_s).data)  # [1, 1j] / sqrt(2)
+print(Statevector.from_instruction(s_then_h).data) # [1, 1] / sqrt(2)
+print(Statevector.from_instruction(h_then_s).data) # [1, 1j] / sqrt(2)
 ~~~
 
 The lecture uses `AerSimulator` and runs an example with 2,000 shots. If you add a $Z$-basis measurement to either circuit above, both ideal distributions are 50/50 because the amplitudes have the same magnitudes. Sampled counts fluctuate. A different basis can reveal the phase difference, as §15 shows. The code illustrates the lecture’s workflow. The course notebook supplies its environment setup.
@@ -1782,7 +1782,7 @@ To invert a block, reverse the gate order and replace each gate with its inverse
 
 ## 25. Worked AND and phase-oracle examples
 
-*Slides 30–32. The transcript introduces these examples briefly. The gate-by-gate details come from the slides.*
+*Slides 30–32. The lecture introduces these examples briefly. The gate-by-gate details come from the slides.*
 
 **Three-input AND with one scratch qubit.** Use a clean work bit $w=0$ and a separate target $y$.
 
@@ -1857,4 +1857,4 @@ These are the eight exercises from slide 36, in the slide’s order.
 7. **Compute OR into a clean target using one Toffoli.** Flip the target from $0$ to $1$. Flip $a,b$, apply Toffoli, then flip $a,b$ back. The target contains $1\oplus(\bar a\bar b)=a\lor b$ and the two inputs are restored.
 8. **Trace $3+5$.** Add $011_2$ and $101_2$ from the right. The sums per column are $1+1+0=2$, $1+0+1=2$, and $0+1+1=2$. Each column writes sum bit $0$ and passes carry $1$. Thus $c_1=c_2=c_3=1$ and the result is $1000_2=8$. The low three bits are $000$ and the high bit $c_3$ carries the overflow.
 
-*Sources. The supplied corrected transcript determines the order and scope. The original TXT was used to cross-check spoken passages. The supplied PDF provides the numbered frames, worked examples and problem set. All diagrams and animations were drawn for these notes.*
+*Sources. The supplied corrected lecture determines the order and scope. The original TXT was used to cross-check spoken passages. The supplied PDF provides the numbered frames, worked examples and problem set. All diagrams and animations were drawn for these notes.*

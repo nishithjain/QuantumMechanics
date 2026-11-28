@@ -1,8 +1,8 @@
 # QC Foundations Part A — Beginner Notes
 
-**Lecturer:** Prof. Kolin Paul (IIT Delhi)  
-**Session:** QC Foundations [1/4] — intuition and physics before formal algebra  
-**Sources:** `01 QC Foundations Part A.pdf` (slides) and `QC_Foundations_Part_A_Corrected_Transcription.md` (edited transcript)
+**Lecturer:** Prof. Kolin Paul (IIT Delhi) 
+**Session:** QC Foundations [1/4] — intuition and physics before formal algebra 
+**Sources:** `01 QC Foundations Part A.pdf` (slides) and edited lecture notes from the same session
 
 These notes turn the lecture into a **study guide** for someone **new to quantum computing** who may need a **math refresher** (linear algebra from the previous week is assumed at a gentle level).
 
@@ -188,20 +188,20 @@ At every point along the line, you **add the wave heights** (positive up, negati
 Read the figure **left to right:**
 
 1. **Coin analogy — limited**
-   - **At rest:** you see **heads** or **tails** — a definite classical bit.
-   - **Spinning:** you **do not know** how it will land yet. That is **ordinary uncertainty**: the coin still has one face at each instant; a fast camera would show it.
-   - **Landed:** classical again — one outcome.
-   - This is **not** the same as a quantum superposition. It only helps you remember that *before you look*, you may use probabilities.
+ - **At rest:** you see **heads** or **tails** — a definite classical bit.
+ - **Spinning:** you **do not know** how it will land yet. That is **ordinary uncertainty**: the coin still has one face at each instant; a fast camera would show it.
+ - **Landed:** classical again — one outcome.
+ - This is **not** the same as a quantum superposition. It only helps you remember that *before you look*, you may use probabilities.
 
 2. **A qubit before measurement**
-   - The state is written $\lvert\psi\rangle = \alpha\lvert 0\rangle + \beta\lvert 1\rangle$.
-   - Think **compass / Bloch sphere:** the arrow can point in **many directions** on the sphere (not only north $|0\rangle$ or south $|1\rangle$).
-   - $\alpha$ and $\beta$ are **probability amplitudes** (complex numbers). They fix the state **before** you measure. The 2D circle in some drawings is just a **slice** of the full sphere picture.
+ - The state is written $\lvert\psi\rangle = \alpha\lvert 0\rangle + \beta\lvert 1\rangle$.
+ - Think **compass / Bloch sphere:** the arrow can point in **many directions** on the sphere (not only north $|0\rangle$ or south $|1\rangle$).
+ - $\alpha$ and $\beta$ are **probability amplitudes** (complex numbers). They fix the state **before** you measure. The 2D circle in some drawings is just a **slice** of the full sphere picture.
 
 3. **Measure in the $0/1$ basis**
-   - One run of the experiment → **one classical answer:** outcome `0` or `1`.
-   - Chances: $P(0) = \lvert\alpha\rvert^2$, $P(1) = \lvert\beta\rvert^2$ (must add to 1).
-   - After an ideal measurement, the qubit is left in $\lvert 0\rangle$ or $\lvert 1\rangle$ — the basis state that matched your result.
+ - One run of the experiment → **one classical answer:** outcome `0` or `1`.
+ - Chances: $P(0) = \lvert\alpha\rvert^2$, $P(1) = \lvert\beta\rvert^2$ (must add to 1).
+ - After an ideal measurement, the qubit is left in $\lvert 0\rangle$ or $\lvert 1\rangle$ — the basis state that matched your result.
 
 **Key difference (bottom of the figure):** quantum **amplitudes can interfere** (see wave picture above). Classical “I don’t know which face” **cannot** produce that extra behaviour on its own.
 
@@ -570,42 +570,42 @@ $$
 
 # 23. Practice questions (with brief answers)
 
-1. **Why use complex numbers?**  
-   Compact notation for phase and interference; probabilities stay real via $\lvert\cdot\rvert^2$.
+1. **Why use complex numbers?** 
+ Compact notation for phase and interference; probabilities stay real via $\lvert\cdot\rvert^2$.
 
-2. **Horizontal then vertical polarizer — light?**  
-   Essentially none (orthogonal filters).
+2. **Horizontal then vertical polarizer — light?** 
+ Essentially none (orthogonal filters).
 
-3. **Why insert 45° between H and V?**  
-   Quantum amplitudes allow transmission where classical “blocking” story fails; ~25% in standard demo.
+3. **Why insert 45° between H and V?** 
+ Quantum amplitudes allow transmission where classical “blocking” story fails; ~25% in standard demo.
 
-4. **Write $\lvert+\rangle$ in numbers.**  
-   $\tfrac{1}{\sqrt2}(1,1)^T$ in computational basis.
+4. **Write $\lvert+\rangle$ in numbers.** 
+ $\tfrac{1}{\sqrt2}(1,1)^T$ in computational basis.
 
-5. **If $\lvert\psi\rangle=\lvert+\rangle$, what are $P(0)$, $P(1)$?**  
-   Both $\tfrac12$.
+5. **If $\lvert\psi\rangle=\lvert+\rangle$, what are $P(0)$, $P(1)$?** 
+ Both $\tfrac12$.
 
-6. **After measuring $\lvert+\rangle$ and getting 0, what is the state?**  
-   $\lvert 0\rangle$; next measurement gives 0 with probability 1.
+6. **After measuring $\lvert+\rangle$ and getting 0, what is the state?** 
+ $\lvert 0\rangle$; next measurement gives 0 with probability 1.
 
-7. **$H^2$ on any state?**  
-   Returns original state ($H$ is self-inverse up to the usual definition).
+7. **$H^2$ on any state?** 
+ Returns original state ($H$ is self-inverse up to the usual definition).
 
-8. **What does $Z$ do to $\lvert+\rangle$?**  
-   $\lvert-\rangle$ (phase on equator).
+8. **What does $Z$ do to $\lvert+\rangle$?** 
+ $\lvert-\rangle$ (phase on equator).
 
-9. **$HZH\lvert 1\rangle$?**  
-   $\lvert 0\rangle$ (behaves like $X$).
+9. **$HZH\lvert 1\rangle$?** 
+ $\lvert 0\rangle$ (behaves like $X$).
 
-10. **How many amplitudes for 3 qubits?**  
-    $2^3 = 8$.
+10. **How many amplitudes for 3 qubits?** 
+ $2^3 = 8$.
 
-11. **Bell pair: measure first qubit 0 — second qubit?**  
-    $\lvert 0\rangle$ with certainty (correlation).
+11. **Bell pair: measure first qubit 0 — second qubit?** 
+ $\lvert 0\rangle$ with certainty (correlation).
 
-12. **Is CNOT a product of single-qubit gates?**  
-    No — it is genuinely two-qubit (entangling).
+12. **Is CNOT a product of single-qubit gates?** 
+ No — it is genuinely two-qubit (entangling).
 
 ---
 
-*End of Part A notes. Part B continues in the next lecture file and transcription.*
+*End of Part A notes. Part B continues in the next lecture file and recording.*

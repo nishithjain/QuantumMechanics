@@ -41,15 +41,15 @@ The lecture repeatedly returns to the same ideas (phase kickback, Hadamard ident
 lecture-notes/
 ├── README.md
 ├── notes/
-│   └── lecture-notes.md
+│ └── lecture-notes.md
 ├── images/
-│   ├── concept-01.png
-│   ├── ...
-│   └── concept-10.png
+│ ├── concept-01.png
+│ ├──...
+│ └── concept-10.png
 └── animations/
-    ├── animation-01.html
-    ├── ...
-    └── animation-06.html
+ ├── animation-01.html
+ ├──...
+ └── animation-06.html
 ```
 
 **Offline:** Images are included as PNGs; HTML animations do not depend on external scripts, fonts, services, or libraries.

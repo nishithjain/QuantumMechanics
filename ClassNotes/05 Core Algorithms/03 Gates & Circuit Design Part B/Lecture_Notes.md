@@ -1,12 +1,12 @@
 # QC Foundations [4/4]: Entanglement as a Resource
 
-**Beginner-friendly study notes — Gates & Circuit Design, Part B**  
-**Lecture:** Prof. Kolin Paul, Department of Computer Science and Engineering, IIT Delhi  
-**Date shown on slides:** 15 November 2026  
-**Sources:** Complete lecture transcript and all 31 numbered lecture slides (presented across 19 PDF pages).  
+**Beginner-friendly study notes — Gates & Circuit Design, Part B** 
+**Lecture:** Prof. Kolin Paul, Department of Computer Science and Engineering, IIT Delhi 
+**Date shown on slides:** 15 November 2026 
+**Sources:** Lecture recording and all 31 numbered lecture slides (presented across 19 PDF pages). 
 **How to use these notes:** Read in order. When an animation is linked, open that file in any modern browser; it works offline. Do the small questions before reading the answer. The longer exercises and fully worked answers are in [Practice Questions](practice/practice_questions.md).
 
-> **Notation used consistently:** A qubit is written `|ψ⟩` (pronounced *ket psi*). Alice has an **unknown input qubit** `q₀` and her **half of a Bell pair** `q₁`; Bob has the other half `q₂`. In teleportation, Alice's measured bits are `m₁` (from `q₀`) and `m₂` (from `q₁`). The four Bell states are `|Φ⁺⟩`, `|Φ⁻⟩`, `|Ψ⁺⟩`, `|Ψ⁻⟩`. Some transcript words such as “bill pair,” “C zero,” “face flip,” and “unit tree” are speech-to-text errors for **Bell pair**, **CNOT**, **phase flip**, and **unitary**.
+> **Notation used consistently:** A qubit is written `|ψ⟩` (pronounced *ket psi*). Alice has an **unknown input qubit** `q₀` and her **half of a Bell pair** `q₁`; Bob has the other half `q₂`. In teleportation, Alice's measured bits are `m₁` (from `q₀`) and `m₂` (from `q₁`). The four Bell states are `|Φ⁺⟩`, `|Φ⁻⟩`, `|Ψ⁺⟩`, `|Ψ⁻⟩`. Some misheard words such as “bill pair,” “C zero,” “face flip,” and “unit tree” are speech-to-text errors for **Bell pair**, **CNOT**, **phase flip**, and **unitary**.
 
 ---
 
@@ -389,31 +389,31 @@ $$
 
 1. **Take the overlap of the two inputs.** For product states, overlaps multiply:
 
-   $$
-   \bigl(\langle\psi|\langle0|\bigr)\bigl(|\phi\rangle|0\rangle\bigr)
-   =\langle\psi|\phi\rangle\langle0|0\rangle.
-   $$
+ $$
+ \bigl(\langle\psi|\langle0|\bigr)\bigl(|\phi\rangle|0\rangle\bigr)
+ =\langle\psi|\phi\rangle\langle0|0\rangle.
+ $$
 
 2. **Simplify the blank part.** Since `|0⟩` is normalized, `⟨0|0⟩=1`. Thus the input overlap is `⟨ψ|φ⟩`.
 
 3. **Unitary gates preserve overlap.** Since `U†U=I`, applying the same `U` to both inputs cannot change their inner product:
 
-   $$
-   \langle\psi|\phi\rangle
-   =\bigl(U|\psi0\rangle\bigr)^\dagger\bigl(U|\phi0\rangle\bigr).
-   $$
+ $$
+ \langle\psi|\phi\rangle
+ =\bigl(U|\psi0\rangle\bigr)^\dagger\bigl(U|\phi0\rangle\bigr).
+ $$
 
 4. **Replace the outputs with the supposed copies:**
 
-   $$
-   \begin{aligned}
-   \langle\psi|\phi\rangle
-   &=\bigl(\langle\psi|\langle\psi|\bigr)
-     \bigl(|\phi\rangle|\phi\rangle\bigr)\\
-   &=\langle\psi|\phi\rangle\,\langle\psi|\phi\rangle\\
-   &=\bigl(\langle\psi|\phi\rangle\bigr)^2.
-   \end{aligned}
-   $$
+ $$
+ \begin{aligned}
+ \langle\psi|\phi\rangle
+ &=\bigl(\langle\psi|\langle\psi|\bigr)
+ \bigl(|\phi\rangle|\phi\rangle\bigr)\\
+ &=\langle\psi|\phi\rangle\,\langle\psi|\phi\rangle\\
+ &=\bigl(\langle\psi|\phi\rangle\bigr)^2.
+ \end{aligned}
+ $$
 
 5. Write `z=⟨ψ|φ⟩`. We have `z=z²`; move everything to one side: `z²−z=0`; factor: `z(z−1)=0`. Therefore **`z=0` or `z=1`**.
 
@@ -908,31 +908,31 @@ from qiskit import QuantumCircuit
 from qiskit.quantum_info import Statevector
 
 def teleport_check(theta):
-    qc = QuantumCircuit(3)
+ qc = QuantumCircuit(3)
 
-    # q0: unknown test state, q1: Alice's Bell half, q2: Bob
-    qc.ry(theta, 0)
+ # q0: unknown test state, q1: Alice's Bell half, q2: Bob
+ qc.ry(theta, 0)
 
-    # Create one Bell pair
-    qc.h(1)
-    qc.cx(1, 2)
+ # Create one Bell pair
+ qc.h(1)
+ qc.cx(1, 2)
 
-    # Alice's Bell decoding
-    qc.cx(0, 1)
-    qc.h(0)
+ # Alice's Bell decoding
+ qc.cx(0, 1)
+ qc.h(0)
 
-    # Deferred conditional corrections
-    qc.cx(1, 2)
-    qc.cz(0, 2)
+ # Deferred conditional corrections
+ qc.cx(1, 2)
+ qc.cz(0, 2)
 
-    # Verification only: reverse the preparation on Bob
-    qc.ry(-theta, 2)
-    return qc
+ # Verification only: reverse the preparation on Bob
+ qc.ry(-theta, 2)
+ return qc
 
 for theta in [0.0, np.pi / 3, 2.0]:
-    sv = Statevector(teleport_check(theta))
-    print(theta, sv.probabilities([2])[0])
-    # Expected probability: 1.0 for all three examples
+ sv = Statevector(teleport_check(theta))
+ print(theta, sv.probabilities([2])[0])
+ # Expected probability: 1.0 for all three examples
 ```
 
 **Read the commands like an instruction sheet:** `qc.ry(theta,0)` rotates `q₀`; `qc.h(1)` is Hadamard on `q₁`; `qc.cx(1,2)` is a CNOT from `q₁` to `q₂`; `qc.cx(0,1)` and `qc.h(0)` implement Alice's analysis; `qc.cx(1,2)` and `qc.cz(0,2)` implement corrections; `qc.ry(-theta,2)` is the *check*, not a required step of teleportation.
@@ -946,21 +946,21 @@ import numpy as np
 from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
 
 q = QuantumRegister(3, 'q')
-m = ClassicalRegister(2, 'm')  # measurement results from Alice
-b = ClassicalRegister(1, 'b')  # Bob's verification bit
+m = ClassicalRegister(2, 'm') # measurement results from Alice
+b = ClassicalRegister(1, 'b') # Bob's verification bit
 qc = QuantumCircuit(q, m, b)
 
 theta = np.pi / 3
 qc.ry(theta, q[0])
 qc.h(q[1]); qc.cx(q[1], q[2])
 qc.cx(q[0], q[1]); qc.h(q[0])
-qc.measure(q[0], m[0])  # top wire, m1 in these notes
-qc.measure(q[1], m[1])  # middle wire, m2 in these notes
+qc.measure(q[0], m[0]) # top wire, m1 in these notes
+qc.measure(q[1], m[1]) # middle wire, m2 in these notes
 
 with qc.if_test((m[1], 1)):
-    qc.x(q[2])
+ qc.x(q[2])
 with qc.if_test((m[0], 1)):
-    qc.z(q[2])
+ qc.z(q[2])
 
 qc.ry(-theta, q[2])
 qc.measure(q[2], b[0])
@@ -1356,18 +1356,18 @@ This is **better than the 75% classical limit**, and it is the maximum achievabl
 import numpy as np
 from qiskit import QuantumCircuit
 
-ALICE_ANGLE = {0: 0.0,       1: np.pi / 4}
-BOB_ANGLE   = {0: np.pi / 8, 1: -np.pi / 8}
+ALICE_ANGLE = {0: 0.0, 1: np.pi / 4}
+BOB_ANGLE = {0: np.pi / 8, 1: -np.pi / 8}
 
 def chsh_circuit(x, y):
-    qc = QuantumCircuit(2, 2)
-    qc.h(0)
-    qc.cx(0, 1)
-    qc.ry(-2 * ALICE_ANGLE[x], 0)
-    qc.ry(-2 * BOB_ANGLE[y], 1)
-    qc.measure(0, 0)  # Alice gives a
-    qc.measure(1, 1)  # Bob gives b
-    return qc
+ qc = QuantumCircuit(2, 2)
+ qc.h(0)
+ qc.cx(0, 1)
+ qc.ry(-2 * ALICE_ANGLE[x], 0)
+ qc.ry(-2 * BOB_ANGLE[y], 1)
+ qc.measure(0, 0) # Alice gives a
+ qc.measure(1, 1) # Bob gives b
+ return qc
 ```
 
 **Why does it test quantum mechanics?** Any strictly **local pre-existing instruction sheet** can do no better than a classical pre-agreed plan. But a Bell pair enables correlations that exceed the 75% limit while each player's *individual result* remains random. Only when the referee later compares the two answer lists does the unusual correlation become visible. **No signalling** occurs through the Bell pair itself.
@@ -1388,7 +1388,7 @@ The professor ends by putting the three major protocols side by side. They all u
 
 The lecture's assigned problem set asks you to (1) test no-cloning on `|−⟩`, (2) build a copier for the `|±⟩` basis, (3) check the four-term teleportation algebra, (4) reverse the Bell circuit on `|+⟩|+⟩`, (5) teleport with a different initial Bell pair, (6) encode/decode superdense message `11`, (7) change Bob's CHSH angles and calculate the win rate, and (8) prove the CHSH cosine-squared probability. **All eight are included, with solutions, in the separate [practice workbook](practice/practice_questions.md).**
 
-He asks learners to practice Qiskit circuits in notebooks (Jupyter, Colab, or their laptop), rather than only watch simulations. The upcoming *Mini-Capstone 1* uses a **teleport–then–undo** check and includes a saved, executed notebook and short written answers. The lecture discusses an *anticipated* December submission window, but the transcript's spoken date is inconsistent and the precise deadline must be confirmed from the actual course announcement; these notes do not treat it as an official current deadline.
+He asks learners to practice Qiskit circuits in notebooks (Jupyter, Colab, or their laptop), rather than only watch simulations. The upcoming *Mini-Capstone 1* uses a **teleport–then–undo** check and includes a saved, executed notebook and short written answers. The lecture discusses an *anticipated* December submission window, but the lecture's spoken date is inconsistent and the precise deadline must be confirmed from the actual course announcement; these notes do not treat it as an official current deadline.
 
 **Reading references shown on the slides:** Nielsen & Chuang, *Quantum Computation and Quantum Information* — quantum teleportation (§1.3.7), superdense coding (§2.3), EPR/Bell inequalities (§2.6), and the no-cloning discussion (Box 12.1); plus Qiskit documentation on `if_test` and `quantum_info.Statevector`. These are **recommended further readings**, not prerequisites for understanding this guide.
 
@@ -1523,6 +1523,6 @@ Each file is standalone HTML with **Play, Pause, Step, Reset** controls, labeled
 
 ### A note about source fidelity and scientific clarifications
 
-These notes follow the lecture's teaching sequence and preserve the professor's major applications, numerical comparisons, the full problem set, programming discussion, and capstone context. Several spoken terms were corrected using the slides (e.g. *CNOT*, *Bell pair*, *Pauli*, *Hadamard*, *phase flip*). The transcript occasionally uses informal shortcuts such as “information changes instantaneously” or “quantum cryptography cannot be broken.” These notes distinguish **nonclassical correlations** from **controllable signalling**, and explain the assumptions needed for cryptographic security. The source's display-order conventions for superdense-code output are also made explicit rather than silently reversing bits.
+These notes follow the lecture's teaching sequence and preserve the professor's major applications, numerical comparisons, the full problem set, programming discussion, and capstone context. Several spoken terms were corrected using the slides (e.g. *CNOT*, *Bell pair*, *Pauli*, *Hadamard*, *phase flip*). The recording occasionally uses informal shortcuts such as “information changes instantaneously” or “quantum cryptography cannot be broken.” These notes distinguish **nonclassical correlations** from **controllable signalling**, and explain the assumptions needed for cryptographic security. The source's display-order conventions for superdense-code output are also made explicit rather than silently reversing bits.
 
 **Slides:** Relevant numbered lecture slides are identified throughout. The original PDF has 19 **physical pages** because most pages contain several incremental versions of slide images; its slide footer enumerates **31 lecture slides**. The slide numbering in these notes refers to the professor's slide-footer numbers, **not** the PDF page numbers.

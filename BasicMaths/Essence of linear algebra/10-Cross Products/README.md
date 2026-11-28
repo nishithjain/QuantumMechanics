@@ -16,4 +16,4 @@
 
 ## Scope
 
-The notes follow the supplied transcript. This lecture covers the standard 2D signed-area interpretation, determinant calculation, 3D cross-product vector, right-hand rule, and determinant mnemonic. The deeper duality explanation is explicitly deferred to the next chapter.
+The notes follow the supplied lecture. This lecture covers the standard 2D signed-area interpretation, determinant calculation, 3D cross-product vector, right-hand rule, and determinant mnemonic. The deeper duality explanation is explicitly deferred to the next chapter.

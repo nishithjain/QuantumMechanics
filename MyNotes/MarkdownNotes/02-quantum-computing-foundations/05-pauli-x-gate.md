@@ -91,7 +91,7 @@ That is a reflection across the diagonal line $y = x$.
 - $|0\rangle = \begin{bmatrix} 1 \\\\ 0 \end{bmatrix}$ goes to $|1\rangle = \begin{bmatrix} 0 \\\\ 1 \end{bmatrix}$
 - $|1\rangle$ goes back to $|0\rangle$
 - the equal superposition $\begin{bmatrix} 1/\sqrt{2} \\\\ 1/\sqrt{2} \end{bmatrix}$ is unchanged, because swapping the
-  two equal numbers does nothing
+ two equal numbers does nothing
 - $\begin{bmatrix} -1/\sqrt{2} \\\\ 1/\sqrt{2} \end{bmatrix}$ swaps with $\begin{bmatrix} 1/\sqrt{2} \\\\ -1/\sqrt{2} \end{bmatrix}$
 
 **Correction.** Your notes said the bit flip “has no effect on the superposition bit.” That is true only for this
@@ -105,9 +105,9 @@ A tiny simulator program that allocates one qubit, writes $0$, applies NOT,
 and reads the bit looks like this (QCEngine-style):
 
 ```javascript
-qc.reset(1);            // one qubit
-qc.write(0);            // start as |0>
-qc.not();               // apply X
+qc.reset(1); // one qubit
+qc.write(0); // start as |0>
+qc.not(); // apply X
 var result = qc.read(); // measure as a classical bit
 ```
 

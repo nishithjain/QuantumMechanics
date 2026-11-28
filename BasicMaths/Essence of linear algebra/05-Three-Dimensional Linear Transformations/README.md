@@ -1,6 +1,6 @@
 # Lecture 05 — Three-Dimensional Linear Transformations
 
-This package contains beginner-friendly notes based on the supplied lecture transcript.
+This package contains beginner-friendly notes based on the supplied lecture lecture.
 
 ## Contents
 
@@ -18,4 +18,4 @@ This package contains beginner-friendly notes based on the supplied lecture tran
 
 ## Scope and accuracy
 
-The notes preserve the order and claims in the transcript. Numerical examples are added to make the lecture's matrix operations easier to follow. The rotation matrix uses the exact basis-vector mappings stated by the lecturer.
+The notes preserve the order and claims in the lecture. Numerical examples are added to make the lecture's matrix operations easier to follow. The rotation matrix uses the exact basis-vector mappings stated by the lecturer.

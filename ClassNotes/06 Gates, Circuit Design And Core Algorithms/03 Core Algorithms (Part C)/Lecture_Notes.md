@@ -1,8 +1,8 @@
 # Core Algorithms (Part C) — Quantum Fourier Transform: Basis, Interference and Periodicity
 
-**Source:** IIT Delhi Quantum Computing lecture, *03 Core Algorithms (Part C)* (complete lecture transcription supplied by the learner).  
-**Teaching approach:** The **lecture sequence** is followed below. Explanations marked **Beginner's expansion** or **Supplementary example** are added to help someone new to the mathematics.  
-**Source availability:** No PDF slides were included with this upload. All diagrams in `images/` are original teaching diagrams; formulas are reconstructed from the spoken lecture and checked mathematically.  
+**Source:** IIT Delhi Quantum Computing lecture, *03 Core Algorithms (Part C)*. 
+**Teaching approach:** The **lecture sequence** is followed below. Explanations marked **Beginner's expansion** or **Supplementary example** are added to help someone new to the mathematics. 
+**Source availability:** No PDF slides were included with this upload. All diagrams in `images/` are original teaching diagrams; formulas are reconstructed from the spoken lecture and checked mathematically. 
 **Read alongside:** [Practice workbook and fully worked answers](practice/practice_questions.md).
 
 > **Most important idea:** The Quantum Fourier Transform (QFT) changes a quantum state's amplitudes so that a *pattern hidden in phases or repeated spacings* may become a *pattern of measurement probabilities*. Its usefulness comes from **interference**, not from reading out exponentially many amplitudes.
@@ -283,7 +283,7 @@ Because $\omega_N^N=1$, wrapping $x+y$ modulo $N$ does not change the result. He
 
 **Worked example, $N=8$, $\gamma=2$.** The phase at sample $x$ is $\omega_8^{2x}=e^{i\pi x/2}$. For $x=0,1,2,3,4$, the values are $1,i,-1,-i,1$. The pattern completes a circuit every four steps, so it goes around twice while $x$ runs from 0 through 7.
 
-The transcript notes that one on-screen drawing accidentally used the **opposite turning direction**: $\omega_N^{-\gamma x}$ instead of $\omega_N^{+\gamma x}$. Both sign conventions are valid *when used consistently*. Throughout these notes, the **forward quantum transform** uses the **positive exponent**; the Fourier coordinate coefficients use the **negative exponent** (see sections 3.6–3.9).
+The lecture notes that one on-screen drawing accidentally used the **opposite turning direction**: $\omega_N^{-\gamma x}$ instead of $\omega_N^{+\gamma x}$. Both sign conventions are valid *when used consistently*. Throughout these notes, the **forward quantum transform** uses the **positive exponent**; the Fourier coordinate coefficients use the **negative exponent** (see sections 3.6–3.9).
 
 [Open animation 02: characters, frequency and phase arrows](animations/animation_02.html).
 
@@ -457,7 +457,7 @@ We need to distinguish two mathematically related operations:
 - **Constructing a Fourier state / applying the positive-sign QFT:** $F_N|x\rangle=|f_x\rangle$, with $+\gamma x$ in the exponent.
 - **Reading the coordinates of the *unchanged* state in the Fourier basis:** $\widehat\alpha=F_N^\dagger\alpha$, with $-\gamma x$ in the exponent.
 
-Both are Fourier transforms in common language; the difference is which direction one calls “forward”. The transcript acknowledges that books sometimes reverse the sign convention. **We follow the lecturer's construction of $F_N$ with the positive exponent**, while writing Fourier *coordinate* coefficients with the negative exponent.
+Both are Fourier transforms in common language; the difference is which direction one calls “forward”. The lecture acknowledges that books sometimes reverse the sign convention. **We follow the lecturer's construction of $F_N$ with the positive exponent**, while writing Fourier *coordinate* coefficients with the negative exponent.
 
 **Why does the distinction matter?** For $N=2$, $H=H^\dagger$, so the difference is invisible. For $N\ge4$, a typical QFT matrix is not its own inverse. Mixing the two would produce wrong phases and wrong circuit interpretations.
 
@@ -932,7 +932,7 @@ $$\boxed{F_8|5\rangle=
 
 **Lecture status: preview, not a derivation the professor completed today.** After writing the product formula, the professor shows that the required phases have denominators $2,4,8,\dots$. Those are exactly the kinds of phases supplied by $Z=R_1$, $S=R_2$, $T=R_3$, and their higher-$j$ relatives. Conditional phases are supplied by controlled-$R_j$.
 
-The standard exact QFT construction on $k$ qubits uses $k$ Hadamard gates, $k(k-1)/2$ controlled phase rotations, and up to $\lfloor k/2\rfloor$ swaps to correct the output-bit order. That is $O(k^2)$ elementary operations. For $k=3$, this corresponds to three Hadamards, three controlled phase rotations and one final SWAP in the usual decomposition. This **extra note** prepares you for the next lecture; don't mistake it for the gate-by-gate proof presented in the provided transcription.
+The standard exact QFT construction on $k$ qubits uses $k$ Hadamard gates, $k(k-1)/2$ controlled phase rotations, and up to $\lfloor k/2\rfloor$ swaps to correct the output-bit order. That is $O(k^2)$ elementary operations. For $k=3$, this corresponds to three Hadamards, three controlled phase rotations and one final SWAP in the usual decomposition. This **extra note** prepares you for the next lecture; don't mistake it for the gate-by-gate proof presented in the lecture.
 
 **Why is there a classical-output catch?** Even if these $O(k^2)$ gates act on $2^k$ amplitudes, a measurement returns one outcome with probability $|\alpha'_y|^2$. It does not print every $\alpha'_y$. Quantum algorithm design therefore has to turn a global Fourier structure into useful *sampling outcomes*.
 
@@ -1066,4 +1066,4 @@ Each file is standalone HTML, CSS and JavaScript; open it directly in a modern b
 
 ---
 
-**Study scope and corrections:** These notes use the supplied transcript as the primary lecture source. Original explanations and exercises are added for understanding; the professor's uncompleted QFT circuit is *not* presented as if fully taught. Transcript slips corrected here include the $f_3$ sign/orthogonality example, a spoken list of even positions that mistakenly included an odd number, missing normalization factors, and the difference between $F_N$ and $F_N^\dagger$. No slide content is attributed to a PDF because no PDF accompanied this lecture.
+**Study scope and corrections:** These notes use the the lecture as the primary source. Original explanations and exercises are added for understanding; the professor's uncompleted QFT circuit is *not* presented as if fully taught. Spoken slips corrected here include the $f_3$ sign/orthogonality example, a spoken list of even positions that mistakenly included an odd number, missing normalization factors, and the difference between $F_N$ and $F_N^\dagger$. No slide content is attributed to a PDF because no PDF accompanied this lecture.

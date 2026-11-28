@@ -1,6 +1,6 @@
 # Practice Workbook — Quantum Fourier Transform, Roots of Unity and Hidden Periods
 
-**Companion:** [Return to main lecture notes](../Lecture_Notes.md). This workbook follows the transcript's sequence but includes additional beginner-level practice. **Every question has a worked explanation in Section B**. Try the questions first without scrolling to the solutions.
+**Companion:** [Return to main lecture notes](../Lecture_Notes.md). This workbook follows the lecture's sequence but includes additional beginner-level practice. **Every question has a worked explanation in Section B**. Try the questions first without scrolling to the solutions.
 
 ## A. Questions (attempt first)
 

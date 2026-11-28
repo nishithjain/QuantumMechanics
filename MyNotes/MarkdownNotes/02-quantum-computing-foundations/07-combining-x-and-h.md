@@ -27,17 +27,17 @@ $$
 1. $X$ swaps the two entries: $\begin{bmatrix} -1/\sqrt{2} \\\\ 1/\sqrt{2} \end{bmatrix}$
 1. $H$ of that vector:
 
-   $$
-   H\begin{bmatrix} -1/\sqrt{2} \\ 1/\sqrt{2} \end{bmatrix}
-   =
-   \frac{1}{\sqrt{2}}
-   \begin{bmatrix}
-   -1/\sqrt{2} + 1/\sqrt{2} \\
-   -1/\sqrt{2} - 1/\sqrt{2}
-   \end{bmatrix}
-   =
-   \begin{bmatrix} 0 \\ -1 \end{bmatrix}
-   $$
+ $$
+ H\begin{bmatrix} -1/\sqrt{2} \\ 1/\sqrt{2} \end{bmatrix}
+ =
+ \frac{1}{\sqrt{2}}
+ \begin{bmatrix}
+ -1/\sqrt{2} + 1/\sqrt{2} \\
+ -1/\sqrt{2} - 1/\sqrt{2}
+ \end{bmatrix}
+ =
+ \begin{bmatrix} 0 \\ -1 \end{bmatrix}
+ $$
 
 1. $X$: $\begin{bmatrix} -1 \\\\ 0 \end{bmatrix} = -|0\rangle$
 

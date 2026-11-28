@@ -1,7 +1,7 @@
 # Core Algorithms (Part C): Simon's Algorithm, Change of Basis, and the Road to the Quantum Fourier Transform
 
-> **Source:** Professor's lecture transcription, *02 Core Algorithms (Part C)*. No lecture PDF was supplied for this session. All diagrams, worked additions and interactive demonstrations in this package are original reconstructions, not screenshots from slides.  
-> **Teaching notation:** A binary string is written `101` or $|101\rangle$; `⊕` means bitwise XOR; a dot product of bit strings always means **modulo 2**, unless explicitly stated otherwise.  
+> **Source:** Professor's lecture, *02 Core Algorithms (Part C)*. No lecture PDF was supplied for this session. All diagrams, worked additions and interactive demonstrations in this package are original reconstructions, not screenshots from slides. 
+> **Teaching notation:** A binary string is written `101` or $|101\rangle$; `⊕` means bitwise XOR; a dot product of bit strings always means **modulo 2**, unless explicitly stated otherwise. 
 > **Scope:** This lecture **finishes Simon's algorithm**, reinterprets Deutsch–Jozsa and Bernstein–Vazirani as Fourier/change-of-basis algorithms, then **introduces** modular arithmetic, characters and roots of unity. A full quantum Fourier transform (QFT) circuit and factoring are topics for subsequent lectures.
 
 ## 1. Introduction
@@ -1222,4 +1222,4 @@ All nine HTML files contain their own CSS and JavaScript and work **offline**. T
 
 ---
 
-*End of this lecture's notes. Additional worked examples, proofs and diagrams beyond the spoken transcript are labelled or contextualized as teaching supplements; the full QFT circuit and factoring procedures have not been attributed to this lecture.*
+*End of this lecture's notes. Additional worked examples, proofs and diagrams beyond the spoken lecture are labelled or contextualized as teaching supplements; the full QFT circuit and factoring procedures have not been attributed to this lecture.*

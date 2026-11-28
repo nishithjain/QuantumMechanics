@@ -3,15 +3,15 @@
 <!-- markdownlint-disable MD033 -->
 <script>
 window.addEventListener("message", function (event) {
-  var data = event.data;
-  if (!data || data.type !== "qm-embed-height" || !event.source) return;
-  var frames = document.getElementsByTagName("iframe");
-  for (var i = 0; i < frames.length; i++) {
-    if (frames[i].contentWindow === event.source) {
-      frames[i].style.height = Math.ceil(data.height) + "px";
-      break;
-    }
-  }
+ var data = event.data;
+ if (!data || data.type !== "qm-embed-height" || !event.source) return;
+ var frames = document.getElementsByTagName("iframe");
+ for (var i = 0; i < frames.length; i++) {
+ if (frames[i].contentWindow === event.source) {
+ frames[i].style.height = Math.ceil(data.height) + "px";
+ break;
+ }
+ }
 });
 </script>
 <!-- markdownlint-enable MD033 -->
@@ -50,7 +50,7 @@ $$
 A(u+v)=Au+Av,\qquad A(cv)=cAv.
 $$
 
-A matrix is a way to write such a rule. If $A$ is an $m\times n$ matrix and $x$ has $n$ entries, $Ax$ has **$m$ entries**. The transcript says $n$ at one point; that is a dimensional slip, not the general rule.
+A matrix is a way to write such a rule. If $A$ is an $m\times n$ matrix and $x$ has $n$ entries, $Ax$ has **$m$ entries**. The lecture says $n$ at one point; that is a dimensional slip, not the general rule.
 
 ### 2.3 Why quantum gates must be unitary
 
@@ -122,11 +122,11 @@ Those squared magnitudes are measurement probabilities, so they must sum to $1$.
 
 1. **No loss of quantum information** — $Z$-basis probabilities stay normalized. For example,
 
-   $$
-   P(0) + P(1) = 1.
-   $$
+ $$
+ P(0) + P(1) = 1.
+ $$
 
-   If $P(0)=0.7$, then $P(1)=0.3$. A unitary gate preserves that total.
+ If $P(0)=0.7$, then $P(1)=0.3$. A unitary gate preserves that total.
 
 2. **Operations are reversible** — every unitary $U$ has inverse $U^\dagger$ on the same Hilbert space, so evolution can be undone in the mathematical model (hardware noise is a separate story).
 
@@ -191,7 +191,7 @@ Av=\begin{pmatrix}2\cdot1+1\cdot1\\\\1\cdot1+2\cdot1\end{pmatrix}
 =\begin{pmatrix}3\\\\3\end{pmatrix}=3\begin{pmatrix}1\\\\1\end{pmatrix}.
 $$
 
-So $(1,1)^T$ is an eigenvector with eigenvalue 3. The transcript briefly says $(3,1)$ for the result; the multiplication establishes that the correct result is **$(3,3)$**.
+So $(1,1)^T$ is an eigenvector with eigenvalue 3. The lecture briefly says $(3,1)$ for the result; the multiplication establishes that the correct result is **$(3,3)$**.
 
 Try $w=(1,0)^T$: $Aw=(2,1)^T$. It is no longer on the original horizontal line, so **not** an eigenvector.
 
@@ -3021,7 +3021,7 @@ Read the notation slowly: $b$ is the input bit; $z$ is the output-basis label, t
 | 1 | 0 | 0 | + |
 | 1 | 1 | 1 | − |
 
-Only the $b=z=1$ combination produces a minus sign. The transcript has a couple of spoken slips (“both terms zero”); the table and equations above show the intended rule.
+Only the $b=z=1$ combination produces a minus sign. The lecture has a couple of spoken slips (“both terms zero”); the table and equations above show the intended rule.
 
 ### 10.1 Yes — this formula is for **one** qubit
 

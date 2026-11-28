@@ -84,12 +84,12 @@ $$
 **Interactive:** Drag $\mathbf w$, change the angle between the vectors, or use presets (same direction, perpendicular, opposite). Watch the projection onto the line through $\mathbf v$ and see how the signed projection length times $\|\mathbf v\|$ matches $\mathbf v\cdot\mathbf w$.
 
 <iframe
-  src="../animations/animation-03-dot-product-projection.html"
-  title="Dot product as signed projection onto v"
-  width="100%"
-  height="920"
-  style="max-width:1150px;border:1px solid #dce4ef;border-radius:12px;background:#f4f7fb;"
-  loading="lazy">
+ src="../animations/animation-03-dot-product-projection.html"
+ title="Dot product as signed projection onto v"
+ width="100%"
+ height="920"
+ style="max-width:1150px;border:1px solid #dce4ef;border-radius:12px;background:#f4f7fb;"
+ loading="lazy">
 </iframe>
 
 <p><a href="../animations/animation-03-dot-product-projection.html">Open Animation 03 — dot product projection in full tab</a> if the embed does not load.</p>

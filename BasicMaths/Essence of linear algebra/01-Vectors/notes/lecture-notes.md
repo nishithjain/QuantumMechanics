@@ -2,7 +2,7 @@
 
 **Essence of Linear Algebra · Chapter 1 · Beginner-friendly learning notes**
 
-**Source:** The supplied *01 — Vectors* transcript and accompanying figures. The explanations follow the order of the lecture, from three interpretations of vectors to coordinates, addition, scaling, and applications. Illustrations and practice explanations are original teaching aids.
+**Source:** The supplied *01 — Vectors* lecture and accompanying figures. The explanations follow the order of the lecture, from three interpretations of vectors to coordinates, addition, scaling, and applications. Illustrations and practice explanations are original teaching aids.
 
 > **How to study:** Read one section, look at its diagram, and repeat the steps aloud. When a blue **Try the animation** link appears, open it in your browser. You can change values, play the demonstration, or advance one step at a time. No internet is required.
 

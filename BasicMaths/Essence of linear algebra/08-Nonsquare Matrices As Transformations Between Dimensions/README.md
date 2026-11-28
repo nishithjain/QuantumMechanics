@@ -1,6 +1,6 @@
 # Chapter 08 — Nonsquare Matrices as Transformations Between Dimensions
 
-Beginner-friendly companion to the attached **08 — Nonsquare Matrices as Transformations Between Dimensions** lecture and transcript.
+Beginner-friendly companion to the attached **08 — Nonsquare Matrices as Transformations Between Dimensions** lecture and lecture.
 
 ## Start here
 

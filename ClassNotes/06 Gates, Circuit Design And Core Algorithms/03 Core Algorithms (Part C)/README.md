@@ -1,6 +1,6 @@
 # Quantum Computing — Core Algorithms (Part C): Offline Learning Pack
 
-This complete learning pack was created from the supplied **03 Core Algorithms (Part C)** lecture transcription. **No PDF slides were included in this turn**, so the educational illustrations are original reconstructions of the mathematics described verbally. The transcript, not a guessed slide deck, determines the lecture sequence.
+This complete learning pack was created from the supplied **03 Core Algorithms (Part C)** lecture. **No PDF slides were included in this turn**, so the educational illustrations are original reconstructions of the mathematics described verbally. The lecture, not a guessed slide deck, determines the lecture sequence.
 
 ## Start here
 
@@ -14,33 +14,33 @@ This complete learning pack was created from the supplied **03 Core Algorithms (
 
 ```text
 Lecture_Notes/
-├── README.md                      ← You are here
-├── Lecture_Notes.md               ← Full Markdown study notes
+├── README.md ← You are here
+├── Lecture_Notes.md ← Full Markdown study notes
 ├── animations/
-│   ├── animation_01.html          ← Roots of unity
-│   ├── animation_02.html          ← Character phase patterns
-│   ├── animation_03.html          ← Fourier basis states
-│   ├── animation_04.html          ← Fourier coordinates and F vs F†
-│   ├── animation_05.html          ← F4 matrix entries
-│   ├── animation_06.html          ← Two-spike interference
-│   ├── animation_07.html          ← Periodic comb and shift
-│   ├── animation_08.html          ← Controlled phase rotations
-│   ├── animation_09.html          ← QFT tensor factorization
-│   └── animation_10.html          ← QFT gate cost (preview)
+│ ├── animation_01.html ← Roots of unity
+│ ├── animation_02.html ← Character phase patterns
+│ ├── animation_03.html ← Fourier basis states
+│ ├── animation_04.html ← Fourier coordinates and F vs F†
+│ ├── animation_05.html ← F4 matrix entries
+│ ├── animation_06.html ← Two-spike interference
+│ ├── animation_07.html ← Periodic comb and shift
+│ ├── animation_08.html ← Controlled phase rotations
+│ ├── animation_09.html ← QFT tensor factorization
+│ └── animation_10.html ← QFT gate cost (preview)
 ├── images/
-│   ├── diagram_01_learning_map.svg
-│   ├── diagram_02_modular_clock.svg
-│   ├── diagram_03_roots_of_unity.svg
-│   ├── diagram_04_fourier_basis.svg
-│   ├── diagram_05_change_of_basis.svg
-│   ├── diagram_06_fourier_matrix.svg
-│   ├── diagram_07_single_spike.svg
-│   ├── diagram_08_two_spikes.svg
-│   ├── diagram_09_periodic_comb.svg
-│   ├── diagram_10_controlled_phase.svg
-│   └── diagram_11_tensor_factorization.svg
+│ ├── diagram_01_learning_map.svg
+│ ├── diagram_02_modular_clock.svg
+│ ├── diagram_03_roots_of_unity.svg
+│ ├── diagram_04_fourier_basis.svg
+│ ├── diagram_05_change_of_basis.svg
+│ ├── diagram_06_fourier_matrix.svg
+│ ├── diagram_07_single_spike.svg
+│ ├── diagram_08_two_spikes.svg
+│ ├── diagram_09_periodic_comb.svg
+│ ├── diagram_10_controlled_phase.svg
+│ └── diagram_11_tensor_factorization.svg
 └── practice/
-    └── practice_questions.md      ← 44 exercises and worked solutions
+ └── practice_questions.md ← 44 exercises and worked solutions
 ```
 
 ## Animation controls

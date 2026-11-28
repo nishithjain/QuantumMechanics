@@ -849,12 +849,12 @@ $$
 **Interactive:** Play the shear on the grid, try î, ĵ, and custom $(x,y)$, and see when the arrow stays fixed. The panel walks through $\det(S-\lambda I)=(1-\lambda)^2$, the only eigenvalue $\lambda=1$, and why only the x-axis gives eigenvectors.
 
 <iframe
-  src="../animations/animation-11-shear-eigenvectors.html"
-  title="Shear transformation eigenvectors lambda equals 1"
-  width="100%"
-  height="980"
-  style="max-width:1100px;border:1px solid #dce4ef;border-radius:12px;background:#f4f7fb;"
-  loading="lazy">
+ src="../animations/animation-11-shear-eigenvectors.html"
+ title="Shear transformation eigenvectors lambda equals 1"
+ width="100%"
+ height="980"
+ style="max-width:1100px;border:1px solid #dce4ef;border-radius:12px;background:#f4f7fb;"
+ loading="lazy">
 </iframe>
 
 <p><a href="../animations/animation-11-shear-eigenvectors.html">Open Animation 11 — shear eigenvectors in full tab</a> if the embed does not load.</p>
@@ -1115,4 +1115,4 @@ This reasoning follows this chain:
 
 ## 23. Scope note: the final puzzle
 
-The source mentions a puzzle shown on screen near the end of the chapter, but the supplied transcript does not contain the puzzle's actual wording or data. It is therefore not reconstructed here. The transcript does state that the next and final chapter in the series will discuss abstract vector spaces.
+The source mentions a puzzle shown on screen near the end of the chapter, but the supplied lecture does not contain the puzzle's actual wording or data. It is therefore not reconstructed here. The lecture does state that the next and final chapter in the series will discuss abstract vector spaces.

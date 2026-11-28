@@ -1,7 +1,7 @@
 # Core Algorithms (Part C) — Offline Study Package
 
-**Topic:** Simon's Algorithm, Change of Basis and the Road to the Quantum Fourier Transform  
-**Source:** The uploaded lecture transcription `02 Core Algorithms (Part C).txt`. **No PDF slides were supplied for this lecture.** The educational diagrams are original and the extra worked examples are labeled as supplements in the notes.
+**Topic:** Simon's Algorithm, Change of Basis and the Road to the Quantum Fourier Transform 
+**Source:** Lecture *02 Core Algorithms (Part C)*. **No PDF slides were supplied for this lecture.** The educational diagrams are original and the extra worked examples are labeled as supplements in the notes.
 
 ## Start here
 
@@ -18,27 +18,27 @@ Lecture_Notes/
 ├── README.md
 ├── Lecture_Notes.md
 ├── animations/
-│   ├── animation_01.html     # Several-qubit Hadamard and parity signs
-│   ├── animation_02.html     # Deutsch–Jozsa / Bernstein–Vazirani
-│   ├── animation_03.html     # Simons paired inputs
-│   ├── animation_04.html     # Simon amplitude cancellation
-│   ├── animation_05.html     # Sample equations and check rank
-│   ├── animation_06.html     # Single-qubit basis change
-│   ├── animation_07.html     # Two-qubit Walsh Fourier coefficients
-│   ├── animation_08.html     # Z_N modular arithmetic clock
-│   └── animation_09.html     # Roots of unity and cyclic characters
+│ ├── animation_01.html # Several-qubit Hadamard and parity signs
+│ ├── animation_02.html # Deutsch–Jozsa / Bernstein–Vazirani
+│ ├── animation_03.html # Simons paired inputs
+│ ├── animation_04.html # Simon amplitude cancellation
+│ ├── animation_05.html # Sample equations and check rank
+│ ├── animation_06.html # Single-qubit basis change
+│ ├── animation_07.html # Two-qubit Walsh Fourier coefficients
+│ ├── animation_08.html # Z_N modular arithmetic clock
+│ └── animation_09.html # Roots of unity and cyclic characters
 ├── images/
-│   ├── diagram_01.svg       # Lecture roadmap
-│   ├── diagram_02.svg       # Hadamard sign pattern
-│   ├── diagram_03.svg       # Simon pairing by XOR
-│   ├── diagram_04.svg       # Simon oracle circuit
-│   ├── diagram_05.svg       # Binary equation elimination
-│   ├── diagram_06.svg       # Change of basis
-│   ├── diagram_07.svg       # Hadamard sign matrix
-│   ├── diagram_08.svg       # Modular addition versus XOR
-│   └── diagram_09.svg       # Roots of unity
+│ ├── diagram_01.svg # Lecture roadmap
+│ ├── diagram_02.svg # Hadamard sign pattern
+│ ├── diagram_03.svg # Simon pairing by XOR
+│ ├── diagram_04.svg # Simon oracle circuit
+│ ├── diagram_05.svg # Binary equation elimination
+│ ├── diagram_06.svg # Change of basis
+│ ├── diagram_07.svg # Hadamard sign matrix
+│ ├── diagram_08.svg # Modular addition versus XOR
+│ └── diagram_09.svg # Roots of unity
 └── practice/
-    └── practice_questions.md
+ └── practice_questions.md
 ```
 
 ## Viewing mathematical equations
@@ -51,7 +51,7 @@ Local SVGs appear within the Markdown as relative references such as `images/dia
 
 ## What this lecture does and does not include
 
-- The transcript **reviews** Deutsch–Jozsa and Bernstein–Vazirani and **completes** the Simon algorithm.
+- The lecture **reviews** Deutsch–Jozsa and Bernstein–Vazirani and **completes** the Simon algorithm.
 - The professor then explains Hadamard as a Fourier/change-of-basis operation and introduces the character property on XOR strings.
 - Finally, the professor introduces modular arithmetic, complex roots of unity and character cancellation as preparation for the **next** lecture.
 - A compact **QFT formula and example** are provided as a clearly identified *supplementary preview*, not falsely attributed as a full QFT derivation taught in this session.

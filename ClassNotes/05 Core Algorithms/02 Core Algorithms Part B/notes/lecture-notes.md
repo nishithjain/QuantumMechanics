@@ -130,7 +130,7 @@ P(\text{all }k\text{ outcomes equal})
 \end{aligned}
 $$
 
-For ten independently sampled inputs, this is `2^(1−10)=1/512≈0.195%`. If instead we **repeat a two-query trial ten times using independent random choices**, the chance of failing all ten trials is `(1/2)^10=1/1024≈0.098%` and costs 20 queries. The transcript shifts between these two experiments; both illustrate very low—but nonzero—error.
+For ten independently sampled inputs, this is `2^(1−10)=1/512≈0.195%`. If instead we **repeat a two-query trial ten times using independent random choices**, the chance of failing all ten trials is `(1/2)^10=1/1024≈0.098%` and costs 20 queries. The lecture shifts between these two experiments; both illustrate very low—but nonzero—error.
 
 | Strategy | Worst-case oracle queries | Can it ever be wrong? |
 |---|---:|---|
@@ -140,7 +140,7 @@ For ten independently sampled inputs, this is `2^(1−10)=1/512≈0.195%`. If in
 
 **Why might people still use the classical randomized method?** Ten inexpensive queries can be more practical than building a real quantum device. The surprising result is the **exact query separation**: one quantum oracle call versus exponentially many deterministic classical oracle calls.
 
-**Transcript clarification:** The lecturer sometimes says “exponential time” while deriving an exponential **query bound**. Query complexity counts calls to the black box; actual running time also depends on how expensive the oracle and other gates are.
+**Clarification:** The lecturer sometimes says “exponential time” while deriving an exponential **query bound**. Query complexity counts calls to the black box; actual running time also depends on how expensive the oracle and other gates are.
 
 **Try it:** [Interactive classical query experiment](../animations/animation-01.html) lets you see the worst-case ambiguity and how random sampling changes the tradeoff.
 
@@ -706,7 +706,7 @@ $$
 
 So measuring at this stage produces a **uniformly random n-bit string**, independent of `s`! We don't even learn the parity signs, because measurement in the computational basis ignores a coefficient's sign.
 
-**Transcript clarification:** The transcript briefly describes prematurely measuring “plus one or minus one.” The meaningful measurement here is **a bit string `x`**, not a directly observable positive or negative amplitude. The signs are only made useful by the final interference step.
+**Clarification:** The lecture briefly describes prematurely measuring “plus one or minus one.” The meaningful measurement here is **a bit string `x`**, not a directly observable positive or negative amplitude. The signs are only made useful by the final interference step.
 
 ### Check your understanding — Bernstein–Vazirani
 
@@ -793,7 +793,7 @@ For example, we could assign four arbitrary distinct output labels, such as `010
 
 There are `2^n` total inputs, but only `2^(n−1)` different output values actually used. In this sense the function is 2-to-1. The lecturer also uses the mathematical word **cardinality**, which just means “number of elements in a set.”
 
-**Transcript clarification:** One early spoken pairing in the three-bit example is garbled: for `s=110`, the partner of `001` is **`111`**, not `110` or `101`. The XOR calculations above supply the unambiguous pairing.
+**Clarification:** One early spoken pairing in the three-bit example is garbled: for `s=110`, the partner of `001` is **`111`**, not `110` or `101`. The XOR calculations above supply the unambiguous pairing.
 
 ### 7.3 Larger five-bit example
 
@@ -812,10 +812,10 @@ $$
 Find its partner one bit at a time:
 
 ```text
-       bit positions: 1 2 3 4 5
-               x    : 1 1 0 1 0
-               s    : 1 1 0 0 1
-             x XOR s: 0 0 0 1 1
+ bit positions: 1 2 3 4 5
+ x : 1 1 0 1 0
+ s : 1 1 0 0 1
+ x XOR s: 0 0 0 1 1
 ```
 
 So `x⊕s=00011`, and the promise guarantees
@@ -896,7 +896,7 @@ $$
 
 This intuition is not the full lower-bound proof, but it explains why the square root appears. Unlike Deutsch–Jozsa, even a **randomized** classical approach requires exponentially many black-box queries to solve Simon's promise problem with substantial success probability.
 
-> **Transcript correction:** The transcript has an unclear phrase resembling “`2^n` queries.” The standard classical randomized query complexity of Simon's problem is exponential but scales as **`2^(n/2)`** (up to asymptotic factors), rather than `2^n`. The numerical example for `n=100`—approximately `10^15`—is consistent with `2^50≈1.13×10^15`, i.e. `2^(n/2)`.
+> **Correction:** The lecture has an unclear phrase resembling “`2^n` queries.” The standard classical randomized query complexity of Simon's problem is exponential but scales as **`2^(n/2)`** (up to asymptotic factors), rather than `2^n`. The numerical example for `n=100`—approximately `10^15`—is consistent with `2^50≈1.13×10^15`, i.e. `2^(n/2)`.
 
 For `n=100`, the contrast is therefore roughly **a quadrillion** random classical oracle calls at birthday scale, versus **on the order of a hundred** quantum oracle calls (plus polynomial-time processing). This is a statement about an *ideal black-box problem*; it is not automatically a benchmark of real hardware speed.
 
@@ -993,13 +993,13 @@ The lecturer asks: **What if we measure only the last n qubits?** This measureme
 In the two-bit example above:
 
 - If the measured second-register label is `00`, the first register collapses to
-  $$
-  \frac{|00\rangle+|01\rangle}{\sqrt2}.
-  $$
+ $$
+ \frac{|00\rangle+|01\rangle}{\sqrt2}.
+ $$
 - If the measured second-register label is `01`, the first register collapses to
-  $$
-  \frac{|10\rangle+|11\rangle}{\sqrt2}.
-  $$
+ $$
+ \frac{|10\rangle+|11\rangle}{\sqrt2}.
+ $$
 
 Why the `1/√2`? Each outcome leaves **two equal-amplitude, orthogonal input basis states**. To make their total probability 1, their amplitudes must each have magnitude `1/√2`, because `1/2+1/2=1`.
 
@@ -1204,7 +1204,7 @@ The lecture now assembles the overall algorithm conceptually:
 8. Start again with fresh registers and gather more such equations.
 9. Once enough equations are **linearly independent**, solve them for the secret `s`.
 
-**Transcript correction:** The lecturer briefly says “measure the last n bits, it gives a string z” near the end. The `z` in the parity constraint comes from measuring the **first register after its final Hadamard**, not from the earlier output-register measurement. The two measurements play completely different roles.
+**Correction:** The lecturer briefly says “measure the last n bits, it gives a string z” near the end. The `z` in the parity constraint comes from measuring the **first register after its final Hadamard**, not from the earlier output-register measurement. The two measurements play completely different roles.
 
 ### 13.1 Solving an example by hand
 
@@ -1352,7 +1352,7 @@ $$
 
 [Try the interactive orthogonal projection](../animations/animation-06.html). Drag an input point or change its coordinates and watch the perpendicular shadow fall onto the diagonal.
 
-> **Important transcript error:** The transcript seems to give `(1/√2,1/√2)` for the projection of `(1,0)`. That is the *unit vector pointing along the diagonal*, **not** the orthogonal projection of `(1,0)`. The projection is `(1/2,1/2)`. The distinction is between a **unit direction** and the **correct length along that direction**.
+> **Important correction:** The lecture seems to give `(1/√2,1/√2)` for the projection of `(1,0)`. That is the *unit vector pointing along the diagonal*, **not** the orthogonal projection of `(1,0)`. The projection is `(1/2,1/2)`. The distinction is between a **unit direction** and the **correct length along that direction**.
 
 ### 14.3 The Z gate in the `|+⟩,|−⟩` basis
 
@@ -1465,13 +1465,13 @@ This section comes **after** the lecture's final questions so that it does not i
 ### Accuracy notes and uncertainties, explicitly tracked
 
 - **The course's claim about Simon's classical complexity:** Correct asymptotic randomized collision-query scale is `Θ(2^(n/2))`, rather than `2^n`. The lecturer's `n=100` numerical analogy fits `2^(n/2)`.
-- **Deutsch–Jozsa sampling:** Ten sampled inputs fail with probability `2^(1−10)` if chosen independently with replacement; ten independently repeated *two-sample trials* fail with probability `2^(−10)`. The transcript moves between those methods.
+- **Deutsch–Jozsa sampling:** Ten sampled inputs fail with probability `2^(1−10)` if chosen independently with replacement; ten independently repeated *two-sample trials* fail with probability `2^(−10)`. The lecture moves between those methods.
 - **The word “query” is not “gate” and not necessarily “seconds.”** These examples establish query complexity results in a black-box model.
 - **Simon register ordering:** Output-register measurement makes a paired state; *later* input-register measurement yields `z`.
 - **Simon's `O(n)` quantum sampling:** Some samples repeat or are dependent; collecting independent constraints may take extra attempts, and classical XOR linear algebra finishes the task.
 - **Projection onto `y=x`:** `(1,0)` projects to `(1/2,1/2)`, *not* `(1/√2,1/√2)`.
-- **Oral spelling/transcription:** Standard names are *Deutsch*, *Deutsch–Jozsa*, *Bernstein–Vazirani*, *Simon*, *Hadamard*, *phase kickback*, and *Quirk*. The labels in these notes follow standard spelling.
-- **Part B coverage limit:** The transcript develops Simon up to the constraint equations, then moves to questions. Details beyond that are labeled supplementary; this document does not silently invent a complete later Fourier-theory lecture.
+- **Oral spelling:** Standard names are *Deutsch*, *Deutsch–Jozsa*, *Bernstein–Vazirani*, *Simon*, *Hadamard*, *phase kickback*, and *Quirk*. The labels in these notes follow standard spelling.
+- **Part B coverage limit:** The lecture develops Simon up to the constraint equations, then moves to questions. Details beyond that are labeled supplementary; this document does not silently invent a complete later Fourier-theory lecture.
 
 ---
 

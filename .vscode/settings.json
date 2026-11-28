@@ -1,0 +1,6 @@
+{
+  "markdownlint.configFile": ".markdownlint.json",
+  "markdown.math.enabled": true,
+  "markdown.preview.allowScriptsAndStyle": true,
+  "markdown.preview.securityLevel": "allowScriptsAndUnsafeContent"
+}

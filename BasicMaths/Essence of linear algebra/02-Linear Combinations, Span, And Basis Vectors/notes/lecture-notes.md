@@ -2,7 +2,7 @@
 
 **Essence of Linear Algebra · Chapter 2 · Detailed beginner-friendly lecture notes**
 
-**Source:** Supplied transcript for *02 — Linear Combinations, Span, and Basis Vectors* (approximately 10 minutes) (approximately 10 minutes). The order of the sections follows the actual teaching progression. The diagrams, extra numerical examples, checks, and HTML demonstrations are original learning aids; they are clearly distinguished from the central examples in the source material.
+**Source:** Supplied lecture for *02 — Linear Combinations, Span, and Basis Vectors* (approximately 10 minutes) (approximately 10 minutes). The order of the sections follows the actual teaching progression. The diagrams, extra numerical examples, checks, and HTML demonstrations are original learning aids; they are clearly distinguished from the central examples in the source material.
 
 > **How to learn from these notes:** Start with the story and the pictures. When an equation appears, read the words below it before doing the arithmetic. Then open the linked HTML animation and move the sliders yourself. You do **not** need to know matrices or calculus for this lesson.
 

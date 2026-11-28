@@ -74,7 +74,7 @@ You can have $\mathbb{C}^2$, $\mathbb{C}^4$, $\mathbb{C}^{10}$, $\mathbb{C}^{100
 
 Here is the real picture. The arrow on the left is just a drawing of the list $(2, 1)$: go $2$ to the right and $1$ up. The boxes on the right show a list of 2 real numbers, a list of 4 real numbers, and a list of 2 complex numbers:
 
-![A vector in R squared drawn as an arrow from the origin to (2, 1), next to column vectors in R squared, R to the fourth and C squared](images/vec-arrow-as-list.svg)
+![A vector in R squared drawn as an arrow from the origin to (2, 1), next to column vectors in R squared, R to the fourth and C squared](assets/vec-arrow-as-list.svg)
 
 > **Important idea.** To a physicist an arrow and a list are the same object. The list is what you calculate with. The arrow is only a picture that helps when the list has 2 or 3 real numbers.
 
@@ -96,7 +96,7 @@ Now take a vector with **two complex** coordinates, such as $(1 + i,\ 2)$. Remem
 - $z_1 = 1 + i$ needs one plane (2 real numbers: the real part and the imaginary part).
 - $z_2 = 2$ needs another plane (2 real numbers again).
 
-![Two complex planes side by side, one with the point 1 + i and one with the point 2, showing that a vector in C squared needs four real numbers](images/vec-c2-needs-4-dims.svg)
+![Two complex planes side by side, one with the point 1 + i and one with the point 2, showing that a vector in C squared needs four real numbers](assets/vec-c2-needs-4-dims.svg)
 
 Altogether the vector is **four real numbers**, $(1, 1, 2, 0)$. To draw four real numbers we would need **four dimensions**, and we only have three. The conclusion:
 
@@ -150,7 +150,7 @@ $$
 
 Here is what both operations look like for real vectors. On the left, adding $\mathbf{u} = (4, 1)$ and $\mathbf{v} = (1, 3)$ gives $(5, 4)$. On the right, scaling $\mathbf{v} = (2, 1)$ by $2$ and by $-1$:
 
-![Left: the parallelogram rule for adding two vectors in the real plane. Right: scaling a vector by 2 and by minus 1](images/vec-addition-scaling-r2.svg)
+![Left: the parallelogram rule for adding two vectors in the real plane. Right: scaling a vector by 2 and by minus 1](assets/vec-addition-scaling-r2.svg)
 
 > **The big difference from school.** In school the scalar was a real number. Here the scalar can be **complex**. A complex scalar also *turns* the entries (remember: multiplying by a complex number rotates and stretches). The slide says: *"Scalars are now complex. That single change is what makes quantum linear algebra different from what many of you saw in school."*
 
@@ -358,7 +358,7 @@ By definition you multiply $\mathbf{v}_1$ by every possible number:
 
 If you take **all** real numbers $\alpha$, you get the **entire line** through the origin and $\mathbf{v}_1$:
 
-![The span of the single vector (1, 3): the whole line through the origin, with points 2v1, minus v1 and minus 2v1 marked](images/vec-span-one-vector.svg)
+![The span of the single vector (1, 3): the whole line through the origin, with points 2v1, minus v1 and minus 2v1 marked](assets/vec-span-one-vector.svg)
 
 > **Span of one vector = a line through the origin.** In the lecture: *"span of $V_1$ will be the line which goes through the origin $O$ and the entire vector."*
 
@@ -374,7 +374,7 @@ $$
 
 So every point of the plane is a linear combination of the two vectors. **The span of $\mathbf{e}_1, \mathbf{e}_2$ is the entire plane.**
 
-![The point (5, 6) written as 5 e1 + 6 e2, with the whole plane shaded to show that the span of e1 and e2 is every point of the plane](images/vec-span-plane.svg)
+![The point (5, 6) written as 5 e1 + 6 e2, with the whole plane shaded to show that the span of e1 and e2 is every point of the plane](assets/vec-span-plane.svg)
 
 (The first pair $(1, 3)$ and $(2, 0)$ also span the whole plane, because they do not point along the same line. We will see the exact condition in section 6.)
 
@@ -386,7 +386,7 @@ Imagine you are in **3D** and you are given two vectors (the illustration: one w
 - Only two vectors, so you **cannot fill the whole 3D space**.
 - You get a **flat sheet**: the plane that contains the origin and both vectors.
 
-![A flat plane through the origin spanned by two vectors a = (1, 2, 3) and b = (1, 3, 5) in 3D](images/vec-span-3d-plane.svg)
+![A flat plane through the origin spanned by two vectors a = (1, 2, 3) and b = (1, 3, 5) in 3D](assets/vec-span-3d-plane.svg)
 
 **What does "the plane through the triangle" mean?** (This was asked in class.) Think about how you describe a line and a plane:
 
@@ -466,7 +466,7 @@ So the east–west line is a subspace.
 
 In the picture, $\mathbf{u}$ and $\mathbf{w}$ lie on the red line $y = 1$, but the parallelogram sum $\mathbf{u}+\mathbf{w}$ lands at $(1, 2)$, off that line. The origin is marked too: $0\cdot\mathbf{u}$ would send you there, which is also not on $y = 1$.
 
-![The line y equals 1 in the plane: vectors u equals (2, 1) and w equals (-1, 1) on the line, their sum u plus w at (1, 2) off the line, and the origin not on y equals 1](images/vec-subspace-y-equals-one-fails.svg)
+![The line y equals 1 in the plane: vectors u equals (2, 1) and w equals (-1, 1) on the line, their sum u plus w at (1, 2) off the line, and the origin not on y equals 1](assets/vec-subspace-y-equals-one-fails.svg)
 
 So that shifted line is **not** a subspace.
 
@@ -485,7 +485,7 @@ Take a plane through the origin in 3D. Pick two vectors in the plane and add the
 
 In the picture, $\mathbf{u}$ and $\mathbf{w}$ both lie in the blue plane. The dashed sides complete the parallelogram, and the far corner $\mathbf{u}+\mathbf{w}$ is still on the plane. The longer arrow $2\mathbf{u}$ is $\mathbf{u}$ scaled by $2$: it stays on the same line, and that line lies in the plane too.
 
-![A tilted plane through the origin, with vectors u and w, the parallelogram they form, and the far corner u plus w still on the plane; 2u continues along u and stays in the plane](images/vec-plane-parallelogram-sum.svg)
+![A tilted plane through the origin, with vectors u and w, the parallelogram they form, and the far corner u plus w still on the plane; 2u continues along u and stays in the plane](assets/vec-plane-parallelogram-sum.svg)
 
 (The picture of the plane in section 4.6 is a good one to keep in mind.)
 
@@ -498,7 +498,7 @@ The picture below shows a green line versus a red line:
 - **Green line (through the origin):** a subspace. Add two points on it and you land on it again.
 - **Red line (shifted away from the origin):** **not** a subspace. Take any point on it and multiply by $0$: you land on the origin, but the origin is not on this line.
 
-![Left: a line through the origin is a subspace, because sums and multiples stay on the line. Right: a shifted line is not a subspace, because 0 times any point is the origin, which is not on the line](images/vec-subspace-test.svg)
+![Left: a line through the origin is a subspace, because sums and multiples stay on the line. Right: a shifted line is not a subspace, because 0 times any point is the origin, which is not on the line](assets/vec-subspace-test.svg)
 
 ## 5.4 Every span is a subspace
 
@@ -517,7 +517,7 @@ Remember the exception in section 4.7: two vectors $\mathbf{v}_1, \mathbf{v}_2$ 
 
 Here are the two situations side by side:
 
-![Left: two vectors that are not parallel span the whole plane. Right: v2 = 5 v1 so the span is only a line](images/vec-independent-dependent.svg)
+![Left: two vectors that are not parallel span the whole plane. Right: v2 = 5 v1 so the span is only a line](assets/vec-independent-dependent.svg)
 
 ## 6.2 The definition in words
 
@@ -588,7 +588,7 @@ The picture to keep in mind:
 2. Add a **second** vector that is **not** on that line. Together they span a **plane**.
 3. Add a **third** vector that is **not** in that plane. Together they span all of **3D**.
 
-![Three panels: one vector spans a line, a second vector off the line gives a plane, a third vector off the plane gives all of 3D](images/vec-adds-dimension.svg)
+![Three panels: one vector spans a line, a second vector off the line gives a plane, a third vector off the plane gives all of 3D](assets/vec-adds-dimension.svg)
 
 If the third vector *were* in the plane, the three would still only span that plane, and they would be dependent.
 
@@ -615,7 +615,7 @@ $$
 
 So $\mathbf{w}$ **is** a multiple of $\mathbf{u}$. Over $\mathbb{C}$ they are **dependent**.
 
-![A complex twist: u = (1, i) and w = (i, -1). Over the reals they are independent, over the complex numbers w = i times u so they are dependent](images/vec-complex-twist.svg)
+![A complex twist: u = (1, i) and w = (i, -1). Over the reals they are independent, over the complex numbers w = i times u so they are dependent](assets/vec-complex-twist.svg)
 
 > **Moral (slide).** *"Parallel" in $\mathbb{C}^n$ means "a complex multiple". Vectors that look different can be the same direction.* This is the same phenomenon as **global phase** in quantum computing: $\boldsymbol\psi$ and $e^{i\varphi}\boldsymbol\psi$ point in the same complex direction. (Phases come back in the next lecture.)
 
@@ -639,7 +639,7 @@ Now ask the question the other way round. **Start with a space and look for vect
 
 **A non-example.** Two vectors $\mathbf{v}_1, \mathbf{v}_2$ on one line: all their combinations stay on that line, so they do not span the plane. *"Two vectors which are linearly dependent will not be a basis of the plane. If they are linearly independent, they will be a basis. That is the main takeaway."*
 
-![Left: a line, where any single vector on it is a basis. Middle: the whole plane, with two non-parallel vectors forming a basis. Right: two vectors on one line, which are not a basis of the plane](images/vec-basis-examples.svg)
+![Left: a line, where any single vector on it is a basis. Middle: the whole plane, with two non-parallel vectors forming a basis. Right: two vectors on one line, which are not a basis of the plane](assets/vec-basis-examples.svg)
 
 ## 7.3 The definition (slide)
 
@@ -697,7 +697,7 @@ So $(1, 1)$ and $(1, -1)$ **form a basis**. Everything here was in $\mathbb{R}^2
 
 The picture below is the same point $(3, 1)$ written in two ways. On the left, the **basis vectors** are $(1, 0)$ and $(0, 1)$; the **coordinates** are $3$ and $1$ (how many of each you need). On the right, the basis vectors are $(1, 1)$ and $(1, -1)$; the coordinates are $2$ and $1$. The **arrow to $(3, 1)$** is the same vector in both panels; only the basis and the coordinate numbers change.
 
-![The point (3, 1) built from the standard basis as 3 times (1, 0) plus 1 times (0, 1), and from the basis (1, 1) and (1, -1) as 2 times (1, 1) plus 1 times (1, -1)](images/vec-two-bases-build-point.svg)
+![The point (3, 1) built from the standard basis as 3 times (1, 0) plus 1 times (0, 1), and from the basis (1, 1) and (1, -1) as 2 times (1, 1) plus 1 times (1, -1)](assets/vec-two-bases-build-point.svg)
 
 ## 7.6 Dimension
 
@@ -970,7 +970,7 @@ $$
 
 Subtract or substitute: $c_1 = 1$, $c_2 = 1$. That matches the table and the picture.
 
-![The same point P drawn in the standard basis with coordinates (4, 3) and in a new basis with coordinates (1, 1)](images/vec-coordinates-two-bases.svg)
+![The same point P drawn in the standard basis with coordinates (4, 3) and in a new basis with coordinates (1, 1)](assets/vec-coordinates-two-bases.svg)
 
 **Takeaway.** $(4, 3)$ and $(1, 1)$ are **not** two different points. They are two **labels** for the same vector $P$, measured against two different bases. Always ask: coordinates **in which basis?** (Section 8.2.)
 
@@ -994,7 +994,7 @@ $$
 \mathbf{e}_1 = \frac{1}{\sqrt2}\left(\mathbf{h}_+ + \mathbf{h}_-\right), \qquad \mathbf{e}_2 = \frac{1}{\sqrt2}\left(\mathbf{h}_+ - \mathbf{h}_-\right)
 $$
 
-![The standard basis e1, e2 and the rotated basis h plus and h minus in the plane, with e1 built from half-length steps along h plus and h minus, and a table of coordinates in both bases](images/vec-hadamard-basis.svg)
+![The standard basis e1, e2 and the rotated basis h plus and h minus in the plane, with e1 built from half-length steps along h plus and h minus, and a table of coordinates in both bases](assets/vec-hadamard-basis.svg)
 
 *In the picture the entries happen to be real, so it can be drawn. This is the "real cartoon".* The two blue and purple arrows are perpendicular to each other and both have length 1. The red arrow $\mathbf{e}_1$ is the diagonal of the dashed parallelogram built from $\tfrac{1}{\sqrt2}\mathbf{h}_+$ and $\tfrac{1}{\sqrt2}\mathbf{h}_-$.
 
@@ -1154,7 +1154,7 @@ In words: the dot product is **(length of $\mathbf{u}$) $\times$ (length of $\ma
 
 Another way to see it: **project $\mathbf{u}$ onto the line that $\mathbf{v}$ spans** (drop a perpendicular from the tip of $\mathbf{u}$ onto that line). The green piece in the picture below has length $\lVert\mathbf{u}\rVert\cos\theta$. Why? Recall from trigonometry: in a right-angled triangle with hypotenuse $r$ and the side next to the angle $a$, $\cos\theta = a/r$, so $a = r\cos\theta$. Here $r$ is $\lVert\mathbf{u}\rVert$ and $a$ is the green length. The dot product is that **projection length times the length of $\mathbf{v}$**.
 
-![The vectors u = (5, 1) and v = (3, 7) with the angle theta between them and the projection of u onto v drawn in green; the dot product is 22](images/vec-real-dot-product.svg)
+![The vectors u = (5, 1) and v = (3, 7) with the angle theta between them and the projection of u onto v drawn in green; the dot product is 22](assets/vec-real-dot-product.svg)
 
 This is exactly **cosine similarity**, as used in vector retrieval (searching for similar items).
 
@@ -1210,7 +1210,7 @@ But if we copied the real formula, $\mathbf{v}\cdot\mathbf{v} = v_1^2 + v_2^2 + 
 
 In the picture, $z^2 = 2i$ is on the imaginary axis, whereas $\lvert z\rvert^2 = 2$ is a plain length-squared on the real axis:
 
-![The complex number 1 + i, its square 2i on the imaginary axis, and its modulus squared 2 on the real axis, showing that z squared is not the same as the modulus squared](images/vec-square-vs-modulus.svg)
+![The complex number 1 + i, its square 2i on the imaginary axis, and its modulus squared 2 on the real axis, showing that z squared is not the same as the modulus squared](assets/vec-square-vs-modulus.svg)
 
 ## 12.2 A disaster with the old formula (slide)
 
@@ -1458,7 +1458,7 @@ $$
 
 In general, $\mathbf{v} - \mathbf{u}$ is the arrow from the tip of $\mathbf{u}$ to the tip of $\mathbf{v}$, with coordinates $(v_1 - u_1,\ v_2 - u_2)$.
 
-![Two points u equals (1, 1) and v equals (4, 5) on a map grid; orange arrow v minus u from u to v; green dashed legs 3 right and 4 up; distance norm v minus u equals 5](images/vec-distance-two-vectors.svg)
+![Two points u equals (1, 1) and v equals (4, 5) on a map grid; orange arrow v minus u from u to v; green dashed legs 3 right and 4 up; distance norm v minus u equals 5](assets/vec-distance-two-vectors.svg)
 
 ### 2. How far apart are the endpoints?
 
@@ -1531,7 +1531,7 @@ So **$\hat{\mathbf{v}}$ is a unit vector** — not a different kind of object. T
 
 For example, if a vector has length 10, multiply all its coordinates by $\tfrac{1}{10}$ and the new vector has length 1; that new vector is $\hat{\mathbf{v}}$.
 
-![Normalising a vector make its length 1: v equals (3, 4) with length 5 and v-hat equals (3/5, 4/5) on the unit circle; steps find norm then divide; examples for (1, 1+i) and (1, -1)](images/vec-normalise-make-length-one.jpg)
+![Normalising a vector make its length 1: v equals (3, 4) with length 5 and v-hat equals (3/5, 4/5) on the unit circle; steps find norm then divide; examples for (1, 1+i) and (1, -1)](assets/vec-normalise-make-length-one.jpg)
 
 The figure shows the **same direction, new length $1$**: blue $\mathbf{v}=(3,4)$ with $\lVert\mathbf{v}\rVert=5$, red $\hat{\mathbf{v}}=(3/5,4/5)$ on the unit circle. The **Steps (recipe)** box is $\hat{\mathbf{v}}=\mathbf{v}/\lVert\mathbf{v}\rVert$. The **Examples** box matches the lecture; for $v=(1,1+i)$ the second term under the radical is $\lvert 1+i\rvert^2=2$ (not $2^2$). Below we derive that length in full before writing $\hat{\mathbf{v}}$.
 
@@ -1627,7 +1627,7 @@ $$
 
 The picture: draw $\mathbf{u}$ and $\mathbf{v}$ head to tail. Then $\mathbf{u} + \mathbf{v}$ is the **third side of a triangle**. The length of one side of a triangle is **at most the sum of the lengths of the other two sides**. Slide caption: *"The direct path is never longer than the detour."*
 
-![Triangle inequality the direct path is never longer: u from O to (5, 1), v from A to B with step (2, 3), u plus v direct to (7, 4); inequality 8.06 at most 5.10 plus 3.61; Cauchy-Schwarz box](images/vec-triangle-inequality.jpg)
+![Triangle inequality the direct path is never longer: u from O to (5, 1), v from A to B with step (2, 3), u plus v direct to (7, 4); inequality 8.06 at most 5.10 plus 3.61; Cauchy-Schwarz box](assets/vec-triangle-inequality.jpg)
 
 (Real cartoon: $\mathbf{u} = (5, 1)$ from $O$ to $A$, $\mathbf{v} = (2, 3)$ from $A$ to $B=(7,4)$, so $\mathbf{u}+\mathbf{v}$ is the direct segment $O\to B$. The figure also restates Cauchy–Schwarz from section 14.1.)
 
@@ -1706,7 +1706,7 @@ $$
 
 Still orthogonal; lengths are $\lVert\mathbf{u}\rVert = 3$ and $\lVert\mathbf{v}\rVert = 4$.
 
-![Three panels: perpendicular unit basis, perpendicular non-unit lengths, and a non-perpendicular basis pair](images/vec-orthogonal-basis-comparison.svg)
+![Three panels: perpendicular unit basis, perpendicular non-unit lengths, and a non-perpendicular basis pair](assets/vec-orthogonal-basis-comparison.svg)
 
 ---
 
@@ -1772,7 +1772,7 @@ $$
 
 **Numerical check:** $\mathbf{u}=(3,1)$, $\mathbf{v}=(-1,3)$. Dot product $3(-1)+1\cdot 3 = 0$. $\lVert\mathbf{u}\rVert^2 = 10$, $\lVert\mathbf{v}\rVert^2 = 10$, $\lVert\mathbf{u}+\mathbf{v}\rVert^2 = \lVert(2,4)\rVert^2 = 20$.
 
-![Pythagoras for perpendicular vectors in the plane](images/vec-pythagoras-orthogonal.jpg)
+![Pythagoras for perpendicular vectors in the plane](assets/vec-pythagoras-orthogonal.jpg)
 
 ---
 
@@ -1834,7 +1834,7 @@ $$
 | $\{(2,0), (0,3)\}$ | Yes | No (lengths $2$, $3$) | Yes |
 | $\{(1,0), (1,1)\}$ | No | No | Yes |
 
-![Comparison of orthonormal, orthogonal-only, and non-orthogonal bases](images/vec-orthogonal-basis-comparison.svg)
+![Comparison of orthonormal, orthogonal-only, and non-orthogonal bases](assets/vec-orthogonal-basis-comparison.svg)
 
 **Packed form (optional, after the two-vector case):** $\langle\mathbf{e}_i, \mathbf{e}_j\rangle = \delta_{ij}$ where $\delta_{ij} = 1$ if $i=j$ and $0$ if $i\ne j$ (**Kronecker delta** — “pick out matching indices only”).
 
@@ -2011,7 +2011,7 @@ Each inner product is **one number** — the “how much” of that Hadamard dir
 
 **Why this vector?** $\lVert\mathbf{v}\rVert^2 = \lvert 3/5\rvert^2 + \lvert 4i/5\rvert^2 = 9/25 + 16/25 = 1$, so it is a **unit** vector (useful later for Parseval and quantum examples).
 
-![Same unit vector, coordinates in standard vs Hadamard ONB](images/vec-onb-coordinates.svg)
+![Same unit vector, coordinates in standard vs Hadamard ONB](assets/vec-onb-coordinates.svg)
 
 *Figure (real cartoon):* the arrow is drawn as $\mathbf{v} = (3/5,\,4/5)$ in $\mathbb{R}^2$ so it can be plotted. **This section’s algebra** uses the lecture column $(3/5,\,4i/5)^T$ — same standard coordinate $3/5$ on $\mathbf{e}_1$, but a **complex** coefficient on $\mathbf{e}_2$. Inner products and $a_\pm$ are unchanged in form; only the second entry is $4i/5$ instead of $4/5$.
 
@@ -2301,7 +2301,7 @@ $$
 
 Imagine walking on a city grid. From the origin you go **$3$ blocks east** and **$4$ blocks north** (perpendicular directions). The straight-line distance to your corner is **$5$** blocks — not $3+4=7$. Pythagoras is about **squares**: $3^2 + 4^2 = 5^2$.
 
-![Parseval city grid: 3 east and 4 north, walking 7 vs straight line 5, standard and Hadamard coordinates same length squared](images/vec-parseval-city-grid.jpg)
+![Parseval city grid: 3 east and 4 north, walking 7 vs straight line 5, standard and Hadamard coordinates same length squared](assets/vec-parseval-city-grid.jpg)
 
 - **$\mathbf{w}$** is the trip as one arrow (the diagonal).
 - **$3$ and $4$** are how far you went along each **axis** (coordinates in the standard basis).
@@ -2340,7 +2340,7 @@ $$
 
 **Misconception check:** If $\mathbf{u} = \mathbf{v}$, the second formula becomes $\lVert\mathbf{v}\rVert^2 = \sum_j \lvert\langle\mathbf{e}_j, \mathbf{v}\rangle\rvert^2$ directly — the same as Parseval. You do **not** need a separate step of “taking $\lvert\cdot\rvert^2$ on both sides” of the two-vector formula.
 
-![Parseval identity for v equals (3,4): coordinates c1 and c2, length 5, norm squared equals sum of squared coordinates](images/vec-parseval-projections.jpg)
+![Parseval identity for v equals (3,4): coordinates c1 and c2, length 5, norm squared equals sum of squared coordinates](assets/vec-parseval-projections.jpg)
 
 *Figure:* $\mathbf{v} = (3,4)$ in the standard ONB; $c_1 = \langle\mathbf{e}_1,\mathbf{v}\rangle = 3$, $c_2 = 4$; $\lVert\mathbf{v}\rVert^2 = 3^2 + 4^2 = 25$. Cross terms in the expansion vanish because $\mathbf{e}_1 \perp \mathbf{e}_2$ (section 16.7).
 
@@ -2371,7 +2371,7 @@ $$
 
 Parseval’s sum of squares **fails** without unit-length basis vectors.
 
-![Why cross terms disappear: ONB for w equals (3,4), expansion, Parseval, three bases same length squared 25](images/vec-parseval-cross-terms.jpg)
+![Why cross terms disappear: ONB for w equals (3,4), expansion, Parseval, three bases same length squared 25](assets/vec-parseval-cross-terms.jpg)
 
 ---
 
@@ -2483,7 +2483,7 @@ Let $\mathbf{u} = \begin{pmatrix}1\\ i\end{pmatrix}$ and $\mathbf{v} = \begin{pm
 | Idea | Definition | Picture (real) |
 |---|---|---|
 | Linear combination | $\alpha_1\mathbf{v}_1 + \cdots + \alpha_k\mathbf{v}_k$ | scale and add |
-| Span | all linear combinations | line, plane, ... through the origin |
+| Span | all linear combinations | line, plane,... through the origin |
 | Subspace | closed under $+$ and scaling (so it contains $\mathbf{0}$) | line or plane **through the origin** |
 | Linearly independent | $\sum\alpha_j\mathbf{v}_j = \mathbf{0}$ forces all $\alpha_j = 0$ | none lies in the span of the others |
 | Basis | independent and spans | gives **unique** coordinates |
